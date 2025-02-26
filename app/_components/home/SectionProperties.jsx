@@ -25,6 +25,10 @@ function SectionProperties() {
       </div>
 
       <Properties />
+
+      <button className="my-8 w-full rounded-lg border border-slate-400 py-6 text-base font-semibold uppercase tracking-widest text-gray-400">
+        Load More
+      </button>
     </section>
   );
 }

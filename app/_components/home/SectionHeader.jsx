@@ -9,13 +9,16 @@ function SectionHeader() {
           Ghor Khoje
         </h1>
         <div className="flex items-center gap-6">
-          <Link href={"/"} className="text-lg font-bold tracking-wide">
+          <Link
+            href={"/"}
+            className="border-b-2 border-gray-700 px-1 text-base font-bold tracking-wide"
+          >
             Buy
           </Link>
-          <Link href={"/"} className="text-lg tracking-wide">
+          <Link href={"/"} className="px-1 text-base tracking-wide">
             Rent
           </Link>
-          <Link href={"/"} className="text-lg tracking-wide">
+          <Link href={"/"} className="px-1 text-base tracking-wide">
             Sell
           </Link>
         </div>
