@@ -135,7 +135,7 @@ function CategoryFilterNav() {
   };
 
   return (
-    <div className="relative mx-auto my-4 w-full max-w-screen-xl">
+    <div className="relative mx-auto w-full max-w-screen-xl">
       <button
         onClick={() => handleScroll("left")}
         className="absolute left-0 top-1/2 z-10 -translate-y-1/2 transform rounded-full bg-white p-2 shadow-md hover:bg-gray-100"
