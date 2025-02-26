@@ -1,5 +1,9 @@
-import Image from "next/image";
+import Home from "@/app/_components/pages/Home";
 
-export default function Home() {
-  return <h1 className="">Ghor Khoje</h1>;
+export default function Page() {
+  return (
+    <>
+      <Home />
+    </>
+  );
 }

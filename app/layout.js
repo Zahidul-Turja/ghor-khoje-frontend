@@ -1,7 +1,7 @@
 import { Toaster } from "react-hot-toast";
 import "@/app/_styles/globals.css";
 
-import { poppins } from "@/app/_utils/fonts";
+import { poppins, raleway } from "@/app/_utils/fonts";
 
 export const metadata = {
   title: {
@@ -15,10 +15,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${poppins.className} relative min-h-screen min-w-full bg-gray-100 text-gray-800 antialiased`}
+        className={`${raleway.className} relative min-h-screen min-w-full bg-gray-100 px-16 text-gray-800 antialiased`}
       >
         {children}
-
         <Toaster position="bottom-center" toastOptions={{ duration: 3000 }} />
       </body>
     </html>
