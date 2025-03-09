@@ -22,6 +22,14 @@ function Footer() {
             <li>Contact</li>
           </ul>
         </div>
+        <div>
+          <h2 className="mb-2 text-lg font-bold">Contact us</h2>
+          <ul>
+            <li>Gulshan, Dhaka, Bangladesh</li>
+            <li>+88 123 456 789</li>
+            <li>R0E9H@example.com</li>
+          </ul>
+        </div>
       </div>
 
       <p className="text-center text-sm font-light">
