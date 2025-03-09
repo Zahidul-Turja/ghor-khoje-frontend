@@ -6,7 +6,7 @@ import { poppins, raleway } from "@/app/_utils/fonts";
 export const metadata = {
   title: {
     template: "%s | Ghor Khoje",
-    default: "Ghor Khoje",
+    default: "Welcome",
   },
   description: "Ghor Khoje is a website for Renting apartments in Bangladesh.",
 };
