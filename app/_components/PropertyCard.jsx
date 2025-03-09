@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { FaStar } from "react-icons/fa";
 
 function PropertyCard({ property }) {
@@ -16,18 +17,23 @@ function PropertyCard({ property }) {
   } = property;
   return (
     <div className="overflow-hidden rounded-lg">
-      <div className="relative h-52 w-full overflow-hidden rounded-lg">
+      <Link
+        href={`/${slug}`}
+        className="relative h-52 w-full overflow-hidden rounded-lg"
+      >
         <Image
           src={image}
           width={400}
           height={200}
           className="rounded-lg object-cover"
         />
-      </div>
+      </Link>
 
       <div className="py-2">
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold">{address}</h3>
+          <Link href={`/${slug}`} className="text-lg font-semibold">
+            {address}
+          </Link>
           <p className="flex items-center gap-1 text-sm font-semibold">
             <FaStar />
             {rating}
