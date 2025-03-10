@@ -8,10 +8,12 @@ export const metadata = {
 
 function Page() {
   return (
-    <BoundingBox>
+    <>
       <NavMain />
-      <Property />
-    </BoundingBox>
+      <BoundingBox classes="px-52">
+        <Property />
+      </BoundingBox>
+    </>
   );
 }
 

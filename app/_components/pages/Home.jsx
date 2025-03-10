@@ -7,8 +7,8 @@ import NavMain from "../NavMain";
 export default function Home() {
   return (
     <>
+      <NavMain />
       <BoundingBox>
-        <NavMain />
         <SectionHeader />
         <SectionProperties />
       </BoundingBox>

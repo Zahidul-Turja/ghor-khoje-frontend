@@ -2,10 +2,13 @@ import Link from "next/link";
 
 function NavMain() {
   return (
-    <nav className="flex items-center justify-between py-4">
-      <h1 className="text-3xl font-extrabold uppercase tracking-widest text-primary">
+    <nav className="flex items-center justify-between px-16 py-4">
+      <Link
+        href={"/"}
+        className="text-3xl font-extrabold uppercase tracking-widest text-primary"
+      >
         Ghor Khoje
-      </h1>
+      </Link>
       <div className="flex items-center gap-6">
         <Link
           href={"/"}

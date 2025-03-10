@@ -1,59 +1,20 @@
-import Image from "next/image";
+import { FaRegHeart } from "react-icons/fa";
+
+import ImageGellary from "./ImageGellary";
 
 function Property() {
   return (
-    <div className="mx-auto my-10 max-w-screen-2xl">
-      <div className="mx-auto grid grid-cols-4 gap-4">
-        {/* First Column: Single Image with half the width and full height */}
-        <div className="col-span-2 h-full grid-rows-2">
-          <Image
-            src="/house-1.jpg"
-            width={1000}
-            height={800} // Adjust height for full height if needed
-            className="h-full object-cover"
-          />
-        </div>
-
-        {/* Second Column: Two Images */}
-        <div className="col-span-1 flex flex-col gap-4">
-          <div className="w-full">
-            <Image
-              src="/house-1.jpg"
-              width={600}
-              height={400}
-              className="object-cover"
-            />
-          </div>
-          <div className="w-full">
-            <Image
-              src="/house-1.jpg"
-              width={1000}
-              height={600}
-              className="object-cover"
-            />
-          </div>
-        </div>
-
-        {/* Third Column: Two Images */}
-        <div className="col-span-1 flex flex-col gap-4">
-          <div className="w-full">
-            <Image
-              src="/house-1.jpg"
-              width={600}
-              height={400}
-              className="object-cover"
-            />
-          </div>
-          <div className="w-full">
-            <Image
-              src="/house-1.jpg"
-              width={600}
-              height={400}
-              className="object-cover"
-            />
-          </div>
+    <div className="mx-auto my-4 max-w-screen-2xl">
+      <div className="my-2 flex items-center justify-between">
+        <h1 className="text-3xl font-bold">
+          ALPHA HOUSE, Design villa w full concierge service
+        </h1>
+        <div className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1 text-sm font-semibold transition-all duration-300 hover:bg-gray-300">
+          <FaRegHeart className="" />
+          <span>Save</span>
         </div>
       </div>
+      <ImageGellary />
     </div>
   );
 }
