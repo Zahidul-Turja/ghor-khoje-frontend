@@ -18,12 +18,12 @@ function Property() {
       </div>
       <ImageGellary />
 
-      <div className="my-4 flex gap-4">
+      <div className="my-4 flex gap-8">
         <div className="w-[70%]">
           <PropertyDetails />
         </div>
 
-        <div className="">
+        <div className="my-8 w-[30%]">
           <AppointmentCard />
         </div>
       </div>
@@ -87,14 +87,57 @@ function PropertyDetails() {
           </button>
         </div>
       </div>
+
+      <div className="border-b-2 border-gray-300 py-8">
+        <h2 className="mb-4 text-2xl font-semibold">Description</h2>
+        <p className="my-2 text-sm">
+          This is a spacious and modern villa located in the heart of the city.
+          It features a large living room with a beautiful view of the city, a
+          kitchen with modern appliances, a spacious bedroom with a private
+          bathroom, and a large balcony with a stunning view of the city. The
+          villa is equipped with all the amenities you need for a comfortable
+          stay.
+        </p>
+        <p className="my-2 text-sm">
+          This is a spacious and modern villa located in the heart of the city.
+          It features a large living room with a beautiful view of the city, a
+          kitchen with modern appliances, a spacious bedroom with a private
+          bathroom, and a large balcony with a stunning view of the city. The
+          villa is equipped with all the amenities you need for a comfortable
+          stay.
+        </p>
+        <button className="border-b-2 border-gray-600 text-sm font-semibold">
+          Read More
+        </button>
+      </div>
+
+      <Amenities />
     </div>
   );
 }
 
 function AppointmentCard() {
   return (
-    <div className="rounded-lg border-2 border-gray-300 p-4 shadow-md">
-      <h3 className="text-xl font-bold">Book Now</h3>
+    <div className="w-full rounded-xl border-2 border-gray-300 p-4 shadow-md">
+      <h3 className="text-center text-xl font-semibold">Make an Appointment</h3>
+
+      <div className="my-6 rounded-lg border-2 border-gray-300 py-2 text-sm">
+        <p className="border-b-2 border-gray-300 px-4 pb-2">
+          Available from 1st May
+        </p>
+        <p className="border-b-2 border-gray-300 px-4 py-2">5 guest capacity</p>
+        <p className="px-4 pt-2 text-base font-bold">
+          20,000 BDT <span className="font-light">per month</span>
+        </p>
+      </div>
+
+      <button className="w-full rounded-lg bg-primary py-3 text-white">
+        Book Now
+      </button>
     </div>
   );
+}
+
+function Amenities() {
+  return <div className="border-b-2 border-gray-300 py-8">Amenities</div>;
 }
