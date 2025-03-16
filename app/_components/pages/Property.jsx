@@ -33,6 +33,8 @@ function Property() {
 
 export default Property;
 
+import Amenities from "@/app/_components/property_details/Amenities";
+
 function PropertyDetails() {
   return (
     <div>
@@ -136,8 +138,4 @@ function AppointmentCard() {
       </button>
     </div>
   );
-}
-
-function Amenities() {
-  return <div className="border-b-2 border-gray-300 py-8">Amenities</div>;
 }
