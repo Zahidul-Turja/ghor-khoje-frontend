@@ -1,7 +1,6 @@
 import { BsDot } from "react-icons/bs";
 import { FaStar } from "react-icons/fa";
 
-import Amenities from "@/app/_components/property_details/Amenities";
 import Image from "next/image";
 
 function PropertyDetails() {
@@ -27,6 +26,7 @@ function PropertyDetails() {
           <div className="relative h-16 w-16 overflow-hidden rounded-full">
             <Image
               src={"/profile-1.jpg"}
+              alt="Host"
               width={1000}
               height={1000}
               className="object-cover"
@@ -59,7 +59,7 @@ function PropertyDetails() {
         </div>
       </div>
 
-      <div className="border-b-2 border-gray-300 py-8">
+      <div className="py-8">
         <h2 className="mb-4 text-2xl font-semibold">Description</h2>
         <p className="my-2 text-sm">
           This is a spacious and modern villa located in the heart of the city.
@@ -81,8 +81,6 @@ function PropertyDetails() {
           Read More
         </button>
       </div>
-
-      <Amenities />
     </div>
   );
 }

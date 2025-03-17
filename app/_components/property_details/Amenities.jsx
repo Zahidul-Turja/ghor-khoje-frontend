@@ -38,13 +38,45 @@ const amenitiesList = [
     icon: <GiCctvCamera className="text-xl" />,
     title: "CCTV",
   },
+  {
+    icon: <FaWifi className="text-xl" />,
+    title: "Free Wifi",
+  },
+  {
+    icon: <TbCarGarage className="text-xl" />,
+    title: "Garage",
+  },
+  {
+    icon: <FaTv className="text-xl" />,
+    title: "Television",
+  },
+  {
+    icon: <TbAirConditioning className="text-xl" />,
+    title: "Air Conditioning",
+  },
+  {
+    icon: <FaSwimmingPool className="text-xl" />,
+    title: "Swimming Pool",
+  },
+  {
+    icon: <LuTrees className="text-xl" />,
+    title: "Garden",
+  },
+  {
+    icon: <CgGym className="text-xl" />,
+    title: "Gym",
+  },
+  {
+    icon: <GiCctvCamera className="text-xl" />,
+    title: "CCTV",
+  },
 ];
 
 function Amenities() {
   return (
-    <div className="py-8">
+    <div className="border-t-2 border-gray-300 py-8">
       <h3 className="mb-4 text-2xl font-semibold">What This Place Offers</h3>
-      <div className="grid grid-cols-2">
+      <div className="grid grid-cols-4">
         {amenitiesList.map((amenity, index) => (
           <div key={index} className="flex items-center gap-4 py-2 font-medium">
             {amenity.icon}

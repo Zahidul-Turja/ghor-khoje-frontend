@@ -4,7 +4,7 @@ import ImageGellary from "@/app/_components/property_details/ImageGellary";
 import PropertyDetails from "@/app/_components/property_details/PropertyDetails";
 import LocationMap from "@/app/_components/property_details/LocationMap";
 import AppointmentCard from "@/app/_components/property_details/AppointmentCard";
-import Footer from "@/app/_components/Footer";
+import Amenities from "@/app/_components/property_details/Amenities";
 
 function Property() {
   return (
@@ -29,6 +29,8 @@ function Property() {
           <AppointmentCard />
         </div>
       </div>
+
+      <Amenities />
 
       <div className="border-t-2 border-gray-300 py-8">
         <h2 className="text-2xl font-semibold">Where You'll Be</h2>

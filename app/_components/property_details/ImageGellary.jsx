@@ -7,6 +7,7 @@ function ImageGellary() {
       <div className="col-span-2 h-full grid-rows-2">
         <Image
           src="/detail-1.jpg"
+          alt="display"
           width={1000}
           height={1000} // Adjust height for full height if needed
           className="h-full object-cover"
@@ -18,6 +19,7 @@ function ImageGellary() {
         <div className="h-full w-full">
           <Image
             src="/detail-2.jpg"
+            alt="display"
             width={1000}
             height={1000}
             className="object-cover"
@@ -26,6 +28,7 @@ function ImageGellary() {
         <div className="h-full w-full">
           <Image
             src="/detail-3.jpg"
+            alt="display"
             width={1000}
             height={1000}
             className="object-cover"
@@ -38,6 +41,7 @@ function ImageGellary() {
         <div className="h-full w-full">
           <Image
             src="/detail-4.jpg"
+            alt="display"
             width={1000}
             height={1000}
             className="object-cover"
@@ -46,6 +50,7 @@ function ImageGellary() {
         <div className="h-full w-full">
           <Image
             src="/detail-5.jpg"
+            alt="display"
             width={1000}
             height={1000}
             className="object-cover"
