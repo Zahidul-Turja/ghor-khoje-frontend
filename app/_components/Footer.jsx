@@ -1,8 +1,11 @@
+import { FaGithub, FaLinkedin, FaGlobe } from "react-icons/fa";
+import { CiGlobe } from "react-icons/ci";
+
 function Footer() {
   return (
     <footer className="w-full bg-gray-800 py-4 text-center text-gray-100">
-      <div className="flex items-center justify-between gap-4 px-64 py-12 text-left">
-        <h1 className="text-2xl font-extrabold uppercase text-primary">
+      <div className="flex items-start justify-between gap-4 px-64 py-12 text-left">
+        <h1 className="my-auto text-2xl font-extrabold uppercase text-primary">
           Ghor Khoje
         </h1>
 
@@ -25,15 +28,29 @@ function Footer() {
         <div>
           <h2 className="mb-2 text-lg font-bold">Contact us</h2>
           <ul>
-            <li>Gulshan, Dhaka, Bangladesh</li>
-            <li>+88 123 456 789</li>
-            <li>R0E9H@example.com</li>
+            <li>Aftabnagar, Dhaka, Bangladesh</li>
+            <li>+880 1748052301</li>
+            <li>zahidulturja@gmail.com</li>
+            <div className="mt-2 flex items-center gap-4">
+              <a href="https://github.com/Zahidul-Turja" target="_blank">
+                <FaGithub />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/zahidul-turja/"
+                target="_black"
+              >
+                <FaLinkedin />
+              </a>
+              <a href="https://zahidul-turja.vercel.app/" target="_blank">
+                <FaGlobe />
+              </a>
+            </div>
           </ul>
         </div>
       </div>
 
       <p className="text-center text-sm font-light">
-        Copyright &copy; 2023 <span className="font-bold">Ghor Khoje</span>
+        Copyright &copy; 2025 <span className="font-bold">Ghor Khoje</span>
       </p>
     </footer>
   );
