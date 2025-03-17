@@ -27,6 +27,13 @@ function Property() {
           <AppointmentCard />
         </div>
       </div>
+
+      <div className="border-t-2 border-gray-300 py-8">
+        <h2 className="text-2xl font-semibold">Where You'll Be</h2>
+        <div className="my-4 overflow-hidden rounded-lg">
+          <LocationMap lat={23.789103} lng={90.425049} />
+        </div>
+      </div>
     </div>
   );
 }
@@ -34,6 +41,7 @@ function Property() {
 export default Property;
 
 import Amenities from "@/app/_components/property_details/Amenities";
+import LocationMap from "../property_details/LocationMap";
 
 function PropertyDetails() {
   return (

@@ -42,7 +42,7 @@ const amenitiesList = [
 
 function Amenities() {
   return (
-    <div className="border-b-2 border-gray-300 py-8">
+    <div className="py-8">
       <h3 className="mb-4 text-2xl font-semibold">What This Place Offers</h3>
       <div className="grid grid-cols-2">
         {amenitiesList.map((amenity, index) => (
