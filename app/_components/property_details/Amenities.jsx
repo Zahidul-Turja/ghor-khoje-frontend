@@ -80,7 +80,7 @@ function Amenities() {
         {amenitiesList.map((amenity, index) => (
           <div key={index} className="flex items-center gap-4 py-2 font-medium">
             {amenity.icon}
-            {amenity.title}
+            <p className="">{amenity.title}</p>
           </div>
         ))}
       </div>
