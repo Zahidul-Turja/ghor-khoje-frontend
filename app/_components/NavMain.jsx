@@ -26,13 +26,13 @@ function NavMain() {
 
       <div className="flex items-center gap-4">
         <Link
-          href={"/"}
+          href={"/auth/login"}
           className="rounded-lg border-2 border-primary px-5 py-1 text-lg font-semibold text-primary"
         >
           Login
         </Link>
         <Link
-          href={"/"}
+          href={"/auth/signup"}
           className="rounded-lg border-2 border-primary bg-primary px-5 py-1 text-lg text-white"
         >
           Sign up

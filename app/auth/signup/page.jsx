@@ -1,5 +1,7 @@
+import SignupPage from "@/app/_components/pages/SignupPage";
+
 function Page() {
-  return <div>page</div>;
+  return <SignupPage />;
 }
 
 export default Page;
