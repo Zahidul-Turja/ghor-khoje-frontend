@@ -1,8 +1,9 @@
 "use client";
+
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import useAuthStore from "@/app/_store/authStore"; // Adjust the import path as needed
+import useAuthStore from "@/app/_store/authStore";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
