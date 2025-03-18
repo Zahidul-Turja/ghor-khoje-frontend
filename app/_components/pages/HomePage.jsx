@@ -4,7 +4,7 @@ import Footer from "@/app/_components/Footer";
 import BoundingBox from "../BoundingBox";
 import NavMain from "../NavMain";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <>
       <NavMain />

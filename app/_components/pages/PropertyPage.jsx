@@ -6,7 +6,7 @@ import LocationMap from "@/app/_components/property_details/LocationMap";
 import AppointmentCard from "@/app/_components/property_details/AppointmentCard";
 import Amenities from "@/app/_components/property_details/Amenities";
 
-function Property() {
+function PropertyPage() {
   return (
     <div className="mx-auto my-4 max-w-screen-2xl">
       <div className="my-2 flex items-center justify-between">
@@ -42,4 +42,4 @@ function Property() {
   );
 }
 
-export default Property;
+export default PropertyPage;

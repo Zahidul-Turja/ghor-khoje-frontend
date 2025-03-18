@@ -1,5 +1,5 @@
 import BoundingBox from "@/app/_components/BoundingBox";
-import Property from "@/app/_components/pages/Property";
+import PropertyPage from "@/app/_components/pages/PropertyPage";
 import NavMain from "@/app/_components/NavMain";
 import Footer from "@/app/_components/Footer";
 
@@ -12,7 +12,7 @@ function Page() {
     <>
       <NavMain />
       <BoundingBox classes="px-52">
-        <Property />
+        <PropertyPage />
       </BoundingBox>
       <Footer />
     </>
