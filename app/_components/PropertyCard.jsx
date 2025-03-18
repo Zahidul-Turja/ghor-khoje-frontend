@@ -23,6 +23,7 @@ function PropertyCard({ property }) {
       >
         <Image
           src={image}
+          alt={title}
           width={400}
           height={200}
           className="rounded-lg object-cover"

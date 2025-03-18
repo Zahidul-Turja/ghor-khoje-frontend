@@ -3,6 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import useAuthStore from "@/app/_store/authStore";
+import { FaChevronLeft } from "react-icons/fa";
 
 function SignupPage() {
   const [formData, setFormData] = useState({
@@ -77,8 +78,14 @@ function SignupPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
-      <div className="w-full max-w-md space-y-8 rounded-lg border border-gray-200 px-10 py-12 shadow-md">
+      <div className="relative w-full max-w-md space-y-8 rounded-lg border border-gray-200 px-10 py-12 shadow-md">
         <div>
+          <a
+            href="/"
+            className="absolute left-6 top-6 rounded-full border border-gray-200 p-3"
+          >
+            <FaChevronLeft />
+          </a>
           <h1 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Create your account
           </h1>
