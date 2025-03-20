@@ -28,14 +28,13 @@ function PropertyPage() {
       <div className="my-4 flex gap-8">
         <div className="w-[70%]">
           <PropertyDetails />
+          <Amenities />
         </div>
 
-        <div className="sticky top-8 my-8 h-fit w-[30%]">
+        <div className="sticky top-16 my-8 h-fit w-[30%]">
           <AppointmentCard />
         </div>
       </div>
-
-      <Amenities />
 
       <div className="border-t-2 border-gray-300 py-8">
         <h2 className="text-2xl font-semibold">Where You'll Be</h2>
