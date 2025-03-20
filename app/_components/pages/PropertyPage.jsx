@@ -30,7 +30,7 @@ function PropertyPage() {
           <PropertyDetails />
         </div>
 
-        <div className="my-8 w-[30%]">
+        <div className="sticky top-8 my-8 h-fit w-[30%]">
           <AppointmentCard />
         </div>
       </div>
