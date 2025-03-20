@@ -1,3 +1,5 @@
+"use client";
+
 import { FaRegHeart } from "react-icons/fa";
 
 import ImageGellary from "@/app/_components/property_details/ImageGellary";
@@ -5,8 +7,11 @@ import PropertyDetails from "@/app/_components/property_details/PropertyDetails"
 import LocationMap from "@/app/_components/property_details/LocationMap";
 import AppointmentCard from "@/app/_components/property_details/AppointmentCard";
 import Amenities from "@/app/_components/property_details/Amenities";
+import { usePathname } from "next/navigation";
 
 function PropertyPage() {
+  const path = usePathname();
+
   return (
     <div className="mx-auto my-4 max-w-screen-2xl">
       <div className="my-2 flex items-center justify-between">

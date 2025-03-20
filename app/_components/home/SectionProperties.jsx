@@ -5,8 +5,8 @@ import Properties from "./Properties";
 
 function SectionProperties() {
   return (
-    <section className="mx-auto max-w-screen-2xl px-4 py-10 md:px-6 lg:px-8">
-      <div className="my-8 flex w-full flex-col items-center justify-between gap-4 rounded-full px-4 shadow-lg md:flex-row">
+    <section className="mx-auto max-w-screen-2xl px-0 py-10 md:px-6 lg:px-8">
+      <div className="my-8 flex w-full flex-col items-center justify-between gap-4 rounded-full px-0 shadow-lg md:flex-row">
         <div className="order-2 w-full md:order-1 md:w-[75%] lg:w-[82%]">
           <CategoryFilterNav />
         </div>
