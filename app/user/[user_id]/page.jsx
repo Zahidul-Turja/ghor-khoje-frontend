@@ -1,4 +1,5 @@
 import BoundingBox from "@/app/_components/BoundingBox";
+import Footer from "@/app/_components/Footer";
 import NavMain from "@/app/_components/NavMain";
 import UserHostPage from "@/app/_components/pages/UserHostPage";
 
@@ -13,6 +14,7 @@ function Page() {
       <BoundingBox classes="px-64">
         <UserHostPage />
       </BoundingBox>
+      <Footer />
     </>
   );
 }

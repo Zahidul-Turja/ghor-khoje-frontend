@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${raleway.className} relative min-h-screen min-w-full bg-gray-100 text-gray-800 antialiased`}
+        className={`${raleway.className} relative min-h-screen min-w-full bg-gray-50 text-gray-800 antialiased`}
       >
         {children}
         <Toaster position="top-center" toastOptions={{ duration: 3000 }} />
