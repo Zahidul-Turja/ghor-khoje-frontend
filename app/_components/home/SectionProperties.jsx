@@ -1,9 +1,20 @@
+"use client";
+
+import { useEffect } from "react";
+
 import { MdTune, MdOutlineSort } from "react-icons/md";
 
 import CategoryFilterNav from "@/app/_components/home/CatagoryFilterNav";
 import Properties from "./Properties";
+import usePlacesStore from "@/app/_store/placesStore";
 
 function SectionProperties() {
+  const { places, isLoading, error, getPlaces } = usePlacesStore();
+
+  useEffect(() => {
+    getPlaces();
+  }, []);
+
   return (
     <section className="mx-auto max-w-screen-2xl px-0 py-10 md:px-6 lg:px-8">
       <div className="my-8 flex w-full flex-col items-center justify-between gap-4 rounded-full px-0 shadow-lg md:flex-row">
@@ -24,8 +35,13 @@ function SectionProperties() {
         </div>
       </div>
 
-      <Properties />
-
+      {places && Array.isArray(places) && places.length > 0 ? (
+        <Properties places={places} />
+      ) : (
+        <div className="py-8 text-center">
+          {isLoading ? "Loading properties..." : "No properties found"}
+        </div>
+      )}
       <button className="my-8 w-full rounded-lg border border-slate-400 py-6 text-base font-semibold uppercase tracking-widest text-gray-400">
         Load More
       </button>

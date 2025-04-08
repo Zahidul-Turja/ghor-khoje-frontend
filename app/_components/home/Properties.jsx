@@ -195,12 +195,17 @@ const dummy_properties_data = [
   },
 ];
 
-function Properties() {
+function Properties({ places }) {
+  console.log("Places:", places);
+
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
-      {dummy_properties_data.map((property) => (
+      {places.map((property) => (
         <PropertyCard key={property.id} property={property} />
       ))}
+      {/* {dummy_properties_data.map((property) => (
+        <PropertyCard key={property.id} property={property} />
+      ))} */}
     </div>
   );
 }

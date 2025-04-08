@@ -2,17 +2,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaStar } from "react-icons/fa";
 
+const BASE_ENDPOINT = process.env.NEXT_PUBLIC_BASE_API_ENDPOINT;
+
 function PropertyCard({ property }) {
   const {
     id,
     slug,
-    image,
+    images,
     title,
     address,
     owner,
     description,
-    price,
-    rating,
+    rent_per_month,
     type,
   } = property;
   return (
@@ -22,7 +23,7 @@ function PropertyCard({ property }) {
         className="relative h-52 w-full overflow-hidden rounded-lg"
       >
         <Image
-          src={image}
+          src={BASE_ENDPOINT + images[0].image}
           alt={title}
           width={400}
           height={200}
@@ -33,17 +34,17 @@ function PropertyCard({ property }) {
       <div className="py-2">
         <div className="flex items-center justify-between">
           <Link href={`/${slug}`} className="text-lg font-semibold">
-            {address}
+            {title}
           </Link>
           <p className="flex items-center gap-1 text-sm font-semibold">
             <FaStar />
-            {rating}
+            {owner.rating}
           </p>
         </div>
-        <p className="text-xs font-extralight">Owned by {owner}</p>
+        <p className="text-xs font-extralight">Owned by {owner.full_name}</p>
         <p className="mt-2 text-sm">
-          <span className="font-semibold">${price}</span>{" "}
-          <span className="text-xs font-extralight"> month</span>
+          <span className="font-semibold">&#2547;{rent_per_month}</span>{" "}
+          <span className="text-xs font-extralight"> /month</span>
         </p>
       </div>
     </div>
