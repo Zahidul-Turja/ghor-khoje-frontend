@@ -32,11 +32,11 @@ function PropertyCard({ property }) {
       </Link>
 
       <div className="py-2">
-        <div className="flex items-center justify-between">
-          <Link href={`/${slug}`} className="text-lg font-semibold">
+        <div className="flex items-start justify-between">
+          <Link href={`/${slug}`} className="w-[85%] text-lg font-semibold">
             {title}
           </Link>
-          <p className="flex items-center gap-1 text-sm font-semibold">
+          <p className="flex items-center gap-1 pt-1 text-sm font-semibold">
             <FaStar />
             {owner.rating}
           </p>

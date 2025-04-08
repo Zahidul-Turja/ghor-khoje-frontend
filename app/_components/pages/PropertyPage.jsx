@@ -9,21 +9,28 @@ import AppointmentCard from "@/app/_components/property_details/AppointmentCard"
 import Amenities from "@/app/_components/property_details/Amenities";
 import { usePathname } from "next/navigation";
 
+import usePlacesStore from "@/app/_store/placesStore";
+import { useEffect } from "react";
+
 function PropertyPage() {
-  const path = usePathname();
+  let path = usePathname();
+  path = path.replace("/", "");
+
+  const { getPlace, place } = usePlacesStore();
+
+  useEffect(() => getPlace(path), []);
 
   return (
     <div className="mx-auto my-4 max-w-screen-2xl">
       <div className="my-2 flex items-center justify-between">
-        <h1 className="text-3xl font-bold">
-          ALPHA HOUSE, Design villa w full concierge service
-        </h1>
+        <h1 className="text-3xl font-bold">{place?.title}</h1>
         <div className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1 text-sm font-semibold transition-all duration-300 hover:bg-gray-300">
           <FaRegHeart className="" />
           <span>Save</span>
         </div>
       </div>
-      <ImageGellary />
+
+      {place && <ImageGellary images={place?.images} />}
 
       <div className="my-4 flex gap-8">
         <div className="w-[70%]">
