@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { MdTune, MdOutlineSort } from "react-icons/md";
 
@@ -9,11 +9,12 @@ import Properties from "./Properties";
 import usePlacesStore from "@/app/_store/placesStore";
 
 function SectionProperties() {
+  const [page, setPage] = useState(1);
   const { places, isLoading, error, getPlaces } = usePlacesStore();
 
   useEffect(() => {
-    getPlaces();
-  }, []);
+    getPlaces(16, page);
+  }, [page]);
 
   return (
     <section className="mx-auto max-w-screen-2xl px-0 py-10 md:px-6 lg:px-8">

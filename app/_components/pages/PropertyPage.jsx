@@ -18,7 +18,9 @@ function PropertyPage() {
 
   const { getPlace, place } = usePlacesStore();
 
-  useEffect(() => getPlace(path), []);
+  useEffect(() => {
+    getPlace(path);
+  }, []);
 
   return (
     <div className="mx-auto my-4 max-w-screen-2xl">
@@ -46,7 +48,9 @@ function PropertyPage() {
       <div className="border-t-2 border-gray-300 py-8">
         <h2 className="text-2xl font-semibold">Where You'll Be</h2>
         <div className="my-4 overflow-hidden rounded-lg">
-          <LocationMap lat={23.789103} lng={90.425049} />
+          {place && (
+            <LocationMap lat={place?.latitude} lng={place?.longitude} />
+          )}
         </div>
       </div>
     </div>
