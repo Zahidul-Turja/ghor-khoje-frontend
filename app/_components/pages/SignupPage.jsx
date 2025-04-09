@@ -4,18 +4,20 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import useAuthStore from "@/app/_store/authStore";
 import { FaChevronLeft } from "react-icons/fa";
+import OTPVerificationModal from "@/app/_components/OTPVerificationModal"; // Import the OTP modal
 
 function SignupPage() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    confirmPassword: "",
+    confirm_password: "",
   });
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const signup = useAuthStore((state) => state.signup);
+  const otpModalOpen = useAuthStore((state) => state.otpModalOpen);
   const router = useRouter();
 
   const handleChange = (e) => {
@@ -31,13 +33,13 @@ function SignupPage() {
       !formData.name ||
       !formData.email ||
       !formData.password ||
-      !formData.confirmPassword
+      !formData.confirm_password
     ) {
       setError("Please fill in all fields");
       return false;
     }
 
-    if (formData.password !== formData.confirmPassword) {
+    if (formData.password !== formData.confirm_password) {
       setError("Passwords do not match");
       return false;
     }
@@ -61,13 +63,14 @@ function SignupPage() {
 
       // Using the Zustand signup function
       await signup({
-        name: formData.name,
+        full_name: formData.name,
         email: formData.email,
         password: formData.password,
+        confirm_password: formData.confirm_password,
       });
 
-      // Redirect to dashboard after successful signup
-      router.push("/dashboard");
+      // The OTP modal will show automatically based on otpModalOpen state
+      // No need to redirect yet - this will happen after OTP verification
     } catch (err) {
       // Error handling is already managed by the Zustand store with toast notifications
       setError("Signup failed. Please try again.");
@@ -160,18 +163,18 @@ function SignupPage() {
               />
             </div>
             <div>
-              <label htmlFor="confirmPassword" className="sr-only">
+              <label htmlFor="confirm_password" className="sr-only">
                 Confirm password
               </label>
               <input
-                id="confirmPassword"
-                name="confirmPassword"
+                id="confirm_password"
+                name="confirm_password"
                 type="password"
                 autoComplete="new-password"
                 required
                 className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-primary/90 focus:outline-none focus:ring-primary/90 sm:text-sm"
                 placeholder="Confirm password"
-                value={formData.confirmPassword}
+                value={formData.confirm_password}
                 onChange={handleChange}
               />
             </div>
@@ -205,6 +208,9 @@ function SignupPage() {
           </div>
         </form>
       </div>
+
+      {/* OTP Verification Modal */}
+      <OTPVerificationModal />
     </div>
   );
 }

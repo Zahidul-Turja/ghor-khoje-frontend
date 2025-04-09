@@ -55,6 +55,7 @@ const useAuthStore = create(
 
       // Signup function
       signup: async (userData) => {
+        console.log("signup called", userData);
         try {
           set({ isLoading: true });
           const response = await fetch(
@@ -68,9 +69,10 @@ const useAuthStore = create(
           const data = await response.json();
 
           if (response.ok) {
+            console.log("Signup response:", data);
             set({
               otpModalOpen: true,
-              user: data.data.user,
+              user: data.data,
               isAuthenticated: false,
             });
             toast.success("OTP sent to your email");
@@ -81,6 +83,52 @@ const useAuthStore = create(
         } catch (error) {
           toast.error("Signup failed");
           console.error("Signup error:", error.message);
+          throw error;
+        } finally {
+          set({ isLoading: false });
+        }
+      },
+
+      // Close OTP modal
+      closeOtpModal: () => {
+        set({ otpModalOpen: false });
+      },
+
+      // Verify OTP function
+      verifyOtp: async (email, otp) => {
+        try {
+          console.log("verifyOtp called", email, otp);
+          set({ isLoading: true });
+          const response = await fetch(
+            `${BASE_ENDPOINT}/api/v1/auth/registration-verification/otp/`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email, otp }),
+            },
+          );
+
+          const data = await response.json();
+
+          if (response.ok) {
+            set({
+              accessToken: data.access_token,
+              refreshToken: data.refresh_token,
+              user: data.user,
+              isAuthenticated: true,
+              otpModalOpen: false,
+            });
+            toast.success("Email verified successfully");
+
+            // You might want to redirect here or let the component handle it
+            return true;
+          } else {
+            toast.error(data.message || "OTP verification failed");
+            throw new Error(data.message || "OTP verification failed");
+          }
+        } catch (error) {
+          toast.error("OTP verification failed");
+          console.error("OTP verification error:", error.message);
           throw error;
         } finally {
           set({ isLoading: false });
