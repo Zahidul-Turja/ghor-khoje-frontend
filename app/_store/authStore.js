@@ -12,12 +12,13 @@ const useAuthStore = create(
       user: null,
       isAuthenticated: false,
       isLoading: false,
+      otpModalOpen: false,
 
       // Login function
       login: async (credentials) => {
         try {
           set({ isLoading: true });
-          const response = await fetch(`${BASE_ENDPOINT}/api/login`, {
+          const response = await fetch(`${BASE_ENDPOINT}/api/v1/auth/login/`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(credentials),
@@ -26,19 +27,26 @@ const useAuthStore = create(
 
           if (response.ok) {
             set({
-              accessToken: data.access_token,
-              refreshToken: data.refresh_token,
-              user: data.user,
+              accessToken: data.data.access_token,
+              refreshToken: data.data.refresh_token,
+              user: data.data.user,
               isAuthenticated: true,
             });
+            console.log("Login successful:", data);
+            window.localStorage.setItem("access_token", data.data.access_token);
+            window.localStorage.setItem(
+              "refresh_token",
+              data.data.refresh_token,
+            );
+            window.localStorage.setItem("user", JSON.stringify(data.data.user));
             toast.success("Login successful");
           } else {
-            toast.error(data.message || "Login failed");
+            // toast.error(data.message || "Login failed");
             throw new Error(data.message || "Login failed");
           }
         } catch (error) {
-          toast.error("Login failed");
-          console.error("Login error:", error.message);
+          toast.error("Login failed! Please try again.");
+
           throw error;
         } finally {
           set({ isLoading: false });
@@ -49,21 +57,23 @@ const useAuthStore = create(
       signup: async (userData) => {
         try {
           set({ isLoading: true });
-          const response = await fetch(`${BASE_ENDPOINT}/api/signup`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(userData),
-          });
+          const response = await fetch(
+            `${BASE_ENDPOINT}/api/v1/auth/registration/`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(userData),
+            },
+          );
           const data = await response.json();
 
           if (response.ok) {
             set({
-              accessToken: data.access_token,
-              refreshToken: data.refresh_token,
-              user: data.user,
-              isAuthenticated: true,
+              otpModalOpen: true,
+              user: data.data.user,
+              isAuthenticated: false,
             });
-            toast.success("Signup successful");
+            toast.success("OTP sent to your email");
           } else {
             toast.error(data.message || "Signup failed");
             throw new Error(data.message || "Signup failed");
@@ -162,14 +172,58 @@ const useAuthStore = create(
       },
 
       // Logout function
-      logout: () => {
-        set({
-          accessToken: null,
-          refreshToken: null,
-          user: null,
-          isAuthenticated: false,
-        });
-        toast.success("Logged out successfully");
+      logout: async () => {
+        try {
+          set({ isLoading: true });
+
+          // Await the fetch call
+          const response = await fetch(`${BASE_ENDPOINT}/api/v1/auth/logout/`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${get().accessToken}`,
+            },
+            body: JSON.stringify({ refresh_token: get().refreshToken }),
+          });
+
+          // Parse response to get potential error messages
+          const data = await response.json().catch(() => ({}));
+
+          if (!response.ok) {
+            console.error(
+              "Logout failed:",
+              data.message || response.statusText,
+            );
+          }
+
+          // Clear state regardless of server response
+          set({
+            accessToken: null,
+            refreshToken: null,
+            user: null,
+            isAuthenticated: false,
+          });
+          // Clear local storage
+          window.localStorage.removeItem("access_token");
+          window.localStorage.removeItem("refresh_token");
+          window.localStorage.removeItem("user");
+
+          toast.success("Logged out successfully");
+        } catch (error) {
+          console.error("Logout error:", error.message);
+
+          // Even if there's a network error, clear local state
+          set({
+            accessToken: null,
+            refreshToken: null,
+            user: null,
+            isAuthenticated: false,
+          });
+
+          toast.success("Logged out locally");
+        } finally {
+          set({ isLoading: false });
+        }
       },
 
       // Check if token is expired

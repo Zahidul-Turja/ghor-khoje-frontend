@@ -29,13 +29,10 @@ function LoginPage() {
       setIsLoading(true);
       setError("");
 
-      // Using the Zustand login function
       await login({ email, password });
 
-      // Redirect to dashboard after successful login
-      router.push("/dashboard");
+      router.push("/");
     } catch (err) {
-      // Error handling is already managed by the Zustand store with toast notifications
       setError("Invalid email or password");
     } finally {
       setIsLoading(false);
