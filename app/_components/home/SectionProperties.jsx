@@ -10,10 +10,13 @@ import usePlacesStore from "@/app/_store/placesStore";
 
 function SectionProperties() {
   const [page, setPage] = useState(1);
-  const { places, isLoading, error, getPlaces } = usePlacesStore();
+  const [pageSize, setPageSize] = useState(1);
+  const [numberOfItems, setNumberOfItems] = useState(pageSize);
+  const { places, isLoading, error, getPlaces, nextPage, previousPage } =
+    usePlacesStore();
 
   useEffect(() => {
-    getPlaces(16, page);
+    getPlaces(pageSize, page);
   }, [page]);
 
   return (
@@ -43,9 +46,23 @@ function SectionProperties() {
           {isLoading ? "Loading properties..." : "No properties found"}
         </div>
       )}
-      <button className="my-8 w-full rounded-lg border border-slate-400 py-6 text-base font-semibold uppercase tracking-widest text-gray-400">
-        Load More
-      </button>
+
+      {places && nextPage && (
+        <button
+          className="my-8 w-full rounded-lg border border-slate-400 py-6 text-base font-semibold uppercase tracking-widest text-gray-400"
+          onClick={() => {
+            if (nextPage) {
+              // setPage(page + 1);
+
+              setNumberOfItems((current) => current + pageSize);
+              // setPage((current) => current + 1);
+              getPlaces(numberOfItems, page);
+            }
+          }}
+        >
+          Load More
+        </button>
+      )}
     </section>
   );
 }

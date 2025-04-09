@@ -33,7 +33,7 @@ function PropertyCard({ property }) {
 
       <div className="py-2">
         <div className="flex items-start justify-between">
-          <Link href={`/${slug}`} className="w-[85%] text-lg font-semibold">
+          <Link href={`/${slug}`} className="w-[85%] text-sm font-semibold">
             {title}
           </Link>
           <p className="flex items-center gap-1 pt-1 text-sm font-semibold">
@@ -41,7 +41,10 @@ function PropertyCard({ property }) {
             {owner.rating}
           </p>
         </div>
-        <p className="text-xs font-extralight">Owned by {owner.full_name}</p>
+        <p className="text-xs font-light">
+          <span className="font-extralight text-gray-600">Owned by</span>{" "}
+          {owner.full_name}
+        </p>
         <p className="mt-2 text-sm">
           <span className="font-semibold">&#2547;{rent_per_month}</span>{" "}
           <span className="text-xs font-extralight"> /month</span>

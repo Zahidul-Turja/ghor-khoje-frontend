@@ -6,8 +6,10 @@ function ImageGallery({ images }) {
   // Return early if there are no images
   if (!images || images.length === 0) {
     return (
-      <div className="mx-auto flex grid h-64 grid-cols-1 items-center justify-center gap-3 overflow-hidden rounded-2xl bg-gray-100">
-        <p className="text-gray-500">No images available</p>
+      <div className="mx-auto grid h-64 grid-cols-1 gap-3 overflow-hidden rounded-2xl bg-gray-100">
+        <div className="flex items-center justify-center">
+          <p className="text-gray-500">No images available</p>
+        </div>
       </div>
     );
   }

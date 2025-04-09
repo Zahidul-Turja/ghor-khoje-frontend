@@ -1,3 +1,4 @@
+import next from "next";
 import { create } from "zustand";
 
 const BASE_ENDPOINT = process.env.NEXT_PUBLIC_BASE_API_ENDPOINT;
@@ -7,6 +8,9 @@ const usePlacesStore = create((set, get) => ({
   place: null,
   isLoading: false,
   error: null,
+  nextPage: null,
+  previousPage: null,
+  totalPages: null,
 
   getPlaces: async (page_size = 16, page = 1) => {
     try {
@@ -17,7 +21,11 @@ const usePlacesStore = create((set, get) => ({
       const data = await response.json();
 
       if (response.ok) {
-        set({ places: data.data.results });
+        set({
+          places: data.data.results,
+          nextPage: data.data.next,
+          previousPage: data.data.previous,
+        });
       } else {
         set({ error: data.message });
         console.error("Failed to fetch places:", data.message);
