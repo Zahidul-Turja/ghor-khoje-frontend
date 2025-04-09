@@ -7,6 +7,7 @@ import PropertyDetails from "@/app/_components/property_details/PropertyDetails"
 import LocationMap from "@/app/_components/property_details/LocationMap";
 import AppointmentCard from "@/app/_components/property_details/AppointmentCard";
 import Amenities from "@/app/_components/property_details/Amenities";
+import Reviews from "@/app/_components/property_details/Reviews";
 import { usePathname } from "next/navigation";
 
 import usePlacesStore from "@/app/_store/placesStore";
@@ -36,7 +37,10 @@ function PropertyPage() {
 
       <div className="my-4 flex gap-8">
         <div className="w-[70%]">
-          <PropertyDetails />
+          <PropertyDetails
+            owner={place?.owner}
+            description={place?.description}
+          />
           <Amenities />
         </div>
 
@@ -51,6 +55,13 @@ function PropertyPage() {
           {place && (
             <LocationMap lat={place?.latitude} lng={place?.longitude} />
           )}
+        </div>
+      </div>
+
+      <div className="border-t-2 border-gray-300 py-8" id="reviews">
+        <h2 className="text-2xl font-semibold">Reviews</h2>
+        <div className="my-4 overflow-hidden rounded-lg">
+          {place && <Reviews />}
         </div>
       </div>
     </div>

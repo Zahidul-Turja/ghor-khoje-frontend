@@ -5,6 +5,9 @@ import { LuLogOut } from "react-icons/lu";
 import { CgProfile } from "react-icons/cg";
 
 import useAuthStore from "@/app/_store/authStore";
+import Image from "next/image";
+
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_ENDPOINT;
 
 function NavMain({ classes }) {
   const { isAuthenticated, user, logout } = useAuthStore();
@@ -50,12 +53,16 @@ function NavMain({ classes }) {
       ) : (
         <div className="flex items-center gap-8">
           <button className="flex items-center gap-2">
-            {user?.image ? (
-              <img
-                src={user.image}
-                alt={user.full_name}
-                className="h-8 w-8 rounded-full"
-              />
+            {user?.profile_image ? (
+              <div className="relative h-8 w-8 overflow-hidden rounded-full">
+                <Image
+                  src={`${BASE_URL}${user?.profile_image}`}
+                  alt="Profile"
+                  width={32}
+                  height={32}
+                  className="h-8 w-8 rounded-full object-cover"
+                />
+              </div>
             ) : (
               <CgProfile className="h-8 w-8 rounded-full text-gray-600" />
             )}

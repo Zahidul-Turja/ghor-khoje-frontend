@@ -2,8 +2,11 @@ import { BsDot } from "react-icons/bs";
 import { FaStar } from "react-icons/fa";
 
 import Image from "next/image";
+import { CgProfile } from "react-icons/cg";
 
-function PropertyDetails() {
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_ENDPOINT;
+
+function PropertyDetails({ owner, description }) {
   return (
     <div>
       <div className="mt-6">
@@ -20,63 +23,53 @@ function PropertyDetails() {
           <span>2 Balconies</span>
         </p>
       </div>
-
-      <div className="flex items-center justify-between border-b-2 border-gray-300 py-4">
-        <div className="flex items-center gap-4">
-          <div className="relative h-16 w-16 overflow-hidden rounded-full">
-            <Image
-              src={"/profile-1.jpg"}
-              alt="Host"
-              width={1000}
-              height={1000}
-              className="object-cover"
-            />
-          </div>
-          <div>
-            <h3 className="font-bold">Hosted by John Doe</h3>
-            <div className="flex items-center text-sm">
-              <p>Engineer</p> <BsDot />
-              <p>3 years of experience</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-4">
-          <div className="flex flex-col items-center">
-            <div className="text-lg font-bold">4.83</div>
-            <div className="flex text-xs">
-              <FaStar />
-              <FaStar />
-              <FaStar />
-              <FaStar />
-              <FaStar />
+      {owner && (
+        <div className="flex items-center justify-between border-b-2 border-gray-300 py-4">
+          <div className="flex items-center gap-4">
+            {owner?.profile_image ? (
+              <div className="relative h-16 w-16 overflow-hidden rounded-full">
+                <Image
+                  src={BASE_URL + owner?.profile_image}
+                  alt="Host"
+                  width={1000}
+                  height={1000}
+                  className="object-cover"
+                />
+              </div>
+            ) : (
+              <CgProfile className="h-12 w-12 rounded-full text-gray-600" />
+            )}
+            <div>
+              <h3 className="font-bold">Hosted by {owner?.full_name}</h3>
+              <div className="flex items-center text-sm">
+                <p>{owner?.profession}</p> <BsDot />
+                <p>3 years of experience</p>
+              </div>
             </div>
           </div>
 
-          <button className="border-b-2 border-gray-600 font-bold">
-            Reviews
-          </button>
+          <div className="flex items-center gap-4">
+            <div className="flex flex-col items-center">
+              <div className="text-lg font-bold">{owner?.rating}</div>
+              <div className="flex text-xs">
+                <FaStar />
+                <FaStar />
+                <FaStar />
+                <FaStar />
+                <FaStar />
+              </div>
+            </div>
+
+            <a className="border-b-2 border-gray-600 font-bold" href="#reviews">
+              Reviews
+            </a>
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="py-8">
         <h2 className="mb-4 text-2xl font-semibold">Description</h2>
-        <p className="my-2 text-sm">
-          This is a spacious and modern villa located in the heart of the city.
-          It features a large living room with a beautiful view of the city, a
-          kitchen with modern appliances, a spacious bedroom with a private
-          bathroom, and a large balcony with a stunning view of the city. The
-          villa is equipped with all the amenities you need for a comfortable
-          stay.
-        </p>
-        <p className="my-2 text-sm">
-          This is a spacious and modern villa located in the heart of the city.
-          It features a large living room with a beautiful view of the city, a
-          kitchen with modern appliances, a spacious bedroom with a private
-          bathroom, and a large balcony with a stunning view of the city. The
-          villa is equipped with all the amenities you need for a comfortable
-          stay.
-        </p>
+        <p className="my-2 text-sm">{description}</p>
         <button className="border-b-2 border-gray-600 text-sm font-semibold">
           Read More
         </button>
