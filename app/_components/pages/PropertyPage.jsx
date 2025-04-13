@@ -71,9 +71,11 @@ function PropertyPage() {
 
       <div className="border-t-2 border-gray-300 py-8" id="reviews">
         <h2 className="text-2xl font-semibold">Reviews</h2>
-        <div className="my-4 overflow-hidden rounded-lg">
-          {place && <Reviews />}
-        </div>
+        {place && (
+          <div className="my-4 overflow-hidden rounded-lg">
+            {place && <Reviews reviews={place?.owner?.reviews} />}
+          </div>
+        )}
       </div>
     </div>
   );

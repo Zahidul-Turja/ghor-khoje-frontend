@@ -1,37 +1,47 @@
 import Image from "next/image";
+import { CgProfile } from "react-icons/cg";
 import { FaStar } from "react-icons/fa";
 
-function Reviews() {
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_ENDPOINT;
+
+function Reviews({ reviews }) {
   return (
     <div className="grid grid-cols-2 gap-8 border-t border-gray-200">
-      <ReviewCard />
-      <ReviewCard />
-      <ReviewCard />
-      <ReviewCard />
-      <ReviewCard />
-      <ReviewCard />
+      {reviews.map((review) => (
+        <ReviewCard key={review.id} {...review} />
+      ))}
     </div>
   );
 }
 
 export default Reviews;
 
-function ReviewCard() {
+function ReviewCard({
+  reviewer,
+  review_date,
+  rating,
+  review_text,
+  reviewed_days_ago,
+}) {
   return (
     <div className="">
       <div className="flex items-center gap-4 p-4">
         <div className="relative h-10 w-10 overflow-hidden rounded-full">
-          <Image
-            src={"/profile-1.jpg"}
-            alt="Host Profile"
-            width={60}
-            height={60}
-            className="object-cover"
-          />
+          {reviewer?.profile_image ? (
+            <Image
+              src={BASE_URL + reviewer.profile_image}
+              alt="Host Profile"
+              width={60}
+              height={60}
+              className="object-cover"
+            />
+          ) : (
+            <CgProfile className="h-10 w-10 rounded-full text-gray-600" />
+          )}
         </div>
         <div>
-          <h3 className="font-bold">John Doe</h3>
-          <p className="text-xs">5 days ago</p>
+          <h3 className="font-bold">{reviewer.full_name}</h3>
+          <p className="text-xs">{reviewed_days_ago} days ago</p>
         </div>
       </div>
       <div className="flex items-center gap-2 px-4">
@@ -42,15 +52,9 @@ function ReviewCard() {
           <FaStar />
           <FaStar />
         </div>
-        <span className="text-sm font-semibold text-gray-700">4.83</span>
+        <span className="text-sm font-semibold text-gray-700">{rating}</span>
       </div>
-      <p className="p-4 text-xs font-semibold">
-        t is a long established fact that a reader will be distracted by the
-        readable content of a page when looking at its layout. The point of
-        using Lorem Ipsum is that it has a more-or-less normal distribution of
-        letters, as opposed to using 'Content here, content here', making it
-        look like readable English.{" "}
-      </p>
+      <p className="p-4 text-xs font-semibold">{review_text}</p>
     </div>
   );
 }
