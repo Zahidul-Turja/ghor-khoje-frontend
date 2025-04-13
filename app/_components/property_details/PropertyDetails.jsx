@@ -6,7 +6,14 @@ import { CgProfile } from "react-icons/cg";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_ENDPOINT;
 
-function PropertyDetails({ owner, description }) {
+function PropertyDetails({
+  owner,
+  description,
+  area_in_sqft,
+  num_of_bedrooms,
+  num_of_bathrooms,
+  num_of_balconies,
+}) {
   return (
     <div>
       <div className="mt-6">
@@ -14,13 +21,13 @@ function PropertyDetails({ owner, description }) {
           Entire villa in Rajshahi, Bangladesh
         </h2>
         <p className="flex items-center">
-          <span>1400 Sqft</span>
+          <span>{area_in_sqft} Sqft</span>
           <BsDot />
-          <span>5 Beds</span>
+          <span>{num_of_bedrooms} Beds</span>
           <BsDot />
-          <span>5 Baths</span>
+          <span>{num_of_bathrooms} Baths</span>
           <BsDot />
-          <span>2 Balconies</span>
+          <span>{num_of_balconies} Balconies</span>
         </p>
       </div>
       {owner && (

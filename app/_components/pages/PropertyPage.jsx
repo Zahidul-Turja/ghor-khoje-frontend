@@ -40,12 +40,23 @@ function PropertyPage() {
           <PropertyDetails
             owner={place?.owner}
             description={place?.description}
+            num_of_bedrooms={place?.num_of_bedrooms}
+            num_of_bathrooms={place?.num_of_bathrooms}
+            num_of_balconies={place?.num_of_balconies}
+            area_in_sqft={place?.area_in_sqft}
           />
           <Amenities />
         </div>
 
         <div className="sticky top-16 my-8 h-fit w-[30%]">
-          <AppointmentCard />
+          <AppointmentCard
+            available_from={place?.available_from}
+            capacity={place?.capacity}
+            rent_per_month={place?.rent_per_month}
+            extra_bills={place?.extra_bills}
+            num_prepayment_months={place?.num_prepayment_months}
+            total_per_month={place?.total_per_month}
+          />
         </div>
       </div>
 
