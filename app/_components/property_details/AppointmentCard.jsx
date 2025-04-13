@@ -1,3 +1,6 @@
+import { Calendar, Users, DollarSign, Clock } from "lucide-react";
+import { useState } from "react";
+
 function AppointmentCard({
   capacity,
   rent_per_month,
@@ -6,30 +9,72 @@ function AppointmentCard({
   available_from,
   num_prepayment_months,
 }) {
-  return (
-    <div className="w-full rounded-xl border-2 border-gray-300 p-4 shadow-md">
-      <h3 className="text-center text-xl font-semibold">Make an Appointment</h3>
+  const [isHovered, setIsHovered] = useState(false);
 
-      <div className="my-6 rounded-lg border-2 border-gray-300 py-2 text-sm">
-        <p className="border-b-2 border-gray-300 px-4 pb-2">
-          Available from {available_from}
-        </p>
-        <p className="border-b-2 border-gray-300 px-4 py-2">
-          {capacity} guest capacity
-        </p>
-        <p className="px-4 pt-2 text-base font-bold">
-          {rent_per_month} BDT <span className="font-light">/ month(rent)</span>
-        </p>
-        <p className="px-4 pt-2 text-base font-bold">
-          {extra_bills} BDT{" "}
-          <span className="font-light">/ month(extra bills)</span>
-        </p>
-        <p className="px-4 pt-2 text-base font-bold">
-          {total_per_month} BDT <span className="font-light">/ month</span>
-        </p>
+  return (
+    <div className="w-full rounded-xl border-2 border-gray-300 p-4 shadow-md transition-shadow duration-300 hover:shadow-lg">
+      <h3 className="mb-1 text-center text-xl font-semibold">
+        Make an Appointment
+      </h3>
+      <p className="mb-4 text-center text-sm text-gray-500">
+        Book your stay today
+      </p>
+
+      <div className="my-6 divide-y divide-gray-300 rounded-lg border-2 border-gray-300 text-sm">
+        <div className="flex items-center gap-3 px-4 py-3">
+          <Calendar size={18} className="flex-shrink-0 text-gray-500" />
+          <p>
+            Available from <span className="font-medium">{available_from}</span>
+          </p>
+        </div>
+
+        <div className="flex items-center gap-3 px-4 py-3">
+          <Users size={18} className="flex-shrink-0 text-gray-500" />
+          <p>
+            <span className="font-medium">{capacity}</span> guest capacity
+          </p>
+        </div>
+
+        <div className="px-4 py-3">
+          <div className="mb-2 flex items-center gap-3">
+            <DollarSign size={18} className="flex-shrink-0 text-gray-500" />
+            <p className="font-medium">Pricing details</p>
+          </div>
+
+          <div className="space-y-2 pl-8">
+            <div className="flex justify-between">
+              <span className="text-gray-600">Rent</span>
+              <span className="font-medium">{rent_per_month} BDT</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-gray-600">Extra bills</span>
+              <span className="font-medium">{extra_bills} BDT</span>
+            </div>
+            <div className="flex justify-between border-t border-gray-200 pt-1">
+              <span className="font-medium">Total per month</span>
+              <span className="text-base font-bold">{total_per_month} BDT</span>
+            </div>
+          </div>
+        </div>
+
+        {num_prepayment_months > 0 && (
+          <div className="flex items-center gap-3 bg-gray-50 px-4 py-3">
+            <Clock size={18} className="flex-shrink-0 text-gray-500" />
+            <p>
+              <span className="font-medium">
+                {num_prepayment_months} months
+              </span>{" "}
+              prepayment required
+            </p>
+          </div>
+        )}
       </div>
 
-      <button className="w-full rounded-lg bg-primary py-3 text-white">
+      <button
+        className={`w-full rounded-lg py-3 text-white transition-colors duration-300 ${isHovered ? "bg-blue-700" : "bg-primary"}`}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
         Book Now
       </button>
     </div>

@@ -36,7 +36,7 @@ function PropertyPage() {
       {place && <ImageGellary images={place?.images} />}
 
       <div className="my-4 flex gap-8">
-        <div className="w-[70%]">
+        <div className="w-[65%]">
           <PropertyDetails
             owner={place?.owner}
             description={place?.description}
@@ -48,7 +48,7 @@ function PropertyPage() {
           <Amenities />
         </div>
 
-        <div className="sticky top-16 my-8 h-fit w-[30%]">
+        <div className="sticky top-16 my-8 h-fit w-[35%]">
           <AppointmentCard
             available_from={place?.available_from}
             capacity={place?.capacity}
