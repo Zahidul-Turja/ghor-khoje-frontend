@@ -100,7 +100,10 @@ function NavMain({ classes }) {
               </button>
             ))}
 
-          <Link href={"/user/profile"} className="flex items-center gap-2">
+          <Link
+            href={"/user/profile/?section=profile"}
+            className="flex items-center gap-2"
+          >
             {user?.profile_image ? (
               <div className="relative h-8 w-8 overflow-hidden rounded-full">
                 <Image

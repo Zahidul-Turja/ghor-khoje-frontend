@@ -19,14 +19,19 @@ import {
   FaQuestionCircle,
   FaPhoneAlt,
 } from "react-icons/fa";
+import { RiNotification3Fill } from "react-icons/ri";
+
+const CURRENT_URL = "/user/profile";
 
 function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
+  const [activeSection, setActiveSection] = useState("profile");
 
   // Navigation items with their respective icons
   const navItems = [
-    { name: "Dashboard", icon: <FaTachometerAlt /> },
     { name: "Profile", icon: <FaUser /> },
+    { name: "Dashboard", icon: <FaTachometerAlt /> },
+    { name: "Notifications", icon: <RiNotification3Fill /> },
     { name: "Settings", icon: <FaCog /> },
     { name: "Messages", icon: <FaEnvelope /> },
     { name: "Analytics", icon: <FaChartBar /> },
@@ -43,7 +48,7 @@ function Sidebar() {
 
   return (
     <div
-      className={`flex h-screen flex-col border-r border-gray-200 bg-white transition-all duration-300 ${collapsed ? "w-16" : "w-64"}`}
+      className={`sticky top-0 flex h-screen flex-col border-r border-gray-200 bg-white transition-all duration-300 ${collapsed ? "w-16" : "w-64"}`}
     >
       <div className="flex items-center justify-between border-b border-gray-200 p-4">
         {!collapsed && <h2 className="text-lg font-bold">Navigation</h2>}
@@ -60,7 +65,7 @@ function Sidebar() {
           {navItems.map((item, index) => (
             <li key={index}>
               <a
-                href={`#${item.name.toLowerCase()}`}
+                href={`${CURRENT_URL}/?section=${item.name.toLowerCase()}`}
                 className={`flex items-center px-4 py-3 hover:bg-gray-100 ${collapsed ? "justify-center" : ""}`}
               >
                 <span

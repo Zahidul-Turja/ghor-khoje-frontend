@@ -1,6 +1,7 @@
 import NavMain from "@/app/_components/NavMain";
 import Layout from "@/app/_components/self_profile/Layout";
 import BoundingBox from "../BoundingBox";
+import ProfileComponent from "@/app/_components/self_profile/ProfileComponent";
 
 function SelfProfile() {
   return (
@@ -8,7 +9,7 @@ function SelfProfile() {
       <NavMain />
       <BoundingBox>
         <Layout>
-          <h1>Self Profile</h1>
+          <ProfileComponent />
         </Layout>
       </BoundingBox>
     </>
