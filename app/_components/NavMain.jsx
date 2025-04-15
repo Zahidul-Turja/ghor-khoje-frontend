@@ -1,16 +1,45 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { LuLogOut } from "react-icons/lu";
 import { CgProfile } from "react-icons/cg";
+import toast from "react-hot-toast";
 
 import useAuthStore from "@/app/_store/authStore";
-import Image from "next/image";
+import { applyForHost, hasAppliedForHost } from "@/app/_lib/apiCalls";
+import { useEffect, useState } from "react";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_ENDPOINT;
 
 function NavMain({ classes }) {
+  const [hasApplied, setHasApplied] = useState(false);
   const { isAuthenticated, user, logout } = useAuthStore();
+
+  const handleHostSubmission = async () => {
+    try {
+      await applyForHost();
+      setHasApplied(true);
+      toast.success("Application submitted successfully");
+    } catch (error) {
+      toast.error("Failed to submit application");
+    }
+  };
+
+  useEffect(() => {
+    const checkHostApplicationStatus = async () => {
+      try {
+        const response = await hasAppliedForHost();
+        setHasApplied(response.has_applied);
+      } catch (error) {
+        console.error("Error checking host application status:", error);
+      }
+    };
+
+    if (isAuthenticated) {
+      checkHostApplicationStatus();
+    }
+  }, [hasApplied]);
 
   return (
     <nav className={`flex items-center justify-between px-24 py-4 ${classes}`}>
@@ -52,7 +81,15 @@ function NavMain({ classes }) {
         </div>
       ) : (
         <div className="flex items-center gap-8">
-          <button className="flex items-center gap-2">
+          {user.user_type != "LANDLORD" && !hasApplied && (
+            <button
+              className="cursor-pointer border-b-2 border-gray-600 text-xs font-semibold"
+              onClick={handleHostSubmission}
+            >
+              Become a Host
+            </button>
+          )}
+          <Link href={"/profile"} className="flex items-center gap-2">
             {user?.profile_image ? (
               <div className="relative h-8 w-8 overflow-hidden rounded-full">
                 <Image
@@ -69,7 +106,7 @@ function NavMain({ classes }) {
             <span className="text-sm font-light text-gray-800">
               {user?.full_name}
             </span>
-          </button>
+          </Link>
           <button className="text-xl text-primary" onClick={logout}>
             <LuLogOut />
           </button>
