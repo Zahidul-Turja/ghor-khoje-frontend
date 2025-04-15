@@ -41,16 +41,17 @@ function ReviewCard({
         </div>
         <div>
           <h3 className="font-bold">{reviewer.full_name}</h3>
-          <p className="text-xs">{reviewed_days_ago} days ago</p>
+          <p className="text-xs">{reviewed_days_ago} </p>
         </div>
       </div>
       <div className="flex items-center gap-2 px-4">
         <div className="flex text-xs">
-          <FaStar />
-          <FaStar />
-          <FaStar />
-          <FaStar />
-          <FaStar />
+          {Array.from({ length: rating }).map((_, index) => (
+            <FaStar key={index} />
+          ))}
+          {Array.from({ length: 5 - rating }).map((_, index) => (
+            <FaStar key={index + rating} className="text-gray-300" />
+          ))}
         </div>
         <span className="text-sm font-semibold text-gray-700">{rating}</span>
       </div>

@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { FaRegHeart } from "react-icons/fa";
 
 import ImageGellary from "@/app/_components/property_details/ImageGellary";
@@ -8,10 +10,9 @@ import LocationMap from "@/app/_components/property_details/LocationMap";
 import AppointmentCard from "@/app/_components/property_details/AppointmentCard";
 import Amenities from "@/app/_components/property_details/Amenities";
 import Reviews from "@/app/_components/property_details/Reviews";
-import { usePathname } from "next/navigation";
+import ChatIcon from "@/app/_components/ChatIcon";
 
 import usePlacesStore from "@/app/_store/placesStore";
-import { useEffect } from "react";
 
 function PropertyPage() {
   let path = usePathname();
@@ -77,6 +78,8 @@ function PropertyPage() {
           </div>
         )}
       </div>
+
+      <ChatIcon />
     </div>
   );
 }
