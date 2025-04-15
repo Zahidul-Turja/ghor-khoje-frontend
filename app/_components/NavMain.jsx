@@ -9,12 +9,14 @@ import toast from "react-hot-toast";
 import useAuthStore from "@/app/_store/authStore";
 import { applyForHost, hasAppliedForHost } from "@/app/_lib/apiCalls";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_ENDPOINT;
 
 function NavMain({ classes }) {
   const [hasApplied, setHasApplied] = useState(false);
   const { isAuthenticated, user, logout } = useAuthStore();
+  const router = useRouter();
 
   const handleHostSubmission = async () => {
     try {
@@ -81,15 +83,24 @@ function NavMain({ classes }) {
         </div>
       ) : (
         <div className="flex items-center gap-8">
-          {user.user_type != "LANDLORD" && !hasApplied && (
-            <button
-              className="cursor-pointer border-b-2 border-gray-600 text-xs font-semibold"
-              onClick={handleHostSubmission}
-            >
-              Become a Host
-            </button>
-          )}
-          <Link href={"/profile"} className="flex items-center gap-2">
+          {user.user_type !== "LANDLORD" &&
+            (hasApplied ? (
+              <button
+                className="rounded-full bg-gray-600 px-2 py-1 text-xs font-normal text-white"
+                onClick={handleHostSubmission}
+              >
+                Applied
+              </button>
+            ) : (
+              <button
+                className="cursor-pointer border-b-2 border-gray-600 text-xs font-semibold"
+                onClick={handleHostSubmission}
+              >
+                Become a Host
+              </button>
+            ))}
+
+          <Link href={"/user/profile"} className="flex items-center gap-2">
             {user?.profile_image ? (
               <div className="relative h-8 w-8 overflow-hidden rounded-full">
                 <Image
@@ -107,7 +118,13 @@ function NavMain({ classes }) {
               {user?.full_name}
             </span>
           </Link>
-          <button className="text-xl text-primary" onClick={logout}>
+          <button
+            className="text-xl text-primary"
+            onClick={() => {
+              logout();
+              router.push("/");
+            }}
+          >
             <LuLogOut />
           </button>
         </div>
