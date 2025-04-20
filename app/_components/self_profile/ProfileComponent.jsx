@@ -17,6 +17,7 @@ import {
   FaEnvelope,
   FaPhone,
   FaTransgender,
+  FaTelegramPlane,
 } from "react-icons/fa";
 
 const NEXT_PUBLIC_BASE_API_ENDPOINT = process.env.NEXT_PUBLIC_BASE_API_ENDPOINT;
@@ -242,8 +243,8 @@ function SocialSection({ social_links }) {
             rel="noopener noreferrer"
             className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 transition duration-300 hover:border-blue-300 hover:bg-blue-50"
           >
-            <div className="rounded-full bg-blue-600 p-3 text-white">
-              <FaFacebook />
+            <div className="rounded-full bg-white p-1 text-blue-600">
+              <FaFacebook className="text-3xl" />
             </div>
             <span className="font-medium">Facebook</span>
           </a>
@@ -256,8 +257,8 @@ function SocialSection({ social_links }) {
             rel="noopener noreferrer"
             className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 transition duration-300 hover:border-blue-300 hover:bg-blue-50"
           >
-            <div className="rounded-full bg-blue-400 p-3 text-white">
-              <FaTwitter />
+            <div className="rounded-full bg-blue-400 p-2 text-white">
+              <FaTwitter className="text-lg" />
             </div>
             <span className="font-medium">Twitter</span>
           </a>
@@ -302,6 +303,19 @@ function SocialSection({ social_links }) {
               <FaYoutube />
             </div>
             <span className="font-medium">YouTube</span>
+          </a>
+        )}
+        {social_links.telegram && (
+          <a
+            href={social_links.telegram}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 transition duration-300 hover:border-blue-300 hover:bg-blue-50"
+          >
+            <div className="rounded-full bg-[#0088CC] p-3 text-white">
+              <FaTelegramPlane />
+            </div>
+            <span className="font-medium">Telegram</span>
           </a>
         )}
       </div>
