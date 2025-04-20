@@ -14,6 +14,27 @@ const useAuthStore = create(
       isLoading: false,
       otpModalOpen: false,
 
+      userInfo: async () => {
+        try {
+          const response = await fetch(
+            `${BASE_ENDPOINT}/api/v1/user/profile/`,
+            {
+              headers: {
+                Authorization: `Bearer ${get().accessToken}`,
+              },
+            },
+          );
+          const data = await response.json();
+          if (response.ok) {
+            set({ user: data.data });
+          } else {
+            throw new Error(data.message || "Failed to fetch user info");
+          }
+        } catch (error) {
+          console.error("User info error:", error.message);
+        }
+      },
+
       // Login function
       login: async (credentials) => {
         try {

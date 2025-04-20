@@ -16,7 +16,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_ENDPOINT;
 function NavMain({ classes }) {
   const [hasApplied, setHasApplied] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const { isAuthenticated, user, logout } = useAuthStore();
+  const { isAuthenticated, user, userInfo, logout } = useAuthStore();
   const router = useRouter();
 
   const handleHostSubmission = async () => {
@@ -42,6 +42,7 @@ function NavMain({ classes }) {
 
     if (isAuthenticated) {
       checkHostApplicationStatus();
+      userInfo();
     }
   }, [hasApplied]);
 
@@ -97,6 +98,7 @@ function NavMain({ classes }) {
                 <button
                   className="cursor-pointer border-b-2 border-gray-600 text-xs font-semibold"
                   onClick={() => {
+                    console.log("user type", user.user_type);
                     setShowModal(true);
                   }}
                 >
