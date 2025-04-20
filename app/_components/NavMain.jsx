@@ -15,6 +15,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_ENDPOINT;
 
 function NavMain({ classes }) {
   const [hasApplied, setHasApplied] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const { isAuthenticated, user, logout } = useAuthStore();
   const router = useRouter();
 
@@ -22,6 +23,7 @@ function NavMain({ classes }) {
     try {
       await applyForHost();
       setHasApplied(true);
+      setShowModal(false);
       toast.success("Application submitted successfully");
     } catch (error) {
       toast.error("Failed to submit application");
@@ -44,96 +46,139 @@ function NavMain({ classes }) {
   }, [hasApplied]);
 
   return (
-    <nav className={`flex items-center justify-between px-24 py-4 ${classes}`}>
-      <Link
-        href={"/"}
-        className="text-xl font-extrabold uppercase tracking-widest text-primary"
+    <>
+      <nav
+        className={`flex items-center justify-between px-24 py-4 ${classes}`}
       >
-        Ghor Khoje
-      </Link>
-      <div className="flex items-center gap-6">
         <Link
           href={"/"}
-          className="border-b-2 border-gray-700 px-1 text-sm font-bold tracking-wide"
+          className="text-xl font-extrabold uppercase tracking-widest text-primary"
         >
-          Buy
+          Ghor Khoje
         </Link>
-        <Link href={"/"} className="px-1 text-sm tracking-wide">
-          Rent
-        </Link>
-        <Link href={"/"} className="px-1 text-sm tracking-wide">
-          Sell
-        </Link>
-      </div>
-
-      {!isAuthenticated ? (
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-6">
           <Link
-            href={"/auth/login"}
-            className="rounded-lg border-2 border-primary px-5 py-1 text-sm font-semibold text-primary"
+            href={"/"}
+            className="border-b-2 border-gray-700 px-1 text-sm font-bold tracking-wide"
           >
-            Login
+            Buy
           </Link>
-          <Link
-            href={"/auth/signup"}
-            className="rounded-lg border-2 border-primary bg-primary px-5 py-1 text-sm text-white"
-          >
-            Sign up
+          <Link href={"/"} className="px-1 text-sm tracking-wide">
+            Rent
+          </Link>
+          <Link href={"/"} className="px-1 text-sm tracking-wide">
+            Sell
           </Link>
         </div>
-      ) : (
-        <div className="flex items-center gap-8">
-          {user.user_type !== "LANDLORD" &&
-            (hasApplied ? (
-              <button
-                className="rounded-full bg-gray-600 px-2 py-1 text-xs font-normal text-white"
-                onClick={handleHostSubmission}
-              >
-                Applied
-              </button>
-            ) : (
-              <button
-                className="cursor-pointer border-b-2 border-gray-600 text-xs font-semibold"
-                onClick={handleHostSubmission}
-              >
-                Become a Host
-              </button>
-            ))}
 
-          <Link
-            href={"/user/profile/?section=profile"}
-            className="flex items-center gap-2"
-          >
-            {user?.profile_image ? (
-              <div className="relative h-8 w-8 overflow-hidden rounded-full">
-                <Image
-                  src={`${BASE_URL}${user?.profile_image}`}
-                  alt="Profile"
-                  width={32}
-                  height={32}
-                  className="h-8 w-8 rounded-full object-cover"
-                />
-              </div>
-            ) : (
-              <CgProfile className="h-8 w-8 rounded-full text-gray-600" />
-            )}
-            <span className="text-sm font-light text-gray-800">
-              {user?.full_name}
-            </span>
-          </Link>
-          <button
-            className="text-xl text-primary"
-            onClick={() => {
-              logout();
-              router.push("/");
-            }}
-          >
-            <LuLogOut />
-          </button>
-        </div>
+        {!isAuthenticated ? (
+          <div className="flex items-center gap-4">
+            <Link
+              href={"/auth/login"}
+              className="rounded-lg border-2 border-primary px-5 py-1 text-sm font-semibold text-primary"
+            >
+              Login
+            </Link>
+            <Link
+              href={"/auth/signup"}
+              className="rounded-lg border-2 border-primary bg-primary px-5 py-1 text-sm text-white"
+            >
+              Sign up
+            </Link>
+          </div>
+        ) : (
+          <div className="flex items-center gap-8">
+            {user.user_type !== "LANDLORD" &&
+              (hasApplied ? (
+                <button className="rounded-full bg-gray-600 px-2 py-1 text-xs font-normal text-white">
+                  Applied
+                </button>
+              ) : (
+                <button
+                  className="cursor-pointer border-b-2 border-gray-600 text-xs font-semibold"
+                  onClick={() => {
+                    setShowModal(true);
+                  }}
+                >
+                  Become a Host
+                </button>
+              ))}
+
+            <Link
+              href={"/user/profile/?section=profile"}
+              className="flex items-center gap-2"
+            >
+              {user?.profile_image ? (
+                <div className="relative h-8 w-8 overflow-hidden rounded-full">
+                  <Image
+                    src={`${BASE_URL}${user?.profile_image}`}
+                    alt="Profile"
+                    width={32}
+                    height={32}
+                    className="h-8 w-8 rounded-full object-cover"
+                  />
+                </div>
+              ) : (
+                <CgProfile className="h-8 w-8 rounded-full text-gray-600" />
+              )}
+              <span className="text-sm font-light text-gray-800">
+                {user?.full_name}
+              </span>
+            </Link>
+            <button
+              className="text-xl text-primary"
+              onClick={() => {
+                logout();
+                router.push("/");
+              }}
+            >
+              <LuLogOut />
+            </button>
+          </div>
+        )}
+      </nav>
+      {showModal && (
+        <ApplyForHostModal
+          handleHostSubmission={handleHostSubmission}
+          setShowModal={setShowModal}
+        />
       )}
-    </nav>
+    </>
   );
 }
 
 export default NavMain;
+function ApplyForHostModal({ handleHostSubmission, setShowModal }) {
+  const handleOutsideClick = (e) => {
+    if (e.target.id === "modal-overlay") {
+      setShowModal(false);
+    }
+  };
+
+  return (
+    <div
+      id="modal-overlay"
+      onClick={handleOutsideClick}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+    >
+      <div className="rounded-lg bg-white p-6 shadow-lg">
+        <h2 className="text-xl font-bold">Apply for Host</h2>
+        <p>Are you sure you want to apply for host?</p>
+        <div className="mt-4 flex justify-end gap-4">
+          <button
+            className="cursor-pointer rounded-lg border-2 border-gray-600 px-5 py-1 text-sm font-semibold text-gray-600"
+            onClick={() => setShowModal(false)}
+          >
+            No
+          </button>
+          <button
+            className="cursor-pointer rounded-lg border-2 bg-primary px-5 py-1 text-sm font-semibold text-white"
+            onClick={handleHostSubmission}
+          >
+            Yes
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
