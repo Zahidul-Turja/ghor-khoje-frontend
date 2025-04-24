@@ -55,19 +55,25 @@ function NavMain({ classes }) {
           href={"/"}
           className="text-xl font-extrabold uppercase tracking-widest text-primary"
         >
-          Ghor Khoje
+          Ghor Khojee
         </Link>
         <div className="flex items-center gap-6">
           <Link
             href={"/"}
-            className="border-b-2 border-gray-700 px-1 text-sm font-bold tracking-wide"
+            className="cursor-pointer border-b-2 border-gray-700 px-1 text-sm font-bold tracking-wide"
           >
             Buy
           </Link>
-          <Link href={"/"} className="px-1 text-sm tracking-wide">
+          <Link
+            href={"/"}
+            className="cursor-pointer px-1 text-sm tracking-wide"
+          >
             Rent
           </Link>
-          <Link href={"/"} className="px-1 text-sm tracking-wide">
+          <Link
+            href={"/"}
+            className="cursor-pointer px-1 text-sm tracking-wide"
+          >
             Sell
           </Link>
         </div>

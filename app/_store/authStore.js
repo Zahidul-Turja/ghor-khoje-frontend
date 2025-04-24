@@ -31,7 +31,7 @@ const useAuthStore = create(
             throw new Error(data.message || "Failed to fetch user info");
           }
         } catch (error) {
-          console.error("User info error:", error.message);
+          console.log("User info error:", error.message);
         }
       },
 
