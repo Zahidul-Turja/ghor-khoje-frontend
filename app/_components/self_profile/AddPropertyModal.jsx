@@ -397,7 +397,7 @@ export default function AddPropertyModal({ onClose }) {
               key={tab.id}
               className={`px-6 py-3 font-medium transition-colors ${
                 activeTab === tab.id
-                  ? "border-b-2 border-blue-500 text-blue-600"
+                  ? "border-b-2 border-primary/80 text-primary"
                   : "text-gray-600 hover:bg-gray-50"
               }`}
               onClick={() => setActiveTab(tab.id)}
@@ -424,7 +424,7 @@ export default function AddPropertyModal({ onClose }) {
                     name="title"
                     value={formData.title}
                     onChange={handleInputChange}
-                    className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                    className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/70 focus:outline-none focus:ring-2 focus:ring-primary/20"
                     placeholder="Enter property title"
                     required
                   />
@@ -439,7 +439,7 @@ export default function AddPropertyModal({ onClose }) {
                     value={formData.description}
                     onChange={handleInputChange}
                     rows={4}
-                    className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                    className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/70 focus:outline-none focus:ring-2 focus:ring-primary/20"
                     placeholder="Describe your property"
                   />
                 </div>
@@ -452,7 +452,7 @@ export default function AddPropertyModal({ onClose }) {
                     name="category"
                     value={formData.category}
                     onChange={handleInputChange}
-                    className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                    className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/70 focus:outline-none focus:ring-2 focus:ring-primary/20"
                     required
                   >
                     <option value="">Select category</option>
@@ -480,7 +480,7 @@ export default function AddPropertyModal({ onClose }) {
                           onClick={() => toggleFacility(facility)}
                           className={`flex cursor-pointer items-center rounded-lg border p-3 transition-colors ${
                             isSelected
-                              ? "border-blue-300 bg-blue-50 text-blue-700"
+                              ? "border-primary/20 bg-primary/10 text-primary/80"
                               : "border-gray-200 hover:bg-gray-50"
                           }`}
                         >
@@ -499,7 +499,7 @@ export default function AddPropertyModal({ onClose }) {
                               type="checkbox"
                               checked={isSelected}
                               onChange={() => {}} // Handled by the parent div's onClick
-                              className="h-4 w-4 rounded text-blue-600"
+                              className="hidden h-4 w-4 rounded text-primary/60"
                             />
                           </div>
                         </div>
@@ -528,7 +528,7 @@ export default function AddPropertyModal({ onClose }) {
                       name="city"
                       value={formData.city}
                       onChange={handleInputChange}
-                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
                     />
                   </div>
                   <div>
@@ -540,7 +540,7 @@ export default function AddPropertyModal({ onClose }) {
                       name="area_name"
                       value={formData.area_name}
                       onChange={handleInputChange}
-                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
                     />
                   </div>
                 </div>
@@ -555,7 +555,7 @@ export default function AddPropertyModal({ onClose }) {
                       name="area_code"
                       value={formData.area_code}
                       onChange={handleInputChange}
-                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
                     />
                   </div>
                   <div>
@@ -567,7 +567,7 @@ export default function AddPropertyModal({ onClose }) {
                       name="block_name"
                       value={formData.block_name}
                       onChange={handleInputChange}
-                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
                     />
                   </div>
                 </div>
@@ -582,7 +582,7 @@ export default function AddPropertyModal({ onClose }) {
                       name="street_name"
                       value={formData.street_name}
                       onChange={handleInputChange}
-                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
                     />
                   </div>
                   <div>
@@ -594,7 +594,7 @@ export default function AddPropertyModal({ onClose }) {
                       name="house_name"
                       value={formData.house_name}
                       onChange={handleInputChange}
-                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
                     />
                   </div>
                 </div>
@@ -609,7 +609,7 @@ export default function AddPropertyModal({ onClose }) {
                       name="house_number"
                       value={formData.house_number}
                       onChange={handleInputChange}
-                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
                     />
                   </div>
                   <div>
@@ -621,7 +621,7 @@ export default function AddPropertyModal({ onClose }) {
                       name="apartment_number"
                       value={formData.apartment_number}
                       onChange={handleInputChange}
-                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
                     />
                   </div>
                   <div>
@@ -633,7 +633,7 @@ export default function AddPropertyModal({ onClose }) {
                       name="floor_number"
                       value={formData.floor_number}
                       onChange={handleInputChange}
-                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
                     />
                   </div>
                 </div>
@@ -649,7 +649,7 @@ export default function AddPropertyModal({ onClose }) {
                       value={formData.latitude}
                       onChange={handleInputChange}
                       step="0.000001"
-                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
                     />
                   </div>
                   <div>
@@ -662,18 +662,18 @@ export default function AddPropertyModal({ onClose }) {
                       value={formData.longitude}
                       onChange={handleInputChange}
                       step="0.000001"
-                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
                     />
                   </div>
                 </div>
 
-                {/* <div className="rounded-lg border border-dashed border-gray-300 p-4">
+                <div className="rounded-lg border border-dashed border-gray-300 p-4">
                   <div className="flex items-center justify-center space-x-2 text-gray-500">
                     <MapPin size={20} />
                     <span>Map functionality would be implemented here</span>
                   </div>
-                </div> */}
-                <div className="space-y-4">
+                </div>
+                {/* <div className="space-y-4">
                   <link
                     rel="stylesheet"
                     href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css"
@@ -681,7 +681,7 @@ export default function AddPropertyModal({ onClose }) {
                     crossOrigin="anonymous"
                   />
 
-                  {/* Include Leaflet JS directly */}
+                 
                   <script
                     src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"
                     integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg=="
@@ -706,7 +706,7 @@ export default function AddPropertyModal({ onClose }) {
                   {selectedLocation && (
                     <div className="rounded-lg bg-blue-50 p-4">
                       <div className="flex items-center space-x-2">
-                        <MapPin size={20} className="text-blue-600" />
+                        <MapPin size={20} className="text-primary/70" />
                         <h3 className="font-medium text-blue-800">
                           Selected Location
                         </h3>
@@ -731,7 +731,7 @@ export default function AddPropertyModal({ onClose }) {
                       </p>
                     </div>
                   )}
-                </div>
+                </div> */}
               </div>
             </div>
 
@@ -748,7 +748,7 @@ export default function AddPropertyModal({ onClose }) {
                     value={formData.area_in_sqft}
                     onChange={handleNumberInput}
                     min="0"
-                    className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                    className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/20"
                   />
                 </div>
 
@@ -763,7 +763,7 @@ export default function AddPropertyModal({ onClose }) {
                       value={formData.num_of_bedrooms}
                       onChange={handleNumberInput}
                       min="0"
-                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/20"
                     />
                   </div>
                   <div>
@@ -776,7 +776,7 @@ export default function AddPropertyModal({ onClose }) {
                       value={formData.num_of_bathrooms}
                       onChange={handleNumberInput}
                       min="0"
-                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/20"
                     />
                   </div>
                 </div>
@@ -792,7 +792,7 @@ export default function AddPropertyModal({ onClose }) {
                       value={formData.num_of_kitchens}
                       onChange={handleNumberInput}
                       min="0"
-                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/20"
                     />
                   </div>
                   <div>
@@ -805,7 +805,7 @@ export default function AddPropertyModal({ onClose }) {
                       value={formData.num_of_balconies}
                       onChange={handleNumberInput}
                       min="0"
-                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/20"
                     />
                   </div>
                 </div>
@@ -821,7 +821,7 @@ export default function AddPropertyModal({ onClose }) {
                       value={formData.num_of_living_rooms}
                       onChange={handleNumberInput}
                       min="0"
-                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/20"
                     />
                   </div>
                   <div>
@@ -834,7 +834,7 @@ export default function AddPropertyModal({ onClose }) {
                       value={formData.num_of_dining_rooms}
                       onChange={handleNumberInput}
                       min="0"
-                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/20"
                     />
                   </div>
                 </div>
@@ -850,7 +850,7 @@ export default function AddPropertyModal({ onClose }) {
                       value={formData.num_of_parking_spaces}
                       onChange={handleNumberInput}
                       min="0"
-                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/20"
                     />
                   </div>
                   <div>
@@ -863,7 +863,7 @@ export default function AddPropertyModal({ onClose }) {
                       value={formData.capacity}
                       onChange={handleNumberInput}
                       min="0"
-                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                      className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/20"
                     />
                   </div>
                 </div>
@@ -877,7 +877,7 @@ export default function AddPropertyModal({ onClose }) {
                     name="available_from"
                     value={formData.available_from}
                     onChange={handleInputChange}
-                    className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                    className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/20"
                   />
                 </div>
               </div>
@@ -901,7 +901,7 @@ export default function AddPropertyModal({ onClose }) {
                       onChange={handleInputChange}
                       min="0"
                       step="0.01"
-                      className="w-full rounded-lg border border-gray-300 p-3 pl-8 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                      className="w-full rounded-lg border border-gray-300 p-3 pl-8 focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/20"
                     />
                   </div>
                 </div>
@@ -921,7 +921,7 @@ export default function AddPropertyModal({ onClose }) {
                       onChange={handleInputChange}
                       min="0"
                       step="0.01"
-                      className="w-full rounded-lg border border-gray-300 p-3 pl-8 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                      className="w-full rounded-lg border border-gray-300 p-3 pl-8 focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/20"
                     />
                   </div>
                   <p className="mt-1 text-sm text-gray-500">
@@ -939,7 +939,7 @@ export default function AddPropertyModal({ onClose }) {
                     value={formData.num_prepayment_months}
                     onChange={handleNumberInput}
                     min="0"
-                    className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                    className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/20"
                   />
                   <p className="mt-1 text-sm text-gray-500">
                     Number of months required for advance payment
@@ -947,7 +947,9 @@ export default function AddPropertyModal({ onClose }) {
                 </div>
 
                 <div className="rounded-lg bg-blue-50 p-4">
-                  <h3 className="font-medium text-blue-800">Payment Summary</h3>
+                  <h3 className="font-medium text-primary/70">
+                    Payment Summary
+                  </h3>
                   <div className="mt-3 space-y-2">
                     <div className="flex justify-between">
                       <span className="text-gray-600">Monthly Rent:</span>
@@ -970,12 +972,12 @@ export default function AddPropertyModal({ onClose }) {
                         ).toFixed(2)}
                       </span>
                     </div>
-                    <div className="border-t border-blue-200 pt-2">
+                    <div className="border-t border-primary/20 pt-2">
                       <div className="flex justify-between">
-                        <span className="font-medium text-blue-800">
+                        <span className="font-medium text-primary/90">
                           Required Prepayment:
                         </span>
-                        <span className="font-bold text-blue-800">
+                        <span className="font-bold text-primary/90">
                           $
                           {(
                             formData.num_prepayment_months *
@@ -1015,7 +1017,7 @@ export default function AddPropertyModal({ onClose }) {
                         </p>
                         <p className="text-sm text-gray-500">or</p>
                       </div>
-                      <label className="cursor-pointer rounded-lg bg-blue-600 px-4 py-2 font-medium text-white transition-colors hover:bg-blue-700">
+                      <label className="cursor-pointer rounded-lg bg-primary/70 px-4 py-2 font-medium text-white transition-colors hover:bg-primary/70">
                         Browse Files
                         <input
                           type="file"
@@ -1061,7 +1063,7 @@ export default function AddPropertyModal({ onClose }) {
                                   e.target.value,
                                 )
                               }
-                              className="w-full rounded-lg border border-gray-300 p-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                              className="w-full rounded-lg border border-gray-300 p-2 focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/20"
                             />
                           </div>
                         </div>
@@ -1095,7 +1097,7 @@ export default function AddPropertyModal({ onClose }) {
               </button>
               <button
                 type="submit"
-                className="rounded-lg bg-blue-600 px-6 py-3 font-medium text-white transition-colors hover:bg-blue-700"
+                className="rounded-lg bg-primary px-6 py-3 font-medium text-white transition-colors hover:bg-primary/80"
               >
                 Save Property
               </button>

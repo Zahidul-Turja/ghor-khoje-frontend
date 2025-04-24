@@ -71,7 +71,7 @@ function Listings({ places }) {
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
   const [openMenuId, setOpenMenuId] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const menuRef = useRef(null);
 
   const filteredPlaces = places.filter(
@@ -115,7 +115,7 @@ function Listings({ places }) {
 
   return (
     <>
-      {showModal && <AddPropertyModal />}
+      {showModal && <AddPropertyModal onClose={() => setShowModal(false)} />}
       <div>
         <div className="border-b border-gray-100">
           <div className="flex items-center justify-between p-6">
@@ -134,13 +134,16 @@ function Listings({ places }) {
                 </div>
                 <input
                   type="text"
-                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-primary/40 focus:ring-primary/40"
                   placeholder="Search properties..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
-              <button className="flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white transition-colors duration-150 hover:bg-blue-700">
+              <button
+                className="flex items-center gap-2 rounded-lg bg-primary/90 px-5 py-2.5 text-sm font-medium text-white transition-colors duration-150 hover:bg-primary"
+                onClick={() => setShowModal(true)}
+              >
                 <IoAdd className="text-lg" />
                 <span>Add Property</span>
               </button>
