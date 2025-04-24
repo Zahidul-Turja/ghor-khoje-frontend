@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { X, Upload, MapPin, Plus, Trash2 } from "lucide-react";
 
 export default function AddPropertyModal({ onClose }) {
@@ -48,6 +48,211 @@ export default function AddPropertyModal({ onClose }) {
     { id: 8, name: "Elevator", icon: "/api/placeholder/40/40" },
   ]);
   const [dragActive, setDragActive] = useState(false);
+
+  // Map functionality
+  const mapRef = useRef(null);
+  const mapInstanceRef = useRef(null);
+  const markerRef = useRef(null);
+  const [mapLoaded, setMapLoaded] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState(null);
+
+  // Initialize Leaflet map directly without dynamic script loading
+  useEffect(() => {
+    // Skip if map is already loaded or ref doesn't exist yet
+    if (mapLoaded || !mapRef.current) return;
+
+    // Initialize with default or existing coordinates
+    const defaultLat = formData.latitude || 40.7128;
+    const defaultLng = formData.longitude || -74.006;
+
+    // Create map - using window.L to make sure Leaflet is referenced correctly
+    try {
+      // Initialize the map
+      const map = L.map(mapRef.current).setView([defaultLat, defaultLng], 13);
+      mapInstanceRef.current = map;
+
+      // Add OpenStreetMap tile layer
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(map);
+
+      // Create marker if coordinates exist in formData
+      if (formData.latitude && formData.longitude) {
+        const marker = L.marker([formData.latitude, formData.longitude], {
+          draggable: true,
+        }).addTo(map);
+        markerRef.current = marker;
+
+        setSelectedLocation({
+          lat: formData.latitude,
+          lng: formData.longitude,
+        });
+
+        // Add drag event
+        marker.on("dragend", function () {
+          const position = marker.getLatLng();
+
+          setFormData({
+            ...formData,
+            latitude: position.lat,
+            longitude: position.lng,
+          });
+
+          setSelectedLocation({
+            lat: position.lat,
+            lng: position.lng,
+          });
+        });
+      }
+
+      // Add click event to map
+      map.on("click", function (e) {
+        const clickedLocation = {
+          lat: e.latlng.lat,
+          lng: e.latlng.lng,
+        };
+
+        // Update form data with new coordinates
+        setFormData({
+          ...formData,
+          latitude: clickedLocation.lat,
+          longitude: clickedLocation.lng,
+        });
+
+        setSelectedLocation(clickedLocation);
+
+        // Update or create marker
+        if (markerRef.current) {
+          markerRef.current.setLatLng(clickedLocation);
+        } else {
+          const marker = L.marker(clickedLocation, {
+            draggable: true,
+          }).addTo(map);
+          markerRef.current = marker;
+
+          // Add drag event
+          marker.on("dragend", function () {
+            const position = marker.getLatLng();
+
+            setFormData({
+              ...formData,
+              latitude: position.lat,
+              longitude: position.lng,
+            });
+
+            setSelectedLocation({
+              lat: position.lat,
+              lng: position.lng,
+            });
+          });
+        }
+      });
+
+      // Simple search box implementation
+      const searchControl = L.control({ position: "topleft" });
+
+      searchControl.onAdd = function () {
+        const container = L.DomUtil.create(
+          "div",
+          "leaflet-control leaflet-bar",
+        );
+        container.style.backgroundColor = "white";
+        container.style.padding = "5px";
+        container.style.margin = "10px";
+        container.style.borderRadius = "4px";
+        container.style.boxShadow = "0 1px 5px rgba(0,0,0,0.4)";
+        container.style.width = "250px";
+
+        const input = L.DomUtil.create("input", "search-input", container);
+        input.type = "text";
+        input.placeholder = "Search location...";
+        input.style.width = "100%";
+        input.style.border = "1px solid #ccc";
+        input.style.borderRadius = "4px";
+        input.style.padding = "8px";
+
+        // Prevent map clicks when interacting with the search box
+        L.DomEvent.disableClickPropagation(container);
+
+        // Handle search
+        L.DomEvent.on(input, "keydown", function (e) {
+          if (e.key === "Enter") {
+            e.preventDefault();
+
+            const searchValue = input.value;
+            if (!searchValue) return;
+
+            // Use OpenStreetMap Nominatim API for search
+            fetch(
+              `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchValue)}`,
+            )
+              .then((response) => response.json())
+              .then((data) => {
+                if (data && data.length > 0) {
+                  const result = data[0];
+                  const lat = parseFloat(result.lat);
+                  const lng = parseFloat(result.lon);
+
+                  map.setView([lat, lng], 16);
+
+                  // Update form data
+                  setFormData({
+                    ...formData,
+                    latitude: lat,
+                    longitude: lng,
+                  });
+
+                  setSelectedLocation({ lat, lng });
+
+                  // Update or create marker
+                  if (markerRef.current) {
+                    markerRef.current.setLatLng([lat, lng]);
+                  } else {
+                    const marker = L.marker([lat, lng], {
+                      draggable: true,
+                    }).addTo(map);
+                    markerRef.current = marker;
+
+                    // Add drag event
+                    marker.on("dragend", function () {
+                      const position = marker.getLatLng();
+
+                      setFormData({
+                        ...formData,
+                        latitude: position.lat,
+                        longitude: position.lng,
+                      });
+
+                      setSelectedLocation({
+                        lat: position.lat,
+                        lng: position.lng,
+                      });
+                    });
+                  }
+                }
+              })
+              .catch((error) =>
+                console.error("Error searching location:", error),
+              );
+          }
+        });
+
+        return container;
+      };
+
+      searchControl.addTo(map);
+
+      // Force the map to recalculate size once it's visible in the DOM
+      setTimeout(() => {
+        map.invalidateSize();
+        setMapLoaded(true);
+      }, 100);
+    } catch (error) {
+      console.error("Error initializing map:", error);
+      setMapLoaded(false);
+    }
+  }, [mapRef.current]);
 
   const handleInputChange = (e) => {
     const { name, value, type } = e.target;
@@ -462,11 +667,70 @@ export default function AddPropertyModal({ onClose }) {
                   </div>
                 </div>
 
-                <div className="rounded-lg border border-dashed border-gray-300 p-4">
+                {/* <div className="rounded-lg border border-dashed border-gray-300 p-4">
                   <div className="flex items-center justify-center space-x-2 text-gray-500">
                     <MapPin size={20} />
                     <span>Map functionality would be implemented here</span>
                   </div>
+                </div> */}
+                <div className="space-y-4">
+                  <link
+                    rel="stylesheet"
+                    href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css"
+                    integrity="sha512-Zcn6bjR/8RZbLEpLIeOwNtzREBAJhXpHQ8Fk+PwGUv8UhAY5r+ux/dFy0EV6ERQEiJ3WEh6cB7wM4fh2j/2v9g=="
+                    crossOrigin="anonymous"
+                  />
+
+                  {/* Include Leaflet JS directly */}
+                  <script
+                    src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"
+                    integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg=="
+                    crossOrigin="anonymous"
+                  ></script>
+                  <div className="relative h-96 w-full rounded-lg border border-gray-300 bg-gray-100 shadow-inner">
+                    {!mapLoaded && (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="flex items-center space-x-2">
+                          <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-500 border-t-transparent"></div>
+                          <span className="text-gray-500">Loading map...</span>
+                        </div>
+                      </div>
+                    )}
+                    <div
+                      ref={mapRef}
+                      className="h-full w-full rounded-lg"
+                      style={{ zIndex: 0 }}
+                    ></div>
+                  </div>
+
+                  {selectedLocation && (
+                    <div className="rounded-lg bg-blue-50 p-4">
+                      <div className="flex items-center space-x-2">
+                        <MapPin size={20} className="text-blue-600" />
+                        <h3 className="font-medium text-blue-800">
+                          Selected Location
+                        </h3>
+                      </div>
+                      <div className="mt-2 grid grid-cols-2 gap-4">
+                        <div>
+                          <p className="text-sm text-gray-600">Latitude</p>
+                          <p className="font-medium">
+                            {selectedLocation.lat.toFixed(6)}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-sm text-gray-600">Longitude</p>
+                          <p className="font-medium">
+                            {selectedLocation.lng.toFixed(6)}
+                          </p>
+                        </div>
+                      </div>
+                      <p className="mt-2 text-xs text-gray-500">
+                        Click on the map to set location or drag the marker to
+                        adjust
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
