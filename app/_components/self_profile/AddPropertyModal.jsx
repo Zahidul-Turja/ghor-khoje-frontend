@@ -55,33 +55,112 @@ export default function AddPropertyModal({ onClose }) {
   const markerRef = useRef(null);
   const [mapLoaded, setMapLoaded] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
+  const [error, setError] = useState(null);
 
-  // Initialize Leaflet map directly without dynamic script loading
+  // Initialize map on component mount
   useEffect(() => {
-    // Skip if map is already loaded or ref doesn't exist yet
-    if (mapLoaded || !mapRef.current) return;
+    console.log("Map initialization effect running");
 
-    // Initialize with default or existing coordinates
-    const defaultLat = formData.latitude || 40.7128;
-    const defaultLng = formData.longitude || -74.006;
+    // Make sure the ref is available
+    if (!mapRef.current) {
+      console.log("Map ref not available yet");
+      return;
+    }
 
-    // Create map - using window.L to make sure Leaflet is referenced correctly
+    // Skip if map is already loaded
+    if (mapLoaded) {
+      console.log("Map already loaded, skipping initialization");
+      return;
+    }
+
+    // Check if Leaflet is available
+    if (!window.L) {
+      console.error("Leaflet library not available. Loading it now...");
+
+      // Load Leaflet dynamically
+      const script = document.createElement("script");
+      script.src =
+        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js";
+      script.integrity =
+        "sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg==";
+      script.crossOrigin = "anonymous";
+
+      // Add CSS if needed
+      if (!document.querySelector('link[href*="leaflet.css"]')) {
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href =
+          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css";
+        link.integrity =
+          "sha512-Zcn6bjR/8RZbLEpLIeOwNtzREBAJhXpHQ8Fk+PwGUv8UhAY5r+ux/dFy0EV6ERQEiJ3WEh6cB7wM4fh2j/2v9g==";
+        link.crossOrigin = "anonymous";
+        document.head.appendChild(link);
+      }
+
+      // Set up event handler for when script is loaded
+      script.onload = () => {
+        console.log("Leaflet script loaded successfully");
+        initializeMap();
+      };
+
+      script.onerror = () => {
+        const errorMsg = "Failed to load Leaflet library";
+        console.error(errorMsg);
+        setError(errorMsg);
+        setMapLoaded(true); // Set to true to remove loading indicator
+      };
+
+      document.body.appendChild(script);
+      return;
+    }
+
+    // If Leaflet is already available, initialize map directly
+    console.log("Leaflet already available, initializing map");
+    initializeMap();
+  }, [mapRef.current, mapLoaded]);
+
+  // Separate function to initialize the map
+  const initializeMap = () => {
     try {
-      // Initialize the map
-      const map = L.map(mapRef.current).setView([defaultLat, defaultLng], 13);
+      console.log("Beginning map initialization");
+
+      // Clear any existing map instance
+      if (mapInstanceRef.current) {
+        console.log("Removing existing map instance");
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
+      }
+
+      // Get default coordinates
+      const defaultLat = formData?.latitude || 40.7128;
+      const defaultLng = formData?.longitude || -74.006;
+
+      console.log(
+        `Initializing map at coordinates: ${defaultLat}, ${defaultLng}`,
+      );
+
+      // Create map
+      const map = window.L.map(mapRef.current).setView(
+        [defaultLat, defaultLng],
+        13,
+      );
       mapInstanceRef.current = map;
 
-      // Add OpenStreetMap tile layer
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      // Add tile layer
+      window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution:
           '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       }).addTo(map);
 
       // Create marker if coordinates exist in formData
-      if (formData.latitude && formData.longitude) {
-        const marker = L.marker([formData.latitude, formData.longitude], {
-          draggable: true,
-        }).addTo(map);
+      if (formData?.latitude && formData?.longitude) {
+        console.log("Adding marker for existing coordinates");
+        const marker = window.L.marker(
+          [formData.latitude, formData.longitude],
+          {
+            draggable: true,
+          },
+        ).addTo(map);
         markerRef.current = marker;
 
         setSelectedLocation({
@@ -93,11 +172,11 @@ export default function AddPropertyModal({ onClose }) {
         marker.on("dragend", function () {
           const position = marker.getLatLng();
 
-          setFormData({
-            ...formData,
+          setFormData((prevState) => ({
+            ...prevState,
             latitude: position.lat,
             longitude: position.lng,
-          });
+          }));
 
           setSelectedLocation({
             lat: position.lat,
@@ -113,12 +192,16 @@ export default function AddPropertyModal({ onClose }) {
           lng: e.latlng.lng,
         };
 
+        console.log(
+          `Map clicked at: ${clickedLocation.lat}, ${clickedLocation.lng}`,
+        );
+
         // Update form data with new coordinates
-        setFormData({
-          ...formData,
+        setFormData((prevState) => ({
+          ...prevState,
           latitude: clickedLocation.lat,
           longitude: clickedLocation.lng,
-        });
+        }));
 
         setSelectedLocation(clickedLocation);
 
@@ -126,7 +209,7 @@ export default function AddPropertyModal({ onClose }) {
         if (markerRef.current) {
           markerRef.current.setLatLng(clickedLocation);
         } else {
-          const marker = L.marker(clickedLocation, {
+          const marker = window.L.marker(clickedLocation, {
             draggable: true,
           }).addTo(map);
           markerRef.current = marker;
@@ -135,11 +218,11 @@ export default function AddPropertyModal({ onClose }) {
           marker.on("dragend", function () {
             const position = marker.getLatLng();
 
-            setFormData({
-              ...formData,
+            setFormData((prevState) => ({
+              ...prevState,
               latitude: position.lat,
               longitude: position.lng,
-            });
+            }));
 
             setSelectedLocation({
               lat: position.lat,
@@ -149,11 +232,11 @@ export default function AddPropertyModal({ onClose }) {
         }
       });
 
-      // Simple search box implementation
-      const searchControl = L.control({ position: "topleft" });
+      // Add search control
+      const searchControl = window.L.control({ position: "topleft" });
 
       searchControl.onAdd = function () {
-        const container = L.DomUtil.create(
+        const container = window.L.DomUtil.create(
           "div",
           "leaflet-control leaflet-bar",
         );
@@ -164,7 +247,11 @@ export default function AddPropertyModal({ onClose }) {
         container.style.boxShadow = "0 1px 5px rgba(0,0,0,0.4)";
         container.style.width = "250px";
 
-        const input = L.DomUtil.create("input", "search-input", container);
+        const input = window.L.DomUtil.create(
+          "input",
+          "search-input",
+          container,
+        );
         input.type = "text";
         input.placeholder = "Search location...";
         input.style.width = "100%";
@@ -173,15 +260,17 @@ export default function AddPropertyModal({ onClose }) {
         input.style.padding = "8px";
 
         // Prevent map clicks when interacting with the search box
-        L.DomEvent.disableClickPropagation(container);
+        window.L.DomEvent.disableClickPropagation(container);
 
         // Handle search
-        L.DomEvent.on(input, "keydown", function (e) {
+        window.L.DomEvent.on(input, "keydown", function (e) {
           if (e.key === "Enter") {
             e.preventDefault();
 
             const searchValue = input.value;
             if (!searchValue) return;
+
+            console.log(`Searching for location: ${searchValue}`);
 
             // Use OpenStreetMap Nominatim API for search
             fetch(
@@ -194,14 +283,16 @@ export default function AddPropertyModal({ onClose }) {
                   const lat = parseFloat(result.lat);
                   const lng = parseFloat(result.lon);
 
+                  console.log(`Found location: ${lat}, ${lng}`);
+
                   map.setView([lat, lng], 16);
 
                   // Update form data
-                  setFormData({
-                    ...formData,
+                  setFormData((prevState) => ({
+                    ...prevState,
                     latitude: lat,
                     longitude: lng,
-                  });
+                  }));
 
                   setSelectedLocation({ lat, lng });
 
@@ -209,7 +300,7 @@ export default function AddPropertyModal({ onClose }) {
                   if (markerRef.current) {
                     markerRef.current.setLatLng([lat, lng]);
                   } else {
-                    const marker = L.marker([lat, lng], {
+                    const marker = window.L.marker([lat, lng], {
                       draggable: true,
                     }).addTo(map);
                     markerRef.current = marker;
@@ -218,11 +309,11 @@ export default function AddPropertyModal({ onClose }) {
                     marker.on("dragend", function () {
                       const position = marker.getLatLng();
 
-                      setFormData({
-                        ...formData,
+                      setFormData((prevState) => ({
+                        ...prevState,
                         latitude: position.lat,
                         longitude: position.lng,
-                      });
+                      }));
 
                       setSelectedLocation({
                         lat: position.lat,
@@ -230,11 +321,14 @@ export default function AddPropertyModal({ onClose }) {
                       });
                     });
                   }
+                } else {
+                  console.log("No results found for search");
                 }
               })
-              .catch((error) =>
-                console.error("Error searching location:", error),
-              );
+              .catch((error) => {
+                console.error("Error searching location:", error);
+                setError("Error searching for location: " + error.message);
+              });
           }
         });
 
@@ -245,14 +339,17 @@ export default function AddPropertyModal({ onClose }) {
 
       // Force the map to recalculate size once it's visible in the DOM
       setTimeout(() => {
+        console.log("Invalidating map size");
         map.invalidateSize();
         setMapLoaded(true);
-      }, 100);
+        console.log("Map initialization complete");
+      }, 250);
     } catch (error) {
       console.error("Error initializing map:", error);
-      setMapLoaded(false);
+      setError("Failed to initialize map: " + error.message);
+      setMapLoaded(true); // Set to true to remove loading indicator
     }
-  }, [mapRef.current]);
+  };
 
   const handleInputChange = (e) => {
     const { name, value, type } = e.target;
@@ -668,70 +765,82 @@ export default function AddPropertyModal({ onClose }) {
                 </div>
 
                 <div className="rounded-lg border border-dashed border-gray-300 p-4">
-                  <div className="flex items-center justify-center space-x-2 text-gray-500">
+                  {/* <div className="flex items-center justify-center space-x-2 text-gray-500">
                     <MapPin size={20} />
                     <span>Map functionality would be implemented here</span>
                   </div>
-                </div>
-                {/* <div className="space-y-4">
-                  <link
-                    rel="stylesheet"
-                    href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css"
-                    integrity="sha512-Zcn6bjR/8RZbLEpLIeOwNtzREBAJhXpHQ8Fk+PwGUv8UhAY5r+ux/dFy0EV6ERQEiJ3WEh6cB7wM4fh2j/2v9g=="
-                    crossOrigin="anonymous"
-                  />
-
-                 
-                  <script
-                    src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"
-                    integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg=="
-                    crossOrigin="anonymous"
-                  ></script>
-                  <div className="relative h-96 w-full rounded-lg border border-gray-300 bg-gray-100 shadow-inner">
-                    {!mapLoaded && (
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="flex items-center space-x-2">
-                          <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-500 border-t-transparent"></div>
-                          <span className="text-gray-500">Loading map...</span>
+                </div> */}
+                  <div className="space-y-4">
+                    <div className="relative h-96 w-full rounded-lg border border-gray-300 bg-gray-100 shadow-inner">
+                      {!mapLoaded && (
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="flex items-center space-x-2">
+                            <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-500 border-t-transparent"></div>
+                            <span className="text-gray-500">
+                              Loading map...
+                            </span>
+                          </div>
                         </div>
+                      )}
+
+                      {error && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-red-50 bg-opacity-80">
+                          <div className="rounded-lg bg-white p-4 shadow-lg">
+                            <h3 className="text-lg font-bold text-red-600">
+                              Error Loading Map
+                            </h3>
+                            <p className="text-gray-700">{error}</p>
+                            <button
+                              className="mt-3 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                              onClick={() => {
+                                setError(null);
+                                setMapLoaded(false);
+                                initializeMap();
+                              }}
+                            >
+                              Try Again
+                            </button>
+                          </div>
+                        </div>
+                      )}
+
+                      <div
+                        ref={mapRef}
+                        className="h-full w-full rounded-lg"
+                        style={{ zIndex: 0 }}
+                      ></div>
+                    </div>
+
+                    {selectedLocation && (
+                      <div className="rounded-lg bg-blue-50 p-4">
+                        <div className="flex items-center space-x-2">
+                          <MapPin size={20} className="text-blue-600" />
+                          <h3 className="font-medium text-blue-800">
+                            Selected Location
+                          </h3>
+                        </div>
+                        <div className="mt-2 grid grid-cols-2 gap-4">
+                          <div>
+                            <p className="text-sm text-gray-600">Latitude</p>
+                            <p className="font-medium">
+                              {selectedLocation.lat.toFixed(6)}
+                            </p>
+                          </div>
+                          <div>
+                            <p className="text-sm text-gray-600">Longitude</p>
+                            <p className="font-medium">
+                              {selectedLocation.lng.toFixed(6)}
+                            </p>
+                          </div>
+                        </div>
+                        <p className="mt-2 text-xs text-gray-500">
+                          Click on the map to set location or drag the marker to
+                          adjust
+                        </p>
                       </div>
                     )}
-                    <div
-                      ref={mapRef}
-                      className="h-full w-full rounded-lg"
-                      style={{ zIndex: 0 }}
-                    ></div>
                   </div>
-
-                  {selectedLocation && (
-                    <div className="rounded-lg bg-blue-50 p-4">
-                      <div className="flex items-center space-x-2">
-                        <MapPin size={20} className="text-primary/70" />
-                        <h3 className="font-medium text-blue-800">
-                          Selected Location
-                        </h3>
-                      </div>
-                      <div className="mt-2 grid grid-cols-2 gap-4">
-                        <div>
-                          <p className="text-sm text-gray-600">Latitude</p>
-                          <p className="font-medium">
-                            {selectedLocation.lat.toFixed(6)}
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-gray-600">Longitude</p>
-                          <p className="font-medium">
-                            {selectedLocation.lng.toFixed(6)}
-                          </p>
-                        </div>
-                      </div>
-                      <p className="mt-2 text-xs text-gray-500">
-                        Click on the map to set location or drag the marker to
-                        adjust
-                      </p>
-                    </div>
-                  )}
-                </div> */}
+                </div>
               </div>
             </div>
 
