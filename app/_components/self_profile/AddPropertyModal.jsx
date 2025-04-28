@@ -1,6 +1,6 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
-import { X, Upload, MapPin, Plus, Trash2 } from "lucide-react";
+import { useState } from "react";
+import { X } from "lucide-react";
 import BasicInfo from "./form/BasicInfo";
 import Location from "./form/Location";
 import PropertyDetails from "./form/PropertyDetails";
@@ -41,7 +41,6 @@ export default function AddPropertyModal({ onClose }) {
     images: [],
   });
 
-  const [facilityInput, setFacilityInput] = useState({ name: "", icon: null });
   const [availableFacilities, setAvailableFacilities] = useState([
     { id: 1, name: "WiFi", icon: "/api/placeholder/40/40" },
     { id: 2, name: "Parking", icon: "/api/placeholder/40/40" },
@@ -68,22 +67,6 @@ export default function AddPropertyModal({ onClose }) {
       ...formData,
       [name]: parseInt(value) || "",
     });
-  };
-
-  const handleAddFacility = () => {
-    if (facilityInput.name && facilityInput.icon) {
-      setFormData({
-        ...formData,
-        facilities: [...formData.facilities, { ...facilityInput }],
-      });
-      setFacilityInput({ name: "", icon: null });
-    }
-  };
-
-  const handleRemoveFacility = (index) => {
-    const updatedFacilities = [...formData.facilities];
-    updatedFacilities.splice(index, 1);
-    setFormData({ ...formData, facilities: updatedFacilities });
   };
 
   const handleDrag = (e) => {
@@ -132,37 +115,20 @@ export default function AddPropertyModal({ onClose }) {
     setFormData({ ...formData, images: updatedImages });
   };
 
-  const handleFacilityIconUpload = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      setFacilityInput({
-        ...facilityInput,
-        icon: {
-          file,
-          preview: URL.createObjectURL(file),
-        },
-      });
-    }
-  };
-
   const toggleFacility = (facility) => {
     const isSelected = formData.facilities.includes(facility);
 
     if (isSelected) {
-      // Remove the facility id if already selected
       setFormData({
         ...formData,
         facilities: formData.facilities.filter((id) => id !== facility),
       });
     } else {
-      // Add the facility id if not selected
       setFormData({
         ...formData,
         facilities: [...formData.facilities, facility],
       });
     }
-    console.log("Selected Facilities:", formData.facilities);
-    console.log("Available Facilities:", availableFacilities);
   };
 
   const handleSubmit = (e) => {

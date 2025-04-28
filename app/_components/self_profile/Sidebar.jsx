@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import {
   FaChevronLeft,
@@ -48,7 +49,7 @@ function Sidebar() {
 
   return (
     <div
-      className={`sticky top-0 flex h-screen flex-col border-r border-gray-200 bg-white transition-all duration-300 ${collapsed ? "w-16" : "w-64"}`}
+      className={`sticky top-0 flex h-[calc(100vh-64px)] flex-col border-r border-gray-200 bg-white transition-all duration-300 ${collapsed ? "w-16" : "w-64"}`}
     >
       <div className="flex items-center justify-between border-b border-gray-200 p-4">
         {!collapsed && <h2 className="text-lg font-bold">Navigation</h2>}
@@ -64,7 +65,7 @@ function Sidebar() {
         <ul className="py-2">
           {navItems.map((item, index) => (
             <li key={index}>
-              <a
+              <Link
                 href={`${CURRENT_URL}/?section=${item.name.toLowerCase()}`}
                 className={`flex items-center px-4 py-3 hover:bg-gray-100 ${collapsed ? "justify-center" : ""}`}
               >
@@ -74,7 +75,7 @@ function Sidebar() {
                   {item.icon}
                 </span>
                 {!collapsed && <span>{item.name}</span>}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
