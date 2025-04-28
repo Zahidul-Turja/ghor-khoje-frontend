@@ -1,3 +1,5 @@
+import { Upload, Trash2 } from "lucide-react";
+
 function Images({
   activeTab,
   formData,

@@ -146,21 +146,23 @@ export default function AddPropertyModal({ onClose }) {
   };
 
   const toggleFacility = (facility) => {
-    const isSelected = formData.facilities.some((f) => f.id === facility.id);
+    const isSelected = formData.facilities.includes(facility);
 
     if (isSelected) {
-      // Remove facility if already selected
+      // Remove the facility id if already selected
       setFormData({
         ...formData,
-        facilities: formData.facilities.filter((f) => f.id !== facility.id),
+        facilities: formData.facilities.filter((id) => id !== facility),
       });
     } else {
-      // Add facility if not selected
+      // Add the facility id if not selected
       setFormData({
         ...formData,
         facilities: [...formData.facilities, facility],
       });
     }
+    console.log("Selected Facilities:", formData.facilities);
+    console.log("Available Facilities:", availableFacilities);
   };
 
   const handleSubmit = (e) => {

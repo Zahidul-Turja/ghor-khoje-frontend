@@ -65,12 +65,12 @@ function BasicInfo({
           <div className="mb-4 grid grid-cols-2 gap-3 md:grid-cols-4">
             {availableFacilities.map((facility) => {
               const isSelected = formData.facilities.some(
-                (f) => f.id === facility.id,
+                (id) => id === facility.id,
               );
               return (
                 <div
                   key={facility.id}
-                  onClick={() => toggleFacility(facility)}
+                  onClick={() => toggleFacility(facility.id)}
                   className={`flex cursor-pointer items-center rounded-lg border p-3 transition-colors ${
                     isSelected
                       ? "border-primary/20 bg-primary/10 text-primary/80"
