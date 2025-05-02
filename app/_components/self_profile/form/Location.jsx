@@ -1,11 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import L from "leaflet";
-import { FaMapMarkerAlt } from "react-icons/fa";
-import { MdLocationOn } from "react-icons/md";
-import { toast } from "react-hot-toast";
 
 function Location({ activeTab, formData, handleInputChange }) {
   // Map functionality

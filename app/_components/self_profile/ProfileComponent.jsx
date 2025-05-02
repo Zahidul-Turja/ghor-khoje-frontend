@@ -1,7 +1,7 @@
 "use client";
 
 import useAuthStore from "@/app/_store/authStore";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   FaMapMarkerAlt,
   FaBriefcase,
@@ -27,6 +27,8 @@ export default function ProfileComponent({ userData }) {
   const [activeTab, setActiveTab] = useState("about");
 
   if (!user) return null;
+
+  console.log(user);
 
   const {
     full_name,
@@ -117,7 +119,7 @@ function AboutSection({
 
   // Format languages array
   const formattedLanguages = languages
-    .split(",")
+    ?.split(",")
     .map((lang) => lang.trim().charAt(0).toUpperCase() + lang.trim().slice(1))
     .join(", ");
 
@@ -173,8 +175,8 @@ function AboutSection({
             <p className="font-medium text-gray-800">{formattedLanguages}</p>
             <p className="mt-1 text-sm text-gray-500">
               Preferred:{" "}
-              {preferred_language.charAt(0).toUpperCase() +
-                preferred_language.slice(1)}
+              {preferred_language?.charAt(0).toUpperCase() +
+                preferred_language?.slice(1)}
             </p>
           </div>
         </div>
