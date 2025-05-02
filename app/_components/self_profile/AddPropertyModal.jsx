@@ -176,7 +176,7 @@ export default function AddPropertyModal({ onClose }) {
         </div>
 
         <div
-          className="overflow-y-auto p-6"
+          className="no-scrollbar overflow-y-auto p-6"
           style={{ maxHeight: "calc(90vh - 140px)" }}
         >
           <form onSubmit={handleSubmit}>

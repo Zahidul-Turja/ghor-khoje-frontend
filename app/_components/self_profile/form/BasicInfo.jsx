@@ -1,10 +1,35 @@
-function BasicInfo({
-  activeTab,
-  formData,
-  handleInputChange,
-  availableFacilities,
-  toggleFacility,
-}) {
+"use client";
+
+import { getAllCategories, getAllFacilities } from "@/app/_lib/apiCalls";
+import { useEffect, useState } from "react";
+
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_ENDPOINT;
+
+function BasicInfo({ activeTab, formData, handleInputChange, toggleFacility }) {
+  const [categories, setCategories] = useState([]);
+  const [availableFacilities, setAvailableFacilities] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCategoriesAndFacilities = async () => {
+      try {
+        const categories = await getAllCategories();
+        setCategories(categories);
+
+        const facilities = await getAllFacilities();
+        setAvailableFacilities(facilities);
+
+        console.log("Facilities:", facilities);
+      } catch (error) {
+        console.error("Error fetching categories and facilities:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategoriesAndFacilities();
+  }, []);
+
   return (
     <div className={activeTab === "basic" ? "block" : "hidden"}>
       <div className="space-y-6">
@@ -49,12 +74,15 @@ function BasicInfo({
             required
           >
             <option value="">Select category</option>
-            <option value="apartment">Apartment</option>
-            <option value="house">House</option>
-            <option value="villa">Villa</option>
-            <option value="condo">Condo</option>
-            <option value="office">Office Space</option>
-            <option value="commercial">Commercial Property</option>
+            {loading ? (
+              <option>Loading...</option>
+            ) : (
+              categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))
+            )}
           </select>
         </div>
 
@@ -78,13 +106,14 @@ function BasicInfo({
                   }`}
                 >
                   <div className="flex items-center space-x-3">
-                    <div className="h-8 w-8 overflow-hidden rounded-md bg-gray-100">
+                    <div className="h-6 w-6 overflow-hidden rounded-md bg-gray-100">
                       <img
-                        src={facility.icon}
+                        src={`${BASE_URL}${facility.icon}`}
                         alt={facility.name}
                         className="h-full w-full object-cover"
                       />
                     </div>
+
                     <span className="font-medium">{facility.name}</span>
                   </div>
                   <div className="ml-auto">

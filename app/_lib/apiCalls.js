@@ -35,3 +35,31 @@ export async function hasAppliedForHost() {
     return data;
   } catch (error) {}
 }
+
+export async function getAllCategories() {
+  try {
+    const response = await axios.get(`${BASE_URL}/api/v1/place/categories/`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+    });
+    const data = response.data.data;
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getAllFacilities() {
+  try {
+    const response = await axios.get(`${BASE_URL}/api/v1/place/facilities/`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+    });
+    const data = response.data.data;
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
