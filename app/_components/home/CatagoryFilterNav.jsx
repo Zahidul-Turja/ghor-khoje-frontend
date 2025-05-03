@@ -1,6 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import { getAllCategories } from "@/app/_lib/apiCalls";
+
 import {
   FaCity,
   FaUmbrellaBeach,
@@ -19,108 +22,127 @@ import { GiWoodCabin, GiMicrochip, GiTennisCourt } from "react-icons/gi";
 import { MdOutlineFoodBank } from "react-icons/md";
 import { BsHouseDoor } from "react-icons/bs";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa6";
+import Image from "next/image";
 
-const categories = [
-  {
-    id: 1,
-    name: "City",
-    icon: <FaCity />,
-  },
-  {
-    id: 2,
-    name: "Room",
-    icon: <LiaBedSolid />,
-  },
-  {
-    id: 3,
-    name: "Seat",
-    icon: <TbArmchair />,
-  },
-  {
-    id: 4,
-    name: "Mountains",
-    icon: <TbMountain />,
-  },
-  {
-    id: 5,
-    name: "Countryside",
-    icon: <TbTrees />,
-  },
-  {
-    id: 6,
-    name: "Luxury",
-    icon: <MdOutlineFoodBank />,
-  },
-  {
-    id: 7,
-    name: "Bed & Breakfast",
-    icon: <MdOutlineFoodBank />,
-  },
-  {
-    id: 8,
-    name: "Beachfront",
-    icon: <FaUmbrellaBeach />,
-  },
-  {
-    id: 9,
-    name: "Lakefront",
-    icon: <FaWater />,
-  },
-  {
-    id: 10,
-    name: "Camping",
-    icon: <FaCampground />,
-  },
-  {
-    id: 11,
-    name: "Cabin",
-    icon: <GiWoodCabin />,
-  },
-  {
-    id: 12,
-    name: "Wooden",
-    icon: <BsHouseDoor />,
-  },
-  {
-    id: 13,
-    name: "Modern",
-    icon: <GiMicrochip />,
-  },
-  {
-    id: 14,
-    name: "Mountains",
-    icon: <TbMountain />,
-  },
-  {
-    id: 15,
-    name: "Rural",
-    icon: <TbBuildingCottage />,
-  },
-  {
-    id: 16,
-    name: "Luxury",
-    icon: <TbArmchair />,
-  },
-  {
-    id: 17,
-    name: "Sport",
-    icon: <GiTennisCourt />,
-  },
-  {
-    id: 18,
-    name: "City",
-    icon: <FaCity />,
-  },
-  {
-    id: 19,
-    name: "Home",
-    icon: <FaHome />,
-  },
-];
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_ENDPOINT;
+
+// const categories = [
+//   {
+//     id: 1,
+//     name: "City",
+//     icon: <FaCity />,
+//   },
+//   {
+//     id: 2,
+//     name: "Room",
+//     icon: <LiaBedSolid />,
+//   },
+//   {
+//     id: 3,
+//     name: "Seat",
+//     icon: <TbArmchair />,
+//   },
+//   {
+//     id: 4,
+//     name: "Mountains",
+//     icon: <TbMountain />,
+//   },
+//   {
+//     id: 5,
+//     name: "Countryside",
+//     icon: <TbTrees />,
+//   },
+//   {
+//     id: 6,
+//     name: "Luxury",
+//     icon: <MdOutlineFoodBank />,
+//   },
+//   {
+//     id: 7,
+//     name: "Bed & Breakfast",
+//     icon: <MdOutlineFoodBank />,
+//   },
+//   {
+//     id: 8,
+//     name: "Beachfront",
+//     icon: <FaUmbrellaBeach />,
+//   },
+//   {
+//     id: 9,
+//     name: "Lakefront",
+//     icon: <FaWater />,
+//   },
+//   {
+//     id: 10,
+//     name: "Camping",
+//     icon: <FaCampground />,
+//   },
+//   {
+//     id: 11,
+//     name: "Cabin",
+//     icon: <GiWoodCabin />,
+//   },
+//   {
+//     id: 12,
+//     name: "Wooden",
+//     icon: <BsHouseDoor />,
+//   },
+//   {
+//     id: 13,
+//     name: "Modern",
+//     icon: <GiMicrochip />,
+//   },
+//   {
+//     id: 14,
+//     name: "Mountains",
+//     icon: <TbMountain />,
+//   },
+//   {
+//     id: 15,
+//     name: "Rural",
+//     icon: <TbBuildingCottage />,
+//   },
+//   {
+//     id: 16,
+//     name: "Luxury",
+//     icon: <TbArmchair />,
+//   },
+//   {
+//     id: 17,
+//     name: "Sport",
+//     icon: <GiTennisCourt />,
+//   },
+//   {
+//     id: 18,
+//     name: "City",
+//     icon: <FaCity />,
+//   },
+//   {
+//     id: 19,
+//     name: "Home",
+//     icon: <FaHome />,
+//   },
+// ];
 
 function CategoryFilterNav() {
   const [activeCategory, setActiveCategory] = useState(null);
   const [scrollPosition, setScrollPosition] = useState(0);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await getAllCategories();
+        if (response) {
+          setCategories(response);
+        }
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const handleScroll = (direction) => {
     const container = document.getElementById("category-container");
@@ -155,7 +177,15 @@ function CategoryFilterNav() {
               className={`flex min-w-fit cursor-pointer flex-col items-center gap-2 rounded-xl px-2 py-3 transition-all hover:bg-gray-100 ${activeCategory === category.id ? "border-b-2 border-black font-medium" : ""}`}
               onClick={() => setActiveCategory(category.id)}
             >
-              <div className="text-2xl">{category.icon}</div>
+              <div className="relative flex h-6 w-6 items-center justify-center">
+                <Image
+                  src={`${BASE_URL}/${category.icon}`}
+                  alt={category.name}
+                  width={40}
+                  height={40}
+                  className="absolute h-full w-full object-cover"
+                />
+              </div>
               <p className="whitespace-nowrap text-sm">{category.name}</p>
             </div>
           ))}

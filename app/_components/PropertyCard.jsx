@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FaStar } from "react-icons/fa";
+import { IoImageOutline } from "react-icons/io5";
 
 const BASE_ENDPOINT = process.env.NEXT_PUBLIC_BASE_API_ENDPOINT;
 
@@ -20,20 +21,21 @@ function PropertyCard({ property }) {
     <div className="overflow-hidden rounded-lg">
       <Link
         href={`/${slug}`}
-        className="relative h-52 w-full overflow-hidden rounded-lg"
+        className="relative h-96 w-full overflow-hidden rounded-lg"
       >
-        {images.length > 0 && (
-          <Image
-            src={BASE_ENDPOINT + images[0].image}
-            alt={title}
-            width={400}
-            height={200}
-            className="rounded-lg object-cover"
-          />
-        )}
-        {images.length === 0 && (
-          <div className="absolute left-2 top-2 z-10 rounded-lg bg-primary/70 px-2 py-1 text-xs font-semibold text-white">
-            No Image
+        {images.length > 0 ? (
+          <div className="h-40 w-full overflow-hidden rounded-lg">
+            <Image
+              src={BASE_ENDPOINT + images[0].image}
+              alt={title}
+              width={400}
+              height={400}
+              className="absolute h-full w-full rounded-lg object-cover"
+            />
+          </div>
+        ) : (
+          <div className="h-40 w-full overflow-hidden rounded-lg bg-gray-200">
+            <IoImageOutline className="absolute left-1/2 top-1/2 h-24 w-24 -translate-x-1/2 -translate-y-1/2 rounded-lg bg-gray-200 text-gray-400" />
           </div>
         )}
       </Link>

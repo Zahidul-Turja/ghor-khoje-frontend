@@ -10,7 +10,7 @@ import usePlacesStore from "@/app/_store/placesStore";
 
 function SectionProperties() {
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(16);
+  const [pageSize, setPageSize] = useState(12);
   const [numberOfItems, setNumberOfItems] = useState(pageSize);
   const { places, isLoading, error, getPlaces, nextPage, previousPage } =
     usePlacesStore();
