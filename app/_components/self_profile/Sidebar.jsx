@@ -61,7 +61,7 @@ function Sidebar() {
         </button>
       </div>
 
-      <div className="flex-grow overflow-y-auto">
+      <div className="no-scrollbar flex-grow overflow-y-auto">
         <ul className="py-2">
           {navItems.map((item, index) => (
             <li key={index}>

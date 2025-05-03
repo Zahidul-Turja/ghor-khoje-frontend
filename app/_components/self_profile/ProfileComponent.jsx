@@ -1,6 +1,7 @@
 "use client";
 
 import useAuthStore from "@/app/_store/authStore";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import {
   FaMapMarkerAlt,
@@ -24,11 +25,8 @@ const NEXT_PUBLIC_BASE_API_ENDPOINT = process.env.NEXT_PUBLIC_BASE_API_ENDPOINT;
 
 export default function ProfileComponent({ userData }) {
   const { user } = useAuthStore();
-  const [activeTab, setActiveTab] = useState("about");
 
   if (!user) return null;
-
-  console.log(user);
 
   const {
     full_name,
@@ -53,12 +51,32 @@ export default function ProfileComponent({ userData }) {
       <div className="relative h-48 bg-gradient-to-r from-blue-500 to-purple-600">
         {/* Profile image */}
         <div className="absolute -bottom-16 left-8">
-          <div className="h-32 w-32 overflow-hidden rounded-full border-4 border-white shadow-lg">
-            <img
-              src={`${NEXT_PUBLIC_BASE_API_ENDPOINT}/${profile_image}`}
-              alt={full_name}
-              className="h-full w-full object-cover"
-            />
+          <div className="relative h-32 w-32 overflow-hidden rounded-full border-4 border-white bg-gray-200 shadow-lg">
+            {user?.profile_image ? (
+              <Image
+                src={`${NEXT_PUBLIC_BASE_API_ENDPOINT}/${profile_image}`}
+                alt={full_name}
+                width={128}
+                height={128}
+                className="h-full w-full object-cover"
+              />
+            ) : user?.gender === "FEMALE" ? (
+              <Image
+                src={`/avatar-female.png`}
+                alt={full_name}
+                width={128}
+                height={128}
+                className="absolute left-[50%] top-[50%] h-20 w-20 translate-x-[-50%] translate-y-[-50%] object-cover"
+              />
+            ) : (
+              <Image
+                src={`/avatar-male.png`}
+                alt={full_name}
+                width={128}
+                height={128}
+                className="absolute left-[50%] top-[50%] h-20 w-20 translate-x-[-50%] translate-y-[-50%] object-cover"
+              />
+            )}
           </div>
         </div>
 
@@ -134,7 +152,7 @@ function AboutSection({
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div className="flex items-start gap-3">
           <div className="rounded-full bg-blue-100 p-3">
-            <FaTransgender className="text-blue-600" />
+            <FaTransgender className="text-gray-600" />
           </div>
           <div>
             <p className="text-sm text-gray-500">Gender</p>
@@ -146,7 +164,7 @@ function AboutSection({
 
         <div className="flex items-start gap-3">
           <div className="rounded-full bg-blue-100 p-3">
-            <FaBirthdayCake className="text-blue-600" />
+            <FaBirthdayCake className="text-gray-600" />
           </div>
           <div>
             <p className="text-sm text-gray-500">Date of Birth</p>
@@ -158,7 +176,7 @@ function AboutSection({
 
         <div className="flex items-start gap-3">
           <div className="rounded-full bg-blue-100 p-3">
-            <FaIdCard className="text-blue-600" />
+            <FaIdCard className="text-gray-700" />
           </div>
           <div>
             <p className="text-sm text-gray-500">NID</p>
@@ -168,7 +186,7 @@ function AboutSection({
 
         <div className="flex items-start gap-3">
           <div className="rounded-full bg-blue-100 p-3">
-            <FaGlobe className="text-blue-600" />
+            <FaGlobe className="text-gray-700" />
           </div>
           <div>
             <p className="text-sm text-gray-500">Languages</p>
@@ -195,7 +213,7 @@ function ContactSection({ address, phone, email }) {
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div className="flex items-start gap-3">
           <div className="rounded-full bg-blue-100 p-3">
-            <FaEnvelope className="text-blue-600" />
+            <FaEnvelope className="text-gray-700" />
           </div>
           <div>
             <p className="text-sm text-gray-500">Email</p>
@@ -205,7 +223,7 @@ function ContactSection({ address, phone, email }) {
 
         <div className="flex items-start gap-3">
           <div className="rounded-full bg-blue-100 p-3">
-            <FaPhone className="text-blue-600" />
+            <FaPhone className="text-gray-700" />
           </div>
           <div>
             <p className="text-sm text-gray-500">Phone</p>
@@ -218,7 +236,7 @@ function ContactSection({ address, phone, email }) {
       <div className="rounded-lg border border-gray-200 bg-gray-50 p-4">
         <div className="flex items-start gap-3">
           <div className="rounded-full bg-blue-100 p-3">
-            <FaMapMarkerAlt className="text-blue-600" />
+            <FaMapMarkerAlt className="text-gray-700" />
           </div>
           <div>
             <p className="font-medium text-gray-800">{address.address}</p>
