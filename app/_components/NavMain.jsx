@@ -127,9 +127,27 @@ function NavMain({ classes }) {
                   />
                 </div>
               ) : (
-                <CgProfile className="h-8 w-8 rounded-full text-gray-600" />
+                <div className="relative overflow-hidden rounded-full border border-gray-800 p-1">
+                  {user?.gender === "FEMALE" ? (
+                    <Image
+                      src={"/avatar-female.png"}
+                      alt="Profile"
+                      width={32}
+                      height={32}
+                      className="h-3 w-3 object-cover"
+                    />
+                  ) : (
+                    <Image
+                      src={"/avatar-male.png"}
+                      alt="Profile"
+                      width={32}
+                      height={32}
+                      className="h-4 w-4 object-cover"
+                    />
+                  )}
+                </div>
               )}
-              <span className="text-sm font-light text-gray-800">
+              <span className="text-sm font-semibold text-gray-800">
                 {user?.full_name}
               </span>
             </Link>
