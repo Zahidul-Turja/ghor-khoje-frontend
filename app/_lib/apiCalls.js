@@ -38,7 +38,7 @@ export async function hasAppliedForHost() {
 
 export async function getAllCategories() {
   try {
-    const response = await axios.get(`${BASE_URL}/api/v1/place/categories/`, {
+    const response = await axios.get(`${BASE_URL}/api/v1/places/categories/`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
       },
@@ -52,7 +52,7 @@ export async function getAllCategories() {
 
 export async function getAllFacilities() {
   try {
-    const response = await axios.get(`${BASE_URL}/api/v1/place/facilities/`, {
+    const response = await axios.get(`${BASE_URL}/api/v1/places/facilities/`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
       },
@@ -63,3 +63,37 @@ export async function getAllFacilities() {
     throw error;
   }
 }
+
+// ? important
+function buildFormData(data) {
+  const formData = new FormData();
+
+  for (const key in data) {
+    if (key === "images") {
+      data.images.forEach((img, index) => {
+        formData.append(`images[${index}].image`, img.image);
+        formData.append(`images[${index}].description`, img.description);
+      });
+    } else {
+      formData.append(key, data[key]);
+    }
+  }
+
+  return formData;
+}
+
+export const createProperty = async (formData) => {
+  const fd = buildFormData(formData);
+
+  try {
+    const res = await axios.post(`${BASE_URL}/api/v1/place/`, fd, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log("Success:", res.data);
+  } catch (err) {
+    console.error("Error:", err.response?.data || err.message);
+  }
+};

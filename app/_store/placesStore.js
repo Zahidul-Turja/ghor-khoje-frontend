@@ -16,7 +16,7 @@ const usePlacesStore = create((set, get) => ({
     try {
       set({ isLoading: true });
       const response = await fetch(
-        `${BASE_ENDPOINT}/api/v1/place/?page_size=${page_size}&page=${page}`,
+        `${BASE_ENDPOINT}/api/v1/places/list/?page_size=${page_size}&page=${page}`,
       );
       const data = await response.json();
 

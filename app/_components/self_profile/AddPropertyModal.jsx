@@ -7,6 +7,8 @@ import PropertyDetails from "./form/PropertyDetails";
 import Financial from "./form/Financial";
 import Images from "./form/Images";
 
+import { createProperty } from "@/app/_lib/apiCalls";
+
 export default function AddPropertyModal({ onClose }) {
   const [activeTab, setActiveTab] = useState("basic");
   const [formData, setFormData] = useState({
@@ -91,7 +93,7 @@ export default function AddPropertyModal({ onClose }) {
 
   const handleImageUpload = (files) => {
     const newImages = Array.from(files).map((file) => ({
-      file,
+      image: file,
       preview: URL.createObjectURL(file),
       description: "",
     }));
@@ -133,8 +135,13 @@ export default function AddPropertyModal({ onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    // Add your form submission logic here
+    createProperty(formData)
+      .then((response) => {
+        console.log("Property created:", response);
+      })
+      .catch((error) => {
+        console.error("Error creating property:", error);
+      });
     onClose();
   };
 
@@ -179,7 +186,7 @@ export default function AddPropertyModal({ onClose }) {
           className="no-scrollbar overflow-y-auto p-6"
           style={{ maxHeight: "calc(90vh - 140px)" }}
         >
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} encType="multipart/form-data">
             {/* Basic Info */}
             <BasicInfo
               availableFacilities={availableFacilities}
