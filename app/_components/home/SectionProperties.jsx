@@ -16,7 +16,10 @@ function SectionProperties() {
     usePlacesStore();
 
   useEffect(() => {
-    getPlaces(pageSize, page);
+    const fetchPlaces = async () => {
+      await getPlaces(pageSize, page);
+    };
+    fetchPlaces();
   }, [page]);
 
   return (

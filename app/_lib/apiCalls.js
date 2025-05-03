@@ -86,7 +86,7 @@ export const createProperty = async (formData) => {
   const fd = buildFormData(formData);
 
   try {
-    const res = await axios.post(`${BASE_URL}/api/v1/place/`, fd, {
+    const res = await axios.post(`${BASE_URL}/api/v1/places/create/`, fd, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         "Content-Type": "multipart/form-data",

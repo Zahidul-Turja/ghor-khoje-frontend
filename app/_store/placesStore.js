@@ -22,9 +22,9 @@ const usePlacesStore = create((set, get) => ({
 
       if (response.ok) {
         set({
-          places: data.data.results,
-          nextPage: data.data.next,
-          previousPage: data.data.previous,
+          places: data.results,
+          nextPage: data.next,
+          previousPage: data.previous,
         });
       } else {
         set({ error: data.message });
@@ -40,7 +40,7 @@ const usePlacesStore = create((set, get) => ({
   getPlace: async (slug) => {
     try {
       set({ isLoading: true });
-      const response = await fetch(`${BASE_ENDPOINT}/api/v1/place/${slug}/`);
+      const response = await fetch(`${BASE_ENDPOINT}/api/v1/places/${slug}/`);
       const data = await response.json();
       console.log(data.data);
 

@@ -22,13 +22,20 @@ function PropertyCard({ property }) {
         href={`/${slug}`}
         className="relative h-52 w-full overflow-hidden rounded-lg"
       >
-        <Image
-          src={BASE_ENDPOINT + images[0].image}
-          alt={title}
-          width={400}
-          height={200}
-          className="rounded-lg object-cover"
-        />
+        {images.length > 0 && (
+          <Image
+            src={BASE_ENDPOINT + images[0].image}
+            alt={title}
+            width={400}
+            height={200}
+            className="rounded-lg object-cover"
+          />
+        )}
+        {images.length === 0 && (
+          <div className="absolute left-2 top-2 z-10 rounded-lg bg-primary/70 px-2 py-1 text-xs font-semibold text-white">
+            No Image
+          </div>
+        )}
       </Link>
 
       <div className="py-2">
