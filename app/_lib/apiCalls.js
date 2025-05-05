@@ -38,12 +38,9 @@ export async function hasAppliedForHost() {
 
 export async function getAllCategories() {
   try {
-    const response = await axios.get(`${BASE_URL}/api/v1/places/categories/`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-      },
-    });
+    const response = await axios.get(`${BASE_URL}/api/v1/places/categories/`);
     const data = response.data.data;
+    console.log("Categories response:", data);
     return data;
   } catch (error) {
     throw error;
@@ -52,11 +49,7 @@ export async function getAllCategories() {
 
 export async function getAllFacilities() {
   try {
-    const response = await axios.get(`${BASE_URL}/api/v1/places/facilities/`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-      },
-    });
+    const response = await axios.get(`${BASE_URL}/api/v1/places/facilities/`);
     const data = response.data.data;
     return data;
   } catch (error) {
