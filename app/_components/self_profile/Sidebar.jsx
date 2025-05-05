@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import {
   FaChevronLeft,
@@ -28,23 +29,26 @@ function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const [activeSection, setActiveSection] = useState("profile");
 
+  const searchParams = useSearchParams();
+  const section = searchParams.get("section");
+
   // Navigation items with their respective icons
   const navItems = [
     { name: "Profile", icon: <FaUser /> },
     { name: "Dashboard", icon: <FaTachometerAlt /> },
     { name: "Notifications", icon: <RiNotification3Fill /> },
-    { name: "Settings", icon: <FaCog /> },
     { name: "Messages", icon: <FaEnvelope /> },
     { name: "Analytics", icon: <FaChartBar /> },
     { name: "Reports", icon: <FaFileAlt /> },
-    { name: "Users", icon: <FaUsers /> },
-    { name: "Projects", icon: <FaFolderOpen /> },
+    // { name: "Users", icon: <FaUsers /> },
+    // { name: "Projects", icon: <FaFolderOpen /> },
     { name: "Tasks", icon: <FaTasks /> },
     { name: "Calendar", icon: <FaCalendarAlt /> },
-    { name: "Documentation", icon: <FaBook /> },
-    { name: "Support", icon: <FaLifeRing /> },
-    { name: "FAQ", icon: <FaQuestionCircle /> },
+    // { name: "Documentation", icon: <FaBook /> },
+    // { name: "Support", icon: <FaLifeRing /> },
+    // { name: "FAQ", icon: <FaQuestionCircle /> },
     { name: "Contact", icon: <FaPhoneAlt /> },
+    { name: "Settings", icon: <FaCog /> },
   ];
 
   return (
@@ -67,7 +71,10 @@ function Sidebar() {
             <li key={index}>
               <Link
                 href={`${CURRENT_URL}/?section=${item.name.toLowerCase()}`}
-                className={`flex items-center px-4 py-3 hover:bg-gray-100 ${collapsed ? "justify-center" : ""}`}
+                className={`flex items-center px-4 py-3 hover:bg-gray-100 ${activeSection === item.name.toLowerCase() ? "font-semibold opacity-100" : "opacity-70"} ${collapsed ? "justify-center" : ""}`}
+                onClick={() => {
+                  setActiveSection(item.name.toLowerCase());
+                }}
               >
                 <span
                   className={`text-gray-500 ${collapsed ? "text-lg" : "mr-3"}`}

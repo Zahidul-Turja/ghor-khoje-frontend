@@ -1,128 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
+
+import { FaChevronRight, FaChevronLeft } from "react-icons/fa6";
 
 import { getAllCategories } from "@/app/_lib/apiCalls";
 
-import {
-  FaCity,
-  FaUmbrellaBeach,
-  FaWater,
-  FaCampground,
-  FaHome,
-} from "react-icons/fa";
-import { LiaBedSolid } from "react-icons/lia";
-import {
-  TbMountain,
-  TbArmchair,
-  TbTrees,
-  TbBuildingCottage,
-} from "react-icons/tb";
-import { GiWoodCabin, GiMicrochip, GiTennisCourt } from "react-icons/gi";
-import { MdOutlineFoodBank } from "react-icons/md";
-import { BsHouseDoor } from "react-icons/bs";
-import { FaChevronRight, FaChevronLeft } from "react-icons/fa6";
-import Image from "next/image";
-
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_ENDPOINT;
-
-// const categories = [
-//   {
-//     id: 1,
-//     name: "City",
-//     icon: <FaCity />,
-//   },
-//   {
-//     id: 2,
-//     name: "Room",
-//     icon: <LiaBedSolid />,
-//   },
-//   {
-//     id: 3,
-//     name: "Seat",
-//     icon: <TbArmchair />,
-//   },
-//   {
-//     id: 4,
-//     name: "Mountains",
-//     icon: <TbMountain />,
-//   },
-//   {
-//     id: 5,
-//     name: "Countryside",
-//     icon: <TbTrees />,
-//   },
-//   {
-//     id: 6,
-//     name: "Luxury",
-//     icon: <MdOutlineFoodBank />,
-//   },
-//   {
-//     id: 7,
-//     name: "Bed & Breakfast",
-//     icon: <MdOutlineFoodBank />,
-//   },
-//   {
-//     id: 8,
-//     name: "Beachfront",
-//     icon: <FaUmbrellaBeach />,
-//   },
-//   {
-//     id: 9,
-//     name: "Lakefront",
-//     icon: <FaWater />,
-//   },
-//   {
-//     id: 10,
-//     name: "Camping",
-//     icon: <FaCampground />,
-//   },
-//   {
-//     id: 11,
-//     name: "Cabin",
-//     icon: <GiWoodCabin />,
-//   },
-//   {
-//     id: 12,
-//     name: "Wooden",
-//     icon: <BsHouseDoor />,
-//   },
-//   {
-//     id: 13,
-//     name: "Modern",
-//     icon: <GiMicrochip />,
-//   },
-//   {
-//     id: 14,
-//     name: "Mountains",
-//     icon: <TbMountain />,
-//   },
-//   {
-//     id: 15,
-//     name: "Rural",
-//     icon: <TbBuildingCottage />,
-//   },
-//   {
-//     id: 16,
-//     name: "Luxury",
-//     icon: <TbArmchair />,
-//   },
-//   {
-//     id: 17,
-//     name: "Sport",
-//     icon: <GiTennisCourt />,
-//   },
-//   {
-//     id: 18,
-//     name: "City",
-//     icon: <FaCity />,
-//   },
-//   {
-//     id: 19,
-//     name: "Home",
-//     icon: <FaHome />,
-//   },
-// ];
 
 function CategoryFilterNav() {
   const [activeCategory, setActiveCategory] = useState(null);
@@ -146,7 +31,7 @@ function CategoryFilterNav() {
 
   const handleScroll = (direction) => {
     const container = document.getElementById("category-container");
-    const scrollAmount = 200;
+    const scrollAmount = 400;
     if (direction === "left") {
       container.scrollLeft -= scrollAmount;
       setScrollPosition(container.scrollLeft);
@@ -157,7 +42,7 @@ function CategoryFilterNav() {
   };
 
   return (
-    <div className="relative mx-auto w-full max-w-screen-xl">
+    <div className="relative mx-auto w-full max-w-screen-xl px-6">
       <button
         onClick={() => handleScroll("left")}
         className="absolute left-0 top-1/2 z-10 -translate-y-1/2 transform rounded-full bg-white p-2 shadow-md hover:bg-gray-100"
