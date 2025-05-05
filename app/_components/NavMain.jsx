@@ -33,8 +33,10 @@ function NavMain({ classes }) {
   useEffect(() => {
     const checkHostApplicationStatus = async () => {
       try {
-        const response = await hasAppliedForHost();
-        setHasApplied(response.has_applied);
+        if (user.user_type !== "LANDLORD") {
+          const response = await hasAppliedForHost();
+          setHasApplied(response.has_applied);
+        }
       } catch (error) {
         console.error("Error checking host application status:", error);
       }
