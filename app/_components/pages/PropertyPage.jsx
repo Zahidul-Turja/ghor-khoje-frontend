@@ -46,7 +46,7 @@ function PropertyPage() {
             num_of_balconies={place?.num_of_balconies}
             area_in_sqft={place?.area_in_sqft}
           />
-          <Amenities />
+          <Amenities amenities={place?.facilities} />
         </div>
 
         <div className="sticky top-16 my-8 h-fit w-[35%]">
