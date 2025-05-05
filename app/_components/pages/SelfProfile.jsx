@@ -8,6 +8,7 @@ import { useSearchParams } from "next/navigation";
 import Dashboard from "../self_profile/Dashboard";
 import Notifications from "../self_profile/Notifications";
 import Messages from "../self_profile/Messages";
+import Analytics from "../self_profile/Analytics";
 
 function SelfProfile() {
   const searchParams = useSearchParams();
@@ -22,6 +23,7 @@ function SelfProfile() {
           {section === "dashboard" && <Dashboard />}
           {section === "notifications" && <Notifications />}
           {section === "messages" && <Messages />}
+          {section === "analytics" && <Analytics />}
         </Layout>
       </BoundingBox>
     </>

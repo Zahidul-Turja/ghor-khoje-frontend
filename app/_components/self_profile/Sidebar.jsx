@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FaChevronLeft,
   FaChevronRight,
@@ -50,6 +50,12 @@ function Sidebar() {
     // { name: "Contact", icon: <FaPhoneAlt /> },
     { name: "Settings", icon: <FaCog /> },
   ];
+
+  useEffect(() => {
+    if (section) {
+      setActiveSection(section);
+    }
+  }, []);
 
   return (
     <div

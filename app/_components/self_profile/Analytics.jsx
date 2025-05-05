@@ -1,13 +1,12 @@
-import { Clock, AlertCircle, Construction } from "lucide-react";
-
+import { Construction } from "lucide-react";
 import InProgress from "../InProgress";
 
-function Messages() {
+function Analytics() {
   return (
     <div className="min-h-screen bg-gradient-to-br px-4 py-12 sm:px-6">
       <div className="mx-auto">
         <div className="mb-6 flex items-center justify-between">
-          <h1 className="text-3xl font-bold">Messages</h1>
+          <h1 className="text-3xl font-bold">Analytics</h1>
           <div className="flex gap-2">
             <div className="rounded-full bg-indigo-600 p-2 shadow-md">
               <Construction size={20} className="text-white" />
@@ -21,4 +20,4 @@ function Messages() {
   );
 }
 
-export default Messages;
+export default Analytics;
