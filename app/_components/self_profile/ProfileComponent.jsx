@@ -48,7 +48,7 @@ export default function ProfileComponent({ userData }) {
   return (
     <div className="mx-auto max-w-5xl overflow-hidden rounded-lg bg-white shadow-lg">
       {/* Header with cover image */}
-      <div className="relative h-48 bg-gradient-to-r from-blue-500 to-purple-600">
+      <div className="relative h-48 bg-gradient-to-r from-primary/80 to-primary/70">
         {/* Profile image */}
         <div className="absolute -bottom-16 left-8">
           <div className="relative h-32 w-32 overflow-hidden rounded-full border-4 border-white bg-gray-200 shadow-lg">
@@ -81,7 +81,7 @@ export default function ProfileComponent({ userData }) {
         </div>
 
         {/* Edit profile button - just for UI, no functionality */}
-        <button className="absolute right-4 top-4 flex items-center gap-2 rounded-full bg-white px-4 py-2 text-blue-600 shadow-md transition duration-300 hover:bg-blue-50">
+        <button className="absolute right-4 top-4 flex items-center gap-2 rounded-full bg-white px-4 py-2 text-gray-900 shadow-md transition duration-300 hover:bg-blue-50">
           <FaPen size={14} />
           <span>Edit Profile</span>
         </button>

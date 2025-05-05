@@ -39,7 +39,7 @@ function Sidebar() {
     { name: "Notifications", icon: <RiNotification3Fill /> },
     { name: "Messages", icon: <FaEnvelope /> },
     { name: "Analytics", icon: <FaChartBar /> },
-    { name: "Reports", icon: <FaFileAlt /> },
+    // { name: "Reports", icon: <FaFileAlt /> },
     // { name: "Users", icon: <FaUsers /> },
     // { name: "Projects", icon: <FaFolderOpen /> },
     { name: "Tasks", icon: <FaTasks /> },
@@ -47,7 +47,7 @@ function Sidebar() {
     // { name: "Documentation", icon: <FaBook /> },
     // { name: "Support", icon: <FaLifeRing /> },
     // { name: "FAQ", icon: <FaQuestionCircle /> },
-    { name: "Contact", icon: <FaPhoneAlt /> },
+    // { name: "Contact", icon: <FaPhoneAlt /> },
     { name: "Settings", icon: <FaCog /> },
   ];
 
