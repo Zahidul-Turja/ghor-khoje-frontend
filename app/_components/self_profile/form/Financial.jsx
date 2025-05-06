@@ -13,7 +13,7 @@ function Financial({
           </label>
           <div className="relative">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-              <span className="text-gray-500">$</span>
+              <span className="text-gray-500">৳</span>
             </div>
             <input
               type="number"
@@ -33,7 +33,7 @@ function Financial({
           </label>
           <div className="relative">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-              <span className="text-gray-500">$</span>
+              <span className="text-gray-500">৳</span>
             </div>
             <input
               type="number"
@@ -73,19 +73,19 @@ function Financial({
             <div className="flex justify-between">
               <span className="text-gray-600">Monthly Rent:</span>
               <span className="font-medium">
-                ${formData.rent_per_month.toFixed(2)}
+                ৳{formData.rent_per_month.toFixed(2)}
               </span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Extra Bills:</span>
               <span className="font-medium">
-                ${formData.extra_bills.toFixed(2)}
+                ৳{formData.extra_bills.toFixed(2)}
               </span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Total Monthly:</span>
               <span className="font-medium">
-                ${(formData.rent_per_month + formData.extra_bills).toFixed(2)}
+                ৳{(formData.rent_per_month + formData.extra_bills).toFixed(2)}
               </span>
             </div>
             <div className="border-t border-primary/20 pt-2">
@@ -94,7 +94,7 @@ function Financial({
                   Required Prepayment:
                 </span>
                 <span className="font-bold text-primary/90">
-                  $
+                  ৳
                   {(
                     formData.num_prepayment_months *
                     (formData.rent_per_month + formData.extra_bills)

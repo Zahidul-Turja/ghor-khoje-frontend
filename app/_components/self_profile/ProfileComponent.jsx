@@ -46,7 +46,7 @@ export default function ProfileComponent({ userData }) {
   } = user;
 
   return (
-    <div className="mx-auto max-w-5xl overflow-hidden rounded-lg bg-white shadow-lg">
+    <div className="mx-auto overflow-hidden rounded-lg bg-white shadow-lg">
       {/* Header with cover image */}
       <div className="relative h-48 bg-gradient-to-r from-primary/80 to-primary/70">
         {/* Profile image */}

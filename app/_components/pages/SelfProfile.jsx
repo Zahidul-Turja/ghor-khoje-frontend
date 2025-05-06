@@ -9,6 +9,9 @@ import Dashboard from "../self_profile/Dashboard";
 import Notifications from "../self_profile/Notifications";
 import Messages from "../self_profile/Messages";
 import Analytics from "../self_profile/Analytics";
+import Settings from "../self_profile/Settings";
+import Tasks from "../self_profile/Tasks";
+import Calendar from "../self_profile/Calendar";
 
 function SelfProfile() {
   const searchParams = useSearchParams();
@@ -24,6 +27,9 @@ function SelfProfile() {
           {section === "notifications" && <Notifications />}
           {section === "messages" && <Messages />}
           {section === "analytics" && <Analytics />}
+          {section === "tasks" && <Tasks />}
+          {section === "calendar" && <Calendar />}
+          {section === "settings" && <Settings />}
         </Layout>
       </BoundingBox>
     </>

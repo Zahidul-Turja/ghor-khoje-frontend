@@ -66,8 +66,8 @@ function Notifications() {
         : notifications.filter((n) => n.read);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 px-4 py-12 sm:px-6">
-      <div className="mx-auto max-w-4xl">
+    <div className="min-h-screen sm:px-6">
+      <div className="mx-auto">
         <div className="mb-6 flex items-center justify-between">
           <h1 className="text-3xl font-bold text-gray-900">Notifications</h1>
           <div className="flex items-center space-x-2">

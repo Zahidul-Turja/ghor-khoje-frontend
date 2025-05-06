@@ -23,7 +23,7 @@ function InProgress() {
       <div className="flex flex-col items-center justify-center p-8 text-center">
         <div id="lottie-container" className="h-32 w-64">
           <div className="flex h-full w-full items-center justify-center">
-            <div className="h-12 w-12 animate-spin rounded-full border-4 border-gray-200 border-t-primary/80"></div>
+            <div className="h-12 w-12 animate-spin rounded-full border-4 border-gray-200 border-t-gray-600"></div>
           </div>
         </div>
 
@@ -37,7 +37,7 @@ function InProgress() {
 
         <div className="mt-8 flex flex-col items-center">
           <div className="h-2 w-64 overflow-hidden rounded-full bg-gray-200">
-            <div className="h-full w-2/3 animate-pulse rounded-full bg-gradient-to-r from-blue-500 to-indigo-600"></div>
+            <div className="h-full w-2/3 animate-pulse rounded-full bg-gradient-to-r from-primary/60 to-primary/70"></div>
           </div>
           <p className="mt-2 text-sm font-medium text-gray-600">67% Complete</p>
         </div>
@@ -50,7 +50,7 @@ function InProgress() {
             </span>
           </div>
 
-          <button className="flex items-center rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-md transition hover:bg-indigo-700">
+          <button className="flex items-center rounded-lg bg-primary/80 px-4 py-2 text-sm font-medium text-white shadow-md transition hover:bg-primary/90">
             Get Notified
           </button>
         </div>
