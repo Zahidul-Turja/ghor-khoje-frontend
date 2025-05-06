@@ -7,6 +7,10 @@ import { IoMdBed } from "react-icons/io";
 import { FaBath, FaUsers } from "react-icons/fa";
 import AddPropertyModal from "./AddPropertyModal";
 
+import { getUserProperties } from "@/app/_lib/apiCalls";
+
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_ENDPOINT;
+
 const dummyPlaces = [
   {
     id: 1,
@@ -109,6 +113,27 @@ const dummyPlaces = [
 ];
 
 export default function Dashboard() {
+  const [places, setPlaces] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchPlaces = async () => {
+      try {
+        const response = await getUserProperties();
+        setPlaces(response);
+
+        console.log("Properties fetched:", response);
+      } catch (error) {
+        setError("Failed to fetch properties");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPlaces();
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="mx-auto px-4 py-6">
@@ -116,7 +141,15 @@ export default function Dashboard() {
           Property Dashboard
         </h1>
         <div className="overflow-hidden rounded-xl bg-white shadow-sm">
-          <Listings places={dummyPlaces} />
+          {loading && (
+            <div className="flex items-center justify-center p-4">
+              <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-gray-600"></div>
+            </div>
+          )}
+          {error && <div className="p-4 text-red-500">{error}</div>}
+          {!loading && !error && places?.length > 0 && (
+            <Listings places={places} />
+          )}
         </div>
       </div>
     </div>
@@ -229,7 +262,7 @@ function Listings({ places }) {
                     <div className="flex items-center space-x-3">
                       <div className="flex-shrink-0">
                         <Image
-                          src={place.image}
+                          src={`${BASE_URL}${place.images[0].image}`}
                           alt={place.title}
                           width={200}
                           height={200}
@@ -241,7 +274,7 @@ function Listings({ places }) {
                           {place.title}
                         </div>
                         <div className="text-xs text-gray-500">
-                          {place.category}
+                          {place.category.name}
                         </div>
                       </div>
                     </div>

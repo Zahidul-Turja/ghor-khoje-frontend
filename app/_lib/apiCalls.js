@@ -90,3 +90,20 @@ export const createProperty = async (formData) => {
     console.error("Error:", err.response?.data || err.message);
   }
 };
+
+export const getUserProperties = async () => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/api/v1/user/listed-properties/`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      },
+    );
+
+    return response.data.results;
+  } catch (error) {
+    throw error;
+  }
+};
