@@ -291,7 +291,7 @@ function SocialSection({ social_links }) {
             rel="noopener noreferrer"
             className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 transition duration-300 hover:border-blue-300 hover:bg-blue-50"
           >
-            <div className="rounded-full bg-pink-600 p-3 text-white">
+            <div className="rounded-full bg-pink-600 p-2 text-white">
               <FaInstagram />
             </div>
             <span className="font-medium">Instagram</span>
@@ -305,7 +305,7 @@ function SocialSection({ social_links }) {
             rel="noopener noreferrer"
             className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 transition duration-300 hover:border-blue-300 hover:bg-blue-50"
           >
-            <div className="rounded-full bg-blue-700 p-3 text-white">
+            <div className="rounded-full bg-blue-700 p-2 text-white">
               <FaLinkedin />
             </div>
             <span className="font-medium">LinkedIn</span>
@@ -319,7 +319,7 @@ function SocialSection({ social_links }) {
             rel="noopener noreferrer"
             className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 transition duration-300 hover:border-blue-300 hover:bg-blue-50"
           >
-            <div className="rounded-full bg-red-600 p-3 text-white">
+            <div className="rounded-full bg-red-600 p-2 text-white">
               <FaYoutube />
             </div>
             <span className="font-medium">YouTube</span>
@@ -332,7 +332,7 @@ function SocialSection({ social_links }) {
             rel="noopener noreferrer"
             className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 transition duration-300 hover:border-blue-300 hover:bg-blue-50"
           >
-            <div className="rounded-full bg-[#0088CC] p-3 text-white">
+            <div className="rounded-full bg-[#0088CC] p-2 text-white">
               <FaTelegramPlane />
             </div>
             <span className="font-medium">Telegram</span>
