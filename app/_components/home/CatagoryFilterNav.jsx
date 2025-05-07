@@ -60,8 +60,7 @@ function CategoryFilterNav({ pageSize, page }) {
     <div className="relative mx-auto w-full max-w-screen-xl px-6">
       <button
         onClick={() => handleScroll("left")}
-        className="absolute left-0 top-1/2 z-10 -translate-y-1/2 transform rounded-full bg-white p-2 shadow-md hover:bg-gray-100"
-        style={{ display: scrollPosition <= 0 ? "none" : "block" }}
+        className="absolute left-0 top-1/2 z-10 block -translate-y-1/2 transform rounded-full bg-white p-2 shadow-md hover:bg-gray-100"
       >
         <FaChevronLeft />
       </button>
