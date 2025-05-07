@@ -14,8 +14,7 @@ function CategoryFilterNav({ pageSize, page }) {
   const [activeCategory, setActiveCategory] = useState(null);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [categories, setCategories] = useState([]);
-  const { places, isLoading, error, getPlaces, nextPage, previousPage } =
-    usePlacesStore();
+  const { getPlaces } = usePlacesStore();
 
   useEffect(() => {
     const fetchCategories = async () => {

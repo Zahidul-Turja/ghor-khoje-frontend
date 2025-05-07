@@ -7,6 +7,7 @@ import { MdTune, MdOutlineSort } from "react-icons/md";
 import CategoryFilterNav from "@/app/_components/home/CatagoryFilterNav";
 import Properties from "./Properties";
 import usePlacesStore from "@/app/_store/placesStore";
+import Empty from "./Empty";
 
 function SectionProperties() {
   const [page, setPage] = useState(1);
@@ -46,9 +47,7 @@ function SectionProperties() {
       {places && Array.isArray(places) && places.length > 0 ? (
         <Properties places={places} />
       ) : (
-        <div className="py-8 text-center">
-          {isLoading ? "Loading properties..." : "No properties found"}
-        </div>
+        <Empty />
       )}
 
       {places && nextPage && (
