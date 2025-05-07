@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_ENDPOINT;
 
-function ImageGallery({ images }) {
+function ImageGallery({ images, onOpen }) {
   // Return early if there are no images
   if (!images || images.length === 0) {
     return (
@@ -136,7 +136,7 @@ function ImageGallery({ images }) {
             className="h-full w-full object-cover"
           />
         </div>
-        <div className="relative col-span-1 cursor-pointer">
+        <button onClick={onOpen} className="relative col-span-1 cursor-pointer">
           {images.length > 4 && (
             <>
               <Image
@@ -164,7 +164,7 @@ function ImageGallery({ images }) {
               className="h-full w-full rounded-br-2xl object-cover"
             />
           )}
-        </div>
+        </button>
       </>
     );
   };

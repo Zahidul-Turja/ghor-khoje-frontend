@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { FaRegHeart } from "react-icons/fa";
 
@@ -13,8 +13,10 @@ import Reviews from "@/app/_components/property_details/Reviews";
 import ChatIcon from "@/app/_components/ChatIcon";
 
 import usePlacesStore from "@/app/_store/placesStore";
+import ImagesModal from "../property_details/ImagesModal";
 
 function PropertyPage() {
+  const [openModal, setOpenModal] = useState(false);
   let path = usePathname();
   path = path.replace("/", "");
 
@@ -34,7 +36,21 @@ function PropertyPage() {
         </div>
       </div>
 
-      {place && <ImageGellary images={place?.images} />}
+      {place && (
+        <ImageGellary
+          images={place?.images}
+          onOpen={() => setOpenModal(true)}
+        />
+      )}
+
+      {place && openModal && (
+        <ImagesModal
+          images={place?.images}
+          onClose={() => {
+            setOpenModal(false);
+          }}
+        />
+      )}
 
       <div className="my-4 flex gap-8">
         <div className="w-[65%]">
