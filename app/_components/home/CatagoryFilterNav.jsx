@@ -6,13 +6,16 @@ import Image from "next/image";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa6";
 
 import { getAllCategories } from "@/app/_lib/apiCalls";
+import usePlacesStore from "@/app/_store/placesStore";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_ENDPOINT;
 
-function CategoryFilterNav() {
+function CategoryFilterNav({ pageSize, page }) {
   const [activeCategory, setActiveCategory] = useState(null);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [categories, setCategories] = useState([]);
+  const { places, isLoading, error, getPlaces, nextPage, previousPage } =
+    usePlacesStore();
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -20,6 +23,8 @@ function CategoryFilterNav() {
         const response = await getAllCategories();
         if (response) {
           setCategories(response);
+          console.log("Categories:", response);
+          console.log("Active Category:", activeCategory);
         }
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -28,6 +33,17 @@ function CategoryFilterNav() {
 
     fetchCategories();
   }, []);
+
+  useEffect(() => {
+    const fetchPlaces = async () => {
+      await getPlaces(pageSize, page, activeCategory);
+    };
+
+    if (activeCategory) {
+      fetchPlaces();
+      console.log("Active Category:", activeCategory);
+    }
+  }, [activeCategory]);
 
   const handleScroll = (direction) => {
     const container = document.getElementById("category-container");
@@ -60,7 +76,7 @@ function CategoryFilterNav() {
             <div
               key={category.id}
               className={`flex min-w-fit cursor-pointer flex-col items-center gap-2 rounded-xl px-2 py-3 transition-all hover:bg-gray-100 ${activeCategory === category.id ? "border-b-2 border-black font-medium" : ""}`}
-              onClick={() => setActiveCategory(category.id)}
+              onClick={() => setActiveCategory(category.slug)}
             >
               <div className="relative flex h-6 w-6 items-center justify-center">
                 <Image

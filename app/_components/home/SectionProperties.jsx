@@ -19,6 +19,7 @@ function SectionProperties() {
     const fetchPlaces = async () => {
       await getPlaces(pageSize, page);
     };
+
     fetchPlaces();
   }, [page]);
 
@@ -26,7 +27,7 @@ function SectionProperties() {
     <section className="mx-auto max-w-screen-2xl px-0 py-10 md:px-6 lg:px-8">
       <div className="my-8 flex w-full flex-col items-center justify-between gap-4 rounded-full px-6 shadow-lg md:flex-row">
         <div className="order-2 w-full md:order-1 md:w-[75%] lg:w-[82%]">
-          <CategoryFilterNav />
+          <CategoryFilterNav pageSize={pageSize} page={page} />
         </div>
 
         <div className="order-1 flex w-full items-center justify-around gap-2 md:order-2">
