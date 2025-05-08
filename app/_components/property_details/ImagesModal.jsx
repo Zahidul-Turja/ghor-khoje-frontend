@@ -48,7 +48,7 @@ function ImagesModal({ images, onClose }) {
           {/* Image */}
           <div className="relative flex h-96 w-full flex-grow items-center justify-center bg-gray-100 p-2">
             <img
-              src={`${BASE_URL}${currentImage.image || "/api/placeholder/400/400"}`}
+              src={`${currentImage.image || "/api/placeholder/400/400"}`}
               alt={`Room view ${currentIndex + 1}`}
               className="max-h-96 max-w-full object-cover"
             />
@@ -89,7 +89,7 @@ function ImagesModal({ images, onClose }) {
                 }`}
               >
                 <img
-                  src={`${BASE_URL}${img.image || "/api/placeholder/400/400"}`}
+                  src={`${img.image || "/api/placeholder/400/400"}`}
                   alt={`Thumbnail ${idx + 1}`}
                   className="h-full w-full rounded object-cover"
                 />

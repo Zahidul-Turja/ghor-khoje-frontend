@@ -21,7 +21,7 @@ function ImageGallery({ images, onOpen }) {
       return (
         <div className="col-span-4">
           <Image
-            src={BASE_URL + images[0].image}
+            src={images[0].image}
             alt="Property image"
             width={1000}
             height={1000}
@@ -37,7 +37,7 @@ function ImageGallery({ images, onOpen }) {
         <>
           <div className="col-span-2">
             <Image
-              src={BASE_URL + images[0].image}
+              src={images[0].image}
               alt="Property image"
               width={1000}
               height={1000}
@@ -46,7 +46,7 @@ function ImageGallery({ images, onOpen }) {
           </div>
           <div className="col-span-2">
             <Image
-              src={BASE_URL + images[1].image}
+              src={images[1].image}
               alt="Property image"
               width={1000}
               height={1000}
@@ -63,7 +63,7 @@ function ImageGallery({ images, onOpen }) {
         <>
           <div className="col-span-2 row-span-2">
             <Image
-              src={BASE_URL + images[0].image}
+              src={images[0].image}
               alt="Property image"
               width={1000}
               height={1000}
@@ -72,7 +72,7 @@ function ImageGallery({ images, onOpen }) {
           </div>
           <div className="col-span-2">
             <Image
-              src={BASE_URL + images[1].image}
+              src={images[1].image}
               alt="Property image"
               width={1000}
               height={1000}
@@ -81,7 +81,7 @@ function ImageGallery({ images, onOpen }) {
           </div>
           <div className="col-span-2">
             <Image
-              src={BASE_URL + images[2].image}
+              src={images[2].image}
               alt="Property image"
               width={1000}
               height={1000}
@@ -98,7 +98,7 @@ function ImageGallery({ images, onOpen }) {
         {/* First Column: Single Image with half the width and full height */}
         <div className="col-span-2 row-span-2">
           <Image
-            src={BASE_URL + images[0].image}
+            src={images[0].image}
             alt="Property image"
             width={1000}
             height={1000}
@@ -109,7 +109,7 @@ function ImageGallery({ images, onOpen }) {
         {/* Second Column: Two Images */}
         <div className="col-span-1">
           <Image
-            src={BASE_URL + images[1].image}
+            src={images[1].image}
             alt="Property image"
             width={1000}
             height={1000}
@@ -118,7 +118,7 @@ function ImageGallery({ images, onOpen }) {
         </div>
         <div className="col-span-1">
           <Image
-            src={BASE_URL + images[2].image}
+            src={images[2].image}
             alt="Property image"
             width={1000}
             height={1000}
@@ -129,7 +129,7 @@ function ImageGallery({ images, onOpen }) {
         {/* Third Column: One Image, potentially with overlay */}
         <div className="relative col-span-1">
           <Image
-            src={BASE_URL + images[3].image}
+            src={images[3].image}
             alt="Property image"
             width={1000}
             height={1000}
@@ -140,7 +140,7 @@ function ImageGallery({ images, onOpen }) {
           {images.length > 4 && (
             <>
               <Image
-                src={BASE_URL + images[4].image}
+                src={images[4].image}
                 alt="Property image"
                 width={1000}
                 height={1000}
@@ -157,7 +157,7 @@ function ImageGallery({ images, onOpen }) {
           )}
           {images.length === 4 && (
             <Image
-              src={BASE_URL + images[3].image}
+              src={images[3].image}
               alt="Property image"
               width={1000}
               height={1000}

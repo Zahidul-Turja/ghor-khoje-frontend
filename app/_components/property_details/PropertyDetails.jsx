@@ -36,7 +36,7 @@ function PropertyDetails({
             {owner?.profile_image ? (
               <div className="relative h-16 w-16 overflow-hidden rounded-full">
                 <Image
-                  src={BASE_URL + owner?.profile_image}
+                  src={owner?.profile_image}
                   alt="Host"
                   width={1000}
                   height={1000}
