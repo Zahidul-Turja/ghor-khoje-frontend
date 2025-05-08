@@ -17,6 +17,21 @@ function Location({ activeTab, formData, handleInputChange, setFormData }) {
   useEffect(() => {
     setIsBrowser(true);
 
+    // Fix marker icon issues
+    if (typeof window !== "undefined" && window.L) {
+      // Fix for marker icons - this needs to run before map initialization
+      delete window.L.Icon.Default.prototype._getIconUrl;
+
+      window.L.Icon.Default.mergeOptions({
+        iconRetinaUrl:
+          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png",
+        iconUrl:
+          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png",
+        shadowUrl:
+          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
+      });
+    }
+
     // Cleanup function to destroy the map when component unmounts
     return () => {
       if (mapInstanceRef.current) {
@@ -290,19 +305,56 @@ function Location({ activeTab, formData, handleInputChange, setFormData }) {
     // Load Leaflet dynamically in the browser
     if (isBrowser) {
       if (!window.L) {
+        // First load CSS to ensure marker icons display correctly
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href =
+          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css";
+        link.integrity =
+          "sha512-Zcn6bjR/8RZbLEpLIeOwNtzREBAJhXpHQ8Fk+PwGUv8UhAY5r+ux/dFy0EV6ERQEiJ3WEh6cB7wM4fh2j/2v9g==";
+        link.crossOrigin = "anonymous";
+        document.head.appendChild(link);
+
+        // Then load the script
         const script = document.createElement("script");
         script.src =
           "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js";
         script.integrity =
           "sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg==";
         script.crossOrigin = "anonymous";
-        script.onload = initMap;
+        script.onload = () => {
+          // Fix marker icons after script loads but before map initialization
+          delete window.L.Icon.Default.prototype._getIconUrl;
+
+          window.L.Icon.Default.mergeOptions({
+            iconRetinaUrl:
+              "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png",
+            iconUrl:
+              "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png",
+            shadowUrl:
+              "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
+          });
+
+          initMap();
+        };
         script.onerror = () => {
           setError("Failed to load map library");
           setMapLoaded(true);
         };
         document.body.appendChild(script);
       } else {
+        // Fix marker icons if Leaflet is already loaded
+        delete window.L.Icon.Default.prototype._getIconUrl;
+
+        window.L.Icon.Default.mergeOptions({
+          iconRetinaUrl:
+            "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png",
+          iconUrl:
+            "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png",
+          shadowUrl:
+            "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
+        });
+
         initMap();
       }
     }

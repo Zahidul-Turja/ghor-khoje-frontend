@@ -183,7 +183,7 @@ export default function AddPropertyModal({ onClose }) {
         </div>
 
         <div
-          className="no-scrollbar overflow-y-auto p-6"
+          className="no-scrollbar overflow-y-auto px-6 pb-24 pt-6"
           style={{ maxHeight: "calc(90vh - 140px)" }}
         >
           <form onSubmit={handleSubmit} encType="multipart/form-data">
@@ -232,7 +232,7 @@ export default function AddPropertyModal({ onClose }) {
               handleDrop={handleDrop}
             />
 
-            <div className="mt-8 flex justify-end space-x-4 border-t border-gray-200 pt-6">
+            <div className="absolute bottom-0 left-0 right-0 z-10 mt-8 flex justify-end space-x-4 border-t border-gray-200 bg-white px-6 py-4 pt-6">
               <button
                 type="button"
                 onClick={onClose}
