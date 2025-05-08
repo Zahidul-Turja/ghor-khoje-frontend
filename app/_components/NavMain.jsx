@@ -121,7 +121,7 @@ function NavMain({ classes }) {
               {user?.profile_image ? (
                 <div className="relative h-8 w-8 overflow-hidden rounded-full">
                   <Image
-                    src={`${BASE_URL}${user?.profile_image}`}
+                    src={`${user?.profile_image}`}
                     alt="Profile"
                     width={32}
                     height={32}

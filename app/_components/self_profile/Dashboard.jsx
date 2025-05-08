@@ -135,8 +135,8 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="mx-auto px-4 py-6">
+    <div className="min-h-screen bg-gray-50 shadow-lg">
+      <div className="mx-auto px-8 py-8">
         <h1 className="mb-6 text-2xl font-bold text-gray-800">
           Property Dashboard
         </h1>
