@@ -200,6 +200,7 @@ export default function AddPropertyModal({ onClose }) {
             <Location
               activeTab={activeTab}
               formData={formData}
+              setFormData={setFormData}
               handleInputChange={handleInputChange}
             />
 

@@ -262,7 +262,7 @@ function Listings({ places }) {
                     <div className="flex items-center space-x-3">
                       <div className="flex-shrink-0">
                         <Image
-                          src={`${BASE_URL}${place.images[0].image}`}
+                          src={`${place.images[0].image}`}
                           alt={place.title}
                           width={200}
                           height={200}

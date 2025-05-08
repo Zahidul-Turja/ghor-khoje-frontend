@@ -1,8 +1,9 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import "leaflet/dist/leaflet.css";
+import { MapPin } from "lucide-react"; // Added import for MapPin
 
-function Location({ activeTab, formData, handleInputChange }) {
+function Location({ activeTab, formData, handleInputChange, setFormData }) {
   // Map functionality
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
@@ -10,9 +11,12 @@ function Location({ activeTab, formData, handleInputChange }) {
   const [mapLoaded, setMapLoaded] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [error, setError] = useState(null);
+  const [isBrowser, setIsBrowser] = useState(false);
 
-  // Initialize map on component mount
+  // Set isBrowser to true when component mounts in the browser
   useEffect(() => {
+    setIsBrowser(true);
+
     // Cleanup function to destroy the map when component unmounts
     return () => {
       if (mapInstanceRef.current) {
@@ -22,26 +26,13 @@ function Location({ activeTab, formData, handleInputChange }) {
     };
   }, []);
 
-  // Load CSS first to prevent display issues
+  // Initialize map when component is visible and in browser environment
   useEffect(() => {
-    // Only add the CSS link if it doesn't already exist
-    if (!document.querySelector('link[href*="leaflet.css"]')) {
-      const link = document.createElement("link");
-      link.rel = "stylesheet";
-      link.href =
-        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css";
-      link.integrity =
-        "sha512-Zcn6bjR/8RZbLEpLIeOwNtzREBAJhXpHQ8Fk+PwGUv8UhAY5r+ux/dFy0EV6ERQEiJ3WEh6cB7wM4fh2j/2v9g==";
-      link.crossOrigin = "anonymous";
-      document.head.appendChild(link);
-    }
-  }, []);
+    // Skip if not in browser, tab not active, or map already loaded
+    if (!isBrowser || activeTab !== "location" || !mapRef.current || mapLoaded)
+      return;
 
-  // Then load the script and initialize map
-  useEffect(() => {
-    // Skip if already loaded or ref not available
-    if (mapLoaded || !mapRef.current) return;
-
+    // Function to initialize map
     const initMap = () => {
       try {
         // Clear any existing map
@@ -296,24 +287,40 @@ function Location({ activeTab, formData, handleInputChange }) {
       }
     };
 
-    // Load Leaflet if not already loaded
-    if (!window.L) {
-      const script = document.createElement("script");
-      script.src =
-        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js";
-      script.integrity =
-        "sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg==";
-      script.crossOrigin = "anonymous";
-      script.onload = initMap;
-      script.onerror = () => {
-        setError("Failed to load map library");
-        setMapLoaded(true);
-      };
-      document.body.appendChild(script);
-    } else {
-      initMap();
+    // Load Leaflet dynamically in the browser
+    if (isBrowser) {
+      if (!window.L) {
+        const script = document.createElement("script");
+        script.src =
+          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js";
+        script.integrity =
+          "sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg==";
+        script.crossOrigin = "anonymous";
+        script.onload = initMap;
+        script.onerror = () => {
+          setError("Failed to load map library");
+          setMapLoaded(true);
+        };
+        document.body.appendChild(script);
+      } else {
+        initMap();
+      }
     }
-  }, [mapRef.current]);
+  }, [isBrowser, activeTab, formData?.latitude, formData?.longitude]);
+
+  // Reinitialize map when tab becomes active
+  useEffect(() => {
+    if (
+      activeTab === "location" &&
+      isBrowser &&
+      mapRef.current &&
+      mapInstanceRef.current
+    ) {
+      setTimeout(() => {
+        mapInstanceRef.current.invalidateSize();
+      }, 100);
+    }
+  }, [activeTab, isBrowser]);
 
   return (
     <div className={activeTab === "location" ? "block" : "hidden"}>
@@ -326,7 +333,7 @@ function Location({ activeTab, formData, handleInputChange }) {
             <input
               type="text"
               name="city"
-              value={formData.city}
+              value={formData.city || ""}
               onChange={handleInputChange}
               className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
             />
@@ -338,7 +345,7 @@ function Location({ activeTab, formData, handleInputChange }) {
             <input
               type="text"
               name="area_name"
-              value={formData.area_name}
+              value={formData.area_name || ""}
               onChange={handleInputChange}
               className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
             />
@@ -353,7 +360,7 @@ function Location({ activeTab, formData, handleInputChange }) {
             <input
               type="text"
               name="area_code"
-              value={formData.area_code}
+              value={formData.area_code || ""}
               onChange={handleInputChange}
               className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
             />
@@ -365,7 +372,7 @@ function Location({ activeTab, formData, handleInputChange }) {
             <input
               type="text"
               name="block_name"
-              value={formData.block_name}
+              value={formData.block_name || ""}
               onChange={handleInputChange}
               className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
             />
@@ -380,7 +387,7 @@ function Location({ activeTab, formData, handleInputChange }) {
             <input
               type="text"
               name="street_name"
-              value={formData.street_name}
+              value={formData.street_name || ""}
               onChange={handleInputChange}
               className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
             />
@@ -392,7 +399,7 @@ function Location({ activeTab, formData, handleInputChange }) {
             <input
               type="text"
               name="house_name"
-              value={formData.house_name}
+              value={formData.house_name || ""}
               onChange={handleInputChange}
               className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
             />
@@ -407,7 +414,7 @@ function Location({ activeTab, formData, handleInputChange }) {
             <input
               type="text"
               name="house_number"
-              value={formData.house_number}
+              value={formData.house_number || ""}
               onChange={handleInputChange}
               className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
             />
@@ -419,7 +426,7 @@ function Location({ activeTab, formData, handleInputChange }) {
             <input
               type="text"
               name="apartment_number"
-              value={formData.apartment_number}
+              value={formData.apartment_number || ""}
               onChange={handleInputChange}
               className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
             />
@@ -431,7 +438,7 @@ function Location({ activeTab, formData, handleInputChange }) {
             <input
               type="text"
               name="floor_number"
-              value={formData.floor_number}
+              value={formData.floor_number || ""}
               onChange={handleInputChange}
               className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
             />
@@ -446,7 +453,7 @@ function Location({ activeTab, formData, handleInputChange }) {
             <input
               type="number"
               name="latitude"
-              value={formData.latitude}
+              value={formData.latitude || ""}
               onChange={handleInputChange}
               step="0.000001"
               className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
@@ -459,7 +466,7 @@ function Location({ activeTab, formData, handleInputChange }) {
             <input
               type="number"
               name="longitude"
-              value={formData.longitude}
+              value={formData.longitude || ""}
               onChange={handleInputChange}
               step="0.000001"
               className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
@@ -496,7 +503,7 @@ function Location({ activeTab, formData, handleInputChange }) {
                 }}
               />
 
-              {!mapLoaded && (
+              {!mapLoaded && isBrowser && (
                 <div className="absolute inset-0 z-20 flex items-center justify-center bg-white bg-opacity-70">
                   <div className="flex items-center space-x-2">
                     <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-500 border-t-transparent"></div>
