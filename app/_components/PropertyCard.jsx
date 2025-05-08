@@ -26,7 +26,7 @@ function PropertyCard({ property }) {
         {images.length > 0 ? (
           <div className="h-40 w-full overflow-hidden rounded-lg">
             <Image
-              src={BASE_ENDPOINT + images[0].image}
+              src={images[0].image}
               alt={title}
               width={400}
               height={400}

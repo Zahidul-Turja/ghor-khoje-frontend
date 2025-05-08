@@ -196,8 +196,6 @@ const dummy_properties_data = [
 ];
 
 function Properties({ places }) {
-  console.log("Places:", places);
-
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
       {places.map((property) => (

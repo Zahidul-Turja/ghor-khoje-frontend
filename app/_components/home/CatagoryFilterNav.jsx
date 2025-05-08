@@ -78,7 +78,7 @@ function CategoryFilterNav({ pageSize, page }) {
             >
               <div className="relative flex h-6 w-6 items-center justify-center">
                 <Image
-                  src={`${BASE_URL}/${category.icon}`}
+                  src={`${category.icon}`}
                   alt={category.name}
                   width={40}
                   height={40}

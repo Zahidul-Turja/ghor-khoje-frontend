@@ -51,7 +51,7 @@ function Amenities({ amenities }) {
             >
               <div>
                 <Image
-                  src={`${API_URL}${amenity.icon}`}
+                  src={`${amenity.icon}`}
                   alt={amenity.name}
                   width={30}
                   height={30}
