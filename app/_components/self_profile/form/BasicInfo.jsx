@@ -108,7 +108,7 @@ function BasicInfo({ activeTab, formData, handleInputChange, toggleFacility }) {
                   <div className="flex items-center space-x-3">
                     <div className="h-6 w-6 overflow-hidden rounded-md bg-gray-100">
                       <img
-                        src={`${BASE_URL}${facility.icon}`}
+                        src={`${facility.icon}`}
                         alt={facility.name}
                         className="h-full w-full object-cover"
                       />

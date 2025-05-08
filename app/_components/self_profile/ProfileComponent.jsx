@@ -18,7 +18,7 @@ import useAuthStore from "@/app/_store/authStore";
 const NEXT_PUBLIC_BASE_API_ENDPOINT = process.env.NEXT_PUBLIC_BASE_API_ENDPOINT;
 
 export default function ProfileComponent({ userData }) {
-  const [editMode, setEditMode] = useState(true);
+  const [editMode, setEditMode] = useState(false);
   const { user } = useAuthStore();
 
   if (!user) return null;
