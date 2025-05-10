@@ -66,7 +66,7 @@ function Profile({
                 height={128}
                 className="h-full w-full object-cover"
               />
-            ) : user?.gender === "FEMALE" ? (
+            ) : gender === "FEMALE" ? (
               <Image
                 src={`/avatar-female.png`}
                 alt={full_name}

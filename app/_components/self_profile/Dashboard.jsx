@@ -261,13 +261,25 @@ function Listings({ places }) {
                   <td className="px-6 py-4">
                     <div className="flex items-center space-x-3">
                       <div className="flex-shrink-0">
-                        <Image
-                          src={`${place.images[0].image}`}
-                          alt={place.title}
-                          width={200}
-                          height={200}
-                          className="h-12 w-16 rounded-md object-cover"
-                        />
+                        {place.images[0]?.image ? (
+                          <Image
+                            src={`${place.images[0]?.image}`}
+                            alt={place.title}
+                            width={200}
+                            height={200}
+                            className="h-12 w-16 rounded-md object-cover"
+                          />
+                        ) : (
+                          <div className="flex h-12 w-16 items-center justify-center rounded-md border border-gray-200">
+                            <Image
+                              src={"/property-placeholder-colored.png"}
+                              alt={place.title}
+                              width={200}
+                              height={200}
+                              className="my-auto h-8 w-8 rounded-md object-cover"
+                            />
+                          </div>
+                        )}
                       </div>
                       <div>
                         <div className="font-medium text-gray-900">
