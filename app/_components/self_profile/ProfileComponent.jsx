@@ -14,8 +14,7 @@ import ContactSection from "./sections/ContactSection";
 import SocialSection from "./sections/SocialSection";
 
 import useAuthStore from "@/app/_store/authStore";
-
-const NEXT_PUBLIC_BASE_API_ENDPOINT = process.env.NEXT_PUBLIC_BASE_API_ENDPOINT;
+import EditProfile from "./form/EditProfile";
 
 export default function ProfileComponent({ userData }) {
   const [editMode, setEditMode] = useState(false);
@@ -123,33 +122,5 @@ function Profile({
         <SocialSection social_links={social_links} />
       </div>
     </>
-  );
-}
-
-function EditProfile({ user, setEditMode }) {
-  return (
-    <div className="mx-auto overflow-hidden rounded-lg bg-white px-8 shadow-lg">
-      <div className="flex items-center justify-between border-b border-gray-200 pb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Edit Profile</h1>
-
-        <div className="flex items-center gap-4">
-          <button
-            className="mt-4 flex items-center gap-2 rounded-md border-2 border-gray-700 px-4 py-2 font-semibold text-gray-700 shadow-md transition duration-300 hover:bg-gray-300"
-            onClick={() => setEditMode(false)}
-          >
-            <FaTimes size={14} />
-            <span>Cancle</span>
-          </button>
-          <button
-            className="mt-4 flex items-center gap-2 rounded-md border-2 border-green-700 bg-green-700 px-4 py-2 text-white shadow-md transition duration-300 hover:bg-green-800"
-            onClick={() => setEditMode(false)}
-          >
-            <FaSave size={14} />
-            <span>Save</span>
-          </button>
-        </div>
-      </div>
-      {/* Add your form fields here */}
-    </div>
   );
 }
