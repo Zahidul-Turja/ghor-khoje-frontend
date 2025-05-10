@@ -27,6 +27,7 @@ const useAuthStore = create(
           const data = await response.json();
           if (response.ok) {
             set({ user: data.data });
+            window.localStorage.setItem("user", JSON.stringify(data.data));
           } else {
             throw new Error(data.message || "Failed to fetch user info");
           }
@@ -315,22 +316,47 @@ const useAuthStore = create(
       updateProfile: async (profileData) => {
         try {
           set({ isLoading: true });
-          const response = await get().authFetch(
-            `${BASE_ENDPOINT}/api/profile`,
+
+          // Determine if profileData is FormData or a regular object
+          const isFormData = profileData instanceof FormData;
+
+          // Prepare request options
+          const requestOptions = {
+            method: "POST",
+            // Don't add Content-Type for FormData
+            headers: isFormData ? {} : { "Content-Type": "application/json" },
+            body: isFormData ? profileData : JSON.stringify(profileData),
+          };
+
+          // When using authFetch, we need to prevent it from adding Content-Type: application/json
+          // if we're using FormData
+          const response = await fetch(
+            `${BASE_ENDPOINT}/api/v1/user/profile/update/`,
             {
-              method: "PUT",
-              body: JSON.stringify(profileData),
+              ...requestOptions,
+              headers: {
+                ...requestOptions.headers,
+                Authorization: `Bearer ${get().accessToken}`,
+              },
             },
           );
 
           const data = await response.json();
 
           if (response.ok) {
+            // Update the user state with the returned data
             set({
-              user: { ...get().user, ...data.user },
+              user: { ...get().user, ...data.data }, // Note: adjust this based on your API response structure
             });
+
+            // Update localStorage
+            window.localStorage.setItem(
+              "user",
+              JSON.stringify({ ...get().user, ...data.data }),
+            );
+
             toast.success("Profile updated successfully");
-            return data.user;
+            return data.data; // Adjust based on your API response structure
           } else {
             toast.error(data.message || "Failed to update profile");
             throw new Error(data.message || "Failed to update profile");

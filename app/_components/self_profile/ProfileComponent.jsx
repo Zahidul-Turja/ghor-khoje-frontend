@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import {
   FaMapMarkerAlt,
@@ -16,9 +16,21 @@ import SocialSection from "./sections/SocialSection";
 import useAuthStore from "@/app/_store/authStore";
 import EditProfile from "./form/EditProfile";
 
-export default function ProfileComponent({ userData }) {
+export default function ProfileComponent() {
   const [editMode, setEditMode] = useState(false);
-  const { user } = useAuthStore();
+  const { user, userInfo } = useAuthStore();
+  const [userData, setUserData] = useState(user);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const user = await userInfo();
+      if (user) {
+        setUserData(user);
+      }
+    };
+
+    fetchUser();
+  }, [user]);
 
   if (!user) return null;
 

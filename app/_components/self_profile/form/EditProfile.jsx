@@ -12,8 +12,12 @@ import {
   FaTelegram,
 } from "react-icons/fa";
 import Image from "next/image";
+import useAuthStore from "@/app/_store/authStore";
 
 function EditProfile({ user, setEditMode }) {
+  const updateProfile = useAuthStore((state) => state.updateProfile);
+  // const user = useAuthStore((state) => state.user);
+
   const [formData, setFormData] = useState({
     full_name: user?.full_name || "",
     phone: user?.phone || "",
@@ -83,7 +87,7 @@ function EditProfile({ user, setEditMode }) {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Create form data for submission
@@ -105,9 +109,8 @@ function EditProfile({ user, setEditMode }) {
       submitData.append("cover_image", coverImage);
     }
 
-    // Here you would handle the API call to update the profile
-    // For example: updateProfile(submitData)
-    console.log("Form submitted", Object.fromEntries(submitData));
+    // Pass the FormData object directly
+    await updateProfile(submitData);
 
     // Close edit mode
     setEditMode(false);
@@ -186,6 +189,7 @@ function EditProfile({ user, setEditMode }) {
             type="submit"
             form="profile-form"
             className="flex items-center gap-2 rounded-md border-2 border-green-700 bg-green-700 px-4 py-2 text-white shadow-md transition duration-300 hover:bg-green-800"
+            onClick={handleSubmit}
           >
             <FaSave size={14} />
             <span>Save</span>
