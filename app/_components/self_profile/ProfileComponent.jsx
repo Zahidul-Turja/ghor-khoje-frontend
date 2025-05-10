@@ -50,6 +50,7 @@ function Profile({
   email,
   phone,
   profile_image,
+  cover_image,
   bio,
   gender,
   date_of_birth,
@@ -62,10 +63,30 @@ function Profile({
   social_links,
   setEditMode,
 }) {
+  const placeholder_cover = `/cover-placeholder-4.jpg`;
+
   return (
     <>
       {/* Header with cover image */}
-      <div className="relative h-48 bg-gradient-to-r from-primary/80 to-primary/70">
+      <div className="relative h-64 bg-gradient-to-r">
+        {/* Cover image */}
+        <div className="absolute inset-0 bg-cover bg-center">
+          {cover_image ? (
+            <Image
+              src={`${cover_image}`}
+              alt="Cover Image"
+              fill
+              className="object-cover"
+            />
+          ) : (
+            <Image
+              src={placeholder_cover}
+              alt="Cover Image"
+              fill
+              className="object-cover"
+            />
+          )}
+        </div>
         {/* Profile image */}
         <div className="absolute -bottom-16 left-8">
           <div className="relative h-32 w-32 overflow-hidden rounded-full border-4 border-white bg-gray-200 shadow-lg">

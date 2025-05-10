@@ -26,7 +26,7 @@ function EditProfile({ user, setEditMode }) {
     date_of_birth: user?.date_of_birth || "",
     nid: user?.nid || "",
     profession: user?.profession || "",
-    address: user?.address || "",
+    address: user?.address.address || "",
     country: user?.country || "",
     state: user?.state || "",
     city: user?.city || "",
@@ -117,7 +117,7 @@ function EditProfile({ user, setEditMode }) {
   };
 
   return (
-    <div className="w-full max-w-4xl overflow-hidden rounded-lg bg-white shadow-lg">
+    <div className="w-full overflow-hidden rounded-lg bg-white shadow-lg">
       {/* Cover Image Section */}
       <div className="relative h-64 w-full">
         <div className="absolute inset-0">
@@ -326,6 +326,7 @@ function EditProfile({ user, setEditMode }) {
                 type="text"
                 name="address"
                 value={formData.address}
+                placeholder="Street, Area, etc."
                 onChange={handleChange}
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
@@ -339,6 +340,7 @@ function EditProfile({ user, setEditMode }) {
               <input
                 type="text"
                 name="country"
+                placeholder="Bangladesh, New Zealand, England etc."
                 value={formData.country}
                 onChange={handleChange}
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
@@ -354,6 +356,7 @@ function EditProfile({ user, setEditMode }) {
                 type="text"
                 name="state"
                 value={formData.state}
+                placeholder="Dhaka, Auckland, etc."
                 onChange={handleChange}
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
@@ -368,6 +371,7 @@ function EditProfile({ user, setEditMode }) {
                 type="text"
                 name="city"
                 value={formData.city}
+                placeholder="Gulshan, Mirpur, etc."
                 onChange={handleChange}
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
@@ -391,7 +395,7 @@ function EditProfile({ user, setEditMode }) {
                 value={formData.languages}
                 onChange={handleChange}
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                placeholder="English, Bangla, etc."
+                placeholder="English, Bangla (comma separated values)"
               />
             </div>
 
@@ -404,6 +408,7 @@ function EditProfile({ user, setEditMode }) {
                 type="text"
                 name="preferred_language"
                 value={formData.preferred_language}
+                placeholder="Bangla"
                 onChange={handleChange}
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
