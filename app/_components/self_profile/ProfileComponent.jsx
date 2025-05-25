@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import {
   FaMapMarkerAlt,
@@ -14,12 +14,23 @@ import ContactSection from "./sections/ContactSection";
 import SocialSection from "./sections/SocialSection";
 
 import useAuthStore from "@/app/_store/authStore";
+import EditProfile from "./form/EditProfile";
 
-const NEXT_PUBLIC_BASE_API_ENDPOINT = process.env.NEXT_PUBLIC_BASE_API_ENDPOINT;
-
-export default function ProfileComponent({ userData }) {
+export default function ProfileComponent() {
   const [editMode, setEditMode] = useState(false);
-  const { user } = useAuthStore();
+  const { user, userInfo } = useAuthStore();
+  const [userData, setUserData] = useState(user);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const user = await userInfo();
+      if (user) {
+        setUserData(user);
+      }
+    };
+
+    fetchUser();
+  }, [user]);
 
   if (!user) return null;
 
@@ -39,6 +50,7 @@ function Profile({
   email,
   phone,
   profile_image,
+  cover_image,
   bio,
   gender,
   date_of_birth,
@@ -51,10 +63,30 @@ function Profile({
   social_links,
   setEditMode,
 }) {
+  const placeholder_cover = `/cover-placeholder-4.jpg`;
+
   return (
     <>
       {/* Header with cover image */}
-      <div className="relative h-48 bg-gradient-to-r from-primary/80 to-primary/70">
+      <div className="relative h-64 bg-gradient-to-r">
+        {/* Cover image */}
+        <div className="absolute inset-0 bg-cover bg-center">
+          {cover_image ? (
+            <Image
+              src={`${cover_image}`}
+              alt="Cover Image"
+              fill
+              className="object-cover"
+            />
+          ) : (
+            <Image
+              src={placeholder_cover}
+              alt="Cover Image"
+              fill
+              className="object-cover"
+            />
+          )}
+        </div>
         {/* Profile image */}
         <div className="absolute -bottom-16 left-8">
           <div className="relative h-32 w-32 overflow-hidden rounded-full border-4 border-white bg-gray-200 shadow-lg">
@@ -66,7 +98,7 @@ function Profile({
                 height={128}
                 className="h-full w-full object-cover"
               />
-            ) : user?.gender === "FEMALE" ? (
+            ) : gender === "FEMALE" ? (
               <Image
                 src={`/avatar-female.png`}
                 alt={full_name}
@@ -123,33 +155,5 @@ function Profile({
         <SocialSection social_links={social_links} />
       </div>
     </>
-  );
-}
-
-function EditProfile({ user, setEditMode }) {
-  return (
-    <div className="mx-auto overflow-hidden rounded-lg bg-white px-8 shadow-lg">
-      <div className="flex items-center justify-between border-b border-gray-200 pb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Edit Profile</h1>
-
-        <div className="flex items-center gap-4">
-          <button
-            className="mt-4 flex items-center gap-2 rounded-md border-2 border-gray-700 px-4 py-2 font-semibold text-gray-700 shadow-md transition duration-300 hover:bg-gray-300"
-            onClick={() => setEditMode(false)}
-          >
-            <FaTimes size={14} />
-            <span>Cancle</span>
-          </button>
-          <button
-            className="mt-4 flex items-center gap-2 rounded-md border-2 border-green-700 bg-green-700 px-4 py-2 text-white shadow-md transition duration-300 hover:bg-green-800"
-            onClick={() => setEditMode(false)}
-          >
-            <FaSave size={14} />
-            <span>Save</span>
-          </button>
-        </div>
-      </div>
-      {/* Add your form fields here */}
-    </div>
   );
 }

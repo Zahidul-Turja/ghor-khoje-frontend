@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import SelfProfile from "@/app/_components/pages/SelfProfile";
 
 export const metadata = {
@@ -6,7 +7,11 @@ export const metadata = {
 };
 
 function Page() {
-  return <SelfProfile />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SelfProfile />
+    </Suspense>
+  );
 }
 
 export default Page;
