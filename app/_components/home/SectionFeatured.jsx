@@ -15,6 +15,23 @@ function SectionFeatured() {
   const nextRef = useRef(null);
   const [properties, setProperties] = useState([]);
 
+  // Check if navigation is needed based on screen size and property count
+  const shouldShowNavigation = () => {
+    if (typeof window === "undefined") return false;
+
+    const width = window.innerWidth;
+    let maxVisibleSlides;
+
+    if (width >= 1024) maxVisibleSlides = 4;
+    else if (width >= 768) maxVisibleSlides = 3;
+    else if (width >= 640) maxVisibleSlides = 2;
+    else maxVisibleSlides = 1;
+
+    return properties.length > maxVisibleSlides;
+  };
+
+  const [showNavigation, setShowNavigation] = useState(shouldShowNavigation());
+
   useEffect(() => {
     const fetchFeaturedProperties = async () => {
       try {
@@ -27,6 +44,16 @@ function SectionFeatured() {
 
     fetchFeaturedProperties();
   }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setShowNavigation(shouldShowNavigation());
+    };
+
+    handleResize(); // Check on mount
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [properties.length]);
 
   if (properties.length === 0) {
     return (
@@ -61,7 +88,6 @@ function SectionFeatured() {
   };
 
   const shouldEnableLoop = properties.length > 4;
-  const shouldShowNavigation = properties.length > 1;
 
   return (
     <section className="mx-auto max-w-screen-2xl px-0 pt-32 md:px-6 lg:px-8">
@@ -70,7 +96,7 @@ function SectionFeatured() {
       </h2>
 
       <div className="flex gap-8">
-        {shouldShowNavigation && (
+        {showNavigation && (
           <button ref={prevRef} className="font-semibold text-black">
             <FaChevronLeft className="text-2xl" />
           </button>
@@ -92,7 +118,7 @@ function SectionFeatured() {
               : false
           }
           navigation={
-            shouldEnableLoop
+            showNavigation
               ? {
                   prevEl: prevRef.current,
                   nextEl: nextRef.current,
@@ -100,7 +126,7 @@ function SectionFeatured() {
               : false
           }
           onBeforeInit={(swiper) => {
-            if (shouldEnableLoop) {
+            if (showNavigation) {
               swiper.params.navigation.prevEl = prevRef.current;
               swiper.params.navigation.nextEl = nextRef.current;
             }
@@ -120,7 +146,7 @@ function SectionFeatured() {
           ))}
         </Swiper>
 
-        {shouldShowNavigation && (
+        {showNavigation && (
           <button ref={nextRef} className="font-semibold text-black">
             <FaChevronRight className="text-2xl" />
           </button>
