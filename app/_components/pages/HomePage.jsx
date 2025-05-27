@@ -1,5 +1,6 @@
 import SectionHeader from "@/app/_components/home/SectionHeader";
 import SectionProperties from "../home/SectionProperties";
+import SectionFeatured from "../home/SectionFeatured";
 import Footer from "@/app/_components/Footer";
 import BoundingBox from "../BoundingBox";
 import NavMain from "../NavMain";
@@ -10,6 +11,7 @@ export default function HomePage() {
       <NavMain />
       <BoundingBox>
         <SectionHeader />
+        <SectionFeatured />
         <SectionProperties />
       </BoundingBox>
       <Footer />
