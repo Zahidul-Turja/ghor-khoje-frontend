@@ -91,7 +91,7 @@ function SectionFeatured() {
 
   return (
     <section className="mx-auto max-w-screen-2xl px-0 pt-32 md:px-6 lg:px-8">
-      <h2 className="mb-6 text-2xl font-bold uppercase tracking-wide text-gray-800">
+      <h2 className="mb-6 text-3xl font-bold uppercase tracking-wide text-gray-800">
         <span className="font-extralight">Featured</span> Properties
       </h2>
 

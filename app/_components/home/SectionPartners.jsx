@@ -37,7 +37,7 @@ function SectionPartners() {
             delay: 0, // No delay between slides
             disableOnInteraction: false,
           }}
-          speed={4000}
+          speed={2000}
           className="px-4"
         >
           {partners.map((partner) => (
