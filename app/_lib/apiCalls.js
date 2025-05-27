@@ -107,3 +107,15 @@ export const getUserProperties = async () => {
     throw error;
   }
 };
+
+export const getFeaturedProperties = async () => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/api/v1/places/featured-properties/`,
+    );
+    const data = response.data.data;
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
