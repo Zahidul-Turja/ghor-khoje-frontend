@@ -29,11 +29,15 @@ function SectionPartners() {
           modules={[Autoplay]}
           slidesPerView="auto"
           spaceBetween={32}
-          loop={partners.length > 4}
+          loop={true}
+          centeredSlides={true}
+          grabCursor={true}
+          freeMode={true}
           autoplay={{
-            delay: 2500,
+            delay: 0, // No delay between slides
             disableOnInteraction: false,
           }}
+          speed={4000}
           className="px-4"
         >
           {partners.map((partner) => (

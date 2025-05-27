@@ -106,6 +106,7 @@ function SectionFeatured() {
           modules={[Navigation, Autoplay]}
           spaceBetween={16}
           centeredSlides={false}
+          grabCursor={true}
           slidesPerView="auto"
           loop={shouldEnableLoop}
           autoplay={

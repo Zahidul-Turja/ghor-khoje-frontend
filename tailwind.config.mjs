@@ -10,6 +10,15 @@ module.exports = {
       colors: {
         primary: "#FF385C",
       },
+      keyframes: {
+        scroll: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+      },
+      animation: {
+        scroll: "scroll 30s linear infinite",
+      },
     },
   },
   plugins: [require("tailwind-scrollbar")],
