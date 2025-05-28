@@ -3,8 +3,10 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { IoAdd, IoEllipsisVertical, IoSearch } from "react-icons/io5";
-import { IoMdBed } from "react-icons/io";
+import { IoMdBed, IoMdAdd } from "react-icons/io";
 import { FaBath, FaUsers } from "react-icons/fa";
+import { ImFilesEmpty } from "react-icons/im";
+
 import AddPropertyModal from "./AddPropertyModal";
 
 import { getUserProperties } from "@/app/_lib/apiCalls";
@@ -116,6 +118,7 @@ export default function Dashboard() {
   const [places, setPlaces] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchPlaces = async () => {
@@ -135,24 +138,46 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 shadow-lg">
-      <div className="mx-auto px-8 py-8">
-        <h1 className="mb-6 text-2xl font-bold text-gray-800">
-          Property Dashboard
-        </h1>
-        <div className="overflow-hidden rounded-xl bg-white shadow-sm">
-          {loading && (
-            <div className="flex items-center justify-center p-4">
-              <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-gray-600"></div>
-            </div>
-          )}
-          {error && <div className="p-4 text-red-500">{error}</div>}
-          {!loading && !error && places?.length > 0 && (
-            <Listings places={places} />
-          )}
+    <>
+      {showModal && <AddPropertyModal onClose={() => setShowModal(false)} />}
+
+      <div className="min-h-screen bg-gray-50 shadow-lg">
+        <div className="mx-auto px-8 py-8">
+          <h1 className="mb-6 text-3xl font-bold text-gray-800">
+            Property Dashboard
+          </h1>
+          <div className="overflow-hidden rounded-xl bg-white shadow-sm">
+            {loading && (
+              <div className="flex items-center justify-center p-4">
+                <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-gray-600"></div>
+              </div>
+            )}
+            {error && <div className="p-4 text-red-500">{error}</div>}
+            {!loading &&
+              !error &&
+              (places?.length > 0 ? (
+                <Listings places={places} />
+              ) : (
+                <div className="flex h-96 flex-col items-center justify-center gap-4 rounded-b-xl bg-gray-50 p-16 text-center">
+                  <ImFilesEmpty className="h-20 w-20 text-gray-400" />
+                  <h2 className="text-lg font-semibold text-gray-700">
+                    No Properties Found
+                  </h2>
+                  <button
+                    onClick={() => setShowModal(true)}
+                    className="flex items-center gap-2 rounded-lg bg-primary/80 px-4 py-2 text-sm font-medium text-white transition hover:bg-primary/90"
+                  >
+                    <IoMdAdd className="text-xl" />
+                    <span className="text-lg font-semibold">
+                      Add New Property
+                    </span>
+                  </button>
+                </div>
+              ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
