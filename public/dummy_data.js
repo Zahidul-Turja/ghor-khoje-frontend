@@ -72,3 +72,138 @@ export const dummy_properties_data = [
     owner: "John Doe",
   },
 ];
+
+export const dummy_reviews = [
+  {
+    id: 1,
+    reviewer: {
+      id: 1,
+      name: "John Doe",
+      image: "/profile-1.jpg",
+    },
+    rating: 5.0,
+    comment:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
+    date: "2023-06-01",
+  },
+  {
+    id: 2,
+    reviewer: {
+      id: 1,
+      name: "John Doe",
+      image: "/profile-1.jpg",
+    },
+    rating: 5.0,
+    comment:
+      "Dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
+    date: "2023-06-01",
+  },
+  {
+    id: 3,
+    reviewer: {
+      id: 1,
+      name: "John Doe",
+      image: "/profile-1.jpg",
+    },
+    rating: 5.0,
+    comment:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
+    date: "2023-06-01",
+  },
+  {
+    id: 4,
+    reviewer: {
+      id: 1,
+      name: "John Doe",
+      image: "/profile-1.jpg",
+    },
+    rating: 5.0,
+    comment:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
+    date: "2023-06-01",
+  },
+  {
+    id: 5,
+    reviewer: {
+      id: 1,
+      name: "John Doe",
+      image: "/profile-3.jpg",
+    },
+    rating: 5.0,
+    comment:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
+    date: "2023-06-01",
+  },
+  {
+    id: 6,
+    reviewer: {
+      id: 1,
+      name: "John Doe",
+      image: "/profile-1.jpg",
+    },
+    rating: 5.0,
+    comment:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
+    date: "2023-06-01",
+  },
+  {
+    id: 7,
+    reviewer: {
+      id: 1,
+      name: "John Doe",
+      image: "/profile-2.jpg",
+    },
+    rating: 5.0,
+    comment:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
+    date: "2023-06-01",
+  },
+  {
+    id: 8,
+    reviewer: {
+      id: 1,
+      name: "John Doe",
+      image: "/profile-1.jpg",
+    },
+    rating: 5.0,
+    comment:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
+    date: "2023-06-01",
+  },
+  {
+    id: 9,
+    reviewer: {
+      id: 1,
+      name: "John Doe",
+      image: "/profile-1.jpg",
+    },
+    rating: 5.0,
+    comment:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
+    date: "2023-06-01",
+  },
+  {
+    id: 10,
+    reviewer: {
+      id: 1,
+      name: "John Doe",
+      image: "/profile-1.jpg",
+    },
+    rating: 5.0,
+    comment:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
+    date: "2023-06-01",
+  },
+  {
+    id: 11,
+    reviewer: {
+      id: 1,
+      name: "John Doe",
+      image: "/profile-2.jpg",
+    },
+    rating: 5.0,
+    comment:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
+    date: "2023-06-01",
+  },
+];

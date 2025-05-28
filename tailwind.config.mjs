@@ -15,9 +15,17 @@ module.exports = {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-50%)" },
         },
+        fadeIn: {
+          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
       },
       animation: {
-        scroll: "scroll 30s linear infinite",
+        scroll: "scroll 45s linear infinite",
+        fadeIn: "fadeIn 0.6s ease-out",
+      },
+      backdropBlur: {
+        xs: "2px",
       },
     },
   },

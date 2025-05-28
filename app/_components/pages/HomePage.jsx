@@ -5,6 +5,7 @@ import Footer from "@/app/_components/Footer";
 import BoundingBox from "../BoundingBox";
 import NavMain from "../NavMain";
 import SectionPartners from "../home/SectionPartners";
+import SectionReviews from "../home/SectionReviews";
 
 export default function HomePage() {
   return (
@@ -14,6 +15,7 @@ export default function HomePage() {
         <SectionHeader />
         <SectionFeatured />
         <SectionProperties />
+        <SectionReviews />
         <SectionPartners />
       </BoundingBox>
       <Footer />
