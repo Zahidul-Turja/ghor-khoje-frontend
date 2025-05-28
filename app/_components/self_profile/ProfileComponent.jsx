@@ -30,7 +30,7 @@ export default function ProfileComponent() {
     };
 
     fetchUser();
-  }, [user]);
+  }, []);
 
   if (!user) return null;
 
