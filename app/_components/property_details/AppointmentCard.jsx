@@ -8,6 +8,7 @@ function AppointmentCard({
   extra_bills,
   available_from,
   num_prepayment_months,
+  setOpenBookingModal,
 }) {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -71,9 +72,10 @@ function AppointmentCard({
       </div>
 
       <button
-        className={`w-full rounded-lg py-3 text-white transition-colors duration-300 ${isHovered ? "bg-blue-700" : "bg-primary"}`}
+        className={`w-full rounded-lg py-3 text-white transition-colors duration-300 ${isHovered ? "bg-primary/90" : "bg-primary/80"}`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        onClick={() => setOpenBookingModal(true)}
       >
         Book Now
       </button>
