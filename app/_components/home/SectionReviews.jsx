@@ -41,8 +41,8 @@ function SectionReviews() {
         </div>
 
         {/* Scrolling Reviews Container */}
-        <div className="relative overflow-hidden">
-          <div className="flex animate-scroll gap-6">
+        <div className="relative overflow-x-hidden">
+          <div className="flex animate-scroll gap-6 py-10">
             {scrollingReviews.map((review, index) => (
               <div
                 key={`${review.id}-${index}`}

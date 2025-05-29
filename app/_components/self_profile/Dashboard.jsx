@@ -16,12 +16,19 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [nextPage, setNextPage] = useState(null);
+  const [prevPage, setPrevPage] = useState(null);
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const fetchPlaces = async () => {
       try {
         const response = await getUserProperties();
-        setPlaces(response);
+        setPlaces(response.results);
+        setNextPage(response.next);
+        setPrevPage(response.previous);
+        setTotalPages(response.count);
 
         console.log("Properties fetched:", response);
       } catch (error) {

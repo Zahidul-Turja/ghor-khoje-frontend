@@ -103,7 +103,9 @@ export const getUserProperties = async () => {
       },
     );
 
-    return response.data.results;
+    console.log("User properties response:", response);
+
+    return response.data;
   } catch (error) {
     throw error;
   }
