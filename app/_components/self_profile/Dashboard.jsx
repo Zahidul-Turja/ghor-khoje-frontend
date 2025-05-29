@@ -100,21 +100,30 @@ export default function Dashboard() {
     </>
   );
 }
-
 function Listings({ places, handleSubmit }) {
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
   const [openMenuId, setOpenMenuId] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [showModal, setShowModal] = useState(false);
-  // const [filteredPlaces, setFilteredPlaces] = useState(places);
+  const [filteredPlaces, setFilteredPlaces] = useState(places);
   const menuRef = useRef(null);
 
-  const filteredPlaces = places.filter(
-    (place) =>
-      place?.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      place?.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      place?.area_name.toLowerCase().includes(searchTerm.toLowerCase()),
-  );
+  // Add this useEffect to sync filteredPlaces with places prop changes
+  useEffect(() => {
+    if (searchTerm === "") {
+      // If no search term, show all places
+      setFilteredPlaces(places);
+    } else {
+      // If there's a search term, filter the new places array
+      const filtered = places.filter(
+        (place) =>
+          place?.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          place?.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          place?.area_name.toLowerCase().includes(searchTerm.toLowerCase()),
+      );
+      setFilteredPlaces(filtered);
+    }
+  }, [places, searchTerm]);
 
   const handleMenuClick = (event, id) => {
     event.stopPropagation();
@@ -148,10 +157,6 @@ function Listings({ places, handleSubmit }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [openMenuId]);
 
-  // useEffect(() => {
-  //   filteredPlaces;
-  // }, [places]);
-
   return (
     <>
       {showModal && (
@@ -181,7 +186,10 @@ function Listings({ places, handleSubmit }) {
                   className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-primary/40 focus:ring-primary/40"
                   placeholder="Search properties..."
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                    // Remove the inline filtering here since useEffect handles it now
+                  }}
                 />
               </div>
               <button
@@ -208,7 +216,7 @@ function Listings({ places, handleSubmit }) {
               </tr>
             </thead>
             <tbody>
-              {places.map((place) => (
+              {filteredPlaces.map((place) => (
                 <tr
                   key={place?.id}
                   className="border-b bg-white hover:bg-gray-50"
