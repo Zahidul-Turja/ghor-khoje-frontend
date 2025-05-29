@@ -137,9 +137,21 @@ export default function Dashboard() {
     fetchPlaces();
   }, []);
 
+  const onSubmit = (formData) => {
+    console.log("Form submitted with data:", formData);
+    // Here you would typically send the formData to your API
+    // For now, we just log it and close the modal
+    setShowModal(false);
+  };
+
   return (
     <>
-      {showModal && <AddPropertyModal onClose={() => setShowModal(false)} />}
+      {showModal && (
+        <AddPropertyModal
+          onClose={() => setShowModal(false)}
+          onSubmit={(formData) => onSubmit(formData)}
+        />
+      )}
 
       <div className="min-h-screen bg-gray-50 shadow-lg">
         <div className="mx-auto px-8 py-8">
@@ -229,7 +241,12 @@ function Listings({ places }) {
 
   return (
     <>
-      {showModal && <AddPropertyModal onClose={() => setShowModal(false)} />}
+      {showModal && (
+        <AddPropertyModal
+          onClose={() => setShowModal(false)}
+          onSubmit={(formData) => onSubmit(formData)}
+        />
+      )}
       <div>
         <div className="border-b border-gray-100">
           <div className="flex items-center justify-between p-6">

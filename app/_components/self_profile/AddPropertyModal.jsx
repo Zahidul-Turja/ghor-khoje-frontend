@@ -9,7 +9,7 @@ import Images from "./form/Images";
 
 import { createProperty } from "@/app/_lib/apiCalls";
 
-export default function AddPropertyModal({ onClose }) {
+export default function AddPropertyModal({ onClose, onSubmit }) {
   const [activeTab, setActiveTab] = useState("basic");
   const [formData, setFormData] = useState({
     title: "",
@@ -144,6 +144,9 @@ export default function AddPropertyModal({ onClose }) {
       });
     onClose();
   };
+
+  console.log("onSubmit", onSubmit);
+  console.log("onClose", onClose);
 
   const tabs = [
     { id: "basic", label: "Basic Info" },
