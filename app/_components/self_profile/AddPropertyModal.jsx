@@ -135,18 +135,10 @@ export default function AddPropertyModal({ onClose, onSubmit }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createProperty(formData)
-      .then((response) => {
-        console.log("Property created:", response);
-      })
-      .catch((error) => {
-        console.error("Error creating property:", error);
-      });
+
+    onSubmit(formData);
     onClose();
   };
-
-  console.log("onSubmit", onSubmit);
-  console.log("onClose", onClose);
 
   const tabs = [
     { id: "basic", label: "Basic Info" },

@@ -86,8 +86,9 @@ export const createProperty = async (formData) => {
       },
     });
     console.log("Success:", res.data);
+    return res.data;
   } catch (err) {
-    console.error("Error:", err.response?.data || err.message);
+    console.error("Error:", err);
   }
 };
 

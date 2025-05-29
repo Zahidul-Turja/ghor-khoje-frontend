@@ -9,110 +9,7 @@ import { ImFilesEmpty } from "react-icons/im";
 
 import AddPropertyModal from "./AddPropertyModal";
 
-import { getUserProperties } from "@/app/_lib/apiCalls";
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_ENDPOINT;
-
-const dummyPlaces = [
-  {
-    id: 1,
-    title: "Sunny Apartment",
-    slug: "sunny-apartment",
-    category: "Apartment",
-    city: "Dhaka",
-    area_name: "Gulshan",
-    rent_per_month: 15000,
-    num_of_bedrooms: 2,
-    num_of_bathrooms: 1,
-    capacity: 2,
-    is_available: true,
-    image: "/house-1.jpg",
-  },
-  {
-    id: 2,
-    title: "Cozy Studio",
-    slug: "cozy-studio",
-    category: "Studio",
-    city: "Chattogram",
-    area_name: "Panchlaish",
-    rent_per_month: 12000,
-    num_of_bedrooms: 1,
-    num_of_bathrooms: 1,
-    capacity: 1,
-    is_available: false,
-    image: "/house-2.jpg",
-  },
-  {
-    id: 3,
-    title: "Family House",
-    slug: "family-house",
-    category: "House",
-    city: "Khulna",
-    area_name: "Sonadanga",
-    rent_per_month: 20000,
-    num_of_bedrooms: 3,
-    num_of_bathrooms: 2,
-    capacity: 4,
-    is_available: true,
-    image: "/house-3.jpg",
-  },
-  {
-    id: 4,
-    title: "Family House",
-    slug: "family-house",
-    category: "House",
-    city: "Khulna",
-    area_name: "Sonadanga",
-    rent_per_month: 20000,
-    num_of_bedrooms: 3,
-    num_of_bathrooms: 2,
-    capacity: 4,
-    is_available: true,
-    image: "/house-3.jpg",
-  },
-  {
-    id: 5,
-    title: "Family House",
-    slug: "family-house",
-    category: "House",
-    city: "Khulna",
-    area_name: "Sonadanga",
-    rent_per_month: 20000,
-    num_of_bedrooms: 3,
-    num_of_bathrooms: 2,
-    capacity: 4,
-    is_available: true,
-    image: "/house-3.jpg",
-  },
-  {
-    id: 6,
-    title: "Family House",
-    slug: "family-house",
-    category: "House",
-    city: "Khulna",
-    area_name: "Sonadanga",
-    rent_per_month: 20000,
-    num_of_bedrooms: 3,
-    num_of_bathrooms: 2,
-    capacity: 4,
-    is_available: true,
-    image: "/house-3.jpg",
-  },
-  {
-    id: 7,
-    title: "Family House",
-    slug: "family-house",
-    category: "House",
-    city: "Khulna",
-    area_name: "Sonadanga",
-    rent_per_month: 20000,
-    num_of_bedrooms: 3,
-    num_of_bathrooms: 2,
-    capacity: 4,
-    is_available: true,
-    image: "/house-3.jpg",
-  },
-];
+import { getUserProperties, createProperty } from "@/app/_lib/apiCalls";
 
 export default function Dashboard() {
   const [places, setPlaces] = useState([]);
@@ -137,10 +34,16 @@ export default function Dashboard() {
     fetchPlaces();
   }, []);
 
-  const onSubmit = (formData) => {
-    console.log("Form submitted with data:", formData);
-    // Here you would typically send the formData to your API
-    // For now, we just log it and close the modal
+  const handleSubmit = (formData) => {
+    createProperty(formData)
+      .then((response) => {
+        console.log("Property created:", response);
+        setPlaces((prevPlaces) => [response?.data, ...prevPlaces]);
+        console.log("Places after submit:", places);
+      })
+      .catch((error) => {
+        console.error("Error creating property:", error);
+      });
     setShowModal(false);
   };
 
@@ -149,7 +52,9 @@ export default function Dashboard() {
       {showModal && (
         <AddPropertyModal
           onClose={() => setShowModal(false)}
-          onSubmit={(formData) => onSubmit(formData)}
+          onSubmit={(formData) => {
+            handleSubmit(formData);
+          }}
         />
       )}
 
@@ -168,7 +73,10 @@ export default function Dashboard() {
             {!loading &&
               !error &&
               (places?.length > 0 ? (
-                <Listings places={places} />
+                <Listings
+                  places={places}
+                  handleSubmit={(formData) => handleSubmit(formData)}
+                />
               ) : (
                 <div className="flex h-96 flex-col items-center justify-center gap-4 rounded-b-xl bg-gray-50 p-16 text-center">
                   <ImFilesEmpty className="h-20 w-20 text-gray-400" />
@@ -193,18 +101,19 @@ export default function Dashboard() {
   );
 }
 
-function Listings({ places }) {
+function Listings({ places, handleSubmit }) {
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
   const [openMenuId, setOpenMenuId] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [showModal, setShowModal] = useState(false);
+  // const [filteredPlaces, setFilteredPlaces] = useState(places);
   const menuRef = useRef(null);
 
   const filteredPlaces = places.filter(
     (place) =>
-      place.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      place.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      place.area_name.toLowerCase().includes(searchTerm.toLowerCase()),
+      place?.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      place?.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      place?.area_name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   const handleMenuClick = (event, id) => {
@@ -239,12 +148,16 @@ function Listings({ places }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [openMenuId]);
 
+  // useEffect(() => {
+  //   filteredPlaces;
+  // }, [places]);
+
   return (
     <>
       {showModal && (
         <AddPropertyModal
           onClose={() => setShowModal(false)}
-          onSubmit={(formData) => onSubmit(formData)}
+          onSubmit={(formData) => handleSubmit(formData)}
         />
       )}
       <div>
@@ -295,18 +208,18 @@ function Listings({ places }) {
               </tr>
             </thead>
             <tbody>
-              {filteredPlaces.map((place) => (
+              {places.map((place) => (
                 <tr
-                  key={place.id}
+                  key={place?.id}
                   className="border-b bg-white hover:bg-gray-50"
                 >
                   <td className="px-6 py-4">
                     <div className="flex items-center space-x-3">
                       <div className="flex-shrink-0">
-                        {place.images[0]?.image ? (
+                        {place?.images[0]?.image ? (
                           <Image
-                            src={`${place.images[0]?.image}`}
-                            alt={place.title}
+                            src={`${place?.images[0]?.image}`}
+                            alt={place?.title}
                             width={200}
                             height={200}
                             className="h-12 w-16 rounded-md object-cover"
@@ -315,7 +228,7 @@ function Listings({ places }) {
                           <div className="flex h-12 w-16 items-center justify-center rounded-md border border-gray-200">
                             <Image
                               src={"/property-placeholder-colored.png"}
-                              alt={place.title}
+                              alt={place?.title}
                               width={200}
                               height={200}
                               className="my-auto h-8 w-8 rounded-md object-cover"
@@ -325,53 +238,53 @@ function Listings({ places }) {
                       </div>
                       <div>
                         <div className="font-medium text-gray-900">
-                          {place.title}
+                          {place?.title}
                         </div>
                         <div className="text-xs text-gray-500">
-                          {place.category.name}
+                          {place?.category.name}
                         </div>
                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-4">
-                    <div className="font-medium">{place.city}</div>
+                    <div className="font-medium">{place?.city}</div>
                     <div className="text-xs text-gray-500">
-                      {place.area_name}
+                      {place?.area_name}
                     </div>
                   </td>
                   <td className="px-6 py-4 font-medium">
-                    ৳ {place.rent_per_month.toLocaleString()}
+                    ৳ {place?.rent_per_month.toLocaleString()}
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center space-x-4">
                       <div className="flex items-center text-gray-500">
                         <IoMdBed className="mr-1" />
-                        <span>{place.num_of_bedrooms}</span>
+                        <span>{place?.num_of_bedrooms}</span>
                       </div>
                       <div className="flex items-center text-gray-500">
                         <FaBath className="mr-1" size={14} />
-                        <span>{place.num_of_bathrooms}</span>
+                        <span>{place?.num_of_bathrooms}</span>
                       </div>
                       <div className="flex items-center text-gray-500">
                         <FaUsers className="mr-1" size={14} />
-                        <span>{place.capacity}</span>
+                        <span>{place?.capacity}</span>
                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-4">
                     <span
                       className={`rounded-full px-2.5 py-1 text-xs font-medium ${
-                        place.is_available
+                        place?.is_available
                           ? "bg-green-100 text-green-800"
                           : "bg-red-100 text-red-800"
                       }`}
                     >
-                      {place.is_available ? "Available" : "Not Available"}
+                      {place?.is_available ? "Available" : "Not Available"}
                     </span>
                   </td>
                   <td className="px-6 py-4 text-right">
                     <button
-                      onClick={(e) => handleMenuClick(e, place.id)}
+                      onClick={(e) => handleMenuClick(e, place?.id)}
                       className="rounded-md p-1.5 text-gray-500 transition-colors hover:bg-gray-100"
                     >
                       <IoEllipsisVertical />
@@ -413,7 +326,7 @@ function Listings({ places }) {
         <div className="flex items-center justify-between border-t border-gray-200 bg-gray-50 px-6 py-3">
           <div className="text-sm text-gray-500">
             Showing <span className="font-medium">{filteredPlaces.length}</span>{" "}
-            of <span className="font-medium">{places.length}</span> properties
+            of <span className="font-medium">{places?.length}</span> properties
           </div>
           <div className="flex items-center space-x-2">
             <button
