@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import "leaflet/dist/leaflet.css";
-import { MapPin } from "lucide-react"; // Added import for MapPin
+import { MapPin } from "lucide-react";
 
 function Location({ activeTab, formData, handleInputChange, setFormData }) {
   // Map functionality
@@ -16,21 +15,6 @@ function Location({ activeTab, formData, handleInputChange, setFormData }) {
   // Set isBrowser to true when component mounts in the browser
   useEffect(() => {
     setIsBrowser(true);
-
-    // Fix marker icon issues
-    if (typeof window !== "undefined" && window.L) {
-      // Fix for marker icons - this needs to run before map initialization
-      delete window.L.Icon.Default.prototype._getIconUrl;
-
-      window.L.Icon.Default.mergeOptions({
-        iconRetinaUrl:
-          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png",
-        iconUrl:
-          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png",
-        shadowUrl:
-          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
-      });
-    }
 
     // Cleanup function to destroy the map when component unmounts
     return () => {
@@ -60,30 +44,52 @@ function Location({ activeTab, formData, handleInputChange, setFormData }) {
         const defaultLat = formData?.latitude || 40.7128;
         const defaultLng = formData?.longitude || -74.006;
 
-        // Create map with specific options to fix UI issues
+        // Create map with optimized options
         const map = window.L.map(mapRef.current, {
-          scrollWheelZoom: false, // Disable scroll to zoom
-          dragging: true, // Enable dragging
-          tap: false, // Disable tap handler for mobile
-          preferCanvas: true, // Use canvas renderer for better performance
+          scrollWheelZoom: true, // Enable scroll zoom
+          dragging: true,
+          tap: true,
+          preferCanvas: false, // Use SVG renderer for better compatibility
+          zoomControl: true,
+          attributionControl: true,
+          maxZoom: 18,
+          minZoom: 2,
         }).setView([defaultLat, defaultLng], 13);
 
         mapInstanceRef.current = map;
 
-        // Add tile layer with proper z-index handling
-        window.L.tileLayer(
+        // Add tile layer with better error handling and options
+        const tileLayer = window.L.tileLayer(
           "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
           {
             attribution:
               '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            maxZoom: 19,
+            maxZoom: 18,
             minZoom: 2,
             tileSize: 256,
             zoomOffset: 0,
-            updateWhenIdle: true,
             detectRetina: true,
+            crossOrigin: true,
+            // Add error handling for tiles
+            errorTileUrl:
+              "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
           },
-        ).addTo(map);
+        );
+
+        // Add event listeners for tile loading
+        tileLayer.on("tileerror", function (error) {
+          console.warn("Tile loading error:", error);
+        });
+
+        tileLayer.on("tileloadstart", function () {
+          // Optional: Add loading indicator
+        });
+
+        tileLayer.on("tileload", function () {
+          // Tiles loaded successfully
+        });
+
+        tileLayer.addTo(map);
 
         // Create marker if coordinates exist in formData
         if (formData?.latitude && formData?.longitude) {
@@ -160,7 +166,7 @@ function Location({ activeTab, formData, handleInputChange, setFormData }) {
           }
         });
 
-        // Add zoom controls explicitly
+        // Position zoom controls
         map.zoomControl.setPosition("bottomright");
 
         // Add search control
@@ -263,69 +269,47 @@ function Location({ activeTab, formData, handleInputChange, setFormData }) {
 
         searchControl.addTo(map);
 
-        // Add custom zoom control buttons
-        const zoomInBtn = document.createElement("button");
-        zoomInBtn.innerHTML = "+";
-        zoomInBtn.className =
-          "absolute bottom-4 right-16 rounded-full bg-white p-2 text-xl shadow-md";
-        zoomInBtn.style.zIndex = 1000;
-        zoomInBtn.onclick = () => map.zoomIn();
-
-        const zoomOutBtn = document.createElement("button");
-        zoomOutBtn.innerHTML = "−";
-        zoomOutBtn.className =
-          "absolute bottom-4 right-4 rounded-full bg-white p-2 text-xl shadow-md";
-        zoomOutBtn.style.zIndex = 1000;
-        zoomOutBtn.onclick = () => map.zoomOut();
-
-        // Need to append these to the map container after a short delay
-        setTimeout(() => {
-          const mapContainer = mapRef.current;
-          if (mapContainer) {
-            mapContainer.style.position = "relative";
-            mapContainer.appendChild(zoomInBtn);
-            mapContainer.appendChild(zoomOutBtn);
-          }
-        }, 300);
-
-        // Need to wait for tiles to load and then invalidate size
+        // Wait for map to be ready and then invalidate size
         map.whenReady(() => {
           setTimeout(() => {
-            map.invalidateSize();
+            map.invalidateSize(true);
             setMapLoaded(true);
-          }, 300);
+          }, 100);
         });
+
+        // Force invalidate size after a longer delay to ensure proper rendering
+        setTimeout(() => {
+          if (map && map.invalidateSize) {
+            map.invalidateSize(true);
+          }
+        }, 500);
       } catch (error) {
         console.error("Error initializing map:", error);
         setError("Failed to initialize map");
-        setMapLoaded(true); // Remove loading indicator
+        setMapLoaded(true);
       }
     };
 
     // Load Leaflet dynamically in the browser
     if (isBrowser) {
       if (!window.L) {
-        // First load CSS to ensure marker icons display correctly
+        // Load CSS first
         const link = document.createElement("link");
         link.rel = "stylesheet";
-        link.href =
-          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css";
-        link.integrity =
-          "sha512-Zcn6bjR/8RZbLEpLIeOwNtzREBAJhXpHQ8Fk+PwGUv8UhAY5r+ux/dFy0EV6ERQEiJ3WEh6cB7wM4fh2j/2v9g==";
-        link.crossOrigin = "anonymous";
+        link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+        link.integrity = "sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=";
+        link.crossOrigin = "";
         document.head.appendChild(link);
 
         // Then load the script
         const script = document.createElement("script");
-        script.src =
-          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js";
+        script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
         script.integrity =
-          "sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg==";
-        script.crossOrigin = "anonymous";
+          "sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=";
+        script.crossOrigin = "";
         script.onload = () => {
-          // Fix marker icons after script loads but before map initialization
+          // Fix default marker icons
           delete window.L.Icon.Default.prototype._getIconUrl;
-
           window.L.Icon.Default.mergeOptions({
             iconRetinaUrl:
               "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png",
@@ -335,7 +319,7 @@ function Location({ activeTab, formData, handleInputChange, setFormData }) {
               "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
           });
 
-          initMap();
+          setTimeout(initMap, 100);
         };
         script.onerror = () => {
           setError("Failed to load map library");
@@ -345,7 +329,6 @@ function Location({ activeTab, formData, handleInputChange, setFormData }) {
       } else {
         // Fix marker icons if Leaflet is already loaded
         delete window.L.Icon.Default.prototype._getIconUrl;
-
         window.L.Icon.Default.mergeOptions({
           iconRetinaUrl:
             "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png",
@@ -355,7 +338,7 @@ function Location({ activeTab, formData, handleInputChange, setFormData }) {
             "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
         });
 
-        initMap();
+        setTimeout(initMap, 100);
       }
     }
   }, [isBrowser, activeTab, formData?.latitude, formData?.longitude]);
@@ -369,7 +352,7 @@ function Location({ activeTab, formData, handleInputChange, setFormData }) {
       mapInstanceRef.current
     ) {
       setTimeout(() => {
-        mapInstanceRef.current.invalidateSize();
+        mapInstanceRef.current.invalidateSize(true);
       }, 100);
     }
   }, [activeTab, isBrowser]);
@@ -528,35 +511,10 @@ function Location({ activeTab, formData, handleInputChange, setFormData }) {
 
         <div className="rounded-lg border border-dashed border-gray-300 p-4">
           <div className="space-y-4">
-            {/* Map Container with explicit size and position */}
-            <div className="relative h-96 w-full rounded-lg border border-gray-300 bg-gray-100 shadow-inner">
-              {/* Load Leaflet CSS explicitly inline to avoid dependency issues */}
-              <style
-                dangerouslySetInnerHTML={{
-                  __html: `
-                .leaflet-container {
-                  width: 100% !important;
-                  height: 100% !important;
-                  z-index: 1;
-                  position: absolute !important;
-                  top: 0;
-                  left: 0;
-                  right: 0;
-                  bottom: 0;            
-                }
-                .leaflet-tile-container img {
-                  width: 256px !important;
-                  height: 256px !important;
-                }
-                .leaflet-control-container {
-                  z-index: 2;
-                }
-              `,
-                }}
-              />
-
+            {/* Map Container */}
+            <div className="relative h-96 w-full overflow-hidden rounded-lg border border-gray-300 bg-gray-100">
               {!mapLoaded && isBrowser && (
-                <div className="absolute inset-0 z-20 flex items-center justify-center bg-white bg-opacity-70">
+                <div className="absolute inset-0 z-50 flex items-center justify-center bg-white bg-opacity-90">
                   <div className="flex items-center space-x-2">
                     <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-500 border-t-transparent"></div>
                     <span className="text-gray-500">Loading map...</span>
@@ -565,7 +523,7 @@ function Location({ activeTab, formData, handleInputChange, setFormData }) {
               )}
 
               {error && (
-                <div className="absolute inset-0 z-20 flex items-center justify-center bg-red-50 bg-opacity-80">
+                <div className="absolute inset-0 z-50 flex items-center justify-center bg-red-50">
                   <div className="rounded-lg bg-white p-4 shadow-lg">
                     <h3 className="text-lg font-bold text-red-600">
                       Error Loading Map
@@ -584,14 +542,15 @@ function Location({ activeTab, formData, handleInputChange, setFormData }) {
                 </div>
               )}
 
-              {/* Map container with explicit full dimensions */}
+              {/* Map container */}
               <div
                 ref={mapRef}
-                className="absolute inset-0 h-full w-full"
+                className="h-full w-full"
                 style={{
-                  zIndex: 10,
+                  minHeight: "384px",
+                  position: "relative",
                 }}
-              ></div>
+              />
             </div>
 
             {selectedLocation && (
