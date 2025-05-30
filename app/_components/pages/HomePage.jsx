@@ -6,6 +6,7 @@ import BoundingBox from "../BoundingBox";
 import NavMain from "../NavMain";
 import SectionPartners from "../home/SectionPartners";
 import SectionReviews from "../home/SectionReviews";
+import SectionFeedback from "../home/SectionFeedback";
 
 export default function HomePage() {
   return (
@@ -18,6 +19,7 @@ export default function HomePage() {
       </BoundingBox>
       <SectionReviews />
       <SectionPartners />
+      <SectionFeedback />
       <Footer />
     </>
   );

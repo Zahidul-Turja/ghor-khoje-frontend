@@ -85,15 +85,15 @@ function NavMain({ classes }) {
           <div className="flex items-center gap-4">
             <Link
               href={"/auth/login"}
-              className="rounded-lg border-2 border-primary px-5 py-1 text-sm font-semibold text-primary"
+              className="rounded-xl border-2 border-primary px-5 py-1.5 text-sm font-semibold text-primary"
             >
               Login
             </Link>
             <Link
               href={"/auth/signup"}
-              className="rounded-lg border-2 border-primary bg-primary px-5 py-1 text-sm text-white"
+              className="rounded-xl border-2 border-primary bg-primary px-5 py-1.5 text-sm text-white"
             >
-              Sign up
+              Create Account
             </Link>
           </div>
         ) : (

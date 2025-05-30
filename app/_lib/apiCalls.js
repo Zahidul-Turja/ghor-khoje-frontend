@@ -122,3 +122,15 @@ export const getFeaturedProperties = async () => {
     throw error;
   }
 };
+
+export const getFeedbackTypes = async () => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/api/v1/feedback/feedback-types/`,
+    );
+    const data = response.data.results;
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
