@@ -30,15 +30,18 @@ function SectionReviews() {
   };
 
   return (
-    <section className="overflow-hidden bg-gradient-to-br from-gray-50 to-white py-16">
+    <section className="overflow-hidden bg-gradient-to-br from-gray-50 to-white py-24">
       <div className="mx-auto">
         {/* Section Header */}
         <div className="mb-12 text-center">
-          <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
-            What Our Customers Say
+          <h2 className="text-3xl font-bold uppercase text-gray-900 sm:text-4xl">
+            <span className="font-extralight">What Our</span> Customers Say
           </h2>
-          <p className="mt-4 text-lg text-gray-600">
-            Real reviews from real customers
+          <p className="mx-auto mt-4 text-lg text-gray-600 md:w-[80vw] lg:w-[60vw]">
+            Discover what our customers truly think about us. These are honest,
+            unfiltered reviews from real people who’ve experienced our service
+            firsthand. Their feedback not only reflects the quality we strive
+            for but also helps you get a clear picture of what to expect.
           </p>
         </div>
 
@@ -76,7 +79,7 @@ function SwiperSlider({ scrollingReviews, renderStars, truncateComment }) {
       grabCursor={true}
       freeMode={true}
       autoplay={{
-        delay: 1000, // No delay between slides
+        delay: 1500, // No delay between slides
         disableOnInteraction: false,
       }}
       speed={2000}
@@ -85,7 +88,7 @@ function SwiperSlider({ scrollingReviews, renderStars, truncateComment }) {
       {scrollingReviews.map((review, index) => (
         <SwiperSlide
           key={`${review.id}-${index}`}
-          className="flex min-w-[400px] max-w-[400px] flex-col rounded-2xl bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+          className="my-10 flex min-w-[400px] max-w-[400px] flex-col rounded-2xl bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
         >
           {/* Header with avatar and info */}
           <div className="mb-4 flex items-center gap-4">

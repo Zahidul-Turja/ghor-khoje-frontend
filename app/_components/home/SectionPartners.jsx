@@ -19,12 +19,21 @@ const partners = [
 
 function SectionPartners() {
   return (
-    <section className="mx-auto max-w-screen-2xl px-0 pt-32 md:px-6 lg:px-8">
-      <h2 className="mb-6 text-3xl font-bold uppercase tracking-wide text-gray-800">
-        <span className="font-extralight">Our</span> Partners
-      </h2>
+    <section className="mx-auto max-w-screen-2xl px-0 py-32">
+      {/* Section Header */}
+      <div className="mb-12 text-center">
+        <h2 className="text-3xl font-bold uppercase text-gray-900 sm:text-4xl">
+          <span className="font-extralight">Our</span> Partners
+        </h2>
+        <p className="mx-auto mt-4 text-lg text-gray-600 md:w-[80vw] lg:w-[60vw]">
+          We’re proud to collaborate with trusted partners who share our vision
+          and values. These partnerships play a key role in helping us deliver
+          exceptional solutions and grow together. Take a look at some of the
+          amazing organizations we work with.
+        </p>
+      </div>
 
-      <div className="flex w-full items-center justify-center py-20">
+      <div className="flex w-full items-center justify-center py-8">
         <Swiper
           modules={[Autoplay]}
           slidesPerView="auto"
