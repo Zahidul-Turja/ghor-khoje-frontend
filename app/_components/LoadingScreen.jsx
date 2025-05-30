@@ -112,7 +112,7 @@ const LoadingScreen = ({ onLoadingComplete }) => {
         {/* Brand Name */}
         <div className="space-y-2">
           <h1 className="bg-gradient-to-r from-primary/70 to-primary bg-clip-text text-3xl font-bold text-transparent">
-            PropertyHub
+            GhorKhojee
           </h1>
           <p className="font-medium text-gray-600">Your Dream Home Awaits</p>
           {/* Developer Note */}

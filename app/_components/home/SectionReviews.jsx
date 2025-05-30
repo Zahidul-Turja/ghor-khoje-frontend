@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { dummy_reviews } from "@/public/dummy_data";
 
@@ -42,58 +44,11 @@ function SectionReviews() {
 
         {/* Scrolling Reviews Container */}
         <div className="relative overflow-x-hidden">
-          <div className="flex animate-scroll gap-6 py-10">
-            {scrollingReviews.map((review, index) => (
-              <div
-                key={`${review.id}-${index}`}
-                className="flex min-w-[400px] max-w-[400px] flex-col rounded-2xl bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
-              >
-                {/* Header with avatar and info */}
-                <div className="mb-4 flex items-center gap-4">
-                  <div className="relative h-16 w-16 overflow-hidden rounded-full">
-                    <Image
-                      src={review.reviewer.image}
-                      alt="Profile"
-                      width={56}
-                      height={56}
-                      className="h-16 w-16 rounded-full object-cover"
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-gray-900">
-                      {review.reviewer.name}
-                    </h4>
-                    <div className="mt-1 flex items-center gap-2">
-                      <div className="flex gap-1">
-                        {renderStars(review.rating)}
-                      </div>
-                      <span className="text-sm font-medium text-gray-700">
-                        {review.rating.toFixed(1)}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Review Comment */}
-                <div className="flex-1">
-                  <p className="leading-relaxed text-gray-700">
-                    "{truncateComment(review.comment)}"
-                  </p>
-                </div>
-
-                {/* Date */}
-                <div className="mt-4 border-t border-gray-100 pt-4">
-                  <time className="text-sm text-gray-500">
-                    {new Date(review.date).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                  </time>
-                </div>
-              </div>
-            ))}
-          </div>
+          <SwiperSlider
+            scrollingReviews={scrollingReviews}
+            renderStars={renderStars}
+            truncateComment={truncateComment}
+          />
 
           {/* Enhanced gradient fade edges */}
           <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-32 bg-gradient-to-r from-gray-50 via-gray-50/80 to-transparent" />
@@ -105,3 +60,90 @@ function SectionReviews() {
 }
 
 export default SectionReviews;
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
+
+function SwiperSlider({ scrollingReviews, renderStars, truncateComment }) {
+  return (
+    <Swiper
+      modules={[Autoplay]}
+      slidesPerView="auto"
+      spaceBetween={32}
+      loop={true}
+      centeredSlides={true}
+      grabCursor={true}
+      freeMode={true}
+      autoplay={{
+        delay: 1000, // No delay between slides
+        disableOnInteraction: false,
+      }}
+      speed={2000}
+      className="px-4"
+    >
+      {scrollingReviews.map((review, index) => (
+        <SwiperSlide
+          key={`${review.id}-${index}`}
+          className="flex min-w-[400px] max-w-[400px] flex-col rounded-2xl bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+        >
+          {/* Header with avatar and info */}
+          <div className="mb-4 flex items-center gap-4">
+            <div className="relative h-16 w-16 overflow-hidden rounded-full">
+              <Image
+                src={review.reviewer.image}
+                alt="Profile"
+                width={56}
+                height={56}
+                className="h-16 w-16 rounded-full object-cover"
+              />
+            </div>
+            <div className="flex-1">
+              <h4 className="font-semibold text-gray-900">
+                {review.reviewer.name}
+              </h4>
+              <div className="mt-1 flex items-center gap-2">
+                <div className="flex gap-1">{renderStars(review.rating)}</div>
+                <span className="text-sm font-medium text-gray-700">
+                  {review.rating.toFixed(1)}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Review Comment */}
+          <div className="flex-1">
+            <p className="leading-relaxed text-gray-700">
+              "{truncateComment(review.comment)}"
+            </p>
+          </div>
+
+          {/* Date */}
+          <div className="mt-4 border-t border-gray-100 pt-4">
+            <time className="text-sm text-gray-500">
+              {new Date(review.date).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </time>
+          </div>
+        </SwiperSlide>
+      ))}
+      {/* {partners.map((partner) => (
+        <SwiperSlide
+          key={partner.id}
+          className="flex !w-[120px] items-center justify-center md:!w-[160px]"
+        >
+          <div className="flex h-36 items-center justify-center">
+            <img
+              src={partner.logo}
+              alt={partner.name}
+              className="max-h-full max-w-full object-contain grayscale transition duration-300 hover:grayscale-0"
+            />
+          </div>
+        </SwiperSlide>
+      ))} */}
+    </Swiper>
+  );
+}
