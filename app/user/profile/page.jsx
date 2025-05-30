@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import SelfProfile from "@/app/_components/pages/SelfProfile";
+import LoadingProfile from "@/app/_components/LoadingProfile";
 
 export const metadata = {
   title: "Profile",
@@ -8,7 +9,7 @@ export const metadata = {
 
 function Page() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<LoadingProfile />}>
       <SelfProfile />
     </Suspense>
   );
