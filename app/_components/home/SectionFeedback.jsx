@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 
-import { getFeedbackTypes } from "@/app/_lib/apiCalls";
+import { getFeedbackTypes, submitFeedback } from "@/app/_lib/apiCalls";
+import toast from "react-hot-toast";
 
 const SectionFeedback = () => {
   const [formData, setFormData] = useState({
@@ -50,14 +51,16 @@ const SectionFeedback = () => {
   };
 
   const handleSubmit = async () => {
-    if (
-      !formData.name ||
-      !formData.email ||
-      !formData.subject ||
-      !formData.message ||
-      !formData.feedback_type
-    ) {
-      alert("Please fill in all required fields");
+    if (!formData.name || !formData.message || !formData.feedback_type) {
+      toast.error(
+        <div className="flex flex-col space-y-1">
+          <h4 className="text-lg font-semibold text-[#ff9966]">Warning!</h4>
+          <p className="text-sm font-medium text-gray-800">
+            Please fill in all required fields(name, message and topic) before
+            submitting your feedback.
+          </p>
+        </div>,
+      );
       return;
     }
 
@@ -65,6 +68,19 @@ const SectionFeedback = () => {
 
     try {
       // Prepare the request body according to your specification
+      if (formData.want_to_be_contacted && !formData.email) {
+        toast.error(
+          <div className="flex flex-col space-y-1">
+            <h4 className="text-lg font-semibold text-[#ff9966]">Warning!</h4>
+            <p className="text-sm font-medium text-gray-800">
+              You've selected to be contacted but didn't provide an email.
+            </p>
+          </div>,
+        );
+        setIsLoading(false);
+        return;
+      }
+
       const requestBody = {
         email: formData.email,
         name: formData.name,
@@ -75,13 +91,7 @@ const SectionFeedback = () => {
       };
 
       // Replace with your actual submission endpoint
-      const response = await fetch("{{local}}/feedback/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      });
+      const response = await submitFeedback(requestBody);
 
       if (response.ok) {
         setIsSubmitted(true);
@@ -93,12 +103,10 @@ const SectionFeedback = () => {
           want_to_be_contacted: false,
           feedback_type: "",
         });
-      } else {
-        throw new Error("Failed to submit feedback");
+        isSubmitted(true);
       }
     } catch (error) {
       console.error("Error submitting feedback:", error);
-      alert("Failed to submit feedback. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -280,7 +288,6 @@ const SectionFeedback = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  required
                   className="w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-gray-500 outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400"
                   placeholder="Your full name"
                 />
@@ -300,7 +307,6 @@ const SectionFeedback = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  required
                   className="w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-gray-500 outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400"
                   placeholder="your.email@example.com"
                 />
@@ -320,7 +326,6 @@ const SectionFeedback = () => {
                   name="subject"
                   value={formData.subject}
                   onChange={handleInputChange}
-                  required
                   className="w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-gray-500 outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400"
                   placeholder="Brief subject of your feedback"
                 />

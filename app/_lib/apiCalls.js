@@ -1,4 +1,5 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_ENDPOINT;
 
@@ -131,6 +132,28 @@ export const getFeedbackTypes = async () => {
     const data = response.data.results;
     return data;
   } catch (error) {
+    throw error;
+  }
+};
+
+export const submitFeedback = async (formData) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/api/v1/feedback/submit-feedback/`,
+      formData,
+    );
+    const data = response.data;
+    console.log("Feedback submitted:", data);
+    if (data.status === "success") {
+      toast.success("Feedback submitted successfully");
+      return data;
+    } else {
+      toast.error(data.message || "Failed to submit feedback");
+    }
+    return null;
+  } catch (error) {
+    console.error("Error submitting feedback:", error);
+    toast.error("Failed to submit feedback");
     throw error;
   }
 };
