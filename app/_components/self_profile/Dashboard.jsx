@@ -6,16 +6,29 @@ import { IoAdd, IoEllipsisVertical, IoSearch } from "react-icons/io5";
 import { IoMdBed, IoMdAdd } from "react-icons/io";
 import { FaBath, FaUsers } from "react-icons/fa";
 import { ImFilesEmpty } from "react-icons/im";
+import { CiWarning } from "react-icons/ci";
 
 import AddPropertyModal from "./AddPropertyModal";
+import ApplyForHostModal from "../ApplyForHostModal";
 
-import { getUserProperties, createProperty } from "@/app/_lib/apiCalls";
+import {
+  getUserProperties,
+  createProperty,
+  applyForHost,
+  hasAppliedForHost,
+} from "@/app/_lib/apiCalls";
+import useAuthStore from "@/app/_store/authStore";
+import toast from "react-hot-toast";
 
 export default function Dashboard() {
+  const { user, userInfo } = useAuthStore();
+
   const [places, setPlaces] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [showApplyModal, setShowApplyModal] = useState(false);
+  const [hasApplied, setHasApplied] = useState(false);
   const [nextPage, setNextPage] = useState(null);
   const [prevPage, setPrevPage] = useState(null);
   const [totalPages, setTotalPages] = useState(0);
@@ -30,7 +43,12 @@ export default function Dashboard() {
         setPrevPage(response.previous);
         setTotalPages(response.count);
 
+        const appliedResponse = await hasAppliedForHost();
+        setHasApplied(appliedResponse.has_applied || false);
+
         console.log("Properties fetched:", response);
+        console.log("Has applied for host:", appliedResponse);
+        console.log("has appliedForHost State:", hasApplied);
       } catch (error) {
         setError("Failed to fetch properties");
       } finally {
@@ -40,6 +58,19 @@ export default function Dashboard() {
 
     fetchPlaces();
   }, []);
+
+  const handleHostSubmission = async () => {
+    try {
+      await applyForHost();
+      setShowApplyModal(false);
+
+      const appliedResponse = await hasAppliedForHost();
+      setHasApplied(appliedResponse.has_applied || false);
+      toast.success("Application submitted successfully");
+    } catch (error) {
+      toast.error("Failed to submit application");
+    }
+  };
 
   const handleSubmit = (formData) => {
     createProperty(formData)
@@ -53,6 +84,57 @@ export default function Dashboard() {
       });
     setShowModal(false);
   };
+
+  if (user?.user_type !== "LANDLORD") {
+    // console.log("User type:", user?.user_type);
+    // console.log("Has applied for host:", hasApplied);
+    if (hasApplied) {
+      return (
+        <div className="mt-[10vh] h-[80vh] bg-gray-50 text-center shadow-lg">
+          <div className="mx-auto px-8 py-8">
+            <h1 className="mb-6 text-3xl font-bold text-primary">
+              Your Application is Under Review
+            </h1>
+            <p className="mx-auto w-96 text-gray-600">
+              Thank you for applying to become a landlord. Our team will review
+              your application and get back to you soon.
+            </p>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <>
+        {showApplyModal && (
+          <ApplyForHostModal
+            setShowModal={setShowApplyModal}
+            handleHostSubmission={handleHostSubmission}
+          />
+        )}
+        <div className="mt-[10vh] h-[80vh] bg-gray-50 text-center shadow-lg">
+          <div className="mx-auto px-8 py-8">
+            <h1 className="mb-6 flex items-center justify-center text-3xl font-bold text-primary">
+              <CiWarning className="mr-2 inline text-4xl" />
+              Landlord Access Required
+            </h1>
+            <p className="mx-auto w-96 text-gray-600">
+              You need to be a landlord to access the property dashboard. If you
+              believe this is an error, please contact support or apply to
+              become a landlord.
+            </p>
+          </div>
+
+          <button
+            className="hover:bg-primary/90` mx-auto mt-4 flex items-center gap-2 rounded-lg bg-primary/80 px-4 py-2 text-sm font-medium text-white transition"
+            onClick={() => setShowApplyModal(true)}
+          >
+            Apply to become a Landlord
+          </button>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>

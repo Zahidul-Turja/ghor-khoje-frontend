@@ -28,6 +28,7 @@ const useAuthStore = create(
           if (response.ok) {
             set({ user: data.data });
             window.localStorage.setItem("user", JSON.stringify(data.data));
+            return data.data;
           } else {
             throw new Error(data.message || "Failed to fetch user info");
           }
