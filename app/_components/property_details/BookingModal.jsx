@@ -1,14 +1,36 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import useAuthStore from "@/app/_store/authStore";
 
 function BookingModal({ isOpen, onClose, propertyData }) {
+  const { isAuthenticated, userInfo, user } = useAuthStore();
+  console.log("userInfo", user);
+  const getValidCheckInDate = () => {
+    const availableFrom = propertyData?.available_from;
+    if (!availableFrom) return "";
+
+    const today = new Date();
+    const availableDate = new Date(availableFrom);
+
+    if (availableDate < today.setHours(0, 0, 0, 0)) {
+      // If the available date has passed, return 1st of next month
+      const nextMonth = new Date();
+      nextMonth.setMonth(nextMonth.getMonth() + 1);
+      nextMonth.setDate(1);
+      return nextMonth.toISOString().split("T")[0]; // Format as YYYY-MM-DD
+    }
+
+    return availableFrom;
+  };
+
   const [formData, setFormData] = useState({
-    checkInDate: "",
+    checkInDate: getValidCheckInDate(),
     checkOutDate: "",
+    contractDuration: "",
     numberOfGuests: 1,
-    fullName: "",
-    email: "",
-    phone: "",
+    fullName: user?.full_name || "",
+    email: user?.email || "",
+    phone: user?.phone || "",
     message: "",
   });
 
@@ -81,7 +103,7 @@ function BookingModal({ isOpen, onClose, propertyData }) {
       className="fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-50 p-4"
       onClick={handleBackdropClick}
     >
-      <div className="relative h-[80vh] w-full max-w-5xl overflow-hidden rounded-2xl bg-white shadow-2xl">
+      <div className="relative min-h-[80vh] w-full max-w-5xl overflow-hidden rounded-2xl bg-white shadow-2xl">
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -105,7 +127,7 @@ function BookingModal({ isOpen, onClose, propertyData }) {
         <div className="flex h-full max-h-[90vh] overflow-hidden">
           {/* Left Side - Property Info */}
           <div className="w-2/5 bg-gradient-to-br from-gray-900 to-gray-800 p-6 text-white">
-            <div className="h-full overflow-y-auto">
+            <div className="no-scrollbar h-full overflow-y-auto">
               {/* Property Image */}
               {propertyData.images && propertyData.images[0] && (
                 <div className="mb-6 overflow-hidden rounded-xl">
@@ -218,7 +240,7 @@ function BookingModal({ isOpen, onClose, propertyData }) {
 
           {/* Right Side - Booking Form */}
           <div className="flex-1 p-6">
-            <div className="h-full overflow-y-auto">
+            <div className="no-scrollbar h-full overflow-y-auto">
               {/* Step Indicator */}
               <div className="mb-6 flex items-center justify-center">
                 <div className="flex items-center space-x-4">
@@ -263,20 +285,23 @@ function BookingModal({ isOpen, onClose, propertyData }) {
                           type="date"
                           name="checkInDate"
                           value={formData.checkInDate}
-                          onChange={handleInputChange}
+                          // onChange={handleInputChange}
+                          disabled
                           min={propertyData.available_from}
-                          className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-20"
+                          className="w-full rounded-lg border border-gray-300 px-4 py-2.5 opacity-70 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-20"
                           required
                         />
                       </div>
                       <div>
-                        <label className="mb-2 block text-sm font-medium text-gray-700">
+                        <label className="mb-2 block text-sm font-medium text-gray-400">
                           Contract Duration
                         </label>
                         <select
                           name="contractDuration"
                           className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-20"
                           required
+                          value={formData.contractDuration}
+                          onChange={handleInputChange}
                         >
                           <option value="">Select duration</option>
                           <option value="6">6 months</option>

@@ -1,3 +1,4 @@
+import useAuthStore from "@/app/_store/authStore";
 import { Calendar, Users, DollarSign, Clock } from "lucide-react";
 import { useState } from "react";
 
@@ -11,6 +12,7 @@ function AppointmentCard({
   setOpenBookingModal,
 }) {
   const [isHovered, setIsHovered] = useState(false);
+  const { isAuthenticated, userInfo } = useAuthStore();
 
   return (
     <div className="w-full rounded-xl border-2 border-gray-300 p-4 shadow-md transition-shadow duration-300 hover:shadow-lg">
@@ -72,10 +74,14 @@ function AppointmentCard({
       </div>
 
       <button
-        className={`w-full rounded-lg py-3 text-white transition-colors duration-300 ${isHovered ? "bg-primary/90" : "bg-primary/80"}`}
+        className={`w-full rounded-lg py-3 text-white transition-colors duration-300 ${isHovered ? "bg-primary/90" : "bg-primary/80"} ${
+          isAuthenticated ? "cursor-pointer" : "cursor-not-allowed opacity-50"
+        }`}
+        title={isAuthenticated ? "Click to book" : "Please log in to book"}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onClick={() => setOpenBookingModal(true)}
+        disabled={!isAuthenticated}
       >
         Book Now
       </button>

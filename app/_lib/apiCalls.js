@@ -87,9 +87,17 @@ export const createProperty = async (formData) => {
       },
     });
     console.log("Success:", res.data);
+    toast.success("Property created successfully");
     return res.data;
   } catch (err) {
     console.error("Error:", err);
+    if (err.response && err.response.data) {
+      const errorMessage =
+        err.response.data.message || "Failed to create property";
+      toast.error(errorMessage);
+    } else {
+      toast.error("An unexpected error occurred");
+    }
   }
 };
 
