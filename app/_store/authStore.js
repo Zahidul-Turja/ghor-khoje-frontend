@@ -46,6 +46,7 @@ const useAuthStore = create(
             body: JSON.stringify(credentials),
           });
           const data = await response.json();
+          console.log("Login response:", data);
 
           if (response.ok) {
             set({
@@ -67,7 +68,8 @@ const useAuthStore = create(
             throw new Error(data.message || "Login failed");
           }
         } catch (error) {
-          toast.error("Login failed! Please try again.");
+          toast.error(error.message || "Login failed");
+          console.error("Login error:", error.message);
 
           throw error;
         } finally {

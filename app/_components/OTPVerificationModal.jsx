@@ -102,7 +102,7 @@ export default function OTPVerificationModal() {
     console.log("OTP Value:", otpValue);
 
     if (otpValue.length !== 4) {
-      toast.error("Please enter a valid 4-digit OTP");
+      // toast.error("Please enter a valid 4-digit OTP");
       return;
     }
 
@@ -110,7 +110,7 @@ export default function OTPVerificationModal() {
       console.log("Verifying OTP...", user);
       setIsLoading(true);
       await verifyOtp(user.email, otpValue);
-      toast.success("OTP verified successfully");
+      // toast.success("OTP verified successfully");
       router.push("/auth/login");
       // verifyOtp function should handle success notifications and routing
     } catch (error) {

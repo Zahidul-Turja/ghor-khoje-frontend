@@ -33,7 +33,7 @@ function LoginPage() {
 
       router.push("/");
     } catch (err) {
-      setError("Invalid email or password");
+      setError(err.message || "An error occurred during login");
     } finally {
       setIsLoading(false);
     }
