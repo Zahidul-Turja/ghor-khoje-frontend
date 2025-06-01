@@ -25,46 +25,50 @@ function SectionProperties() {
   }, [page]);
 
   return (
-    <section className="mx-auto max-w-screen-2xl px-0 py-10 md:px-6 lg:px-8">
-      <div className="my-8 flex w-full flex-col items-center justify-between gap-4 rounded-full px-6 shadow-lg md:flex-row">
-        <div className="order-2 w-full md:order-1 md:w-[75%] lg:w-[82%]">
+    <section className="mx-auto max-w-screen-2xl px-3 py-8 md:px-6 md:py-10 lg:px-8">
+      {/* Filter and Sort Bar */}
+      <div className="my-6 flex w-full flex-col gap-4 rounded-2xl bg-white px-4 py-4 shadow-lg md:my-8 md:flex-row md:items-center md:justify-between md:px-6 lg:rounded-full">
+        {/* Category Filter Navigation */}
+        <div className="order-2 w-full md:order-1 md:w-[70%] lg:w-[75%] xl:w-[80%]">
           <CategoryFilterNav pageSize={pageSize} page={page} />
         </div>
 
-        <div className="order-1 flex w-full items-center justify-around gap-2 md:order-2">
-          <button className="flex items-center gap-2 rounded-full border border-gray-300 px-4 py-2 transition-all hover:bg-gray-100">
+        {/* Filter and Sort Buttons */}
+        <div className="order-1 flex w-full items-center justify-center gap-3 md:order-2 md:w-auto md:justify-end">
+          <button className="flex flex-1 items-center justify-center gap-2 rounded-full border border-gray-300 px-4 py-2.5 text-sm font-medium transition-all hover:bg-gray-100 active:scale-95 md:flex-initial">
             <MdTune className="text-lg" />
-            <span className="text-sm font-medium">Filters</span>
+            <span className="hidden sm:inline">Filters</span>
           </button>
 
-          <button className="flex items-center gap-2 rounded-full border border-gray-300 px-4 py-2 transition-all hover:bg-gray-100">
+          <button className="flex flex-1 items-center justify-center gap-2 rounded-full border border-gray-300 px-4 py-2.5 text-sm font-medium transition-all hover:bg-gray-100 active:scale-95 md:flex-initial">
             <MdOutlineSort className="text-lg" />
-            <span className="text-sm font-medium">Sort</span>
+            <span className="hidden sm:inline">Sort</span>
           </button>
         </div>
       </div>
 
+      {/* Properties Grid or Empty State */}
       {places && Array.isArray(places) && places.length > 0 ? (
         <Properties places={places} />
       ) : (
         <Empty />
       )}
 
+      {/* Load More Button */}
       {places && nextPage && (
-        <button
-          className="my-8 w-full rounded-lg border border-slate-400 py-6 text-base font-semibold uppercase tracking-widest text-gray-400"
-          onClick={() => {
-            if (nextPage) {
-              // setPage(page + 1);
-
-              setNumberOfItems((current) => current + pageSize);
-              // setPage((current) => current + 1);
-              getPlaces(numberOfItems, page);
-            }
-          }}
-        >
-          Load More
-        </button>
+        <div className="mt-8 flex justify-center md:mt-12">
+          <button
+            className="active:scale-98 w-full max-w-md rounded-xl border-2 border-slate-300 py-4 text-base font-semibold uppercase tracking-widest text-gray-600 transition-all hover:border-slate-400 hover:bg-slate-50 md:py-6"
+            onClick={() => {
+              if (nextPage) {
+                setNumberOfItems((current) => current + pageSize);
+                getPlaces(numberOfItems, page);
+              }
+            }}
+          >
+            Load More Properties
+          </button>
+        </div>
       )}
     </section>
   );
