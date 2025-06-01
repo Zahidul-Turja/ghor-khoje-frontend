@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import useAuthStore from "@/app/_store/authStore";
+import { bookProperty } from "@/app/_lib/apiCalls";
 
 function BookingModal({ isOpen, onClose, propertyData }) {
   const { isAuthenticated, userInfo, user } = useAuthStore();
@@ -24,6 +25,7 @@ function BookingModal({ isOpen, onClose, propertyData }) {
   };
 
   const [formData, setFormData] = useState({
+    place: propertyData?.id || "",
     checkInDate: getValidCheckInDate(),
     checkOutDate: "",
     contractDuration: "",
@@ -88,11 +90,26 @@ function BookingModal({ isOpen, onClose, propertyData }) {
 
   const costs = calculateTotal();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle booking submission
     console.log("Booking submitted:", formData);
-    // Add your booking logic here
+    const res = await bookProperty(formData);
+    if (res && res.status === "success") {
+      onClose();
+      setCurrentStep(1); // Reset to first step after successful booking
+      setFormData({
+        checkInDate: getValidCheckInDate(),
+        checkOutDate: "",
+        contractDuration: "",
+        numberOfGuests: 1,
+        fullName: user?.full_name || "",
+        email: user?.email || "",
+        phone: user?.phone || "",
+        message: "",
+      });
+    }
+    // console.log("Booking response:", res);
   };
 
   const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, 2));
@@ -103,7 +120,7 @@ function BookingModal({ isOpen, onClose, propertyData }) {
       className="fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-50 p-4"
       onClick={handleBackdropClick}
     >
-      <div className="relative min-h-[80vh] w-full max-w-5xl overflow-hidden rounded-2xl bg-white shadow-2xl">
+      <div className="relative h-[80vh] w-full max-w-5xl overflow-hidden rounded-2xl bg-white shadow-2xl">
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -124,9 +141,9 @@ function BookingModal({ isOpen, onClose, propertyData }) {
           </svg>
         </button>
 
-        <div className="flex h-full max-h-[90vh] overflow-hidden">
+        <div className="flex h-full overflow-hidden">
           {/* Left Side - Property Info */}
-          <div className="w-2/5 bg-gradient-to-br from-gray-900 to-gray-800 p-6 text-white">
+          <div className="h-full w-2/5 bg-gradient-to-br from-gray-900 to-gray-800 p-6 text-white">
             <div className="no-scrollbar h-full overflow-y-auto">
               {/* Property Image */}
               {propertyData.images && propertyData.images[0] && (

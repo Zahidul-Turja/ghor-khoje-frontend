@@ -165,3 +165,32 @@ export const submitFeedback = async (formData) => {
     throw error;
   }
 };
+
+export const bookProperty = async (formData) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/api/v1/bookings/create-booking/`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      },
+    );
+    console.log("Booking response:", response);
+    const data = response.data;
+    console.log("Booking response:", data);
+    if (data.status === "success") {
+      toast.success("Booking created successfully");
+      return data;
+    } else {
+      console.log("Booking error:", data);
+      toast.error(data.message || "Failed to create booking");
+    }
+    return null;
+  } catch (error) {
+    console.log("Error creating booking:", error);
+    toast.error("Failed to create booking");
+    throw error;
+  }
+};
