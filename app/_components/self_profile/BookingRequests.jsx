@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Calendar,
   MapPin,
@@ -20,6 +20,8 @@ import {
   Star,
   MessageSquare,
 } from "lucide-react";
+
+import { getBookingRequests } from "@/app/_lib/apiCalls";
 
 // Mock data - replace with your actual data
 const mockData = {
@@ -187,9 +189,23 @@ const mockData = {
 };
 
 function BookingRequests() {
-  const [bookings, setBookings] = useState(mockData.results);
+  const [bookings, setBookings] = useState();
+  const [loading, setLoading] = useState(true);
   const [expandedCard, setExpandedCard] = useState(null);
   const [filter, setFilter] = useState("all");
+
+  useEffect(() => {
+    const fetchBookings = async () => {
+      const response = await getBookingRequests();
+      if (response && response.results) {
+        setBookings(response.results);
+        console.log("Bookings fetched:", response);
+      }
+
+      setLoading(false);
+    };
+    fetchBookings();
+  }, []);
 
   const updateBookingStatus = (bookingId, newStatus) => {
     setBookings((prev) =>
@@ -225,7 +241,7 @@ function BookingRequests() {
     }
   };
 
-  const filteredBookings = bookings.filter(
+  const filteredBookings = bookings?.filter(
     (booking) => filter === "all" || booking.status === filter,
   );
 
@@ -246,20 +262,28 @@ function BookingRequests() {
     });
   };
 
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <div className="h-16 w-16 animate-spin rounded-full border-t-4 border-primary/80"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-4 sm:p-6">
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="mb-8">
           <div className="mb-3 flex items-center gap-3">
-            <div className="rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 p-3 shadow-lg">
-              <Home className="h-8 w-8 text-white" />
+            <div className="rounded-xl bg-gradient-to-r from-primary/90 to-primary p-3 shadow-lg">
+              <Home className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h1 className="bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-4xl font-bold text-transparent">
+              <h1 className="bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-2xl font-bold text-transparent">
                 Booking Requests
               </h1>
-              <p className="mt-1 text-slate-600">
+              <p className="mt-0 text-slate-600">
                 Manage and review all property booking requests
               </p>
             </div>
@@ -272,15 +296,15 @@ function BookingRequests() {
             {["all", "pending", "confirmed", "rejected"].map((status) => {
               const count =
                 status === "all"
-                  ? bookings.length
-                  : bookings.filter((b) => b.status === status).length;
+                  ? bookings?.length
+                  : bookings?.filter((b) => b.status === status).length;
               return (
                 <button
                   key={status}
                   onClick={() => setFilter(status)}
-                  className={`flex items-center gap-2 rounded-xl px-6 py-3 font-medium capitalize transition-all duration-200 ${
+                  className={`flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium capitalize transition-all duration-200 ${
                     filter === status
-                      ? "scale-105 transform bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-200"
+                      ? "scale-105 transform bg-gradient-to-r from-primary/80 to-primary/90 text-white shadow-lg shadow-blue-200"
                       : "text-slate-600 hover:bg-white/80 hover:shadow-md"
                   }`}
                 >
@@ -315,17 +339,17 @@ function BookingRequests() {
               </p>
             </div>
           ) : (
-            filteredBookings.map((booking) => (
+            filteredBookings?.map((booking) => (
               <div
-                key={booking.id}
+                key={booking?.id}
                 className="group overflow-hidden rounded-3xl border border-white/50 bg-white/80 shadow-xl backdrop-blur-sm transition-all duration-300 hover:shadow-2xl"
               >
                 {/* Status Banner */}
                 <div
                   className={`h-2 ${
-                    booking.status === "confirmed"
+                    booking?.status === "confirmed"
                       ? "bg-gradient-to-r from-emerald-500 to-green-500"
-                      : booking.status === "rejected"
+                      : booking?.status === "rejected"
                         ? "bg-gradient-to-r from-rose-500 to-red-500"
                         : "bg-gradient-to-r from-amber-500 to-yellow-500"
                   }`}
@@ -338,28 +362,29 @@ function BookingRequests() {
                     <div className="flex-1">
                       <div className="mb-4 flex items-start justify-between">
                         <div>
-                          <h3 className="mb-2 text-2xl font-bold text-slate-900 transition-colors group-hover:text-blue-600">
-                            {booking.place.title}
+                          <h3 className="mb-2 text-xl font-bold text-slate-900 transition-colors group-hover:text-primary/90">
+                            {booking?.place.title}
                           </h3>
                           <div className="flex flex-wrap items-center gap-4 text-slate-600">
                             <div className="flex items-center gap-2">
                               <MapPin className="h-4 w-4 text-blue-500" />
                               <span className="font-medium">
-                                {booking.place.city}, {booking.place.area_name}
+                                {booking?.place.city},{" "}
+                                {booking?.place.area_name}
                               </span>
                             </div>
                             <div className="flex items-center gap-2">
                               <Home className="h-4 w-4 text-indigo-500" />
-                              <span>{booking.place.category.name}</span>
+                              <span>{booking?.place.category.name}</span>
                             </div>
                           </div>
                         </div>
                         <div
-                          className={`flex items-center gap-2 rounded-full px-4 py-2 shadow-lg ${getStatusStyle(booking.status)}`}
+                          className={`flex items-center gap-2 rounded-full px-4 py-2 shadow-lg ${getStatusStyle(booking?.status)}`}
                         >
-                          {getStatusIcon(booking.status)}
+                          {getStatusIcon(booking?.status)}
                           <span className="font-semibold capitalize">
-                            {booking.status}
+                            {booking?.status}
                           </span>
                         </div>
                       </div>
@@ -371,18 +396,18 @@ function BookingRequests() {
                             <p className="mb-1 text-sm text-slate-600">
                               Monthly Rent
                             </p>
-                            <p className="text-2xl font-bold text-slate-900">
-                              {formatCurrency(booking.place.rent_per_month)}
+                            <p className="text-lg font-bold text-slate-900">
+                              {formatCurrency(booking?.rent_per_month)}
                             </p>
                           </div>
                           <div className="text-right">
                             <p className="mb-1 text-sm text-slate-600">
                               Total (with bills)
                             </p>
-                            <p className="text-xl font-semibold text-blue-600">
+                            <p className="text-xl font-semibold text-primary">
                               {formatCurrency(
-                                parseFloat(booking.place.rent_per_month) +
-                                  parseFloat(booking.place.extra_bills),
+                                parseFloat(booking?.rent_per_month) +
+                                  parseFloat(booking?.extra_bills),
                               )}
                             </p>
                           </div>
@@ -399,16 +424,16 @@ function BookingRequests() {
                     <div className="rounded-2xl border border-slate-100 bg-gradient-to-br from-slate-50 to-white p-6">
                       <h4 className="mb-4 flex items-center gap-2 font-bold text-slate-900">
                         <User className="h-5 w-5 text-blue-500" />
-                        Account Holder
+                        Booked By
                       </h4>
                       <div className="flex items-start gap-4">
                         <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-2xl shadow-lg ring-4 ring-white">
                           <img
                             src={
-                              booking.booked_by.profile_image ||
-                              "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"
+                              booking?.booked_by.profile_image ||
+                              "/avatar-male.png"
                             }
-                            alt={booking.booked_by.full_name}
+                            alt={booking?.booked_by.full_name}
                             className="h-full w-full object-cover"
                           />
                         </div>
@@ -534,7 +559,7 @@ function BookingRequests() {
                           expandedCard === booking.id ? null : booking.id,
                         )
                       }
-                      className="flex items-center gap-2 rounded-xl bg-blue-50 px-4 py-2 font-semibold text-blue-600 transition-colors hover:bg-blue-100 hover:text-blue-700"
+                      className="flex items-center gap-2 rounded-xl bg-gray-50 px-4 py-2 font-semibold text-gray-600 transition-colors hover:bg-gray-100 hover:text-primary/90"
                     >
                       <Eye className="h-4 w-4" />
                       {expandedCard === booking.id ? "Hide" : "View"} Property
@@ -603,7 +628,7 @@ function BookingRequests() {
                           onClick={() =>
                             updateBookingStatus(booking.id, "confirmed")
                           }
-                          className="flex transform items-center gap-3 rounded-2xl bg-gradient-to-r from-emerald-500 to-green-500 px-8 py-3 font-semibold text-white shadow-lg shadow-emerald-200 transition-all duration-200 hover:scale-105 hover:from-emerald-600 hover:to-green-600 hover:shadow-xl hover:shadow-emerald-300"
+                          className="flex transform items-center gap-3 rounded-2xl bg-gradient-to-r from-emerald-500 to-green-500 px-8 py-3 font-semibold text-white shadow-lg shadow-emerald-200 transition-all duration-200 hover:from-emerald-600 hover:to-green-600 hover:shadow-xl hover:shadow-emerald-300"
                         >
                           <CheckCircle className="h-5 w-5" />
                           Confirm Booking
@@ -612,7 +637,7 @@ function BookingRequests() {
                           onClick={() =>
                             updateBookingStatus(booking.id, "rejected")
                           }
-                          className="flex transform items-center gap-3 rounded-2xl bg-gradient-to-r from-rose-500 to-red-500 px-8 py-3 font-semibold text-white shadow-lg shadow-rose-200 transition-all duration-200 hover:scale-105 hover:from-rose-600 hover:to-red-600 hover:shadow-xl hover:shadow-rose-300"
+                          className="flex transform items-center gap-3 rounded-2xl bg-gradient-to-r from-rose-500 to-red-500 px-8 py-3 font-semibold text-white shadow-lg shadow-rose-200 transition-all duration-200 hover:from-rose-600 hover:to-red-600 hover:shadow-xl hover:shadow-rose-300"
                         >
                           <XCircle className="h-5 w-5" />
                           Reject Booking

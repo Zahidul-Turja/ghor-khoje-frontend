@@ -194,3 +194,22 @@ export const bookProperty = async (formData) => {
     throw error;
   }
 };
+
+export const getBookingRequests = async () => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/api/v1/bookings/booking-requests/`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      },
+    );
+    const data = response.data;
+    return data;
+  } catch (error) {
+    toast.error("Failed to fetch booking requests");
+    console.error("Error fetching booking requests:", error);
+    throw error;
+  }
+};
