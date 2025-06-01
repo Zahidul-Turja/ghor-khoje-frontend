@@ -88,7 +88,7 @@ function SwiperSlider({ scrollingReviews, renderStars, truncateComment }) {
       {scrollingReviews.map((review, index) => (
         <SwiperSlide
           key={`${review.id}-${index}`}
-          className="my-10 flex min-w-[380px] max-w-[380px] flex-col rounded-2xl bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl md:min-w-[400px] md:max-w-[400px]"
+          className="my-10 flex min-w-[350px] max-w-[350px] flex-col rounded-2xl bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl md:min-w-[400px] md:max-w-[400px]"
         >
           {/* Header with avatar and info */}
           <div className="mb-4 flex items-center gap-4">

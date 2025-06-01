@@ -22,6 +22,7 @@ import {
   FaPhoneAlt,
 } from "react-icons/fa";
 import { RiNotification3Fill } from "react-icons/ri";
+import { IoBookmark } from "react-icons/io5";
 
 const CURRENT_URL = "/user/profile";
 
@@ -35,7 +36,8 @@ function Sidebar() {
   // Navigation items with their respective icons
   const navItems = [
     { name: "Profile", icon: <FaUser /> },
-    { name: "Dashboard", icon: <FaTachometerAlt /> },
+    { name: "My Properties", icon: <FaTachometerAlt /> },
+    { name: "Book Requests", icon: <IoBookmark /> },
     { name: "Notifications", icon: <RiNotification3Fill /> },
     { name: "Messages", icon: <FaEnvelope /> },
     { name: "Analytics", icon: <FaChartBar /> },
@@ -76,7 +78,7 @@ function Sidebar() {
           {navItems.map((item, index) => (
             <li key={index}>
               <Link
-                href={`${CURRENT_URL}/?section=${item.name.toLowerCase()}`}
+                href={`${CURRENT_URL}/?section=${item.name.toLowerCase().replace(" ", "-")}`}
                 className={`flex items-center px-4 py-3 hover:bg-gray-100 ${activeSection === item.name.toLowerCase() ? "font-semibold opacity-100" : "opacity-70"} ${collapsed ? "justify-center" : ""}`}
                 onClick={() => {
                   setActiveSection(item.name.toLowerCase());
