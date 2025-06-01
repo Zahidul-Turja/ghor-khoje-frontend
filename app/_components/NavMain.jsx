@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ApplyForHostModal from "./ApplyForHostModal";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_ENDPOINT;
+import SvgIcon from "./SvgIcon";
 
 function NavMain({ classes }) {
   const [hasApplied, setHasApplied] = useState(false);
@@ -64,6 +64,11 @@ function NavMain({ classes }) {
           href={"/"}
           className="text-lg font-extrabold uppercase tracking-widest text-primary md:text-xl"
         >
+          {/* Ghor Khojee */}
+          {/* <SvgIcon
+            styles="mr-2 inline-block h-6 w-6 text-primary"
+            className="text-primary"
+          /> */}
           Ghor Khojee
         </Link>
 
