@@ -30,14 +30,14 @@ function SectionReviews() {
   };
 
   return (
-    <section className="overflow-hidden bg-gradient-to-br from-gray-50 to-white py-24">
+    <section className="mx-auto overflow-hidden bg-gradient-to-br from-gray-50 to-white px-3 py-24 pt-16 md:px-6 md:pt-32 lg:px-8">
       <div className="mx-auto">
         {/* Section Header */}
         <div className="mb-12 text-center">
-          <h2 className="text-3xl font-bold uppercase text-gray-900 sm:text-4xl">
+          <h2 className="text-2xl font-bold uppercase tracking-wide text-gray-800 md:text-3xl lg:text-4xl">
             <span className="font-extralight">What Our</span> Customers Say
           </h2>
-          <p className="mx-auto mt-4 text-lg text-gray-600 md:w-[80vw] lg:w-[60vw]">
+          <p className="mx-auto mt-4 text-gray-600 md:w-[80vw] md:text-lg lg:w-[60vw]">
             Discover what our customers truly think about us. These are honest,
             unfiltered reviews from real people who’ve experienced our service
             firsthand. Their feedback not only reflects the quality we strive
@@ -54,8 +54,8 @@ function SectionReviews() {
           />
 
           {/* Enhanced gradient fade edges */}
-          <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-32 bg-gradient-to-r from-gray-50 via-gray-50/80 to-transparent" />
-          <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-32 bg-gradient-to-l from-gray-50 via-gray-50/80 to-transparent" />
+          <div className="pointer-events-none absolute left-0 top-0 z-10 hidden h-full w-32 bg-gradient-to-r from-gray-50 via-gray-50/80 to-transparent md:block" />
+          <div className="pointer-events-none absolute right-0 top-0 z-10 hidden h-full w-32 bg-gradient-to-l from-gray-50 via-gray-50/80 to-transparent md:block" />
         </div>
       </div>
     </section>
