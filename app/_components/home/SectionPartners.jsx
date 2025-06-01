@@ -19,7 +19,7 @@ const partners = [
 
 function SectionPartners() {
   return (
-    <section className="mx-auto max-w-screen-2xl px-3 pt-16 md:px-6 md:pt-32 lg:px-8">
+    <section className="mx-auto max-w-screen-2xl px-3 py-16 md:px-6 md:py-32 lg:px-8">
       {/* Section Header */}
       <div className="mb-6 md:mb-8">
         <h2 className="text-center text-2xl font-bold uppercase tracking-wide text-gray-800 md:text-left md:text-3xl lg:text-4xl">
@@ -33,7 +33,7 @@ function SectionPartners() {
         </p>
       </div>
 
-      <div className="flex w-full items-center justify-center py-8">
+      <div className="flex w-full items-center justify-center pt-8">
         <Swiper
           modules={[Autoplay]}
           slidesPerView="auto"

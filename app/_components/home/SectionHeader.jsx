@@ -3,7 +3,7 @@ import Link from "next/link";
 
 function SectionHeader() {
   return (
-    <header className="px-3 py-4 md:px-24">
+    <header className="px-3 py-4 lg:px-24">
       <div className="flex w-full flex-col items-center justify-between gap-8 lg:flex-row lg:gap-12">
         {/* Image Section */}
         <div className="relative h-64 w-full overflow-hidden rounded-lg sm:h-80 md:h-96 lg:h-[35rem] lg:w-[45%] xl:h-[40rem] xl:w-[40.5%]">

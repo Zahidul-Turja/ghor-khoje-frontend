@@ -90,7 +90,7 @@ const SectionFeedback = () => {
 
   if (isSubmitted) {
     return (
-      <section className="bg-white px-4 py-8 sm:py-16">
+      <section className="bg-white px-4 py-16 md:py-8">
         <div className="mx-auto max-w-6xl">
           <div className="text-center">
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-black">
