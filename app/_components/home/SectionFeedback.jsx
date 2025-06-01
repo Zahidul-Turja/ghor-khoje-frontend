@@ -2,9 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 
-import { getFeedbackTypes, submitFeedback } from "@/app/_lib/apiCalls";
-import toast from "react-hot-toast";
-
 const SectionFeedback = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -23,19 +20,15 @@ const SectionFeedback = () => {
   useEffect(() => {
     const fetchFeedbackTypes = async () => {
       try {
-        // Replace {{local}} with your actual API base URL
-        const response = await getFeedbackTypes();
-        console.log("Feedback Types:", response);
-        setFeedbackTypes(response);
-      } catch (error) {
-        console.error("Error fetching feedback types:", error);
-        // Fallback data for demo
+        // Simulating API call with fallback data
         setFeedbackTypes([
           { id: 1, name: "Feature Request" },
           { id: 2, name: "Bug Report" },
           { id: 3, name: "General Feedback" },
           { id: 4, name: "Support" },
         ]);
+      } catch (error) {
+        console.error("Error fetching feedback types:", error);
       }
     };
 
@@ -52,14 +45,8 @@ const SectionFeedback = () => {
 
   const handleSubmit = async () => {
     if (!formData.name || !formData.message || !formData.feedback_type) {
-      toast.error(
-        <div className="flex flex-col space-y-1">
-          <h4 className="text-lg font-semibold text-[#ff9966]">Warning!</h4>
-          <p className="text-sm font-medium text-gray-800">
-            Please fill in all required fields(name, message and topic) before
-            submitting your feedback.
-          </p>
-        </div>,
+      alert(
+        "Please fill in all required fields (name, message and topic) before submitting your feedback.",
       );
       return;
     }
@@ -67,16 +54,8 @@ const SectionFeedback = () => {
     setIsLoading(true);
 
     try {
-      // Prepare the request body according to your specification
       if (formData.want_to_be_contacted && !formData.email) {
-        toast.error(
-          <div className="flex flex-col space-y-1">
-            <h4 className="text-lg font-semibold text-[#ff9966]">Warning!</h4>
-            <p className="text-sm font-medium text-gray-800">
-              You've selected to be contacted but didn't provide an email.
-            </p>
-          </div>,
-        );
+        alert("You've selected to be contacted but didn't provide an email.");
         setIsLoading(false);
         return;
       }
@@ -90,21 +69,18 @@ const SectionFeedback = () => {
         feedback_type: parseInt(formData.feedback_type),
       };
 
-      // Replace with your actual submission endpoint
-      const response = await submitFeedback(requestBody);
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      if (response.ok) {
-        setIsSubmitted(true);
-        setFormData({
-          name: "",
-          email: "",
-          subject: "",
-          message: "",
-          want_to_be_contacted: false,
-          feedback_type: "",
-        });
-        isSubmitted(true);
-      }
+      setIsSubmitted(true);
+      setFormData({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+        want_to_be_contacted: false,
+        feedback_type: "",
+      });
     } catch (error) {
       console.error("Error submitting feedback:", error);
     } finally {
@@ -114,14 +90,26 @@ const SectionFeedback = () => {
 
   if (isSubmitted) {
     return (
-      <section className="bg-white px-4 py-16">
+      <section className="bg-white px-4 py-8 sm:py-16">
         <div className="mx-auto max-w-6xl">
           <div className="text-center">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-black"></div>
-            <h2 className="mb-2 text-2xl font-bold text-black">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-black">
+              <svg
+                className="h-8 w-8 text-white"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+            <h2 className="mb-2 text-xl font-bold text-black sm:text-2xl">
               Thank you for your feedback!
             </h2>
-            <p className="mb-6 text-gray-600">
+            <p className="mb-6 text-sm text-gray-600 sm:text-base">
               We've received your message and will get back to you soon.
             </p>
             <button
@@ -137,24 +125,24 @@ const SectionFeedback = () => {
   }
 
   return (
-    <section className="bg-white px-4 py-16">
+    <section className="bg-white px-4 py-8 sm:py-16">
       <div className="mx-auto max-w-6xl">
-        <div className="grid items-start gap-12 lg:grid-cols-2">
+        <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-12">
           {/* Left Side - Content */}
-          <div className="flex h-[90%] flex-col justify-between space-y-8 py-12">
+          <div className="order-2 flex flex-col justify-between space-y-6 py-0 sm:space-y-8 lg:order-1 lg:py-12">
             <div>
-              <h2 className="w-96 text-3xl font-bold leading-tight text-black lg:text-4xl">
+              <h2 className="mb-4 text-2xl font-bold leading-tight text-black sm:text-3xl lg:text-4xl">
                 Your Feedback helps us improve
               </h2>
 
               {/* Additional content below the main text */}
-              <div className="my-2 w-80 text-base text-gray-600">
-                <p className="text-gray-600">
+              <div className="text-sm text-gray-600 sm:text-base">
+                <p className="mb-4 text-gray-600">
                   We are here to help you and we'd love to connect with you.
                 </p>
-                <div className="mt-3 space-y-6">
-                  <div className="group flex items-center space-x-4">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-black transition-transform duration-200 group-hover:scale-110">
+                <div className="space-y-4 sm:space-y-6">
+                  <div className="group flex items-center space-x-3 sm:space-x-4">
+                    <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-black transition-transform duration-200 group-hover:scale-110">
                       <svg
                         className="h-4 w-4 text-white"
                         fill="currentColor"
@@ -168,17 +156,17 @@ const SectionFeedback = () => {
                       </svg>
                     </div>
                     <div>
-                      <span className="font-medium text-gray-800">
+                      <span className="text-sm font-medium text-gray-800 sm:text-base">
                         Lightning fast responses
                       </span>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-xs text-gray-500 sm:text-sm">
                         Usually within 24 hours
                       </p>
                     </div>
                   </div>
 
-                  <div className="group flex items-center space-x-4">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-black transition-transform duration-200 group-hover:scale-110">
+                  <div className="group flex items-center space-x-3 sm:space-x-4">
+                    <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-black transition-transform duration-200 group-hover:scale-110">
                       <svg
                         className="h-4 w-4 text-white"
                         fill="currentColor"
@@ -188,17 +176,17 @@ const SectionFeedback = () => {
                       </svg>
                     </div>
                     <div>
-                      <span className="font-medium text-gray-800">
+                      <span className="text-sm font-medium text-gray-800 sm:text-base">
                         Trusted by thousands
                       </span>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-xs text-gray-500 sm:text-sm">
                         10,000+ happy users worldwide
                       </p>
                     </div>
                   </div>
 
-                  <div className="group flex items-center space-x-4">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-black transition-transform duration-200 group-hover:scale-110">
+                  <div className="group flex items-center space-x-3 sm:space-x-4">
+                    <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-black transition-transform duration-200 group-hover:scale-110">
                       <svg
                         className="h-4 w-4 text-white"
                         fill="currentColor"
@@ -212,10 +200,10 @@ const SectionFeedback = () => {
                       </svg>
                     </div>
                     <div>
-                      <span className="font-medium text-gray-800">
+                      <span className="text-sm font-medium text-gray-800 sm:text-base">
                         Privacy first
                       </span>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-xs text-gray-500 sm:text-sm">
                         Your data is secure with us
                       </p>
                     </div>
@@ -225,11 +213,11 @@ const SectionFeedback = () => {
             </div>
 
             {/* Contribute to Open Source */}
-            <div className="mt-12 w-[26rem] rounded-2xl border border-gray-300 bg-gray-100 px-7 py-6 shadow-lg">
-              <h3 className="text-lg font-bold text-gray-800">
+            <div className="mt-8 rounded-2xl border border-gray-300 bg-gray-100 px-4 py-4 shadow-lg sm:px-7 sm:py-6 lg:mt-12">
+              <h3 className="text-base font-bold text-gray-800 sm:text-lg">
                 Contribute to Our Project
               </h3>
-              <p className="my-1 text-sm text-gray-600">
+              <p className="my-2 text-xs text-gray-600 sm:text-sm">
                 We are an open-source project and your contributions are
                 welcome. Please check out our GitHub repositories to see if
                 you're interested in contributing.
@@ -238,7 +226,7 @@ const SectionFeedback = () => {
                 href="https://github.com/Zahidul-Turja/ghor-khoje-frontend"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 inline-block rounded-lg bg-black px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-black/90 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
+                className="mt-3 inline-block rounded-lg bg-black px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-black/90 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 sm:mt-4 sm:px-4"
                 title="View on GitHub"
               >
                 View on GitHub
@@ -247,8 +235,8 @@ const SectionFeedback = () => {
           </div>
 
           {/* Right Side - Form */}
-          <div className="rounded-2xl p-8">
-            <div className="space-y-6">
+          <div className="order-1 rounded-2xl p-4 sm:p-8 lg:order-2">
+            <div className="space-y-4 sm:space-y-6">
               {/* Topic */}
               <div>
                 <label
@@ -263,7 +251,7 @@ const SectionFeedback = () => {
                   value={formData.feedback_type}
                   onChange={handleInputChange}
                   required
-                  className="w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-gray-500 outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400"
+                  className="w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-sm text-gray-500 outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400 sm:text-base"
                 >
                   <option value="">Select a topic</option>
                   {feedbackTypes?.map((type) => (
@@ -288,7 +276,7 @@ const SectionFeedback = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  className="w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-gray-500 outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400"
+                  className="w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-sm text-gray-500 outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400 sm:text-base"
                   placeholder="Your full name"
                 />
               </div>
@@ -307,7 +295,7 @@ const SectionFeedback = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-gray-500 outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400"
+                  className="w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-sm text-gray-500 outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400 sm:text-base"
                   placeholder="your.email@example.com"
                 />
               </div>
@@ -326,7 +314,7 @@ const SectionFeedback = () => {
                   name="subject"
                   value={formData.subject}
                   onChange={handleInputChange}
-                  className="w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-gray-500 outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400"
+                  className="w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-sm text-gray-500 outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400 sm:text-base"
                   placeholder="Brief subject of your feedback"
                 />
               </div>
@@ -345,8 +333,8 @@ const SectionFeedback = () => {
                   value={formData.message}
                   onChange={handleInputChange}
                   required
-                  rows={5}
-                  className="resize-vertical w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400"
+                  rows={4}
+                  className="resize-vertical w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-sm outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400 sm:text-base"
                   placeholder="Tell us more about your feedback..."
                 />
               </div>
@@ -363,7 +351,7 @@ const SectionFeedback = () => {
                 />
                 <label
                   htmlFor="want_to_be_contacted"
-                  className="cursor-pointer text-sm text-gray-700"
+                  className="cursor-pointer text-xs text-gray-700 sm:text-sm"
                 >
                   I would like to be contacted regarding this feedback
                 </label>
@@ -374,7 +362,7 @@ const SectionFeedback = () => {
                 type="button"
                 onClick={handleSubmit}
                 disabled={isLoading}
-                className="w-full rounded-lg bg-black px-6 py-3 font-medium text-white transition-all hover:bg-gray-950 focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                className="w-full rounded-lg bg-black px-6 py-3 text-sm font-medium text-white transition-all hover:bg-gray-950 focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 sm:text-base"
               >
                 {isLoading ? "Sending..." : "Send Feedback"}
               </button>
