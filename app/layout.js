@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
   };
 
   return (
-    <html lang="en">
+    <html lang="en" className="overflow-x-hidden scroll-smooth">
       <body
         className={`${raleway.className} relative min-h-screen min-w-full bg-gray-50 text-gray-800 antialiased`}
       >
