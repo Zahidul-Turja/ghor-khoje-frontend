@@ -3,8 +3,6 @@ import Link from "next/link";
 import { FaStar } from "react-icons/fa";
 import { IoImageOutline } from "react-icons/io5";
 
-const BASE_ENDPOINT = process.env.NEXT_PUBLIC_BASE_API_ENDPOINT;
-
 function PropertyCard({ property }) {
   const {
     id,

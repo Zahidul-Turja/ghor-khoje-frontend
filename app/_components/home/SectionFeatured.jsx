@@ -57,8 +57,8 @@ function SectionFeatured() {
 
   if (properties.length === 0) {
     return (
-      <section className="mx-auto max-w-screen-2xl px-0 pt-32 md:px-6 lg:px-8">
-        <h2 className="mb-6 text-3xl font-bold uppercase tracking-wide text-gray-800">
+      <section className="mx-auto max-w-screen-2xl px-3 pt-16 md:px-6 md:pt-32 lg:px-8">
+        <h2 className="mb-6 text-2xl font-bold uppercase tracking-wide text-gray-800 md:text-3xl">
           <span className="font-extralight">Featured</span> Properties
         </h2>
         <p className="text-gray-500">No featured properties available.</p>
@@ -90,18 +90,35 @@ function SectionFeatured() {
   const shouldEnableLoop = properties.length > 4;
 
   return (
-    <section className="mx-auto max-w-screen-2xl px-0 pt-32 md:px-6 lg:px-8">
-      <h2 className="mb-6 text-3xl font-bold uppercase tracking-wide text-gray-800">
-        <span className="font-extralight">Featured</span> Properties
-      </h2>
+    <section className="mx-auto max-w-screen-2xl px-3 pt-16 md:px-6 md:pt-32 lg:px-8">
+      {/* Section Header */}
+      <div className="mb-6 md:mb-8">
+        <h2 className="text-2xl font-bold uppercase tracking-wide text-gray-800 md:text-3xl lg:text-4xl">
+          <span className="font-extralight">Featured</span> Properties
+        </h2>
+      </div>
 
-      <div className="flex gap-8">
+      {/* Swiper Container */}
+      <div className="relative">
+        {/* Desktop Navigation - Positioned outside swiper */}
         {showNavigation && (
-          <button ref={prevRef} className="font-semibold text-black">
-            <FaChevronLeft className="text-2xl" />
-          </button>
+          <div className="hidden md:block">
+            <button
+              ref={prevRef}
+              className="absolute -left-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white p-3 font-semibold text-black shadow-lg transition-all hover:bg-gray-100 hover:shadow-xl lg:-left-6"
+            >
+              <FaChevronLeft className="text-xl lg:text-2xl" />
+            </button>
+            <button
+              ref={nextRef}
+              className="absolute -right-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white p-3 font-semibold text-black shadow-lg transition-all hover:bg-gray-100 hover:shadow-xl lg:-right-6"
+            >
+              <FaChevronRight className="text-xl lg:text-2xl" />
+            </button>
+          </div>
         )}
 
+        {/* Swiper */}
         <Swiper
           modules={[Navigation, Autoplay]}
           spaceBetween={16}
@@ -112,7 +129,7 @@ function SectionFeatured() {
           autoplay={
             shouldEnableLoop
               ? {
-                  delay: 3000,
+                  delay: 4000,
                   disableOnInteraction: false,
                   pauseOnMouseEnter: true,
                 }
@@ -133,11 +150,11 @@ function SectionFeatured() {
             }
           }}
           breakpoints={breakpoints}
-          className="w-full"
+          className="w-full overflow-visible"
         >
           {properties.map((property) => (
             <SwiperSlide key={property.id} className="!w-auto">
-              <div className="w-72 lg:w-80">
+              <div className="w-64 sm:w-72 lg:w-80">
                 <PropertyCard
                   property={property}
                   image={property.images[0]?.image}
@@ -147,10 +164,26 @@ function SectionFeatured() {
           ))}
         </Swiper>
 
+        {/* Mobile Navigation Dots/Indicators */}
         {showNavigation && (
-          <button ref={nextRef} className="font-semibold text-black">
-            <FaChevronRight className="text-2xl" />
-          </button>
+          <div className="mt-6 flex justify-center gap-2 md:hidden">
+            <button
+              onClick={() => {
+                if (prevRef.current) prevRef.current.click();
+              }}
+              className="rounded-full bg-gray-200 p-2 text-gray-600 transition-colors hover:bg-gray-300"
+            >
+              <FaChevronLeft className="text-sm" />
+            </button>
+            <button
+              onClick={() => {
+                if (nextRef.current) nextRef.current.click();
+              }}
+              className="rounded-full bg-gray-200 p-2 text-gray-600 transition-colors hover:bg-gray-300"
+            >
+              <FaChevronRight className="text-sm" />
+            </button>
+          </div>
         )}
       </div>
     </section>
