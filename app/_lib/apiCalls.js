@@ -240,3 +240,18 @@ export const updateBookingStatus = async (bookingId, status) => {
     throw error;
   }
 };
+
+export const aboutHost = async (host_id) => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/api/v1/user/about-host/${host_id}/`,
+    );
+    const data = response.data;
+    console.log("About host response:", data);
+    return data;
+  } catch (error) {
+    console.error("Error fetching about host:", error);
+    toast.error("Failed to fetch about host");
+    throw error;
+  }
+};

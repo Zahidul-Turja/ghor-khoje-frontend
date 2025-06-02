@@ -3,21 +3,58 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
+import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
+import { FaStar } from "react-icons/fa";
 import { HiMiniFlag } from "react-icons/hi2";
 
+import { aboutHost } from "@/app/_lib/apiCalls";
+
 function UserHostPage() {
-  const path = usePathname().replace("/user/", "");
+  const user_id = usePathname().replace("/user/", "");
+  const [host, setHost] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchHostData = async () => {
+      try {
+        setLoading(true);
+        const data = await aboutHost(user_id);
+        setHost(data.data);
+      } catch (error) {
+        console.error("Error fetching host data:", error);
+      }
+    };
+
+    fetchHostData();
+    setLoading(false);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
+  if (!host) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        Host not found
+      </div>
+    );
+  }
 
   return (
     <div className="flex justify-between px-52 py-8">
       <div className="sticky top-8 flex h-screen w-[30%] flex-col gap-8">
-        <ProfileCard />
-        <ProfileInfoCard />
+        <ProfileCard host={host} />
+        <ProfileInfoCard host={host} />
       </div>
 
       <div className="w-[65%]">
-        <ProfileDescription />
+        <ProfileDescription host={host} />
       </div>
     </div>
   );
@@ -27,14 +64,14 @@ export default UserHostPage;
 
 import { MdVerifiedUser } from "react-icons/md";
 
-function ProfileCard() {
+function ProfileCard({ host }) {
   return (
     <div className="flex items-center justify-between gap-4 rounded-2xl px-8 py-6 shadow-[0px_6px_16px_rgba(0,0,0,0.15)]">
       <div className="text-center">
         <div className="relative">
           <div className="relative mx-auto h-24 w-24 overflow-hidden rounded-full">
             <Image
-              src="/profile-1.jpg"
+              src={host?.profile_image}
               alt="Host Profile"
               width={1000}
               height={1000}
@@ -45,22 +82,28 @@ function ProfileCard() {
           </div>
         </div>
         <div className="mt-2">
-          <h3 className="text-lg font-bold">John Doe</h3>
-          <p className="text-xs font-medium">Engineer by Profession</p>
+          <h3 className="text-lg font-bold">{host?.full_name}</h3>
+          <p className="text-xs font-medium">
+            {host?.profession} by Profession
+          </p>
         </div>
       </div>
 
       <div>
         <div className="py-2">
-          <h3 className="text-base font-extrabold">573</h3>
+          <h3 className="text-base font-extrabold">
+            {host?.reviews?.length || 0}
+          </h3>
           <p className="text-xs font-medium">Reviws</p>
         </div>
         <div className="border-y border-gray-300 py-2">
-          <h3 className="text-base font-extrabold">4.83</h3>
+          <h3 className="text-base font-extrabold">{host?.average_rating}</h3>
           <p className="text-xs font-medium">Rating</p>
         </div>
         <div className="py-2">
-          <h3 className="text-base font-extrabold">11</h3>
+          <h3 className="text-base font-extrabold">
+            {host?.hosted_places?.length || 0}
+          </h3>
           <p className="text-xs font-medium">Places hosted</p>
         </div>
       </div>
@@ -69,27 +112,44 @@ function ProfileCard() {
 }
 
 import { SiVerizon } from "react-icons/si";
+import { RxCross2 } from "react-icons/rx";
 
-function ProfileInfoCard() {
+function ProfileInfoCard({ host }) {
   return (
     <div>
       <div className="w-full rounded-2xl border border-gray-300 p-4">
         <h3 className="text-lg font-semibold">John's Confirmed Information</h3>
         <div className="px-4 pt-2">
           <div className="flex gap-2 border-b border-gray-300 px-2 py-2">
-            <SiVerizon />
+            {host?.profession ? (
+              <SiVerizon />
+            ) : (
+              <RxCross2 className="text-lg text-red-500" />
+            )}
             <p className="text-sm">Profession</p>
           </div>
           <div className="flex gap-2 border-b border-gray-300 px-2 py-2">
-            <SiVerizon />
+            {host?.email ? (
+              <SiVerizon />
+            ) : (
+              <RxCross2 className="text-lg text-red-500" />
+            )}
             <p className="text-sm">Email</p>
           </div>
           <div className="flex gap-2 border-b border-gray-300 px-2 py-2">
-            <SiVerizon />
+            {host?.phone ? (
+              <SiVerizon />
+            ) : (
+              <RxCross2 className="text-lg text-red-500" />
+            )}
             <p className="text-sm">Phone</p>
           </div>
           <div className="flex gap-2 px-2 py-2">
-            <SiVerizon />
+            {host?.address ? (
+              <SiVerizon />
+            ) : (
+              <RxCross2 className="text-lg text-red-500" />
+            )}
             <p className="text-sm">Address</p>
           </div>
         </div>
@@ -104,105 +164,133 @@ function ProfileInfoCard() {
 
 import { GrMapLocation } from "react-icons/gr";
 
-function ProfileDescription() {
+function ProfileDescription({ host }) {
   return (
     <div className="">
-      <h2 className="text-2xl font-bold">About John Doe</h2>
+      <h2 className="text-2xl font-bold">About {host?.full_name}</h2>
 
       <div className="my-6 flex items-center gap-2">
         <GrMapLocation />{" "}
-        <span className="text-sm">Lives in Rajshahi, Bangladesh</span>
+        <span className="text-sm">Lives in {host?.address?.address}</span>
       </div>
 
       <p className="text-justify text-sm font-medium tracking-wider">
-        Hi! I am John Doe and I will make sure you have a very pleasant stay! I
-        manage properties in Rajshahi. I have a lot of experience in this field
-        and I will make sure you have a very pleasant stay!
+        {host?.bio}
       </p>
 
-      <Reviews />
+      <Reviews reviews={host?.reviews} name={host?.full_name} />
 
-      <Listings />
+      <Listings property={host?.hosted_places} />
     </div>
   );
 }
 
-import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
-import { FaStar } from "react-icons/fa";
+function Reviews({ reviews = [], name = "Guest" }) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [showAll, setShowAll] = useState(false);
 
-function Reviews() {
+  // Determine how many reviews to show
+  const reviewsToShow = showAll ? reviews : reviews.slice(0, 2);
+  const visibleReviews = reviewsToShow.slice(currentIndex, currentIndex + 2);
+
+  const canGoLeft = currentIndex > 0;
+  const canGoRight = currentIndex + 2 < reviewsToShow.length;
+
+  const handlePrevious = () => {
+    if (canGoLeft) {
+      setCurrentIndex(currentIndex - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (canGoRight) {
+      setCurrentIndex(currentIndex + 1);
+    }
+  };
+
+  const handleShowMore = () => {
+    setShowAll(true);
+    setCurrentIndex(0);
+  };
+
+  // Don't render if no reviews
+  if (!reviews || reviews.length === 0) {
+    return null;
+  }
+
   return (
     <div className="my-8 border-y border-gray-300 py-8">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-bold">John's Reviews</h2>
+        <h2 className="text-lg font-bold">{name.split(" ")[0]}'s Reviews</h2>
 
-        <div className="flex items-center gap-2">
-          <div className="cursor-pointer rounded-full border border-gray-400 p-1 opacity-70 transition-all duration-300 hover:opacity-100">
-            <FaAngleLeft className="text-xs" />
+        {reviewsToShow.length > 2 && (
+          <div className="flex items-center gap-2">
+            <div
+              className={`cursor-pointer rounded-full border border-gray-400 p-1 transition-all duration-300 ${
+                canGoLeft
+                  ? "opacity-70 hover:opacity-100"
+                  : "cursor-not-allowed opacity-30"
+              }`}
+              onClick={handlePrevious}
+            >
+              <FaAngleLeft className="text-xs" />
+            </div>
+            <div
+              className={`cursor-pointer rounded-full border border-gray-400 p-1 transition-all duration-300 ${
+                canGoRight
+                  ? "opacity-70 hover:opacity-100"
+                  : "cursor-not-allowed opacity-30"
+              }`}
+              onClick={handleNext}
+            >
+              <FaAngleRight className="text-xs" />
+            </div>
           </div>
-          <div className="cursor-pointer rounded-full border border-gray-400 p-1 opacity-70 transition-all duration-300 hover:opacity-100">
-            <FaAngleRight className="text-xs" />
-          </div>
-        </div>
+        )}
       </div>
 
-      <div className="my-4 flex items-center gap-2">
-        <div className="w-1/2 rounded-xl border border-gray-300 p-4">
-          <p className="text-xs font-medium leading-5">
-            Wow wow wow! We loved our stay at this villa. Putu and all the staff
-            went above and beyond. Our breakfast was amazing every day. No need
-            to stress about what activities you would like to do whilst on the
-            island
-          </p>
+      <div className="my-4 flex items-start gap-2">
+        {visibleReviews.map((review, index) => (
+          <div
+            key={review.id || index}
+            className="h-44 w-1/2 rounded-xl border border-gray-300 p-4"
+          >
+            <p className="line-clamp-4 text-xs font-medium leading-5">
+              {review.review_text}
+            </p>
 
-          <div className="mt-4 flex items-center gap-4">
-            <div className="relative h-10 w-10 overflow-hidden rounded-full">
-              <Image
-                src={"/profile-1.jpg"}
-                alt="Host Profile"
-                width={1000}
-                height={1000}
-                className="object-cover"
-              />
-            </div>
-            <div>
-              <h3 className="text-sm font-semibold">John Doe</h3>
-              <p className="text-xs">5 days ago</p>
+            <div className="mt-4 flex items-center gap-4">
+              <div className="relative h-10 w-10 overflow-hidden rounded-full">
+                <Image
+                  src={review.reviewer.profile_image || "/profile-1.jpg"}
+                  alt="Reviewer Profile"
+                  width={1000}
+                  height={1000}
+                  className="object-cover"
+                />
+              </div>
+              <div>
+                <h3 className="text-sm font-semibold">
+                  {review.reviewer.full_name}
+                </h3>
+                <p className="text-xs">{review.timeAgo}</p>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="w-1/2 rounded-xl border border-gray-300 p-4">
-          <p className="text-xs font-medium leading-5">
-            Wow wow wow! We loved our stay at this villa. Putu and all the staff
-            went above and beyond. Our breakfast was amazing every day. No need
-            to stress about what activities you would like to do whilst on the
-            island
-          </p>
+        ))}
 
-          <div className="mt-4 flex items-center gap-4">
-            <div className="relative h-10 w-10 overflow-hidden rounded-full">
-              <Image
-                src={"/profile-1.jpg"}
-                alt="Host Profile"
-                width={1000}
-                height={1000}
-                className="object-cover"
-              />
-            </div>
-            <div>
-              <h3 className="text-sm font-semibold">John Doe</h3>
-              <p className="text-xs">5 days ago</p>
-            </div>
-          </div>
-        </div>
+        {/* Fill empty space if only one review is visible */}
+        {visibleReviews.length === 1 && <div className="w-1/2"></div>}
       </div>
 
-      <Link
-        href={"/"}
-        className="mt-3 text-sm font-bold text-gray-700 underline"
-      >
-        Show more reviews
-      </Link>
+      {!showAll && reviews.length > 2 && (
+        <button
+          onClick={handleShowMore}
+          className="mt-3 cursor-pointer border-none bg-transparent p-0 text-sm font-bold text-gray-700 underline"
+        >
+          Show more reviews ({reviews.length - 2} more)
+        </button>
+      )}
     </div>
   );
 }
@@ -234,30 +322,6 @@ const dummy_properties_data = [
     type: "Apartment",
     owner: "John Doe",
   },
-  // {
-  //   id: 3,
-  //   slug: "property-3",
-  //   image: "/house-3.jpg",
-  //   title: "Property 3",
-  //   address: "Istanbul, Turkey",
-  //   description: "Description 3",
-  //   price: 3000,
-  //   rating: 4.5,
-  //   type: "Apartment",
-  //   owner: "John Doe",
-  // },
-  // {
-  //   id: 4,
-  //   slug: "property-4",
-  //   image: "/house-4.jpg",
-  //   title: "Property 4",
-  //   address: "Islamabaad, Pakistan",
-  //   description: "Description 4",
-  //   price: 4000,
-  //   rating: 4.5,
-  //   type: "Apartment",
-  //   owner: "John Doe",
-  // },
 ];
 
 function Listings({ property }) {
