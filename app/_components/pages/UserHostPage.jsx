@@ -52,7 +52,6 @@ function UserHostPage() {
         <ProfileCard host={host} />
         <ProfileInfoCard host={host} />
       </div>
-
       <div className="w-[65%]">
         <ProfileDescription host={host} />
       </div>
@@ -180,7 +179,7 @@ function ProfileDescription({ host }) {
 
       <Reviews reviews={host?.reviews} name={host?.full_name} />
 
-      <Listings property={host?.hosted_places} />
+      <Listings properties={host?.hosted_places} />
     </div>
   );
 }
@@ -324,7 +323,7 @@ const dummy_properties_data = [
   },
 ];
 
-function Listings({ property }) {
+function Listings({ properties }) {
   return (
     <div>
       <div className="flex items-center justify-between">
