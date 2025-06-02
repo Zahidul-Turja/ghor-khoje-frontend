@@ -21,172 +21,7 @@ import {
   MessageSquare,
 } from "lucide-react";
 
-import { getBookingRequests } from "@/app/_lib/apiCalls";
-
-// Mock data - replace with your actual data
-const mockData = {
-  count: 3,
-  next: null,
-  previous: null,
-  results: [
-    {
-      id: 3,
-      place: {
-        id: 41,
-        title: "Modern Penthouse with City View",
-        slug: "vagag",
-        owner: {
-          id: 9,
-          full_name: "John Doe",
-          email: "johndoe@gmail.com",
-          profession: "Engineer",
-          hosted_places: 6,
-          rating: 4.33,
-          profile_image:
-            "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
-        },
-        description: "Luxury penthouse with stunning city views",
-        category: {
-          id: 8,
-          name: "Penthouse",
-          slug: "penthouse",
-        },
-        city: "Rajshahi",
-        area_name: "Aftabnagar",
-        house_name: "Sergeant Tower",
-        house_number: "917",
-        apartment_number: "331",
-        rent_per_month: "32344.00",
-        extra_bills: "4444.00",
-        num_of_bedrooms: 1,
-        num_of_bathrooms: 1,
-        area_in_sqft: 12,
-        capacity: 1,
-      },
-      booked_by: {
-        id: 9,
-        full_name: "John Doe",
-        email: "johndoe@gmail.com",
-        phone: "01748052301",
-        profession: "Engineer",
-        profile_image:
-          "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
-      },
-      full_name: "Alice Johnson",
-      email: "alice.johnson@email.com",
-      phone_number: "01712345678",
-      move_in_date: "2025-07-01",
-      move_out_date: "2025-12-01",
-      number_of_occupants: 2,
-      note: "Looking for a quiet place for remote work",
-      status: "pending",
-    },
-    {
-      id: 2,
-      place: {
-        id: 5,
-        title: "Cozy Studio Apartment",
-        slug: "at-unde-sequi-tenetu",
-        owner: {
-          id: 9,
-          full_name: "John Doe",
-          email: "johndoe@gmail.com",
-          profession: "Engineer",
-          hosted_places: 6,
-          rating: 4.33,
-          profile_image:
-            "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
-        },
-        description: "Perfect studio for young professionals",
-        category: {
-          id: 5,
-          name: "Studio Apartment",
-          slug: "studio-apartment",
-        },
-        city: "Dhaka",
-        area_name: "Gulshan",
-        house_name: "Azure Heights",
-        house_number: "927",
-        apartment_number: "201",
-        rent_per_month: "25000.00",
-        extra_bills: "3000.00",
-        num_of_bedrooms: 1,
-        num_of_bathrooms: 1,
-        area_in_sqft: 450,
-        capacity: 2,
-      },
-      booked_by: {
-        id: 10,
-        full_name: "Sarah Wilson",
-        email: "sarah.wilson@email.com",
-        phone: "01798765432",
-        profession: "Designer",
-        profile_image:
-          "https://images.unsplash.com/photo-1494790108755-2616b332c63b?w=150&h=150&fit=crop&crop=face",
-      },
-      full_name: "Sarah Wilson",
-      email: "sarah.wilson@email.com",
-      phone_number: "01798765432",
-      move_in_date: "2025-06-15",
-      move_out_date: "2025-12-01",
-      number_of_occupants: 1,
-      note: null,
-      status: "confirmed",
-    },
-    {
-      id: 1,
-      place: {
-        id: 43,
-        title: "Spacious Family Home",
-        slug: "aliquip-laborum-enim",
-        owner: {
-          id: 9,
-          full_name: "John Doe",
-          email: "johndoe@gmail.com",
-          profession: "Engineer",
-          hosted_places: 6,
-          rating: 4.33,
-          profile_image:
-            "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
-        },
-        description: "Perfect for families with children",
-        category: {
-          id: 12,
-          name: "Family",
-          slug: "family",
-        },
-        city: "Chittagong",
-        area_name: "Nasirabad",
-        house_name: "Green Villa",
-        house_number: "752",
-        apartment_number: "522",
-        rent_per_month: "45000.00",
-        extra_bills: "5000.00",
-        num_of_bedrooms: 3,
-        num_of_bathrooms: 2,
-        area_in_sqft: 1200,
-        capacity: 6,
-      },
-      booked_by: {
-        id: 11,
-        full_name: "Mike Rahman",
-        email: "mike.rahman@email.com",
-        phone: "01823456789",
-        profession: "Doctor",
-        profile_image:
-          "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-      },
-      full_name: "Mike Rahman",
-      email: "mike.rahman@email.com",
-      phone_number: "01823456789",
-      move_in_date: "2025-06-01",
-      move_out_date: "2026-06-01",
-      number_of_occupants: 4,
-      note: "Clean before we come. Family with 2 children.",
-      status: "rejected",
-    },
-  ],
-};
+import { getBookingRequests, updateBookingStatus } from "@/app/_lib/apiCalls";
 
 function BookingRequests() {
   const [bookings, setBookings] = useState();
@@ -207,17 +42,33 @@ function BookingRequests() {
     fetchBookings();
   }, []);
 
-  const updateBookingStatus = (bookingId, newStatus) => {
-    setBookings((prev) =>
-      prev.map((booking) =>
-        booking.id === bookingId ? { ...booking, status: newStatus } : booking,
-      ),
-    );
+  const HandleUpdateStatus = (bookingId, newStatus) => {
+    const updateBooking = async () => {
+      try {
+        const response = await updateBookingStatus(bookingId, newStatus);
+        if (response && response.status === "success") {
+          console.log("Booking status updated:", response);
+          setBookings((prev) =>
+            prev.map((booking) =>
+              booking.id === bookingId
+                ? { ...booking, status: newStatus }
+                : booking,
+            ),
+          );
+          return response;
+        } else {
+          console.error("Failed to update booking status:", response);
+        }
+      } catch (error) {
+        console.error("Error updating booking status:", error);
+      }
+    };
+    updateBooking();
   };
 
   const getStatusIcon = (status) => {
     switch (status) {
-      case "confirmed":
+      case "accepted":
         return <CheckCircle className="h-4 w-4" />;
       case "rejected":
         return <XCircle className="h-4 w-4" />;
@@ -230,7 +81,7 @@ function BookingRequests() {
 
   const getStatusStyle = (status) => {
     switch (status) {
-      case "confirmed":
+      case "accepted":
         return "bg-emerald-500 text-white shadow-emerald-200";
       case "rejected":
         return "bg-rose-500 text-white shadow-rose-200";
@@ -293,7 +144,7 @@ function BookingRequests() {
         {/* Modern Filter Tabs */}
         <div className="mb-8">
           <div className="flex flex-wrap gap-2 rounded-2xl border border-white/20 bg-white/70 p-1 shadow-lg backdrop-blur-sm">
-            {["all", "pending", "confirmed", "rejected"].map((status) => {
+            {["all", "pending", "accepted", "rejected"].map((status) => {
               const count =
                 status === "all"
                   ? bookings?.length
@@ -347,7 +198,7 @@ function BookingRequests() {
                 {/* Status Banner */}
                 <div
                   className={`h-2 ${
-                    booking?.status === "confirmed"
+                    booking?.status === "accepted"
                       ? "bg-gradient-to-r from-emerald-500 to-green-500"
                       : booking?.status === "rejected"
                         ? "bg-gradient-to-r from-rose-500 to-red-500"
@@ -626,7 +477,7 @@ function BookingRequests() {
                       <>
                         <button
                           onClick={() =>
-                            updateBookingStatus(booking.id, "confirmed")
+                            HandleUpdateStatus(booking.id, "accepted")
                           }
                           className="flex transform items-center gap-3 rounded-2xl bg-gradient-to-r from-emerald-500 to-green-500 px-8 py-3 font-semibold text-white shadow-lg shadow-emerald-200 transition-all duration-200 hover:from-emerald-600 hover:to-green-600 hover:shadow-xl hover:shadow-emerald-300"
                         >
@@ -635,7 +486,7 @@ function BookingRequests() {
                         </button>
                         <button
                           onClick={() =>
-                            updateBookingStatus(booking.id, "rejected")
+                            HandleUpdateStatus(booking.id, "rejected")
                           }
                           className="flex transform items-center gap-3 rounded-2xl bg-gradient-to-r from-rose-500 to-red-500 px-8 py-3 font-semibold text-white shadow-lg shadow-rose-200 transition-all duration-200 hover:from-rose-600 hover:to-red-600 hover:shadow-xl hover:shadow-rose-300"
                         >
@@ -644,10 +495,10 @@ function BookingRequests() {
                         </button>
                       </>
                     )}
-                    {booking.status === "confirmed" && (
+                    {booking.status === "accepted" && (
                       <button
                         onClick={() =>
-                          updateBookingStatus(booking.id, "pending")
+                          HandleUpdateStatus(booking.id, "pending")
                         }
                         className="transform rounded-2xl bg-gradient-to-r from-amber-500 to-yellow-500 px-8 py-3 font-semibold text-white shadow-lg shadow-amber-200 transition-all duration-200 hover:scale-105 hover:from-amber-600 hover:to-yellow-600 hover:shadow-xl hover:shadow-amber-300"
                       >
@@ -657,7 +508,7 @@ function BookingRequests() {
                     {booking.status === "rejected" && (
                       <button
                         onClick={() =>
-                          updateBookingStatus(booking.id, "pending")
+                          HandleUpdateStatus(booking.id, "pending")
                         }
                         className="transform rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-500 px-8 py-3 font-semibold text-white shadow-lg shadow-blue-200 transition-all duration-200 hover:scale-105 hover:from-blue-600 hover:to-indigo-600 hover:shadow-xl hover:shadow-blue-300"
                       >

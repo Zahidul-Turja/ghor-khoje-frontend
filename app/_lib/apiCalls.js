@@ -213,3 +213,30 @@ export const getBookingRequests = async () => {
     throw error;
   }
 };
+
+export const updateBookingStatus = async (bookingId, status) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/api/v1/bookings/update-booking-status/${bookingId}/`,
+      { status },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      },
+    );
+    const data = response.data;
+    console.log("Booking status updated:", data);
+    if (data.status === "success") {
+      toast.success("Booking status updated successfully");
+      return data;
+    } else {
+      toast.error(data.message || "Failed to update booking status");
+    }
+    return null;
+  } catch (error) {
+    console.error("Error updating booking status:", error);
+    toast.error("Failed to update booking status");
+    throw error;
+  }
+};
