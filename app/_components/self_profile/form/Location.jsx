@@ -41,8 +41,8 @@ function Location({ activeTab, formData, handleInputChange, setFormData }) {
         }
 
         // Get default coordinates
-        const defaultLat = formData?.latitude || 40.7128;
-        const defaultLng = formData?.longitude || -74.006;
+        const defaultLat = formData?.latitude || 23.777176;
+        const defaultLng = formData?.longitude || 90.399452;
 
         // Create map with optimized options
         const map = window.L.map(mapRef.current, {

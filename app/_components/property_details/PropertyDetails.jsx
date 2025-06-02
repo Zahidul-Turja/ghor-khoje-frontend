@@ -3,6 +3,7 @@ import { FaStar } from "react-icons/fa";
 
 import Image from "next/image";
 import { CgProfile } from "react-icons/cg";
+import Link from "next/link";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_ENDPOINT;
 
@@ -34,7 +35,10 @@ function PropertyDetails({
         <div className="flex items-center justify-between border-b-2 border-gray-300 py-4">
           <div className="flex items-center gap-4">
             {owner?.profile_image ? (
-              <div className="relative h-16 w-16 overflow-hidden rounded-full">
+              <Link
+                href={`user/${owner?.id}`}
+                className="relative h-16 w-16 cursor-pointer overflow-hidden rounded-full"
+              >
                 <Image
                   src={owner?.profile_image}
                   alt="Host"
@@ -42,12 +46,17 @@ function PropertyDetails({
                   height={1000}
                   className="object-cover"
                 />
-              </div>
+              </Link>
             ) : (
               <CgProfile className="h-12 w-12 rounded-full text-gray-600" />
             )}
             <div>
-              <h3 className="font-bold">Hosted by {owner?.full_name}</h3>
+              <Link
+                href={`user/${owner?.id}`}
+                className="cursor-pointer font-semibold"
+              >
+                Hosted by {owner?.full_name}
+              </Link>
               <div className="flex items-center text-sm">
                 <p>{owner?.profession}</p> <BsDot />
                 <p>3 years of experience</p>

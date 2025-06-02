@@ -5,6 +5,7 @@ import { useEffect, useState, useRef } from "react";
 import { FaBath, FaUsers } from "react-icons/fa";
 import { IoMdBed } from "react-icons/io";
 import { IoAdd, IoEllipsisVertical, IoSearch } from "react-icons/io5";
+import AddPropertyModal from "./AddPropertyModal";
 
 function Listings({ places, handleSubmit }) {
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
