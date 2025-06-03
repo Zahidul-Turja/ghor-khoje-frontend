@@ -9,6 +9,8 @@ import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
 import { FaStar } from "react-icons/fa";
 import { HiMiniFlag } from "react-icons/hi2";
 
+import Listings from "@/app/_components/host_page/Listings";
+
 import { aboutHost } from "@/app/_lib/apiCalls";
 
 function UserHostPage() {
@@ -290,112 +292,6 @@ function Reviews({ reviews = [], name = "Guest" }) {
           Show more reviews ({reviews.length - 2} more)
         </button>
       )}
-    </div>
-  );
-}
-
-const dummy_properties_data = [
-  {
-    id: 1,
-    slug: "property-1",
-    image: "/house-1.jpg",
-    title: "Property 1",
-    address: "Bangkok, Thailand",
-    description:
-      "We loved our stay at this villa. Putu and all the staff went above and beyond. Our breakfast was amazing every day. ",
-    price: 1000,
-    rating: 4.5,
-    type: "Apartment",
-    owner: "John Doe",
-  },
-  {
-    id: 2,
-    slug: "property-2",
-    image: "/house-2.jpg",
-    title: "Property 2",
-    address: "Dhaka, Bangladesh",
-    description:
-      "We loved our stay at this villa. Putu and all the staff went above and beyond. Our breakfast was amazing every day. ",
-    price: 1000,
-    rating: 4.5,
-    type: "Apartment",
-    owner: "John Doe",
-  },
-];
-
-function Listings({ properties }) {
-  return (
-    <div>
-      <div className="flex items-center justify-between">
-        <h2 className="text-lg font-bold">John's Listings</h2>
-
-        <div className="flex items-center gap-2">
-          <div className="cursor-pointer rounded-full border border-gray-400 p-1 opacity-70 transition-all duration-300 hover:opacity-100">
-            <FaAngleLeft className="text-xs" />
-          </div>
-          <div className="cursor-pointer rounded-full border border-gray-400 p-1 opacity-70 transition-all duration-300 hover:opacity-100">
-            <FaAngleRight className="text-xs" />
-          </div>
-        </div>
-      </div>
-
-      <div className="my-4 flex items-center gap-3">
-        {dummy_properties_data.map((property) => (
-          <Property key={property.id} property={property} />
-        ))}
-      </div>
-
-      <Link
-        href={"/"}
-        className="mt-3 text-sm font-bold text-gray-700 underline"
-      >
-        Show more listings
-      </Link>
-    </div>
-  );
-}
-
-function Property({ property }) {
-  const {
-    id,
-    slug,
-    image,
-    title,
-    address,
-    owner,
-    description,
-    price,
-    rating,
-    type,
-  } = property;
-
-  return (
-    <div className="overflow-hidden rounded-lg">
-      <Link
-        href={`/${slug}`}
-        className="relative h-52 w-full overflow-hidden rounded-lg"
-      >
-        <Image
-          src={image}
-          alt={title}
-          width={400}
-          height={200}
-          className="rounded-lg object-cover"
-        />
-      </Link>
-
-      <div className="py-2">
-        <div className="flex items-center justify-between">
-          <Link href={`/${slug}`} className="text-sm font-semibold">
-            {address}
-          </Link>
-          <p className="flex items-center gap-1 text-xs font-semibold">
-            <FaStar />
-            {rating}
-          </p>
-        </div>
-      </div>
-      <p className="truncate text-xs">{description}</p>
     </div>
   );
 }
