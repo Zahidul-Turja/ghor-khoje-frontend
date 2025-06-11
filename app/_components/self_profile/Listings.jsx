@@ -18,10 +18,8 @@ function Listings({ places, handleSubmit }) {
   // Add this useEffect to sync filteredPlaces with places prop changes
   useEffect(() => {
     if (searchTerm === "") {
-      // If no search term, show all places
       setFilteredPlaces(places);
     } else {
-      // If there's a search term, filter the new places array
       const filtered = places.filter(
         (place) =>
           place?.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -73,18 +71,21 @@ function Listings({ places, handleSubmit }) {
         />
       )}
       <div>
+        {/* Header Section */}
         <div className="border-b border-gray-100">
-          <div className="flex items-center justify-between p-6">
+          <div className="flex flex-col gap-4 p-4 sm:p-6 lg:flex-row lg:items-center lg:justify-between lg:gap-0">
             <div className="flex items-center space-x-2">
-              <h2 className="text-xl font-semibold text-gray-800">
+              <h2 className="text-lg font-semibold text-gray-800 sm:text-xl">
                 Properties for Rent
               </h2>
               <span className="rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800">
                 {places.length}
               </span>
             </div>
-            <div className="flex items-center space-x-4">
-              <div className="relative">
+
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+              {/* Search Input */}
+              <div className="relative w-full sm:w-64">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                   <IoSearch className="text-gray-400" />
                 </div>
@@ -93,14 +94,13 @@ function Listings({ places, handleSubmit }) {
                   className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-primary/40 focus:ring-primary/40"
                   placeholder="Search properties..."
                   value={searchTerm}
-                  onChange={(e) => {
-                    setSearchTerm(e.target.value);
-                    // Remove the inline filtering here since useEffect handles it now
-                  }}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
+
+              {/* Add Property Button - Hidden on mobile (shown in parent component) */}
               <button
-                className="flex items-center gap-2 rounded-lg bg-primary/90 px-5 py-2.5 text-sm font-medium text-white transition-colors duration-150 hover:bg-primary"
+                className="hidden items-center gap-2 rounded-lg bg-primary/90 px-5 py-2.5 text-sm font-medium text-white transition-colors duration-150 hover:bg-primary sm:flex"
                 onClick={() => setShowModal(true)}
               >
                 <IoAdd className="text-lg" />
@@ -110,7 +110,8 @@ function Listings({ places, handleSubmit }) {
           </div>
         </div>
 
-        <div className="overflow-x-auto">
+        {/* Desktop Table View */}
+        <div className="hidden overflow-x-auto lg:block">
           <table className="w-full text-left text-sm">
             <thead className="bg-gray-50 text-xs uppercase text-gray-700">
               <tr>
@@ -209,49 +210,156 @@ function Listings({ places, handleSubmit }) {
               ))}
             </tbody>
           </table>
-
-          {filteredPlaces.length === 0 && (
-            <div className="py-10 text-center text-gray-500">
-              No properties found matching your search.
-            </div>
-          )}
-
-          {openMenuId !== null && (
-            <div
-              ref={menuRef}
-              className="fixed z-50 w-36 overflow-hidden rounded-lg border border-gray-200 bg-white text-sm shadow-lg"
-              style={{
-                top: `${menuPosition.top}px`,
-                left: `${menuPosition.left}px`,
-              }}
-            >
-              <button className="flex w-full items-center px-4 py-2.5 text-left transition-colors hover:bg-gray-50">
-                <span className="text-gray-700">View Details</span>
-              </button>
-              <button className="flex w-full items-center px-4 py-2.5 text-left transition-colors hover:bg-gray-50">
-                <span className="text-gray-700">Edit Property</span>
-              </button>
-              <button className="flex w-full items-center border-t border-gray-100 px-4 py-2.5 text-left transition-colors hover:bg-gray-50">
-                <span className="text-red-600">Delete</span>
-              </button>
-            </div>
-          )}
         </div>
 
-        <div className="flex items-center justify-between border-t border-gray-200 bg-gray-50 px-6 py-3">
-          <div className="text-sm text-gray-500">
+        {/* Mobile/Tablet Card View */}
+        <div className="block lg:hidden">
+          <div className="divide-y divide-gray-200">
+            {filteredPlaces.map((place) => (
+              <div key={place?.id} className="bg-white p-4 hover:bg-gray-50">
+                <div className="flex gap-4">
+                  {/* Property Image */}
+                  <div className="flex-shrink-0">
+                    {place?.images[0]?.image ? (
+                      <Image
+                        src={`${place?.images[0]?.image}`}
+                        alt={place?.title}
+                        width={200}
+                        height={200}
+                        className="h-16 w-20 rounded-md object-cover sm:h-20 sm:w-24"
+                      />
+                    ) : (
+                      <div className="flex h-16 w-20 items-center justify-center rounded-md border border-gray-200 sm:h-20 sm:w-24">
+                        <Image
+                          src={"/property-placeholder-colored.png"}
+                          alt={place?.title}
+                          width={200}
+                          height={200}
+                          className="h-10 w-10 rounded-md object-cover"
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Property Details */}
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-start justify-between">
+                      <div className="min-w-0 flex-1">
+                        <h3 className="truncate text-sm font-medium text-gray-900 sm:text-base">
+                          {place?.title}
+                        </h3>
+                        <p className="text-xs text-gray-500 sm:text-sm">
+                          {place?.category.name}
+                        </p>
+                      </div>
+
+                      {/* Actions Menu */}
+                      <button
+                        onClick={(e) => handleMenuClick(e, place?.id)}
+                        className="ml-2 rounded-md p-1.5 text-gray-500 transition-colors hover:bg-gray-100"
+                      >
+                        <IoEllipsisVertical />
+                      </button>
+                    </div>
+
+                    {/* Location */}
+                    <div className="mt-1">
+                      <p className="text-sm font-medium text-gray-700">
+                        {place?.city}
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        {place?.area_name}
+                      </p>
+                    </div>
+
+                    {/* Price */}
+                    <div className="mt-2">
+                      <p className="text-lg font-semibold text-gray-900 sm:text-xl">
+                        ৳ {place?.rent_per_month.toLocaleString()}
+                      </p>
+                    </div>
+
+                    {/* Property Details */}
+                    <div className="mt-3 flex items-center gap-4 text-xs text-gray-500 sm:text-sm">
+                      <div className="flex items-center">
+                        <IoMdBed className="mr-1 text-sm" />
+                        <span>{place?.num_of_bedrooms}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <FaBath className="mr-1 text-xs" />
+                        <span>{place?.num_of_bathrooms}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <FaUsers className="mr-1 text-xs" />
+                        <span>{place?.capacity}</span>
+                      </div>
+                    </div>
+
+                    {/* Status */}
+                    <div className="mt-3">
+                      <span
+                        className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${
+                          place?.is_available
+                            ? "bg-green-100 text-green-800"
+                            : "bg-red-100 text-red-800"
+                        }`}
+                      >
+                        {place?.is_available ? "Available" : "Not Available"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* No Results Message */}
+        {filteredPlaces.length === 0 && (
+          <div className="py-10 text-center text-gray-500 sm:py-16">
+            <p className="text-sm sm:text-base">
+              No properties found matching your search.
+            </p>
+          </div>
+        )}
+
+        {/* Action Menu */}
+        {openMenuId !== null && (
+          <div
+            ref={menuRef}
+            className="fixed z-50 w-36 overflow-hidden rounded-lg border border-gray-200 bg-white text-sm shadow-lg"
+            style={{
+              top: `${menuPosition.top}px`,
+              left: `${menuPosition.left}px`,
+            }}
+          >
+            <button className="flex w-full items-center px-4 py-2.5 text-left transition-colors hover:bg-gray-50">
+              <span className="text-gray-700">View Details</span>
+            </button>
+            <button className="flex w-full items-center px-4 py-2.5 text-left transition-colors hover:bg-gray-50">
+              <span className="text-gray-700">Edit Property</span>
+            </button>
+            <button className="flex w-full items-center border-t border-gray-100 px-4 py-2.5 text-left transition-colors hover:bg-gray-50">
+              <span className="text-red-600">Delete</span>
+            </button>
+          </div>
+        )}
+
+        {/* Footer/Pagination */}
+        <div className="flex flex-col gap-4 border-t border-gray-200 bg-gray-50 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+          <div className="text-center text-sm text-gray-500 sm:text-left">
             Showing <span className="font-medium">{filteredPlaces.length}</span>{" "}
             of <span className="font-medium">{places?.length}</span> properties
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center justify-center space-x-2 sm:justify-end">
             <button
-              className="rounded-md border border-gray-300 bg-white px-3 py-1 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+              className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
               disabled
             >
               Previous
             </button>
             <button
-              className="rounded-md border border-gray-300 bg-white px-3 py-1 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+              className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
               disabled
             >
               Next

@@ -11,22 +11,16 @@ import {
   FaCog,
   FaEnvelope,
   FaChartBar,
-  FaFileAlt,
-  FaUsers,
-  FaFolderOpen,
   FaTasks,
   FaCalendarAlt,
-  FaBook,
-  FaLifeRing,
-  FaQuestionCircle,
-  FaPhoneAlt,
+  FaTimes,
 } from "react-icons/fa";
 import { RiNotification3Fill } from "react-icons/ri";
 import { IoBookmark } from "react-icons/io5";
 
 const CURRENT_URL = "/user/profile";
 
-function Sidebar() {
+function Sidebar({ isOpen, onClose }) {
   const [collapsed, setCollapsed] = useState(false);
   const [activeSection, setActiveSection] = useState("profile");
 
@@ -41,15 +35,8 @@ function Sidebar() {
     { name: "Notifications", icon: <RiNotification3Fill /> },
     { name: "Messages", icon: <FaEnvelope /> },
     { name: "Analytics", icon: <FaChartBar /> },
-    // { name: "Reports", icon: <FaFileAlt /> },
-    // { name: "Users", icon: <FaUsers /> },
-    // { name: "Projects", icon: <FaFolderOpen /> },
     { name: "Tasks", icon: <FaTasks /> },
     { name: "Calendar", icon: <FaCalendarAlt /> },
-    // { name: "Documentation", icon: <FaBook /> },
-    // { name: "Support", icon: <FaLifeRing /> },
-    // { name: "FAQ", icon: <FaQuestionCircle /> },
-    // { name: "Contact", icon: <FaPhoneAlt /> },
     { name: "Settings", icon: <FaCog /> },
   ];
 
@@ -57,45 +44,116 @@ function Sidebar() {
     if (section) {
       setActiveSection(section);
     }
-  }, []);
+  }, [section]);
+
+  // Reset collapsed state on mobile when sidebar opens
+  useEffect(() => {
+    if (isOpen && window.innerWidth < 1024) {
+      setCollapsed(false);
+    }
+  }, [isOpen]);
+
+  const handleNavClick = (itemName) => {
+    setActiveSection(itemName.toLowerCase());
+    // Close mobile sidebar when item is clicked
+    if (window.innerWidth < 1024) {
+      onClose();
+    }
+  };
 
   return (
-    <div
-      className={`sticky top-0 flex h-[calc(100vh-64px)] flex-col border-r border-gray-200 bg-white transition-all duration-300 ${collapsed ? "w-16" : "w-64"}`}
-    >
-      <div className="flex items-center justify-between border-b border-gray-200 p-4">
-        {!collapsed && <h2 className="text-lg font-bold">Navigation</h2>}
-        <button
-          onClick={() => setCollapsed(!collapsed)}
-          className="rounded-full p-2 hover:bg-gray-100"
-        >
-          {collapsed ? <FaChevronRight /> : <FaChevronLeft />}
-        </button>
+    <>
+      {/* Desktop Sidebar */}
+      <div
+        className={`sticky top-0 hidden h-screen flex-col border-r border-gray-200 bg-white transition-all duration-300 lg:flex ${
+          collapsed ? "w-16" : "w-64"
+        }`}
+      >
+        {/* Desktop Header */}
+        <div className="flex items-center justify-between border-b border-gray-200 p-4">
+          {!collapsed && <h2 className="text-lg font-bold">Navigation</h2>}
+          <button
+            onClick={() => setCollapsed(!collapsed)}
+            className="rounded-full p-2 hover:bg-gray-100"
+          >
+            {collapsed ? <FaChevronRight /> : <FaChevronLeft />}
+          </button>
+        </div>
+
+        {/* Desktop Navigation */}
+        <div className="no-scrollbar flex-grow overflow-y-auto">
+          <ul className="py-2">
+            {navItems.map((item, index) => (
+              <li key={index}>
+                <Link
+                  href={`${CURRENT_URL}/?section=${item.name.toLowerCase().replace(" ", "-")}`}
+                  className={`flex items-center px-4 py-3 hover:bg-gray-100 ${
+                    activeSection === item.name.toLowerCase().replace(" ", "-")
+                      ? "bg-blue-50 font-semibold text-blue-600"
+                      : "text-gray-700"
+                  } ${collapsed ? "justify-center" : ""}`}
+                  onClick={() => handleNavClick(item.name)}
+                >
+                  <span
+                    className={`${collapsed ? "text-lg" : "mr-3 text-base"}`}
+                  >
+                    {item.icon}
+                  </span>
+                  {!collapsed && <span className="text-sm">{item.name}</span>}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
 
-      <div className="no-scrollbar flex-grow overflow-y-auto">
-        <ul className="py-2">
-          {navItems.map((item, index) => (
-            <li key={index}>
-              <Link
-                href={`${CURRENT_URL}/?section=${item.name.toLowerCase().replace(" ", "-")}`}
-                className={`flex items-center px-4 py-3 hover:bg-gray-100 ${activeSection === item.name.toLowerCase() ? "font-semibold opacity-100" : "opacity-70"} ${collapsed ? "justify-center" : ""}`}
-                onClick={() => {
-                  setActiveSection(item.name.toLowerCase());
-                }}
-              >
-                <span
-                  className={`text-gray-500 ${collapsed ? "text-lg" : "mr-3"}`}
+      {/* Mobile Sidebar */}
+      <div
+        className={`fixed inset-y-0 left-0 z-30 flex h-full w-64 flex-col border-r border-gray-200 bg-white shadow-lg transition-transform duration-300 lg:hidden ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        {/* Mobile Header */}
+        <div className="flex items-center justify-between border-b border-gray-200 p-4">
+          <h2 className="text-lg font-bold">Navigation</h2>
+          <button
+            onClick={onClose}
+            className="rounded-full p-2 hover:bg-gray-100"
+          >
+            <FaTimes />
+          </button>
+        </div>
+
+        {/* Mobile Navigation */}
+        <div className="flex-grow overflow-y-auto">
+          <ul className="py-2">
+            {navItems.map((item, index) => (
+              <li key={index}>
+                <Link
+                  href={`${CURRENT_URL}/?section=${item.name.toLowerCase().replace(" ", "-")}`}
+                  className={`flex items-center px-4 py-4 hover:bg-gray-100 ${
+                    activeSection === item.name.toLowerCase().replace(" ", "-")
+                      ? "bg-blue-50 font-semibold text-blue-600"
+                      : "text-gray-700"
+                  }`}
+                  onClick={() => handleNavClick(item.name)}
                 >
-                  {item.icon}
-                </span>
-                {!collapsed && <span>{item.name}</span>}
-              </Link>
-            </li>
-          ))}
-        </ul>
+                  <span className="mr-4 text-lg">{item.icon}</span>
+                  <span className="text-base">{item.name}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Mobile Footer */}
+        <div className="border-t border-gray-200 p-4">
+          <div className="text-center text-xs text-gray-500">
+            Swipe left to close
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
