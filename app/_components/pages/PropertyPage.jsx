@@ -37,10 +37,10 @@ function PropertyPage() {
           propertyData={place}
         />
       )}
-      <div className="mx-auto my-4 max-w-screen-2xl">
-        <div className="my-2 flex items-center justify-between">
-          <h1 className="text-3xl font-bold">{place?.title}</h1>
-          <div className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1 text-sm font-semibold transition-all duration-300 hover:bg-gray-300">
+      <div className="mx-auto my-4 max-w-screen-2xl px-4 sm:px-6 lg:px-8">
+        <div className="my-2 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <h1 className="text-2xl font-bold sm:text-3xl">{place?.title}</h1>
+          <div className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition-all duration-300 hover:bg-gray-300 sm:px-2 sm:py-1">
             <FaRegHeart className="" />
             <span>Save</span>
           </div>
@@ -62,8 +62,8 @@ function PropertyPage() {
           />
         )}
 
-        <div className="my-4 flex gap-8">
-          <div className="w-[65%]">
+        <div className="my-4 flex flex-col gap-6 lg:flex-row lg:gap-8">
+          <div className="w-full lg:w-[65%]">
             <PropertyDetails
               owner={place?.owner}
               description={place?.description}
@@ -75,7 +75,7 @@ function PropertyPage() {
             <Amenities amenities={place?.facilities} />
           </div>
 
-          <div className="sticky top-16 my-8 h-fit w-[35%]">
+          <div className="w-full lg:sticky lg:top-16 lg:my-8 lg:h-fit lg:w-[35%]">
             <AppointmentCard
               available_from={place?.available_from}
               capacity={place?.capacity}
@@ -88,8 +88,8 @@ function PropertyPage() {
           </div>
         </div>
 
-        <div className="border-t-2 border-gray-300 py-8">
-          <h2 className="text-2xl font-semibold">Where You'll Be</h2>
+        <div className="border-t-2 border-gray-300 py-6 sm:py-8">
+          <h2 className="text-xl font-semibold sm:text-2xl">Where You'll Be</h2>
           <div className="my-4 overflow-hidden rounded-lg">
             {place && (
               <LocationMap lat={place?.latitude} lng={place?.longitude} />
@@ -97,8 +97,8 @@ function PropertyPage() {
           </div>
         </div>
 
-        <div className="border-t-2 border-gray-300 py-8" id="reviews">
-          <h2 className="text-2xl font-semibold">Reviews</h2>
+        <div className="border-t-2 border-gray-300 py-6 sm:py-8" id="reviews">
+          <h2 className="text-xl font-semibold sm:text-2xl">Reviews</h2>
           {place && (
             <div className="my-4 overflow-hidden rounded-lg">
               {place && <Reviews reviews={place?.owner?.reviews} />}

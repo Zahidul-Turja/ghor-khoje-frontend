@@ -11,7 +11,7 @@ function Page() {
   return (
     <>
       <NavMain />
-      <BoundingBox classes="px-52">
+      <BoundingBox classes="md:px-52">
         <PropertyPage />
       </BoundingBox>
       <Footer />
