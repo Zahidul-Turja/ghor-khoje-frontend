@@ -46,7 +46,9 @@ function Layout({ children }) {
         </div>
 
         {/* Main content area */}
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6">{children}</main>
+        <main className="no-scrollbar flex-1 overflow-y-auto sm:py-6 md:p-4">
+          {children}
+        </main>
       </div>
     </div>
   );

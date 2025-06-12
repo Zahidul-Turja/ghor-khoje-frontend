@@ -7,8 +7,6 @@ import PropertyDetails from "./form/PropertyDetails";
 import Financial from "./form/Financial";
 import Images from "./form/Images";
 
-import { createProperty } from "@/app/_lib/apiCalls";
-
 export default function AddPropertyModal({ onClose, onSubmit }) {
   const [activeTab, setActiveTab] = useState("basic");
   const [formData, setFormData] = useState({
@@ -149,23 +147,27 @@ export default function AddPropertyModal({ onClose, onSubmit }) {
   ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-sm">
-      <div className="relative mx-4 h-[90vh] w-full max-w-5xl overflow-hidden rounded-xl bg-white shadow-xl">
-        <header className="flex items-center justify-between border-b border-gray-200 bg-gray-50 px-6 py-4">
-          <h1 className="text-2xl font-bold text-gray-800">Add New Property</h1>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 p-2 backdrop-blur-sm sm:p-4">
+      <div className="relative flex h-full w-full max-w-6xl flex-col overflow-hidden rounded-none bg-white shadow-xl sm:h-[95vh] sm:max-h-[800px] sm:rounded-xl">
+        {/* Header */}
+        <header className="flex flex-shrink-0 items-center justify-between border-b border-gray-200 bg-gray-50 px-4 py-3 sm:px-6 sm:py-4">
+          <h1 className="truncate text-lg font-bold text-gray-800 sm:text-2xl">
+            Add New Property
+          </h1>
           <button
             onClick={onClose}
-            className="rounded-full p-2 text-gray-500 transition-colors hover:bg-gray-200"
+            className="flex-shrink-0 rounded-full p-1.5 text-gray-500 transition-colors hover:bg-gray-200 sm:p-2"
           >
-            <X size={24} />
+            <X size={20} className="sm:h-6 sm:w-6" />
           </button>
         </header>
 
-        <div className="flex border-b border-gray-200">
+        {/* Tabs */}
+        <div className="flex flex-shrink-0 overflow-x-auto border-b border-gray-200">
           {tabs.map((tab) => (
             <button
               key={tab.id}
-              className={`px-6 py-3 font-medium transition-colors ${
+              className={`whitespace-nowrap px-3 py-2 text-sm font-medium transition-colors sm:px-6 sm:py-3 sm:text-base ${
                 activeTab === tab.id
                   ? "border-b-2 border-primary/80 text-primary"
                   : "text-gray-600 hover:bg-gray-50"
@@ -177,72 +179,74 @@ export default function AddPropertyModal({ onClose, onSubmit }) {
           ))}
         </div>
 
-        <div
-          className="no-scrollbar overflow-y-auto px-6 pb-24 pt-6"
-          style={{ maxHeight: "calc(90vh - 140px)" }}
-        >
-          <form onSubmit={handleSubmit} encType="multipart/form-data">
-            {/* Basic Info */}
-            <BasicInfo
-              availableFacilities={availableFacilities}
-              activeTab={activeTab}
-              formData={formData}
-              handleInputChange={handleInputChange}
-              toggleFacility={toggleFacility}
-            />
+        {/* Main Content */}
+        <div className="flex-1 overflow-y-auto">
+          <div className="px-4 pb-20 pt-4 sm:px-6 sm:pb-24 sm:pt-6">
+            <form onSubmit={handleSubmit} encType="multipart/form-data">
+              {/* Basic Info */}
+              <BasicInfo
+                availableFacilities={availableFacilities}
+                activeTab={activeTab}
+                formData={formData}
+                handleInputChange={handleInputChange}
+                toggleFacility={toggleFacility}
+              />
 
-            {/* Location */}
-            <Location
-              activeTab={activeTab}
-              formData={formData}
-              setFormData={setFormData}
-              handleInputChange={handleInputChange}
-            />
+              {/* Location */}
+              <Location
+                activeTab={activeTab}
+                formData={formData}
+                setFormData={setFormData}
+                handleInputChange={handleInputChange}
+              />
 
-            {/* Property Details */}
-            <PropertyDetails
-              activeTab={activeTab}
-              formData={formData}
-              handleInputChange={handleInputChange}
-              handleNumberInput={handleNumberInput}
-            />
+              {/* Property Details */}
+              <PropertyDetails
+                activeTab={activeTab}
+                formData={formData}
+                handleInputChange={handleInputChange}
+                handleNumberInput={handleNumberInput}
+              />
 
-            {/* Financial */}
-            <Financial
-              activeTab={activeTab}
-              formData={formData}
-              handleInputChange={handleInputChange}
-              handleNumberInput={handleNumberInput}
-            />
+              {/* Financial */}
+              <Financial
+                activeTab={activeTab}
+                formData={formData}
+                handleInputChange={handleInputChange}
+                handleNumberInput={handleNumberInput}
+              />
 
-            {/* Images */}
-            <Images
-              activeTab={activeTab}
-              formData={formData}
-              handleImageUpload={handleImageUpload}
-              handleRemoveImage={handleRemoveImage}
-              handleImageDescriptionChange={handleImageDescriptionChange}
-              dragActive={dragActive}
-              handleDrag={handleDrag}
-              handleDrop={handleDrop}
-            />
+              {/* Images */}
+              <Images
+                activeTab={activeTab}
+                formData={formData}
+                handleImageUpload={handleImageUpload}
+                handleRemoveImage={handleRemoveImage}
+                handleImageDescriptionChange={handleImageDescriptionChange}
+                dragActive={dragActive}
+                handleDrag={handleDrag}
+                handleDrop={handleDrop}
+              />
+            </form>
+          </div>
+        </div>
 
-            <div className="absolute bottom-0 left-0 right-0 z-10 mt-8 flex justify-end space-x-4 border-t border-gray-200 bg-white px-6 py-4 pt-6">
-              <button
-                type="button"
-                onClick={onClose}
-                className="rounded-lg border border-gray-300 bg-white px-6 py-3 font-medium text-gray-700 transition-colors hover:bg-gray-50"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="rounded-lg bg-primary px-6 py-3 font-medium text-white transition-colors hover:bg-primary/80"
-              >
-                Save Property
-              </button>
-            </div>
-          </form>
+        {/* Footer Actions */}
+        <div className="absolute bottom-0 left-0 right-0 z-10 flex flex-shrink-0 flex-col justify-end space-y-2 border-t border-gray-200 bg-white px-4 py-3 sm:flex-row sm:space-x-4 sm:space-y-0 sm:px-6 sm:py-4">
+          <button
+            type="button"
+            onClick={onClose}
+            className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 sm:w-auto sm:px-6 sm:py-3 sm:text-base"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            onClick={handleSubmit}
+            className="w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-primary/80 sm:w-auto sm:px-6 sm:py-3 sm:text-base"
+          >
+            Save Property
+          </button>
         </div>
       </div>
     </div>
