@@ -21,11 +21,11 @@ function SectionPartners() {
   return (
     <section className="mx-auto max-w-screen-2xl px-3 py-16 md:px-6 md:py-32 lg:px-8">
       {/* Section Header */}
-      <div className="mb-6 md:mb-8">
-        <h2 className="text-center text-2xl font-bold uppercase tracking-wide text-gray-800 md:text-left md:text-3xl lg:text-4xl">
+      <div className="mb-6 text-center md:mb-8">
+        <h2 className="text-center text-2xl font-bold uppercase tracking-wide text-gray-800 md:text-3xl lg:text-4xl">
           <span className="font-extralight">Our</span> Partners
         </h2>
-        <p className="mx-auto mt-4 text-center text-gray-600 md:w-[80vw] md:text-left md:text-lg lg:w-[60vw]">
+        <p className="mx-auto mt-4 text-center text-gray-600 md:w-[80vw] md:text-lg lg:w-[60vw]">
           We’re proud to collaborate with trusted partners who share our vision
           and values. These partnerships play a key role in helping us deliver
           exceptional solutions and grow together. Take a look at some of the
