@@ -13,43 +13,12 @@ import {
   XCircle,
   Settings,
 } from "lucide-react";
-// Import your API functions
+
 import {
   listOfNotifications,
   markAllNotificationsAsRead,
   markNotificationAsRead,
 } from "@/app/_lib/apiCalls";
-
-// // Mock API functions for demo (replace with your actual imports)
-// const listOfNotifications = async () => {
-//   // Mock data for demo
-//   return [
-//     {
-//       id: 1,
-//       title: "Test",
-//       message: "Test notification",
-//       type: "INFO",
-//       is_read: false,
-//       created_at: new Date().toISOString(),
-//     },
-//     {
-//       id: 2,
-//       title: "Another",
-//       message: "Another notification",
-//       type: "SUCCESS",
-//       is_read: true,
-//       created_at: new Date().toISOString(),
-//     },
-//   ];
-// };
-
-// const markAllNotificationsAsRead = async () => {
-//   return { success: true };
-// };
-
-// const markNotificationAsRead = async (id) => {
-//   return { success: true };
-// };
 
 function Notifications() {
   const [activeTab, setActiveTab] = useState("all");
@@ -186,7 +155,7 @@ function Notifications() {
             <h1 className="text-3xl font-bold text-gray-900">Notifications</h1>
           </div>
           <div className="flex items-center justify-center py-16">
-            <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-indigo-600"></div>
+            <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-primary/80"></div>
           </div>
         </div>
       </div>
@@ -211,7 +180,7 @@ function Notifications() {
         </div>
 
         <div className="overflow-hidden rounded-2xl bg-white shadow-xl">
-          <div className="border-b border-gray-200 bg-gradient-to-r from-indigo-500 to-purple-600 p-6">
+          <div className="border-b border-gray-200 bg-gradient-to-r from-primary/80 to-primary/90 p-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <Bell size={24} className="mr-3 rotate-12 text-white" />
@@ -220,7 +189,7 @@ function Notifications() {
                 </h2>
               </div>
               <div className="flex items-center">
-                <span className="mr-2 rounded-full bg-white px-3 py-1 text-sm font-medium text-indigo-600">
+                <span className="mr-2 rounded-full bg-white px-3 py-1 text-sm font-medium text-primary">
                   {unreadCount} new
                 </span>
                 <button
@@ -238,7 +207,7 @@ function Notifications() {
                 onClick={() => setActiveTab("all")}
                 className={`rounded-t-lg px-4 py-2 text-sm font-medium transition ${
                   activeTab === "all"
-                    ? "bg-white text-indigo-600"
+                    ? "bg-white text-primary"
                     : "bg-white/20 text-white hover:bg-white/30"
                 }`}
               >

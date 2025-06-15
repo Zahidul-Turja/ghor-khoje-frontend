@@ -36,7 +36,7 @@ function Sidebar({ isOpen, onClose }) {
     { name: "Messages", icon: <FaEnvelope /> },
     { name: "Analytics", icon: <FaChartBar /> },
     { name: "Tasks", icon: <FaTasks /> },
-    { name: "Calendar", icon: <FaCalendarAlt /> },
+    // { name: "Calendar", icon: <FaCalendarAlt /> },
     { name: "Settings", icon: <FaCog /> },
   ];
 
