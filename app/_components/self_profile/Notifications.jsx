@@ -1,69 +1,197 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Bell,
-  UserPlus,
-  MessageSquare,
-  Heart,
-  AlertCircle,
   CheckCircle,
   Clock,
   MoreHorizontal,
+  Star,
+  Calendar,
+  Info,
+  AlertTriangle,
+  XCircle,
+  Settings,
 } from "lucide-react";
+// Import your API functions
+import {
+  listOfNotifications,
+  markAllNotificationsAsRead,
+  markNotificationAsRead,
+} from "@/app/_lib/apiCalls";
+
+// // Mock API functions for demo (replace with your actual imports)
+// const listOfNotifications = async () => {
+//   // Mock data for demo
+//   return [
+//     {
+//       id: 1,
+//       title: "Test",
+//       message: "Test notification",
+//       type: "INFO",
+//       is_read: false,
+//       created_at: new Date().toISOString(),
+//     },
+//     {
+//       id: 2,
+//       title: "Another",
+//       message: "Another notification",
+//       type: "SUCCESS",
+//       is_read: true,
+//       created_at: new Date().toISOString(),
+//     },
+//   ];
+// };
+
+// const markAllNotificationsAsRead = async () => {
+//   return { success: true };
+// };
+
+// const markNotificationAsRead = async (id) => {
+//   return { success: true };
+// };
 
 function Notifications() {
   const [activeTab, setActiveTab] = useState("all");
+  const [isMarkingAllRead, setIsMarkingAllRead] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [markingIds, setMarkingIds] = useState(new Set());
 
-  const notifications = [
-    {
-      id: 1,
-      type: "follow",
-      message: "Alex Morgan started following you",
-      time: "2 hours ago",
-      read: false,
-      icon: <UserPlus size={18} className="text-blue-500" />,
-    },
-    {
-      id: 2,
-      type: "comment",
-      message: 'Sarah commented on your recent post: "This is amazing work!"',
-      time: "5 hours ago",
-      read: false,
-      icon: <MessageSquare size={18} className="text-green-500" />,
-    },
-    {
-      id: 3,
-      type: "like",
-      message: "Chris liked your photo",
-      time: "1 day ago",
-      read: true,
-      icon: <Heart size={18} className="text-red-500" />,
-    },
-    {
-      id: 4,
-      type: "alert",
-      message: "Your account password was changed successfully",
-      time: "2 days ago",
-      read: true,
-      icon: <CheckCircle size={18} className="text-emerald-500" />,
-    },
-    {
-      id: 5,
-      type: "system",
-      message: "System maintenance scheduled for tomorrow at 2:00 AM",
-      time: "3 days ago",
-      read: true,
-      icon: <AlertCircle size={18} className="text-amber-500" />,
-    },
-  ];
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        setLoading(true);
+        const response = await listOfNotifications();
+        setNotifications(response);
+      } catch (error) {
+        console.error("Error fetching list of notifications:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchNotifications();
+  }, []);
+
+  // Function to get icon and color based on notification type
+  const getNotificationIcon = (type) => {
+    switch (type) {
+      case "ERROR":
+        return <XCircle size={18} className="text-red-500" />;
+      case "INFO":
+        return <Info size={18} className="text-blue-500" />;
+      case "REVIEW":
+        return <Star size={18} className="text-yellow-500" />;
+      case "BOOKING":
+        return <Calendar size={18} className="text-purple-500" />;
+      case "SYSTEM":
+        return <Settings size={18} className="text-gray-500" />;
+      case "WARNING":
+        return <AlertTriangle size={18} className="text-orange-500" />;
+      case "SUCCESS":
+        return <CheckCircle size={18} className="text-green-500" />;
+      default:
+        return <Bell size={18} className="text-gray-500" />;
+    }
+  };
+
+  const markAllAsRead = async () => {
+    const unreadNotifications = notifications.filter((n) => !n.is_read);
+    if (unreadNotifications.length === 0) {
+      return; // No unread notifications
+    }
+
+    setIsMarkingAllRead(true);
+    try {
+      await markAllNotificationsAsRead();
+
+      // Update local state - mark all as read
+      setNotifications((prevNotifications) =>
+        prevNotifications.map((notification) => ({
+          ...notification,
+          is_read: true,
+        })),
+      );
+
+      console.log("All notifications marked as read");
+    } catch (error) {
+      console.error("Error marking notifications as read:", error);
+    } finally {
+      setIsMarkingAllRead(false);
+    }
+  };
+
+  const handleNotificationClick = async (notificationId) => {
+    const notification = notifications.find((n) => n.id === notificationId);
+    if (!notification || notification.is_read) {
+      return; // Already read or not found
+    }
+
+    setMarkingIds((prev) => new Set([...prev, notificationId]));
+
+    try {
+      await markNotificationAsRead(notificationId);
+
+      // Update local state for this specific notification
+      setNotifications((prevNotifications) =>
+        prevNotifications.map((n) =>
+          n.id === notificationId ? { ...n, is_read: true } : n,
+        ),
+      );
+
+      console.log(`Notification ${notificationId} marked as read`);
+    } catch (error) {
+      console.error("Error marking notification as read:", error);
+    } finally {
+      setMarkingIds((prev) => {
+        const newSet = new Set(prev);
+        newSet.delete(notificationId);
+        return newSet;
+      });
+    }
+  };
+
+  // Function to format timestamp
+  const formatTime = (timestamp) => {
+    const date = new Date(timestamp);
+    const now = new Date();
+    const diffInHours = Math.floor((now - date) / (1000 * 60 * 60));
+    const diffInDays = Math.floor(diffInHours / 24);
+
+    if (diffInHours < 1) {
+      return "Just now";
+    } else if (diffInHours < 24) {
+      return `${diffInHours} hour${diffInHours > 1 ? "s" : ""} ago`;
+    } else if (diffInDays < 7) {
+      return `${diffInDays} day${diffInDays > 1 ? "s" : ""} ago`;
+    } else {
+      return date.toLocaleDateString();
+    }
+  };
 
   const filteredNotifications =
     activeTab === "all"
       ? notifications
       : activeTab === "unread"
-        ? notifications.filter((n) => !n.read)
-        : notifications.filter((n) => n.read);
+        ? notifications.filter((n) => !n.is_read)
+        : notifications.filter((n) => n.is_read);
+
+  const unreadCount = notifications.filter((n) => !n.is_read).length;
+
+  if (loading) {
+    return (
+      <div className="min-h-screen sm:px-6">
+        <div className="mx-auto">
+          <div className="mb-6 flex items-center justify-between">
+            <h1 className="text-3xl font-bold text-gray-900">Notifications</h1>
+          </div>
+          <div className="flex items-center justify-center py-16">
+            <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-indigo-600"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen sm:px-6">
@@ -83,7 +211,7 @@ function Notifications() {
         </div>
 
         <div className="overflow-hidden rounded-2xl bg-white shadow-xl">
-          <div className="border-b border-gray-200 bg-gradient-to-r from-primary/90 to-primary/80 p-6">
+          <div className="border-b border-gray-200 bg-gradient-to-r from-indigo-500 to-purple-600 p-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <Bell size={24} className="mr-3 rotate-12 text-white" />
@@ -92,11 +220,15 @@ function Notifications() {
                 </h2>
               </div>
               <div className="flex items-center">
-                <span className="mr-2 rounded-full bg-white px-3 py-1 text-sm font-medium text-primary/90">
-                  {notifications.filter((n) => !n.read).length} new
+                <span className="mr-2 rounded-full bg-white px-3 py-1 text-sm font-medium text-indigo-600">
+                  {unreadCount} new
                 </span>
-                <button className="rounded-full bg-white/20 px-3 py-1 text-sm font-medium text-white hover:bg-white/30">
-                  Mark all read
+                <button
+                  onClick={markAllAsRead}
+                  disabled={isMarkingAllRead || unreadCount === 0}
+                  className="rounded-full bg-white/20 px-3 py-1 text-sm font-medium text-white hover:bg-white/30 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {isMarkingAllRead ? "Marking..." : "Mark all read"}
                 </button>
               </div>
             </div>
@@ -106,7 +238,7 @@ function Notifications() {
                 onClick={() => setActiveTab("all")}
                 className={`rounded-t-lg px-4 py-2 text-sm font-medium transition ${
                   activeTab === "all"
-                    ? "bg-white text-primary/90"
+                    ? "bg-white text-indigo-600"
                     : "bg-white/20 text-white hover:bg-white/30"
                 }`}
               >
@@ -116,17 +248,17 @@ function Notifications() {
                 onClick={() => setActiveTab("unread")}
                 className={`rounded-t-lg px-4 py-2 text-sm font-medium transition ${
                   activeTab === "unread"
-                    ? "bg-white text-primary/90"
+                    ? "bg-white text-indigo-600"
                     : "bg-white/20 text-white hover:bg-white/30"
                 }`}
               >
-                Unread
+                Unread ({unreadCount})
               </button>
               <button
                 onClick={() => setActiveTab("read")}
                 className={`rounded-t-lg px-4 py-2 text-sm font-medium transition ${
                   activeTab === "read"
-                    ? "bg-white text-primary/90"
+                    ? "bg-white text-indigo-600"
                     : "bg-white/20 text-white hover:bg-white/30"
                 }`}
               >
@@ -141,24 +273,55 @@ function Notifications() {
                 {filteredNotifications.map((notification) => (
                   <li
                     key={notification.id}
+                    onClick={() => handleNotificationClick(notification.id)}
                     className={`flex items-start p-4 transition hover:bg-gray-50 ${
-                      !notification.read ? "bg-blue-50/50" : ""
-                    }`}
+                      !notification.is_read
+                        ? "cursor-pointer bg-blue-50/50"
+                        : ""
+                    } ${markingIds.has(notification.id) ? "opacity-60" : ""}`}
                   >
                     <div className="mr-4 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-100 to-purple-100">
-                      {notification.icon}
+                      {getNotificationIcon(notification.type)}
                     </div>
                     <div className="flex-grow">
+                      {notification.title && (
+                        <h3
+                          className={`mb-1 text-sm font-semibold ${
+                            !notification.is_read
+                              ? "text-gray-900"
+                              : "text-gray-700"
+                          }`}
+                        >
+                          {notification.title}
+                        </h3>
+                      )}
                       <p
-                        className={`text-sm ${!notification.read ? "font-medium text-gray-900" : "text-gray-800"}`}
+                        className={`text-sm ${
+                          !notification.is_read
+                            ? "font-medium text-gray-900"
+                            : "text-gray-800"
+                        }`}
                       >
                         {notification.message}
                       </p>
                       <div className="mt-1 flex items-center text-xs text-gray-500">
                         <Clock size={12} className="mr-1" />
-                        {notification.time}
+                        {formatTime(notification.created_at)}
+                        <span className="ml-2 rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600">
+                          {notification.type}
+                        </span>
+                        {markingIds.has(notification.id) && (
+                          <span className="ml-2 text-xs text-blue-600">
+                            Marking as read...
+                          </span>
+                        )}
                       </div>
                     </div>
+                    {!notification.is_read && (
+                      <div className="ml-2 flex-shrink-0">
+                        <div className="h-2 w-2 rounded-full bg-blue-500"></div>
+                      </div>
+                    )}
                     <button className="ml-4 flex-shrink-0 rounded-full p-1 hover:bg-gray-200">
                       <MoreHorizontal size={16} className="text-gray-400" />
                     </button>

@@ -255,3 +255,71 @@ export const aboutHost = async (host_id) => {
     throw error;
   }
 };
+
+export const listOfNotifications = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/api/v1/user/notifications/`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+    });
+    const data = response.data;
+    console.log("List of notifications response:", data);
+    return data.data;
+  } catch (error) {
+    console.error("Error fetching list of notifications:", error);
+    toast.error("Failed to fetch list of notifications");
+    throw error;
+  }
+};
+
+export const markAllNotificationsAsRead = async () => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/api/v1/user/notifications/mark-all-read/`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      },
+    );
+    const data = response.data;
+    console.log("Mark all notifications as read response:", data);
+    return data;
+  } catch (error) {
+    console.error("Error marking all notifications as read:", error);
+    toast.error("Failed to mark all notifications as read");
+    throw error;
+  }
+};
+
+export const markNotificationAsRead = async (notificationIds) => {
+  try {
+    // Accept either a single ID or array of IDs
+    const ids = Array.isArray(notificationIds)
+      ? notificationIds
+      : [notificationIds];
+
+    const response = await axios.post(
+      `${BASE_URL}/api/v1/user/notifications/mark-read/`,
+      {
+        notification_ids: ids, // Use `data` property for axios, not `body`
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          "Content-Type": "application/json",
+        },
+      },
+    );
+    const data = response.data;
+    console.log("Mark notification as read response:", data);
+    toast.success("Notification marked as read");
+    return data;
+  } catch (error) {
+    console.error("Error marking notification as read:", error);
+    toast.error("Failed to mark notification as read");
+    throw error;
+  }
+};
