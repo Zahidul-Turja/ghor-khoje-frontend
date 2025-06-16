@@ -152,7 +152,7 @@ function Analytics() {
         {/* Header */}
         <div className="mb-8 flex items-center justify-between">
           <div>
-            <h1 className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-4xl font-bold text-transparent">
+            <h1 className="bg-gradient-to-r from-primary/80 to-primary bg-clip-text text-4xl font-bold text-transparent">
               Analytics Dashboard
             </h1>
             <p className="mt-2 text-gray-600">
@@ -160,7 +160,7 @@ function Analytics() {
             </p>
           </div>
           <div className="flex gap-2">
-            <div className="rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 p-3 shadow-lg">
+            <div className="rounded-full bg-gradient-to-r from-primary/80 to-primary p-3 shadow-lg">
               <Construction size={24} className="text-white" />
             </div>
           </div>

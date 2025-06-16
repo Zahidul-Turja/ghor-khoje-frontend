@@ -30,7 +30,7 @@ function SelfProfile() {
           {section === "messages" && <Messages />}
           {section === "analytics" && <Analytics />}
           {section === "tasks" && <Tasks />}
-          {section === "calendar" && <Calendar />}
+          {/* {section === "calendar" && <Calendar />} */}
           {section === "settings" && <Settings />}
         </Layout>
       </BoundingBox>
