@@ -323,3 +323,21 @@ export const markNotificationAsRead = async (notificationIds) => {
     throw error;
   }
 };
+
+// Tasks
+export const getTasks = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/api/v1/user/tasks/`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+    });
+    const data = response.data;
+    console.log("Tasks response:", data);
+    return data.data;
+  } catch (error) {
+    console.error("Error fetching tasks:", error);
+    toast.error("Failed to fetch tasks");
+    throw error;
+  }
+};

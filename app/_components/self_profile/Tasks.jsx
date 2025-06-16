@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Construction,
   Plus,
@@ -17,24 +17,30 @@ import {
   Filter,
   Search,
 } from "lucide-react";
+import { getTasks, getUserProperties } from "@/app/_lib/apiCalls";
 
 const taskCategories = [
   {
-    id: "maintenance",
+    id: "Maintenance",
     name: "Maintenance",
     icon: Wrench,
     color: "bg-orange-500",
   },
-  { id: "cleaning", name: "Cleaning", icon: Home, color: "bg-blue-500" },
-  { id: "guest", name: "Guest Relations", icon: Users, color: "bg-green-500" },
+  { id: "Cleaning", name: "Cleaning", icon: Home, color: "bg-blue-500" },
   {
-    id: "financial",
+    id: "Guest Relations",
+    name: "Guest Relations",
+    icon: Users,
+    color: "bg-green-500",
+  },
+  {
+    id: "Financial",
     name: "Financial",
     icon: DollarSign,
     color: "bg-purple-500",
   },
-  { id: "marketing", name: "Marketing", icon: Star, color: "bg-pink-500" },
-  { id: "other", name: "Other", icon: Circle, color: "bg-gray-500" },
+  { id: "Marketing", name: "Marketing", icon: Star, color: "bg-pink-500" },
+  { id: "Other", name: "Other", icon: Circle, color: "bg-gray-500" },
 ];
 
 const priorityLevels = [
@@ -60,7 +66,7 @@ const initialTasks = [
     category: "maintenance",
     priority: "high",
     dueDate: "2025-06-18",
-    completed: false,
+    is_complete: false,
     property: "Luxury Suite Downtown",
     createdAt: "2025-06-15",
   },
@@ -71,7 +77,7 @@ const initialTasks = [
     category: "cleaning",
     priority: "medium",
     dueDate: "2025-06-17",
-    completed: false,
+    is_complete: false,
     property: "Cozy Garden Apartment",
     createdAt: "2025-06-16",
   },
@@ -82,7 +88,7 @@ const initialTasks = [
     category: "guest",
     priority: "high",
     dueDate: "2025-06-16",
-    completed: true,
+    is_complete: true,
     property: "Modern Loft Studio",
     createdAt: "2025-06-16",
   },
@@ -93,7 +99,7 @@ const initialTasks = [
     category: "marketing",
     priority: "low",
     dueDate: "2025-06-25",
-    completed: false,
+    is_complete: false,
     property: "Seaside Villa",
     createdAt: "2025-06-14",
   },
@@ -104,14 +110,15 @@ const initialTasks = [
     category: "financial",
     priority: "medium",
     dueDate: "2025-06-30",
-    completed: false,
+    is_complete: false,
     property: "All Properties",
     createdAt: "2025-06-10",
   },
 ];
 
 function Tasks() {
-  const [tasks, setTasks] = useState(initialTasks);
+  const [tasks, setTasks] = useState([]);
+  const [properties, setProperties] = useState([]);
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
   const [filterCategory, setFilterCategory] = useState("all");
@@ -126,14 +133,31 @@ function Tasks() {
     property: "",
   });
 
+  useEffect(() => {
+    const fetchTasks = async () => {
+      const response = await getTasks();
+      setTasks(response);
+    };
+
+    const fetchProperties = async () => {
+      const response = await getUserProperties();
+      setProperties(response.results);
+      setNewTask({ ...newTask, property: response.results[0].id });
+    };
+
+    fetchTasks();
+    fetchProperties();
+  }, []);
+
   const handleAddTask = () => {
     if (newTask.title.trim()) {
       const task = {
         id: Date.now(),
         ...newTask,
-        completed: false,
+        is_complete: false,
         createdAt: new Date().toISOString().split("T")[0],
       };
+      console.log("New task:", task);
       setTasks([task, ...tasks]);
       setNewTask({
         title: "",
@@ -150,7 +174,7 @@ function Tasks() {
   const handleToggleComplete = (taskId) => {
     setTasks(
       tasks.map((task) =>
-        task.id === taskId ? { ...task, completed: !task.completed } : task,
+        task.id === taskId ? { ...task, is_complete: !task.is_complete } : task,
       ),
     );
   };
@@ -197,12 +221,14 @@ function Tasks() {
       filterCategory === "all" || task.category === filterCategory;
     const matchesStatus =
       filterStatus === "all" ||
-      (filterStatus === "completed" && task.completed) ||
-      (filterStatus === "pending" && !task.completed);
+      (filterStatus === "is_complete" && task.is_complete) ||
+      (filterStatus === "pending" && !task.is_complete);
     const matchesSearch =
       task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       task.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      task.property.toLowerCase().includes(searchTerm.toLowerCase());
+      task.related_property.title
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
 
     return matchesCategory && matchesStatus && matchesSearch;
   });
@@ -231,10 +257,10 @@ function Tasks() {
 
   const taskStats = {
     total: tasks.length,
-    completed: tasks.filter((t) => t.completed).length,
-    pending: tasks.filter((t) => !t.completed).length,
-    overdue: tasks.filter((t) => !t.completed && isOverdue(t.dueDate)).length,
-    dueSoon: tasks.filter((t) => !t.completed && isDueSoon(t.dueDate)).length,
+    is_complete: tasks.filter((t) => t.is_complete).length,
+    pending: tasks.filter((t) => !t.is_complete).length,
+    overdue: tasks.filter((t) => !t.is_complete && isOverdue(t.dueDate)).length,
+    dueSoon: tasks.filter((t) => !t.is_complete && isDueSoon(t.dueDate)).length,
   };
 
   return (
@@ -274,9 +300,9 @@ function Tasks() {
           </div>
           <div className="rounded-lg border border-gray-100 bg-white p-4 shadow-lg">
             <div className="text-2xl font-bold text-green-600">
-              {taskStats.completed}
+              {taskStats.is_complete}
             </div>
-            <div className="text-sm text-gray-600">Completed</div>
+            <div className="text-sm text-gray-600">Complete</div>
           </div>
           <div className="rounded-lg border border-gray-100 bg-white p-4 shadow-lg">
             <div className="text-2xl font-bold text-blue-600">
@@ -332,7 +358,7 @@ function Tasks() {
               >
                 <option value="all">All Status</option>
                 <option value="pending">Pending</option>
-                <option value="completed">Completed</option>
+                <option value="is_complete">Completed</option>
               </select>
             </div>
           </div>
@@ -426,7 +452,7 @@ function Tasks() {
                 <label className="mb-1 block text-sm font-medium text-gray-700">
                   Property
                 </label>
-                <input
+                {/* <input
                   type="text"
                   className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={newTask.property}
@@ -434,7 +460,21 @@ function Tasks() {
                     setNewTask({ ...newTask, property: e.target.value })
                   }
                   placeholder="Which property is this for?"
-                />
+                /> */}
+                <select
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={newTask.priority}
+                  onChange={(e) =>
+                    setNewTask({ ...newTask, property: e.target.value })
+                  }
+                >
+                  {properties.map((property) => (
+                    <option key={property.id} value={property.id}>
+                      {property.id}
+                      {property.title}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
             <div className="mt-6 flex gap-3">
@@ -493,7 +533,7 @@ function Tasks() {
                 <div
                   key={task.id}
                   className={`rounded-xl border bg-white p-6 shadow-lg transition-all duration-200 hover:shadow-xl ${
-                    task.completed
+                    task.is_complete
                       ? "border-green-200 bg-green-50/30"
                       : isOverdue(task.dueDate)
                         ? "border-red-200 bg-red-50/30"
@@ -506,12 +546,12 @@ function Tasks() {
                     <button
                       onClick={() => handleToggleComplete(task.id)}
                       className={`mt-1 transition-colors ${
-                        task.completed
+                        task.is_complete
                           ? "text-green-500"
                           : "text-gray-300 hover:text-green-500"
                       }`}
                     >
-                      {task.completed ? (
+                      {task.is_complete ? (
                         <CheckCircle2 size={24} />
                       ) : (
                         <Circle size={24} />
@@ -523,7 +563,7 @@ function Tasks() {
                         <div className="flex-1">
                           <h3
                             className={`mb-2 text-lg font-semibold ${
-                              task.completed
+                              task.is_complete
                                 ? "text-gray-500 line-through"
                                 : "text-gray-900"
                             }`}
@@ -533,7 +573,7 @@ function Tasks() {
                           {task.description && (
                             <p
                               className={`mb-3 text-sm ${
-                                task.completed
+                                task.is_complete
                                   ? "text-gray-400"
                                   : "text-gray-600"
                               }`}
@@ -554,10 +594,10 @@ function Tasks() {
                             >
                               {priorityInfo.name}
                             </span>
-                            {task.property && (
+                            {task.related_property && (
                               <span className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-700">
                                 <Home size={12} />
-                                {task.property}
+                                {task.related_property.title}
                               </span>
                             )}
                           </div>
