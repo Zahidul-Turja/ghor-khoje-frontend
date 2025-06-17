@@ -17,6 +17,7 @@ import {
 } from "react-icons/fa";
 import { RiNotification3Fill } from "react-icons/ri";
 import { IoBookmark } from "react-icons/io5";
+import { FaCodePullRequest } from "react-icons/fa6";
 
 const CURRENT_URL = "/user/profile";
 
@@ -31,7 +32,8 @@ function Sidebar({ isOpen, onClose }) {
   const navItems = [
     { name: "Profile", icon: <FaUser /> },
     { name: "My Properties", icon: <FaTachometerAlt /> },
-    { name: "Book Requests", icon: <IoBookmark /> },
+    { name: "Requests", icon: <FaCodePullRequest /> },
+    { name: "Book Marks", icon: <IoBookmark /> },
     { name: "Notifications", icon: <RiNotification3Fill /> },
     { name: "Messages", icon: <FaEnvelope /> },
     { name: "Analytics", icon: <FaChartBar /> },
@@ -87,10 +89,10 @@ function Sidebar({ isOpen, onClose }) {
               <li key={index}>
                 <Link
                   href={`${CURRENT_URL}/?section=${item.name.toLowerCase().replace(" ", "-")}`}
-                  className={`flex items-center px-4 py-3 hover:bg-gray-100 ${
+                  className={`flex items-center px-4 py-3 hover:bg-gray-100 hover:text-gray-800 ${
                     activeSection === item.name.toLowerCase().replace(" ", "-")
-                      ? "bg-blue-50 font-semibold text-blue-600"
-                      : "text-gray-700"
+                      ? "bg-blue-50 font-semibold text-primary"
+                      : "text-gray-500"
                   } ${collapsed ? "justify-center" : ""}`}
                   onClick={() => handleNavClick(item.name)}
                 >

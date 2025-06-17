@@ -13,6 +13,7 @@ import Settings from "../self_profile/Settings";
 import Tasks from "../self_profile/Tasks";
 import Calendar from "../self_profile/Calendar";
 import BookingRequests from "../self_profile/BookingRequests";
+import BookMarks from "../self_profile/BookMarks";
 
 function SelfProfile() {
   const searchParams = useSearchParams();
@@ -25,7 +26,8 @@ function SelfProfile() {
         <Layout>
           {section === "profile" && <ProfileComponent />}
           {section === "my-properties" && <MyProperties />}
-          {section === "book-requests" && <BookingRequests />}
+          {section === "requests" && <BookingRequests />}
+          {section === "book-marks" && <BookMarks />}
           {section === "notifications" && <Notifications />}
           {section === "messages" && <Messages />}
           {section === "analytics" && <Analytics />}

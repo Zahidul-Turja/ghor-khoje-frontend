@@ -31,8 +31,8 @@ function InProgress() {
           We're Building Something Amazing!
         </h3>
         <p className="mt-2 max-w-md text-gray-600">
-          Our messaging feature is currently under development. We're working
-          hard to bring you a seamless communication experience.
+          Our new feature is currently under development. We're working hard to
+          bring you a something amazing.
         </p>
 
         <div className="mt-8 flex flex-col items-center">
@@ -46,11 +46,14 @@ function InProgress() {
           <div className="flex items-center rounded-lg bg-blue-50 p-3 text-blue-600">
             <AlertCircle size={18} className="mr-2" />
             <span className="text-sm font-medium">
-              Expected Launch: June 2025
+              Expected Launch: Auguest, 2025
             </span>
           </div>
 
-          <button className="flex items-center rounded-lg bg-primary/80 px-4 py-2 text-sm font-medium text-white shadow-md transition hover:bg-primary/90">
+          <button
+            disabled
+            className="flex cursor-not-allowed items-center rounded-lg bg-primary/80 px-4 py-2 text-sm font-medium text-white shadow-md transition hover:bg-primary/90 disabled:opacity-70"
+          >
             Get Notified
           </button>
         </div>
@@ -61,7 +64,7 @@ function InProgress() {
           <p className="text-sm text-gray-500">
             Have questions? Contact{" "}
             <span className="font-medium text-indigo-600">
-              support@example.com
+              zahidulturja@gmail.com
             </span>
           </p>
           <button className="rounded-md bg-white px-3 py-1 text-sm text-gray-600 shadow-sm hover:bg-gray-100">

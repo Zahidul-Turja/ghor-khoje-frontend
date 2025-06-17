@@ -13,6 +13,7 @@ const useAuthStore = create(
       isAuthenticated: false,
       isLoading: false,
       otpModalOpen: false,
+      theme: "light",
 
       userInfo: async () => {
         try {
