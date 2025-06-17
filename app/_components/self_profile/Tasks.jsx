@@ -17,7 +17,14 @@ import {
   Filter,
   Search,
 } from "lucide-react";
-import { getTasks, getUserProperties } from "@/app/_lib/apiCalls";
+import {
+  getTasks,
+  getUserProperties,
+  createNewTask,
+  updateTask,
+  toggleCompleteTask,
+  deleteTask,
+} from "@/app/_lib/apiCalls";
 
 const taskCategories = [
   {
@@ -58,63 +65,63 @@ const priorityLevels = [
 ];
 
 // Sample tasks data
-const initialTasks = [
-  {
-    id: 1,
-    title: "Fix leaky faucet in Room A",
-    description: "Guest reported dripping faucet in bathroom",
-    category: "maintenance",
-    priority: "high",
-    dueDate: "2025-06-18",
-    is_complete: false,
-    property: "Luxury Suite Downtown",
-    createdAt: "2025-06-15",
-  },
-  {
-    id: 2,
-    title: "Deep clean Room B after checkout",
-    description: "Standard deep cleaning required between guests",
-    category: "cleaning",
-    priority: "medium",
-    dueDate: "2025-06-17",
-    is_complete: false,
-    property: "Cozy Garden Apartment",
-    createdAt: "2025-06-16",
-  },
-  {
-    id: 3,
-    title: "Respond to guest inquiry about WiFi",
-    description: "Guest asking about WiFi password and connection issues",
-    category: "guest",
-    priority: "high",
-    dueDate: "2025-06-16",
-    is_complete: true,
-    property: "Modern Loft Studio",
-    createdAt: "2025-06-16",
-  },
-  {
-    id: 4,
-    title: "Update listing photos",
-    description: "Take new photos of renovated kitchen",
-    category: "marketing",
-    priority: "low",
-    dueDate: "2025-06-25",
-    is_complete: false,
-    property: "Seaside Villa",
-    createdAt: "2025-06-14",
-  },
-  {
-    id: 5,
-    title: "Process monthly expenses",
-    description: "Review and categorize all property-related expenses",
-    category: "financial",
-    priority: "medium",
-    dueDate: "2025-06-30",
-    is_complete: false,
-    property: "All Properties",
-    createdAt: "2025-06-10",
-  },
-];
+// const initialTasks = [
+//   {
+//     id: 1,
+//     title: "Fix leaky faucet in Room A",
+//     description: "Guest reported dripping faucet in bathroom",
+//     category: "maintenance",
+//     priority: "high",
+//     dueDate: "2025-06-18",
+//     is_complete: false,
+//     property: "Luxury Suite Downtown",
+//     createdAt: "2025-06-15",
+//   },
+//   {
+//     id: 2,
+//     title: "Deep clean Room B after checkout",
+//     description: "Standard deep cleaning required between guests",
+//     category: "cleaning",
+//     priority: "medium",
+//     dueDate: "2025-06-17",
+//     is_complete: false,
+//     property: "Cozy Garden Apartment",
+//     createdAt: "2025-06-16",
+//   },
+//   {
+//     id: 3,
+//     title: "Respond to guest inquiry about WiFi",
+//     description: "Guest asking about WiFi password and connection issues",
+//     category: "guest",
+//     priority: "high",
+//     dueDate: "2025-06-16",
+//     is_complete: true,
+//     property: "Modern Loft Studio",
+//     createdAt: "2025-06-16",
+//   },
+//   {
+//     id: 4,
+//     title: "Update listing photos",
+//     description: "Take new photos of renovated kitchen",
+//     category: "marketing",
+//     priority: "low",
+//     dueDate: "2025-06-25",
+//     is_complete: false,
+//     property: "Seaside Villa",
+//     createdAt: "2025-06-14",
+//   },
+//   {
+//     id: 5,
+//     title: "Process monthly expenses",
+//     description: "Review and categorize all property-related expenses",
+//     category: "financial",
+//     priority: "medium",
+//     dueDate: "2025-06-30",
+//     is_complete: false,
+//     property: "All Properties",
+//     createdAt: "2025-06-10",
+//   },
+// ];
 
 function Tasks() {
   const [tasks, setTasks] = useState([]);
@@ -130,7 +137,7 @@ function Tasks() {
     category: "other",
     priority: "medium",
     dueDate: "",
-    property: "",
+    related_property: "",
   });
 
   useEffect(() => {
@@ -142,36 +149,35 @@ function Tasks() {
     const fetchProperties = async () => {
       const response = await getUserProperties();
       setProperties(response.results);
-      setNewTask({ ...newTask, property: response.results[0].id });
+      setNewTask({ ...newTask, related_property: response.results[0].id });
     };
 
     fetchTasks();
     fetchProperties();
   }, []);
 
-  const handleAddTask = () => {
+  const handleAddTask = async () => {
     if (newTask.title.trim()) {
-      const task = {
-        id: Date.now(),
-        ...newTask,
-        is_complete: false,
-        createdAt: new Date().toISOString().split("T")[0],
-      };
-      console.log("New task:", task);
-      setTasks([task, ...tasks]);
+      newTask.priority =
+        newTask.priority[0].toUpperCase() + newTask.priority.slice(1);
+      const response = await createNewTask(newTask);
+
+      setTasks([...tasks, response.data]);
       setNewTask({
         title: "",
         description: "",
         category: "other",
         priority: "medium",
         dueDate: "",
-        property: "",
+        related_property: "",
       });
       setShowAddForm(false);
     }
   };
 
-  const handleToggleComplete = (taskId) => {
+  const handleToggleComplete = async (taskId) => {
+    const response = await toggleCompleteTask(taskId);
+
     setTasks(
       tasks.map((task) =>
         task.id === taskId ? { ...task, is_complete: !task.is_complete } : task,
@@ -179,7 +185,8 @@ function Tasks() {
     );
   };
 
-  const handleDeleteTask = (taskId) => {
+  const handleDeleteTask = async (taskId) => {
+    const res = await deleteTask(taskId);
     setTasks(tasks.filter((task) => task.id !== taskId));
   };
 
@@ -191,16 +198,18 @@ function Tasks() {
       category: task.category,
       priority: task.priority,
       dueDate: task.dueDate,
-      property: task.property,
+      related_property: task.related_property,
     });
     setShowAddForm(true);
   };
 
-  const handleUpdateTask = () => {
+  const handleUpdateTask = async () => {
     if (newTask.title.trim()) {
+      const response = await updateTask(editingTask.id, newTask);
+
       setTasks(
         tasks.map((task) =>
-          task.id === editingTask.id ? { ...task, ...newTask } : task,
+          task.id === editingTask.id ? { ...task, ...response } : task,
         ),
       );
       setEditingTask(null);
@@ -210,7 +219,7 @@ function Tasks() {
         category: "other",
         priority: "medium",
         dueDate: "",
-        property: "",
+        related_property: "",
       });
       setShowAddForm(false);
     }
@@ -465,7 +474,7 @@ function Tasks() {
                   className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={newTask.priority}
                   onChange={(e) =>
-                    setNewTask({ ...newTask, property: e.target.value })
+                    setNewTask({ ...newTask, related_property: e.target.value })
                   }
                 >
                   {properties.map((property) => (
@@ -494,7 +503,7 @@ function Tasks() {
                     category: "other",
                     priority: "medium",
                     dueDate: "",
-                    property: "",
+                    related_property: "",
                   });
                 }}
                 className="rounded-lg bg-gray-300 px-4 py-2 text-gray-700 transition-colors hover:bg-gray-400"

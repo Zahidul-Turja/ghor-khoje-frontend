@@ -341,3 +341,89 @@ export const getTasks = async () => {
     throw error;
   }
 };
+
+export const createNewTask = async (formData) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/api/v1/user/tasks/create/`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      },
+    );
+    const data = response.data;
+    toast.success("New task created successfully");
+    console.log("New task created:", data);
+    return data;
+  } catch (error) {
+    console.error("Error creating new task:", error);
+    toast.error("Failed to create new task");
+    throw error;
+  }
+};
+
+export const updateTask = async (taskId, formData) => {
+  try {
+    const response = await axios.patch(
+      `${BASE_URL}/api/v1/user/tasks/update/${taskId}/`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      },
+    );
+    const data = response.data;
+    toast.success("Task updated successfully");
+    console.log("Task updated:", data);
+    return data.data;
+  } catch (error) {
+    console.error("Error updating task:", error);
+    toast.error("Failed to update task");
+    throw error;
+  }
+};
+
+export const deleteTask = async (taskId) => {
+  try {
+    const response = await axios.delete(
+      `${BASE_URL}/api/v1/user/tasks/delete/${taskId}/`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      },
+    );
+    const data = response.data;
+    toast.success("Task deleted successfully");
+    console.log("Task deleted:", data);
+    return data;
+  } catch (error) {
+    console.error("Error deleting task:", error);
+    toast.error("Failed to delete task");
+    throw error;
+  }
+};
+
+export const toggleCompleteTask = async (taskId) => {
+  try {
+    const response = await axios.patch(
+      `${BASE_URL}/api/v1/user/tasks/toggle-completed/${taskId}/`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      },
+    );
+    const data = response.data;
+    console.log("Task completed:", data);
+    return data;
+  } catch (error) {
+    console.error("Error toggling task completion:", error);
+    toast.error("Failed to toggle task completion");
+    throw error;
+  }
+};
