@@ -185,14 +185,14 @@ const useAuthStore = create(
         }
       },
 
-      forgetPassword: async (email) => {
+      forgetPassword: async (email, password) => {
         try {
           const response = await fetch(
             `${BASE_ENDPOINT}/api/v1/auth/forget-password/`,
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ email }),
+              body: JSON.stringify({ email, password }),
             },
           );
           const data = await response.json();
