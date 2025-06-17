@@ -5,7 +5,7 @@ import useAuthStore from "@/app/_store/authStore";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
-export default function OTPVerificationModal() {
+export default function OTPVerificationModal({ email }) {
   const [otp, setOtp] = useState(["", "", "", ""]);
   const [isLoading, setIsLoading] = useState(false);
   const [resendCountdown, setResendCountdown] = useState(0);
@@ -109,7 +109,7 @@ export default function OTPVerificationModal() {
     try {
       console.log("Verifying OTP...", user);
       setIsLoading(true);
-      await verifyOtp(user.email, otpValue);
+      await verifyOtp(email, otpValue);
       // toast.success("OTP verified successfully");
       router.push("/auth/login");
       // verifyOtp function should handle success notifications and routing

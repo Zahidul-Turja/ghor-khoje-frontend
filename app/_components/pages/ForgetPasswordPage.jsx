@@ -7,7 +7,7 @@ import useAuthStore from "@/app/_store/authStore";
 
 import { FaChevronLeft } from "react-icons/fa";
 
-function LoginPage() {
+function ForgetPasswordPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -149,4 +149,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default ForgetPasswordPage;

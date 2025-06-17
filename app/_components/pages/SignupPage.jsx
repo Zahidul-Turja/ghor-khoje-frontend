@@ -210,7 +210,7 @@ function SignupPage() {
       </div>
 
       {/* OTP Verification Modal */}
-      <OTPVerificationModal />
+      <OTPVerificationModal email={formData.email} />
     </div>
   );
 }

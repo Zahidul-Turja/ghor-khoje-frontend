@@ -160,6 +160,59 @@ const useAuthStore = create(
         }
       },
 
+      resendOtp: async (email) => {
+        try {
+          const response = await fetch(
+            `${BASE_ENDPOINT}/api/v1/auth/resend-otp/`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email }),
+            },
+          );
+          const data = await response.json();
+          if (response.ok) {
+            toast.success("OTP resent successfully");
+            return true;
+          } else {
+            toast.error(data.message || "Failed to resend OTP");
+            throw new Error(data.message || "Failed to resend OTP");
+          }
+        } catch (error) {
+          toast.error("Failed to resend OTP");
+          console.error("Resend OTP error:", error.message);
+          throw error;
+        }
+      },
+
+      forgetPassword: async (email) => {
+        try {
+          const response = await fetch(
+            `${BASE_ENDPOINT}/api/v1/auth/forget-password/`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email }),
+            },
+          );
+          const data = await response.json();
+          if (response.ok) {
+            toast.success("OTP sent to your email");
+            set({
+              otpModalOpen: true,
+            });
+            return true;
+          } else {
+            toast.error(data.message || "Failed to send OTP");
+            throw new Error(data.message || "Failed to send OTP");
+          }
+        } catch (error) {
+          toast.error("Failed to send OTP");
+          console.error("Send OTP error:", error.message);
+          throw error;
+        }
+      },
+
       // Refresh token function
       refreshAuth: async () => {
         try {
