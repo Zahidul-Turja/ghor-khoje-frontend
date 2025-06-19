@@ -134,7 +134,7 @@ function Tasks() {
   const [newTask, setNewTask] = useState({
     title: "",
     description: "",
-    category: "other",
+    category: "Other",
     priority: "medium",
     dueDate: "",
     related_property: "",
