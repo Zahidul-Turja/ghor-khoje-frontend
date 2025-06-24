@@ -106,7 +106,7 @@ function PropertyPage() {
           )}
         </div>
 
-        <ChatIcon />
+        {place?.owner && <ChatIcon receiver={place?.owner} />}
       </div>
     </>
   );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Clock, AlertCircle, Construction } from "lucide-react";
+import { AlertCircle, Construction } from "lucide-react";
 import { useWebSocket } from "@/app/_lib/hooks";
 import ConversationList from "./ConversationList";
 import ChatWindow from "./ChatWindow";
@@ -55,7 +55,7 @@ function Messages() {
     sendMessage,
     error: wsError,
   } = useWebSocket(
-    "ws://127.0.0.1:8000/ws/chat/", // Adjust URL as needed
+    `${process.env.NEXT_PUBLIC_CHAT_SOCKET_ENDPOINT}/ws/chat/`,
     token && currentUser ? token : null,
   );
 
