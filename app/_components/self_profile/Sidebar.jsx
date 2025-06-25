@@ -6,18 +6,17 @@ import { useEffect, useState } from "react";
 import {
   FaChevronLeft,
   FaChevronRight,
-  FaTachometerAlt,
   FaUser,
   FaCog,
   FaEnvelope,
   FaChartBar,
   FaTasks,
-  FaCalendarAlt,
   FaTimes,
 } from "react-icons/fa";
 import { RiNotification3Fill } from "react-icons/ri";
 import { IoBookmark } from "react-icons/io5";
 import { FaCodePullRequest } from "react-icons/fa6";
+import { MapPinHouse } from "lucide-react";
 
 const CURRENT_URL = "/user/profile";
 
@@ -31,7 +30,7 @@ function Sidebar({ isOpen, onClose }) {
   // Navigation items with their respective icons
   const navItems = [
     { name: "Profile", icon: <FaUser /> },
-    { name: "My Properties", icon: <FaTachometerAlt /> },
+    { name: "My Properties", icon: <MapPinHouse className="h-5 w-5" /> },
     { name: "Requests", icon: <FaCodePullRequest /> },
     { name: "Book Marks", icon: <IoBookmark /> },
     { name: "Notifications", icon: <RiNotification3Fill /> },

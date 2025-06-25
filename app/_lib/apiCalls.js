@@ -427,3 +427,19 @@ export const toggleCompleteTask = async (taskId) => {
     throw error;
   }
 };
+
+export const getBookmarkedPlaces = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/api/v1/user/bookmarks/`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+    });
+    const data = response.data;
+    return data.data;
+  } catch (error) {
+    console.error("Error fetching bookmarked places:", error);
+    toast.error("Failed to fetch bookmarked places");
+    throw error;
+  }
+};
