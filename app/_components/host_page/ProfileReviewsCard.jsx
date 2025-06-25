@@ -1,7 +1,19 @@
-import Link from "next/link";
+import { useState } from "react";
+import { IoClose } from "react-icons/io5";
+import { FaStar, FaRegStar } from "react-icons/fa";
 import { MdFeedback } from "react-icons/md";
 
 function ProfileReviewsCard({ host }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [reviewData, setReviewData] = useState({
+    overall: 0,
+    cleanliness_rating: 0,
+    communication_rating: 0,
+    financial_transparency_rating: 0,
+    maintenance_rating: 0,
+    privacy_rating: 0,
+    review_text: "",
+  });
   // Function to render horizontal progress bar
   const renderProgressBar = (rating) => {
     const percentage = (rating / 5) * 100;
@@ -52,6 +64,61 @@ function ProfileReviewsCard({ host }) {
     },
   ];
 
+  // Review form fields configuration
+  const reviewFields = [
+    { label: "Overall", key: "overall" },
+    { label: "Cleanliness", key: "cleanliness_rating" },
+    { label: "Communication", key: "communication_rating" },
+    { label: "Financial Transparency", key: "financial_transparency_rating" },
+    { label: "Maintenance", key: "maintenance_rating" },
+    { label: "Privacy", key: "privacy_rating" },
+  ];
+
+  const handleRatingChange = (key, rating) => {
+    setReviewData((prev) => ({
+      ...prev,
+      [key]: rating,
+    }));
+  };
+
+  const handleSubmitReview = (e) => {
+    e.preventDefault();
+    // Handle form submission here
+    console.log("Review submitted:", reviewData);
+    setIsModalOpen(false);
+    // Reset form
+    setReviewData({
+      overall: 0,
+      cleanliness_rating: 0,
+      communication_rating: 0,
+      financial_transparency_rating: 0,
+      maintenance_rating: 0,
+      privacy_rating: 0,
+      review_text: "",
+    });
+  };
+
+  const renderRatingInput = (field) => {
+    return (
+      <div className="flex gap-1">
+        {[1, 2, 3, 4, 5].map((rating) => (
+          <button
+            key={rating}
+            type="button"
+            onClick={() => handleRatingChange(field.key, rating)}
+            className="transition-colors hover:scale-110"
+          >
+            {reviewData[field.key] >= rating ? (
+              <FaStar className="text-lg text-yellow-400" />
+            ) : (
+              <FaRegStar className="text-lg text-gray-300 hover:text-yellow-200" />
+            )}
+          </button>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <div>
       <div className="w-full rounded-2xl border border-gray-300 p-4">
@@ -86,10 +153,87 @@ function ProfileReviewsCard({ host }) {
           ))}
         </div>
       </div>
-      <Link href={"/"} className="my-5 flex items-center gap-2">
+      <button
+        onClick={() => setIsModalOpen(true)}
+        className="my-5 flex items-center gap-2 transition-colors hover:text-red-600"
+      >
         <MdFeedback className="text-sm" />
-        <span className="text-xs font-bold underline">Give Feedback</span>
-      </Link>
+        <span className="text-xs font-bold underline">Give a Review</span>
+      </button>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+          <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white">
+            <div className="p-6">
+              {/* Modal Header */}
+              <div className="mb-6 flex items-start justify-between">
+                <h2 className="text-xl font-semibold">
+                  Review {host?.full_name}
+                </h2>
+                <button
+                  onClick={() => setIsModalOpen(false)}
+                  className="text-gray-500 transition-colors hover:text-gray-700"
+                >
+                  <IoClose size={24} />
+                </button>
+              </div>
+
+              {/* Review Form */}
+              <form onSubmit={handleSubmitReview} className="space-y-4">
+                {/* Rating Fields */}
+                {reviewFields.map((field) => (
+                  <div
+                    key={field.key}
+                    className="flex items-center justify-between"
+                  >
+                    <label className="min-w-[140px] text-sm font-medium text-gray-700">
+                      {field.label}
+                    </label>
+                    {renderRatingInput(field)}
+                  </div>
+                ))}
+
+                {/* Review Text */}
+                <div className="space-y-2 pt-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Review
+                  </label>
+                  <textarea
+                    value={reviewData.review_text}
+                    onChange={(e) =>
+                      setReviewData((prev) => ({
+                        ...prev,
+                        review_text: e.target.value,
+                      }))
+                    }
+                    placeholder="Share your experience with this host..."
+                    rows={4}
+                    className="w-full resize-none rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-green-500"
+                  />
+                </div>
+
+                {/* Submit Button */}
+                <div className="flex gap-3 pt-4">
+                  <button
+                    type="button"
+                    onClick={() => setIsModalOpen(false)}
+                    className="flex-1 rounded-lg border border-gray-300 px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="flex-1 rounded-lg bg-green-600 px-4 py-2 text-white transition-colors hover:bg-green-700"
+                  >
+                    Submit Review
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
