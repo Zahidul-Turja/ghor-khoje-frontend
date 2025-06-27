@@ -3,15 +3,18 @@ import { IoClose } from "react-icons/io5";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import { MdFeedback } from "react-icons/md";
 
+import { toast } from "react-hot-toast";
+import { reviewUser } from "@/app/_lib/reviewCalls";
+
 function ProfileReviewsCard({ host }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [reviewData, setReviewData] = useState({
     overall: 0,
-    cleanliness_rating: 0,
-    communication_rating: 0,
-    financial_transparency_rating: 0,
-    maintenance_rating: 0,
-    privacy_rating: 0,
+    cleanliness: 0,
+    communication: 0,
+    financial_transparency: 0,
+    maintenance: 0,
+    privacy: 0,
     review_text: "",
   });
   // Function to render horizontal progress bar
@@ -35,43 +38,43 @@ function ProfileReviewsCard({ host }) {
     {
       label: "Average Rating",
       rating: host?.average_rating || 0,
-      key: "average_rating",
+      key: "average",
     },
     {
       label: "Cleanliness",
       rating: host?.cleanliness_rating || 0,
-      key: "cleanliness_rating",
+      key: "cleanliness",
     },
     {
       label: "Communication",
       rating: host?.communication_rating || 0,
-      key: "communication_rating",
+      key: "communication",
     },
     {
       label: "Financial Transparency",
       rating: host?.financial_transparency_rating || 0,
-      key: "financial_transparency_rating",
+      key: "financial_transparency",
     },
     {
       label: "Maintenance",
       rating: host?.maintenance_rating || 0,
-      key: "maintenance_rating",
+      key: "maintenance",
     },
     {
       label: "Privacy",
       rating: host?.privacy_rating || 0,
-      key: "privacy_rating",
+      key: "privacy",
     },
   ];
 
   // Review form fields configuration
   const reviewFields = [
     { label: "Overall", key: "overall" },
-    { label: "Cleanliness", key: "cleanliness_rating" },
-    { label: "Communication", key: "communication_rating" },
-    { label: "Financial Transparency", key: "financial_transparency_rating" },
-    { label: "Maintenance", key: "maintenance_rating" },
-    { label: "Privacy", key: "privacy_rating" },
+    { label: "Cleanliness", key: "cleanliness" },
+    { label: "Communication", key: "communication" },
+    { label: "Financial Transparency", key: "financial_transparency" },
+    { label: "Maintenance", key: "maintenance" },
+    { label: "Privacy", key: "privacy" },
   ];
 
   const handleRatingChange = (key, rating) => {
@@ -81,19 +84,22 @@ function ProfileReviewsCard({ host }) {
     }));
   };
 
-  const handleSubmitReview = (e) => {
+  const handleSubmitReview = async (e) => {
     e.preventDefault();
+
+    const res = await reviewUser(host?.id, reviewData);
+
     // Handle form submission here
     console.log("Review submitted:", reviewData);
     setIsModalOpen(false);
     // Reset form
     setReviewData({
       overall: 0,
-      cleanliness_rating: 0,
-      communication_rating: 0,
-      financial_transparency_rating: 0,
-      maintenance_rating: 0,
-      privacy_rating: 0,
+      cleanliness: 0,
+      communication: 0,
+      financial_transparency: 0,
+      maintenance: 0,
+      privacy: 0,
       review_text: "",
     });
   };
