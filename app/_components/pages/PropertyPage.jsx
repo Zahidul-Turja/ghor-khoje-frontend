@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { FaRegHeart } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 import ImageGellary from "@/app/_components/property_details/ImageGellary";
 import PropertyDetails from "@/app/_components/property_details/PropertyDetails";
@@ -17,8 +17,12 @@ import ImagesModal from "../property_details/ImagesModal";
 import BookingModal from "../property_details/BookingModal";
 
 import { reviewPlace } from "@/app/_lib/reviewCalls";
+import { toggleBookMark, idsOfBookmarkedPlaces } from "@/app/_lib/apiCalls";
+import { IoBookmarkOutline } from "react-icons/io5";
 
 function PropertyPage() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [openBookingModal, setOpenBookingModal] = useState(false);
   let path = usePathname();
@@ -27,8 +31,24 @@ function PropertyPage() {
   const { getPlace, place } = usePlacesStore();
 
   useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      setIsLoggedIn(true);
+    }
     getPlace(path);
   }, [path]);
+
+  useEffect(() => {
+    async function checkSaved() {
+      if (!isLoggedIn) return;
+      console.log("hit");
+      const res = await idsOfBookmarkedPlaces();
+      if (res.includes(place?.id)) {
+        setIsSaved(true);
+      }
+    }
+    checkSaved();
+  }, [isLoggedIn, place?.id]);
 
   const handleSubmitReview = async (reviewData) => {
     try {
@@ -36,6 +56,20 @@ function PropertyPage() {
       await getPlace(path);
     } catch (error) {
       console.error("Error submitting review:", error);
+    }
+  };
+
+  const handleToggleBookmark = async () => {
+    try {
+      if (!isLoggedIn) {
+        toast.error("Please login to save property");
+        return;
+      }
+      const message = isSaved ? "Place unsaved" : "Placed saved";
+      await toggleBookMark(place?.slug, message);
+      setIsSaved((prev) => !prev);
+    } catch (error) {
+      console.error("Error toggling bookmark:", error);
     }
   };
 
@@ -51,10 +85,13 @@ function PropertyPage() {
       <div className="mx-auto my-4 max-w-screen-2xl px-4 sm:px-6 lg:px-8">
         <div className="my-2 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <h1 className="text-2xl font-bold sm:text-3xl">{place?.title}</h1>
-          <div className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition-all duration-300 hover:bg-gray-300 sm:px-2 sm:py-1">
-            <FaRegHeart className="" />
+          <button
+            onClick={handleToggleBookmark}
+            className={`flex cursor-pointer items-center gap-1 px-3 py-2 text-sm font-semibold hover:border-b-2 hover:border-primary hover:text-primary sm:px-2 sm:py-1 ${isSaved ? "border-b-2 border-primary text-primary" : ""}`}
+          >
+            <IoBookmarkOutline className="text-lg" />
             <span>Save</span>
-          </div>
+          </button>
         </div>
 
         {place && (

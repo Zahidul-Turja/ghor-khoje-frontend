@@ -443,3 +443,44 @@ export const getBookmarkedPlaces = async () => {
     throw error;
   }
 };
+
+export const toggleBookMark = async (slug, message) => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/api/v1/places/toggle-bookmark/${slug}/`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      },
+    );
+    const data = response.data;
+
+    toast.success(message);
+    return data;
+  } catch (error) {
+    console.error("Error toggling bookmark:", error);
+    toast.error("Failed to toggle bookmark");
+    throw error;
+  }
+};
+
+export const idsOfBookmarkedPlaces = async () => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/api/v1/user/ids-bookmarked-places/`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      },
+    );
+    const data = response.data;
+    console.log("Bookmarked place IDs:", data.data);
+    return data.data;
+  } catch (error) {
+    console.error("Error fetching bookmarked place IDs:", error);
+    toast.error("Failed to fetch bookmarked place IDs");
+    throw error;
+  }
+};
