@@ -16,6 +16,8 @@ import usePlacesStore from "@/app/_store/placesStore";
 import ImagesModal from "../property_details/ImagesModal";
 import BookingModal from "../property_details/BookingModal";
 
+import { reviewPlace } from "@/app/_lib/reviewCalls";
+
 function PropertyPage() {
   const [openModal, setOpenModal] = useState(false);
   const [openBookingModal, setOpenBookingModal] = useState(false);
@@ -26,7 +28,17 @@ function PropertyPage() {
 
   useEffect(() => {
     getPlace(path);
-  }, []);
+  }, [path]);
+
+  const handleSubmitReview = async (reviewData) => {
+    try {
+      await reviewPlace(place?.slug, reviewData);
+      await getPlace(path);
+    } catch (error) {
+      console.error("Error submitting review:", error);
+      // Handle error (show toast, etc.)
+    }
+  };
 
   return (
     <>
@@ -101,7 +113,11 @@ function PropertyPage() {
           <h2 className="text-xl font-semibold sm:text-2xl">Reviews</h2>
           {place && (
             <div className="my-4 overflow-hidden rounded-lg">
-              {place && <Reviews reviews={place?.owner?.reviews} />}
+              <Reviews
+                reviews={place?.reviews}
+                avgRatings={place?.avg_ratings}
+                onSubmitReview={handleSubmitReview}
+              />
             </div>
           )}
         </div>

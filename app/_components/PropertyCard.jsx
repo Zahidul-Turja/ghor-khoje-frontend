@@ -11,6 +11,7 @@ function PropertyCard({ property }) {
     title,
     address,
     owner,
+    avg_ratings,
     description,
     rent_per_month,
     type,
@@ -51,10 +52,10 @@ function PropertyCard({ property }) {
             <h3 className="line-clamp-2 leading-tight">{title}</h3>
           </Link>
 
-          {owner?.rating && (
+          {avg_ratings?.overall > 0 && (
             <div className="flex shrink-0 items-center gap-1 text-xs font-semibold text-gray-700 sm:text-sm">
               <FaStar className="h-3 w-3 text-yellow-400 sm:h-4 sm:w-4" />
-              <span>{owner.rating}</span>
+              <span>{avg_ratings.overall}</span>
             </div>
           )}
         </div>
