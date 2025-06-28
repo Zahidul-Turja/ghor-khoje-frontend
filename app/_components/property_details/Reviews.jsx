@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { CgProfile } from "react-icons/cg";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import { IoClose, IoAdd } from "react-icons/io5";
 import { HiSparkles } from "react-icons/hi2";
+import toast from "react-hot-toast";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_ENDPOINT;
 
 function Reviews({ reviews, avgRatings, onSubmitReview }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState(null);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    setLoggedInUser(user);
+  }, []);
 
   return (
     <div className="flex flex-col gap-8">
@@ -69,7 +76,13 @@ function Reviews({ reviews, avgRatings, onSubmitReview }) {
       {/* Add Review Button */}
       <div className="flex justify-end">
         <button
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => {
+            if (!loggedInUser) {
+              toast.error("You must be logged in to give a review.");
+              return;
+            }
+            setIsModalOpen(true);
+          }}
           className="group relative overflow-hidden rounded-full bg-gradient-to-r from-primary/70 to-primary/90 px-8 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:shadow-xl"
         >
           <div className="absolute inset-0 bg-gradient-to-r from-primary/70 to-primary/90 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>

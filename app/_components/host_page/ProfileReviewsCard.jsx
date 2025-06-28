@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import { MdFeedback } from "react-icons/md";
@@ -7,6 +7,7 @@ import { toast } from "react-hot-toast";
 import { reviewUser } from "@/app/_lib/reviewCalls";
 
 function ProfileReviewsCard({ host }) {
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [reviewData, setReviewData] = useState({
     overall: 0,
@@ -16,6 +17,13 @@ function ProfileReviewsCard({ host }) {
     maintenance: 0,
     privacy: 0,
     review_text: "",
+  });
+
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      setUserLoggedIn(true);
+    }
   });
   // Function to render horizontal progress bar
   const renderProgressBar = (rating) => {
@@ -160,7 +168,12 @@ function ProfileReviewsCard({ host }) {
         </div>
       </div>
       <button
-        onClick={() => setIsModalOpen(true)}
+        onClick={() => {
+          if (!userLoggedIn) {
+            return toast.error("You must be logged in to give a review.");
+          }
+          setIsModalOpen(true);
+        }}
         className="my-5 flex items-center gap-2 transition-colors hover:text-red-600"
       >
         <MdFeedback className="text-sm" />

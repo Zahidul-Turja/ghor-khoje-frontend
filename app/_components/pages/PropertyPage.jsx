@@ -36,7 +36,6 @@ function PropertyPage() {
       await getPlace(path);
     } catch (error) {
       console.error("Error submitting review:", error);
-      // Handle error (show toast, etc.)
     }
   };
 
