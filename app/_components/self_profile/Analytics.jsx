@@ -37,32 +37,23 @@ import {
   Award,
 } from "lucide-react";
 
-// Enhanced dummy data
-const bookingsData = [
-  { month: "Jan", bookings: 12, revenue: 5400, avgPrice: 450 },
-  { month: "Feb", bookings: 18, revenue: 7200, avgPrice: 400 },
-  { month: "Mar", bookings: 9, revenue: 3600, avgPrice: 400 },
-  { month: "Apr", bookings: 20, revenue: 8200, avgPrice: 410 },
-  { month: "May", bookings: 15, revenue: 6000, avgPrice: 400 },
-  { month: "Jun", bookings: 25, revenue: 10500, avgPrice: 420 },
-];
+import { analytics } from "@/app/_lib/apiCalls";
+import { useEffect, useState } from "react";
 
-const occupancyData = [
-  { month: "Jan", occupancyRate: 65, bookings: 12 },
-  { month: "Feb", occupancyRate: 78, bookings: 18 },
-  { month: "Mar", occupancyRate: 45, bookings: 9 },
-  { month: "Apr", occupancyRate: 85, bookings: 20 },
-  { month: "May", occupancyRate: 72, bookings: 15 },
-  { month: "Jun", occupancyRate: 92, bookings: 25 },
-];
-
-const topListingsData = [
-  { name: "Luxury Suite Downtown", bookings: 25, revenue: 8750, rating: 4.8 },
-  { name: "Cozy Garden Apartment", bookings: 18, revenue: 5400, rating: 4.6 },
-  { name: "Modern Loft Studio", bookings: 12, revenue: 4200, rating: 4.4 },
-  { name: "Seaside Villa", bookings: 8, revenue: 4800, rating: 4.9 },
-  { name: "Urban Penthouse", bookings: 6, revenue: 3600, rating: 4.3 },
-];
+// const topListingsData = [
+//   { name: "Luxury Suite Downtown", revenue: 8750 },
+//   { name: "Cozy Garden Apartment", revenue: 5400 },
+//   { name: "Modern Loft Studio", revenue: 4200 },
+//   { name: "Seaside Villa", revenue: 4800 },
+//   { name: "Urban Penthouse", revenue: 3600 },
+// ];
+// const topListingsData = [
+//   { name: "Luxury Suite Downtown", bookings: 25, revenue: 8750, rating: 4.8 },
+//   { name: "Cozy Garden Apartment", bookings: 18, revenue: 5400, rating: 4.6 },
+//   { name: "Modern Loft Studio", bookings: 12, revenue: 4200, rating: 4.4 },
+//   { name: "Seaside Villa", bookings: 8, revenue: 4800, rating: 4.9 },
+//   { name: "Urban Penthouse", bookings: 6, revenue: 3600, rating: 4.3 },
+// ];
 
 const bookingSourceData = [
   { name: "Direct Booking", value: 35, color: "#4f46e5" },
@@ -87,21 +78,14 @@ const seasonalTrendsData = [
   { month: "Jun", avgStay: 2.6, revenue: 10500, guests: 58 },
 ];
 
-const performanceMetrics = [
-  { metric: "Response Rate", value: 95, target: 90, color: "#10b981" },
-  { metric: "Check-in Rating", value: 4.7, target: 4.5, color: "#3b82f6" },
-  { metric: "Cleanliness", value: 4.8, target: 4.5, color: "#f59e0b" },
-  { metric: "Communication", value: 4.6, target: 4.3, color: "#8b5cf6" },
-];
-
-const priceOptimizationData = [
-  { price: 200, bookings: 15, revenue: 3000 },
-  { price: 250, bookings: 22, revenue: 5500 },
-  { price: 300, bookings: 18, revenue: 5400 },
-  { price: 350, bookings: 12, revenue: 4200 },
-  { price: 400, bookings: 8, revenue: 3200 },
-  { price: 450, bookings: 5, revenue: 2250 },
-];
+// const priceOptimizationData = [
+//   { price: 200, revenue: 3000 },
+//   { price: 250, revenue: 5500 },
+//   { price: 300, revenue: 5400 },
+//   { price: 350, revenue: 4200 },
+//   { price: 400, revenue: 3200 },
+//   { price: 450, revenue: 2250 },
+// ];
 
 const cancellationData = [
   { month: "Jan", cancellations: 2, bookings: 12, rate: 16.7 },
@@ -113,6 +97,28 @@ const cancellationData = [
 ];
 
 function Analytics() {
+  const [stats, setStats] = useState([]);
+  const [bookingsData, setBookingsData] = useState([]);
+  const [occupancyData, setOccupancyData] = useState([]);
+  const [performanceMetrics, setPerformanceMetrics] = useState([]);
+  const [topListingsData, setTopListingsData] = useState([]);
+  const [priceOptimizationData, setPriceOptimizationData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const analyticsData = await analytics();
+      console.log("Analytics Data:", analyticsData);
+      setStats(analyticsData.stats || []);
+      setBookingsData(analyticsData.revenue_booking_trend || []);
+      setOccupancyData(analyticsData.occupancy_trend || []);
+      setPerformanceMetrics(analyticsData.performance_metrics || []);
+      setTopListingsData(analyticsData.top_listings || []);
+      setPriceOptimizationData(analyticsData.price_optimization || []);
+    };
+
+    fetchData();
+  }, []);
+
   const StatCard = ({ title, value, change, icon: Icon, color = "blue" }) => {
     const colorClasses = {
       blue: "bg-blue-500",
@@ -168,34 +174,17 @@ function Analytics() {
 
         {/* Key Metrics Cards */}
         <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-          <StatCard
-            title="Total Revenue"
-            value="$42,900"
-            change={15.3}
-            icon={DollarSign}
-            color="green"
-          />
-          <StatCard
-            title="Total Bookings"
-            value="109"
-            change={8.2}
-            icon={Calendar}
-            color="blue"
-          />
-          <StatCard
-            title="Avg Rating"
-            value="4.7"
-            change={2.1}
-            icon={Star}
-            color="orange"
-          />
-          <StatCard
-            title="Occupancy Rate"
-            value="73%"
-            change={-1.2}
-            icon={Users}
-            color="purple"
-          />
+          {stats &&
+            stats.map((stat, index) => (
+              <StatCard
+                key={index}
+                title={stat.title || "Total Revenue"}
+                value={stat.value || "৳42,900"}
+                change={stat.change || 15.3}
+                icon={DollarSign}
+                color={stat.color || "green"}
+              />
+            ))}
         </div>
 
         <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
@@ -233,7 +222,7 @@ function Analytics() {
                   dataKey="revenue"
                   stroke="#10b981"
                   strokeWidth={3}
-                  name="Revenue ($)"
+                  name="Revenue (৳)"
                 />
               </ComposedChart>
             </ResponsiveContainer>
@@ -284,9 +273,8 @@ function Analytics() {
           </div>
         </div>
 
-        <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
-          {/* Booking Sources */}
-          <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg">
+        <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
+          {/* <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg">
             <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold">
               <MapPin className="text-green-500" size={20} />
               Booking Sources
@@ -310,10 +298,9 @@ function Analytics() {
                 <Legend />
               </PieChart>
             </ResponsiveContainer>
-          </div>
+          </div> */}
 
-          {/* Guest Types */}
-          <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg">
+          {/* <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg">
             <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold">
               <Users className="text-blue-500" size={20} />
               Guest Types
@@ -336,6 +323,40 @@ function Analytics() {
                 <Tooltip formatter={(value) => [`${value}%`, "Share"]} />
                 <Legend />
               </PieChart>
+            </ResponsiveContainer>
+          </div> */}
+          <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg">
+            <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold">
+              <DollarSign className="text-green-500" size={20} />
+              Price vs Revenue Analysis
+            </h2>
+            <ResponsiveContainer width="100%" height={300}>
+              <ScatterChart data={priceOptimizationData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                <XAxis dataKey="price" name="Price" unit="৳" />
+                <YAxis dataKey="revenue" name="Bookings" />
+                <ZAxis
+                  dataKey="revenue"
+                  range={[50, 400]}
+                  name="Revenue"
+                  unit="৳"
+                />
+                <Tooltip
+                  cursor={{ strokeDasharray: "3 3" }}
+                  contentStyle={{
+                    backgroundColor: "white",
+                    border: "1px solid #e2e8f0",
+                    borderRadius: "8px",
+                    boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+                  }}
+                  formatter={(value, name) => {
+                    if (name === "revenue") return [`৳${value}`, "Revenue"];
+                    // if (name === "bookings") return [value, "Bookings"];
+                    return [value, name];
+                  }}
+                />
+                <Scatter dataKey="price" fill="#10b981" />
+              </ScatterChart>
             </ResponsiveContainer>
           </div>
 
@@ -372,7 +393,6 @@ function Analytics() {
           </div>
         </div>
 
-        {/* Top Performing Listings */}
         <div className="mb-8 rounded-xl border border-gray-100 bg-white p-6 shadow-lg">
           <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold">
             <Star className="text-yellow-500" size={20} />
@@ -381,7 +401,7 @@ function Analytics() {
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={topListingsData} layout="vertical">
               <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-              <XAxis type="number" />
+              <XAxis type="number" unit={"৳"} />
               <YAxis type="category" dataKey="name" width={150} />
               <Tooltip
                 contentStyle={{
@@ -391,23 +411,28 @@ function Analytics() {
                   boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
                 }}
               />
-              <Bar dataKey="bookings" fill="#f59e0b" radius={[0, 4, 4, 0]} />
+              <Bar
+                dataKey="revenue"
+                fill="#f59e0b"
+                radius={[0, 4, 4, 0]}
+                unit={"৳"}
+              />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
         <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
           {/* Price Optimization */}
-          <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg">
+          {/* <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg">
             <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold">
               <DollarSign className="text-green-500" size={20} />
-              Price vs Bookings Analysis
+              Price vs Revenue Analysis
             </h2>
             <ResponsiveContainer width="100%" height={300}>
               <ScatterChart data={priceOptimizationData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
                 <XAxis dataKey="price" name="Price" unit="$" />
-                <YAxis dataKey="bookings" name="Bookings" />
+                <YAxis dataKey="revenue" name="Bookings" />
                 <ZAxis
                   dataKey="revenue"
                   range={[50, 400]}
@@ -424,17 +449,17 @@ function Analytics() {
                   }}
                   formatter={(value, name) => {
                     if (name === "revenue") return [`$${value}`, "Revenue"];
-                    if (name === "bookings") return [value, "Bookings"];
+                    // if (name === "bookings") return [value, "Bookings"];
                     return [value, name];
                   }}
                 />
-                <Scatter dataKey="bookings" fill="#10b981" />
+                <Scatter dataKey="price" fill="#10b981" />
               </ScatterChart>
             </ResponsiveContainer>
-          </div>
+          </div> */}
 
           {/* Seasonal Trends */}
-          <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg">
+          {/* <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg">
             <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold">
               <Clock className="text-indigo-500" size={20} />
               Average Stay Duration
@@ -463,11 +488,11 @@ function Analytics() {
                 />
               </LineChart>
             </ResponsiveContainer>
-          </div>
+          </div> */}
         </div>
 
         {/* Cancellation Analysis */}
-        <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg">
+        {/* <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg">
           <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold">
             <Eye className="text-red-500" size={20} />
             Cancellation Analysis
@@ -504,7 +529,7 @@ function Analytics() {
               />
             </ComposedChart>
           </ResponsiveContainer>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -484,3 +484,20 @@ export const idsOfBookmarkedPlaces = async () => {
     throw error;
   }
 };
+
+export const analytics = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/api/v1/user/analytics/`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+    });
+    const data = response.data;
+    console.log("Analytics response:", data);
+    return data.data;
+  } catch (error) {
+    console.error("Error fetching analytics:", error);
+    toast.error("Failed to fetch analytics");
+    throw error;
+  }
+};
