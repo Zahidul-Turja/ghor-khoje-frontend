@@ -13,7 +13,12 @@ const useAuthStore = create(
       isAuthenticated: false,
       isLoading: false,
       otpModalOpen: false,
-      theme: "light",
+      theme: window.localStorage.getItem("theme") || "light",
+
+      setTheme: (theme) => {
+        set({ theme });
+        window.localStorage.setItem("theme", theme);
+      },
 
       userInfo: async () => {
         try {

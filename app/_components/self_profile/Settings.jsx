@@ -33,9 +33,10 @@ function Settings() {
     JSON.parse(localStorage.getItem("user")) || {},
   );
 
-  const { changePassword, deactivateAccount } = useAuthStore();
+  const { changePassword, deactivateAccount, setTheme } = useAuthStore();
+  const theme = useAuthStore((state) => state.theme);
 
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(theme === "dark");
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -105,6 +106,7 @@ function Settings() {
   };
 
   const toggleDarkMode = () => {
+    setTheme(darkMode ? "light" : "dark");
     setDarkMode(!darkMode);
     // In a real app, you'd also update the global theme here
   };
@@ -172,7 +174,7 @@ function Settings() {
               <button
                 onClick={toggleDarkMode}
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 ${
-                  darkMode ? "bg-indigo-600" : "bg-gray-200"
+                  darkMode ? "bg-primary/90" : "bg-gray-200"
                 }`}
               >
                 <span
@@ -251,7 +253,7 @@ function Settings() {
                 <button
                   onClick={() => handleChatSettingChange("openToChat")}
                   className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 ${
-                    chatSettings.openToChat ? "bg-primary/70" : "bg-gray-200"
+                    chatSettings.openToChat ? "bg-primary" : "bg-gray-200"
                   }`}
                 >
                   <span
@@ -275,9 +277,7 @@ function Settings() {
                 <button
                   onClick={() => handleChatSettingChange("showOnlineStatus")}
                   className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 ${
-                    chatSettings.showOnlineStatus
-                      ? "bg-primary/70"
-                      : "bg-gray-200"
+                    chatSettings.showOnlineStatus ? "bg-primary" : "bg-gray-200"
                   }`}
                 >
                   <span
@@ -302,7 +302,7 @@ function Settings() {
                   onClick={() => handleChatSettingChange("allowDirectMessages")}
                   className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 ${
                     chatSettings.allowDirectMessages
-                      ? "bg-primary/70"
+                      ? "bg-primary"
                       : "bg-gray-200"
                   }`}
                 >
