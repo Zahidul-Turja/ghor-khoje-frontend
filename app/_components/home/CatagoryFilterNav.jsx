@@ -60,7 +60,7 @@ function CategoryFilterNav({ pageSize, page }) {
     <div className="relative mx-auto w-full max-w-screen-xl px-6">
       <button
         onClick={() => handleScroll("left")}
-        className="absolute left-0 top-1/2 z-10 block -translate-y-1/2 transform rounded-full bg-white p-2 shadow-md hover:bg-gray-100"
+        className="absolute left-0 top-1/2 z-10 block -translate-y-1/2 transform rounded-full bg-white p-2 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
       >
         <FaChevronLeft />
       </button>
@@ -73,7 +73,7 @@ function CategoryFilterNav({ pageSize, page }) {
           {categories.map((category) => (
             <div
               key={category.id}
-              className={`flex min-w-fit cursor-pointer flex-col items-center gap-2 rounded-xl px-2 py-3 transition-all hover:bg-gray-100 ${activeCategory === category.id ? "border-b-2 border-black font-medium" : ""}`}
+              className={`flex min-w-fit cursor-pointer flex-col items-center gap-2 rounded-xl px-2 py-3 transition-all hover:bg-gray-100 dark:hover:bg-gray-900 ${activeCategory === category.id ? "border-b-2 border-black font-medium" : ""}`}
               onClick={() => setActiveCategory(category.slug)}
             >
               <div className="relative flex h-6 w-6 items-center justify-center">
@@ -93,7 +93,7 @@ function CategoryFilterNav({ pageSize, page }) {
 
       <button
         onClick={() => handleScroll("right")}
-        className="absolute right-0 top-1/2 z-10 -translate-y-1/2 transform rounded-full bg-white p-2 shadow-md hover:bg-gray-100"
+        className="absolute right-0 top-1/2 z-10 block -translate-y-1/2 transform rounded-full bg-white p-2 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
       >
         <FaChevronRight />
       </button>

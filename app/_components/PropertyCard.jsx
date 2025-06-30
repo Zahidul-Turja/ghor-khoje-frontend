@@ -18,7 +18,7 @@ function PropertyCard({ property }) {
   } = property;
 
   return (
-    <div className="group overflow-hidden rounded-xl bg-white shadow-sm transition-all duration-300 hover:shadow-lg">
+    <div className="group overflow-hidden rounded-xl bg-white shadow-sm transition-all duration-300 hover:shadow-lg dark:bg-gray-800 dark:shadow-gray-700">
       {/* Property Image */}
       <Link
         href={`/${slug}`}
@@ -47,14 +47,14 @@ function PropertyCard({ property }) {
         <div className="mb-2 flex items-start justify-between gap-2">
           <Link
             href={`/${slug}`}
-            className="flex-1 text-sm font-semibold text-gray-900 hover:text-primary sm:text-base"
+            className="flex-1 text-sm font-semibold text-gray-900 hover:text-primary sm:text-base dark:text-gray-200 dark:hover:text-gray-200"
           >
             <h3 className="line-clamp-2 leading-tight">{title}</h3>
           </Link>
 
           {avg_ratings?.overall > 0 && (
-            <div className="flex shrink-0 items-center gap-1 text-xs font-semibold text-gray-700 sm:text-sm">
-              <FaStar className="h-3 w-3 text-yellow-400 sm:h-4 sm:w-4" />
+            <div className="flex shrink-0 items-center gap-1 text-xs font-semibold text-gray-700 sm:text-sm dark:text-gray-300">
+              <FaStar className="h-3 w-3 text-yellow-400 sm:h-4 sm:w-4 dark:text-yellow-500" />
               <span>{avg_ratings.overall}</span>
             </div>
           )}
@@ -62,7 +62,7 @@ function PropertyCard({ property }) {
 
         {/* Owner Information */}
         {owner?.full_name && (
-          <p className="mb-3 text-xs text-gray-600 sm:text-sm">
+          <p className="mb-3 text-xs text-gray-600 sm:text-sm dark:text-gray-400">
             <span className="font-light">Owned by </span>
             <span className="font-medium">{owner.full_name}</span>
           </p>
@@ -70,17 +70,17 @@ function PropertyCard({ property }) {
 
         {/* Address */}
         {address && (
-          <p className="mb-3 line-clamp-1 text-xs text-gray-500 sm:text-sm">
+          <p className="mb-3 line-clamp-1 text-xs text-gray-500 sm:text-sm dark:text-gray-400">
             {address}
           </p>
         )}
 
         {/* Price */}
         <div className="flex items-baseline gap-1">
-          <span className="text-base font-bold text-gray-900 sm:text-lg">
+          <span className="text-base font-bold text-gray-900 sm:text-lg dark:text-gray-200">
             &#2547;{rent_per_month?.toLocaleString()}
           </span>
-          <span className="text-xs font-light text-gray-600 sm:text-sm">
+          <span className="text-xs font-light text-gray-600 sm:text-sm dark:text-gray-400">
             /month
           </span>
         </div>

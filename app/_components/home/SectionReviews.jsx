@@ -68,14 +68,14 @@ function SectionReviews() {
   };
 
   return (
-    <section className="mx-auto overflow-hidden bg-gradient-to-br from-gray-50 to-white px-3 py-24 pt-16 md:px-6 md:pt-32 lg:px-8">
+    <section className="mx-auto overflow-hidden bg-gradient-to-br from-gray-50 to-white px-3 py-24 pt-16 md:px-6 md:pt-32 lg:px-8 dark:border-t dark:bg-gray-900 dark:from-gray-900 dark:to-gray-900">
       <div className="mx-auto">
         {/* Section Header */}
         <div className="mb-12 text-center">
-          <h2 className="text-2xl font-bold uppercase tracking-wide text-gray-800 md:text-3xl lg:text-4xl">
+          <h2 className="text-2xl font-bold uppercase tracking-wide text-gray-800 md:text-3xl lg:text-4xl dark:text-gray-200">
             <span className="font-extralight">What Our</span> Customers Say
           </h2>
-          <p className="mx-auto mt-4 text-gray-600 md:w-[80vw] md:text-lg lg:w-[60vw]">
+          <p className="mx-auto mt-4 text-gray-600 md:w-[80vw] md:text-lg lg:w-[60vw] dark:text-gray-300">
             Discover what our customers truly think about us. These are honest,
             unfiltered reviews from real people who've experienced our service
             firsthand. Their feedback not only reflects the quality we strive
@@ -86,16 +86,16 @@ function SectionReviews() {
         {/* Loading State */}
         {loading && (
           <div className="flex items-center justify-center py-16">
-            <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-gray-800"></div>
+            <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-gray-800 dark:border-gray-200"></div>
           </div>
         )}
 
         {/* No Reviews State */}
         {!loading && transformedReviews.length === 0 && (
           <div className="py-16 text-center">
-            <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-gray-100">
+            <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
               <svg
-                className="h-12 w-12 text-gray-400"
+                className="h-12 w-12 text-gray-400 dark:text-gray-500"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -108,10 +108,10 @@ function SectionReviews() {
                 />
               </svg>
             </div>
-            <h3 className="mb-2 text-xl font-semibold text-gray-800">
+            <h3 className="mb-2 text-xl font-semibold text-gray-800 dark:text-gray-200">
               No Reviews Yet
             </h3>
-            <p className="mx-auto max-w-md text-gray-600">
+            <p className="mx-auto max-w-md text-gray-600 dark:text-gray-300">
               Be the first to share your experience! We'd love to hear your
               feedback and help others make informed decisions.
             </p>
@@ -128,8 +128,8 @@ function SectionReviews() {
             />
 
             {/* Enhanced gradient fade edges */}
-            <div className="pointer-events-none absolute left-0 top-0 z-10 hidden h-full w-32 bg-gradient-to-r from-gray-50 via-gray-50/80 to-transparent md:block" />
-            <div className="pointer-events-none absolute right-0 top-0 z-10 hidden h-full w-32 bg-gradient-to-l from-gray-50 via-gray-50/80 to-transparent md:block" />
+            <div className="pointer-events-none absolute left-0 top-0 z-10 hidden h-full w-32 bg-gradient-to-r from-gray-50 via-gray-50/80 to-transparent md:block dark:bg-gradient-to-r dark:from-gray-900 dark:via-gray-900/80 dark:to-transparent" />
+            <div className="pointer-events-none absolute right-0 top-0 z-10 hidden h-full w-32 bg-gradient-to-l from-gray-50 via-gray-50/80 to-transparent md:block dark:bg-gradient-to-l dark:from-gray-900 dark:via-gray-900/80 dark:to-transparent" />
           </div>
         )}
       </div>
@@ -157,7 +157,7 @@ function SwiperSlider({ scrollingReviews, renderStars, truncateComment }) {
       {scrollingReviews.map((review, index) => (
         <SwiperSlide
           key={`${review.id}-${index}`}
-          className="my-10 flex min-w-[350px] max-w-[350px] flex-col rounded-2xl bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl md:min-w-[400px] md:max-w-[400px]"
+          className="my-10 flex min-w-[350px] max-w-[350px] flex-col rounded-2xl bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl md:min-w-[400px] md:max-w-[400px] dark:bg-gray-800 dark:text-gray-200"
         >
           {/* Header with avatar and info */}
           <div className="mb-4 flex items-center gap-4">
@@ -174,12 +174,12 @@ function SwiperSlider({ scrollingReviews, renderStars, truncateComment }) {
               />
             </div>
             <div className="flex-1">
-              <h4 className="font-semibold text-gray-900">
+              <h4 className="font-semibold text-gray-900 dark:text-gray-200">
                 {review.reviewer.name}
               </h4>
               <div className="mt-1 flex items-center gap-2">
                 <div className="flex gap-1">{renderStars(review.rating)}</div>
-                <span className="text-sm font-medium text-gray-700">
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                   {review.rating}/5
                 </span>
               </div>
@@ -188,14 +188,14 @@ function SwiperSlider({ scrollingReviews, renderStars, truncateComment }) {
 
           {/* Review Comment */}
           <div className="flex-1">
-            <p className="text-sm leading-relaxed text-gray-700 md:text-base">
+            <p className="text-sm leading-relaxed text-gray-700 md:text-base dark:text-gray-300">
               "{truncateComment(review.comment)}"
             </p>
           </div>
 
           {/* Date */}
-          <div className="mt-4 border-t border-gray-100 pt-4">
-            <time className="text-sm text-gray-500">
+          <div className="mt-4 border-t border-gray-100 pt-4 dark:border-gray-700">
+            <time className="text-sm text-gray-500 dark:text-gray-400">
               {new Date(review.date).toLocaleDateString("en-US", {
                 year: "numeric",
                 month: "long",

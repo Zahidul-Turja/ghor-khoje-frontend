@@ -11,8 +11,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ApplyForHostModal from "./ApplyForHostModal";
 
-import SvgIcon from "./SvgIcon";
-
 function NavMain({ classes }) {
   const [hasApplied, setHasApplied] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -64,11 +62,6 @@ function NavMain({ classes }) {
           href={"/"}
           className="text-lg font-extrabold uppercase tracking-widest text-primary md:text-xl"
         >
-          {/* Ghor Khojee */}
-          {/* <SvgIcon
-            styles="mr-2 inline-block h-6 w-6 text-primary"
-            className="text-primary"
-          /> */}
           Ghor Khojee
         </Link>
 
@@ -76,7 +69,7 @@ function NavMain({ classes }) {
         <div className="hidden items-center gap-6 md:flex">
           <Link
             href={"/"}
-            className="cursor-pointer border-b-2 border-gray-700 px-1 text-sm font-bold tracking-wide"
+            className="cursor-pointer border-b-2 border-gray-700 px-1 text-sm font-bold tracking-wide dark:border-gray-50"
           >
             Buy
           </Link>
@@ -115,12 +108,12 @@ function NavMain({ classes }) {
             <div className="flex items-center gap-8">
               {user?.user_type !== "LANDLORD" &&
                 (hasApplied ? (
-                  <button className="rounded-full bg-gray-600 px-2 py-1 text-xs font-normal text-white">
+                  <button className="rounded-full bg-gray-600 px-2 py-1 text-xs font-normal text-white dark:bg-gray-700 dark:text-gray-50">
                     Applied
                   </button>
                 ) : (
                   <button
-                    className="cursor-pointer border-b-2 border-gray-600 text-xs font-semibold"
+                    className="cursor-pointer border-b-2 border-gray-600 text-xs font-semibold dark:border-gray-50"
                     onClick={() => {
                       console.log("user type", user?.user_type);
                       setShowModal(true);
@@ -135,7 +128,7 @@ function NavMain({ classes }) {
                 className="flex items-center gap-2"
               >
                 {user?.profile_image ? (
-                  <div className="relative h-8 w-8 overflow-hidden rounded-full">
+                  <div className="relative h-8 w-8 overflow-hidden rounded-full dark:border-gray-100">
                     <Image
                       src={`${user?.profile_image}`}
                       alt="Profile"
@@ -165,7 +158,7 @@ function NavMain({ classes }) {
                     )}
                   </div>
                 )}
-                <span className="text-sm font-semibold text-gray-800">
+                <span className="text-sm font-semibold text-gray-800 dark:text-gray-50">
                   {user?.full_name}
                 </span>
               </Link>

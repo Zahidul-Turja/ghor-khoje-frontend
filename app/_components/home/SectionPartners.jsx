@@ -19,13 +19,13 @@ const partners = [
 
 function SectionPartners() {
   return (
-    <section className="mx-auto overflow-hidden bg-gradient-to-br from-gray-50 to-white px-3 py-24 pt-16 md:px-6 md:pt-32 lg:px-8">
+    <section className="mx-auto overflow-hidden bg-gradient-to-br from-gray-50 to-white px-3 py-24 pt-16 md:px-6 md:pt-32 lg:px-8 dark:bg-gray-900 dark:from-gray-900 dark:to-gray-900">
       {/* Section Header */}
       <div className="mb-6 text-center md:mb-8">
-        <h2 className="text-center text-2xl font-bold uppercase tracking-wide text-gray-800 md:text-3xl lg:text-4xl">
+        <h2 className="text-center text-2xl font-bold uppercase tracking-wide text-gray-800 md:text-3xl lg:text-4xl dark:text-gray-200">
           <span className="font-extralight">Our</span> Partners
         </h2>
-        <p className="mx-auto mt-4 text-center text-gray-600 md:w-[80vw] md:text-lg lg:w-[60vw]">
+        <p className="mx-auto mt-4 text-center text-gray-600 md:w-[80vw] md:text-lg lg:w-[60vw] dark:text-gray-300">
           We’re proud to collaborate with trusted partners who share our vision
           and values. These partnerships play a key role in helping us deliver
           exceptional solutions and grow together. Take a look at some of the

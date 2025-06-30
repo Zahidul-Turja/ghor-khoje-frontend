@@ -90,12 +90,12 @@ const SectionFeedback = () => {
 
   if (isSubmitted) {
     return (
-      <section className="bg-white px-4 py-16 md:py-8">
+      <section className="bg-white px-4 py-16 md:py-8 dark:bg-gray-900">
         <div className="mx-auto max-w-6xl">
           <div className="text-center">
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-black">
               <svg
-                className="h-8 w-8 text-white"
+                className="h-8 w-8 text-white dark:text-gray-200"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
@@ -106,15 +106,15 @@ const SectionFeedback = () => {
                 />
               </svg>
             </div>
-            <h2 className="mb-2 text-xl font-bold text-black sm:text-2xl">
+            <h2 className="mb-2 text-xl font-bold text-black sm:text-2xl dark:text-gray-200">
               Thank you for your feedback!
             </h2>
-            <p className="mb-6 text-sm text-gray-600 sm:text-base">
+            <p className="mb-6 text-sm text-gray-600 sm:text-base dark:text-gray-300">
               We've received your message and will get back to you soon.
             </p>
             <button
               onClick={() => setIsSubmitted(false)}
-              className="rounded-lg bg-black px-6 py-2 text-white transition-colors hover:bg-gray-800"
+              className="rounded-lg bg-black px-6 py-2 text-white transition-colors hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 sm:text-base dark:bg-gray-400 dark:hover:bg-gray-500"
             >
               Submit Another Feedback
             </button>
@@ -125,19 +125,19 @@ const SectionFeedback = () => {
   }
 
   return (
-    <section className="bg-white px-4 py-8 sm:py-16">
+    <section className="bg-white px-4 py-8 sm:py-16 dark:bg-gray-900">
       <div className="mx-auto max-w-6xl">
         <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-12">
           {/* Left Side - Content */}
           <div className="order-2 flex flex-col justify-between space-y-6 py-0 sm:space-y-8 lg:order-1 lg:py-12">
             <div>
-              <h2 className="mb-4 text-2xl font-bold leading-tight text-black sm:text-3xl lg:text-4xl">
+              <h2 className="mb-4 text-2xl font-bold leading-tight text-black sm:text-3xl lg:text-4xl dark:text-gray-200">
                 Your Feedback helps us improve
               </h2>
 
               {/* Additional content below the main text */}
-              <div className="text-sm text-gray-600 sm:text-base">
-                <p className="mb-4 text-gray-600">
+              <div className="text-sm text-gray-600 sm:text-base dark:text-gray-300">
+                <p className="mb-4 text-gray-600 dark:text-gray-300">
                   We are here to help you and we'd love to connect with you.
                 </p>
                 <div className="space-y-4 sm:space-y-6">
@@ -156,7 +156,7 @@ const SectionFeedback = () => {
                       </svg>
                     </div>
                     <div>
-                      <span className="text-sm font-medium text-gray-800 sm:text-base">
+                      <span className="text-sm font-medium text-gray-800 sm:text-base dark:text-gray-400">
                         Lightning fast responses
                       </span>
                       <p className="text-xs text-gray-500 sm:text-sm">
@@ -176,10 +176,10 @@ const SectionFeedback = () => {
                       </svg>
                     </div>
                     <div>
-                      <span className="text-sm font-medium text-gray-800 sm:text-base">
+                      <span className="text-sm font-medium text-gray-800 sm:text-base dark:text-gray-400">
                         Trusted by thousands
                       </span>
-                      <p className="text-xs text-gray-500 sm:text-sm">
+                      <p className="text-xs text-gray-500 sm:text-sm dark:text-gray-300">
                         10,000+ happy users worldwide
                       </p>
                     </div>
@@ -200,7 +200,7 @@ const SectionFeedback = () => {
                       </svg>
                     </div>
                     <div>
-                      <span className="text-sm font-medium text-gray-800 sm:text-base">
+                      <span className="text-sm font-medium text-gray-800 sm:text-base dark:text-gray-400">
                         Privacy first
                       </span>
                       <p className="text-xs text-gray-500 sm:text-sm">
@@ -213,11 +213,11 @@ const SectionFeedback = () => {
             </div>
 
             {/* Contribute to Open Source */}
-            <div className="mt-8 rounded-2xl border border-gray-300 bg-gray-100 px-4 py-4 shadow-lg sm:px-7 sm:py-6 lg:mt-12">
-              <h3 className="text-base font-bold text-gray-800 sm:text-lg">
+            <div className="mt-8 rounded-2xl border border-gray-300 bg-gray-100 px-4 py-4 shadow-lg sm:px-7 sm:py-6 lg:mt-12 dark:border-gray-700 dark:bg-gray-800">
+              <h3 className="text-base font-bold text-gray-800 sm:text-lg dark:border-gray-700 dark:text-gray-200">
                 Contribute to Our Project
               </h3>
-              <p className="my-2 text-xs text-gray-600 sm:text-sm">
+              <p className="my-2 text-xs text-gray-600 sm:text-sm dark:text-gray-300">
                 We are an open-source project and your contributions are
                 welcome. Please check out our GitHub repositories to see if
                 you're interested in contributing.
@@ -241,7 +241,7 @@ const SectionFeedback = () => {
               <div>
                 <label
                   htmlFor="feedback_type"
-                  className="mb-2 block text-sm font-medium text-gray-600"
+                  className="mb-2 block text-sm font-medium text-gray-600 dark:text-gray-300"
                 >
                   Topic
                 </label>
@@ -251,7 +251,7 @@ const SectionFeedback = () => {
                   value={formData.feedback_type}
                   onChange={handleInputChange}
                   required
-                  className="w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-sm text-gray-500 outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400 sm:text-base"
+                  className="w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-sm text-gray-500 outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400 sm:text-base dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:focus:ring-gray-500"
                 >
                   <option value="">Select a topic</option>
                   {feedbackTypes?.map((type) => (
@@ -266,7 +266,7 @@ const SectionFeedback = () => {
               <div>
                 <label
                   htmlFor="name"
-                  className="mb-2 block text-sm font-medium text-gray-600"
+                  className="mb-2 block text-sm font-medium text-gray-600 dark:text-gray-300"
                 >
                   Name
                 </label>
@@ -276,7 +276,7 @@ const SectionFeedback = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  className="w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-sm text-gray-500 outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400 sm:text-base"
+                  className="w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-sm text-gray-500 outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400 sm:text-base dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:focus:ring-gray-500"
                   placeholder="Your full name"
                 />
               </div>
@@ -285,7 +285,7 @@ const SectionFeedback = () => {
               <div>
                 <label
                   htmlFor="email"
-                  className="mb-2 block text-sm font-medium text-gray-600"
+                  className="mb-2 block text-sm font-medium text-gray-600 dark:text-gray-300"
                 >
                   Email
                 </label>
@@ -295,7 +295,7 @@ const SectionFeedback = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-sm text-gray-500 outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400 sm:text-base"
+                  className="w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-sm text-gray-500 outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400 sm:text-base dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:focus:ring-gray-500"
                   placeholder="your.email@example.com"
                 />
               </div>
@@ -304,7 +304,7 @@ const SectionFeedback = () => {
               <div>
                 <label
                   htmlFor="subject"
-                  className="mb-2 block text-sm font-medium text-gray-600"
+                  className="mb-2 block text-sm font-medium text-gray-600 dark:text-gray-300"
                 >
                   Subject
                 </label>
@@ -314,7 +314,7 @@ const SectionFeedback = () => {
                   name="subject"
                   value={formData.subject}
                   onChange={handleInputChange}
-                  className="w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-sm text-gray-500 outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400 sm:text-base"
+                  className="w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-sm text-gray-500 outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400 sm:text-base dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:focus:ring-gray-500"
                   placeholder="Brief subject of your feedback"
                 />
               </div>
@@ -323,7 +323,7 @@ const SectionFeedback = () => {
               <div>
                 <label
                   htmlFor="message"
-                  className="mb-2 block text-sm font-medium text-gray-600"
+                  className="mb-2 block text-sm font-medium text-gray-600 dark:text-gray-300"
                 >
                   Message
                 </label>
@@ -334,7 +334,7 @@ const SectionFeedback = () => {
                   onChange={handleInputChange}
                   required
                   rows={4}
-                  className="resize-vertical w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-sm outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400 sm:text-base"
+                  className="resize-vertical w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-sm outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400 sm:text-base dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:focus:ring-gray-500"
                   placeholder="Tell us more about your feedback..."
                 />
               </div>
@@ -347,11 +347,11 @@ const SectionFeedback = () => {
                   name="want_to_be_contacted"
                   checked={formData.want_to_be_contacted}
                   onChange={handleInputChange}
-                  className="mt-1 h-4 w-4 rounded border-gray-300 bg-gray-100 text-gray-500 focus:border-transparent focus:ring-1 focus:ring-gray-400 focus:ring-offset-2"
+                  className="mt-1 h-4 w-4 rounded border-gray-300 bg-gray-100 text-gray-500 focus:border-transparent focus:ring-1 focus:ring-gray-400 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:focus:ring-gray-500"
                 />
                 <label
                   htmlFor="want_to_be_contacted"
-                  className="cursor-pointer text-xs text-gray-700 sm:text-sm"
+                  className="cursor-pointer text-xs text-gray-700 sm:text-sm dark:text-gray-300"
                 >
                   I would like to be contacted regarding this feedback
                 </label>

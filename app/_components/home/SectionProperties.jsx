@@ -38,7 +38,7 @@ function SectionProperties() {
   return (
     <section className="mx-auto max-w-screen-2xl px-3 py-8 md:px-6 md:py-10 lg:px-8">
       {/* Filter and Sort Bar */}
-      <div className="my-6 flex w-full flex-col gap-4 rounded-2xl bg-white px-4 py-4 shadow-lg md:my-8 md:flex-row md:items-center md:justify-between md:px-6 lg:rounded-full">
+      <div className="my-6 flex w-full flex-col gap-4 rounded-2xl bg-white px-4 py-0 shadow-lg md:my-8 md:flex-row md:items-center md:justify-between md:px-6 lg:rounded-full dark:bg-gray-800">
         {/* Category Filter Navigation */}
         <div className="order-2 w-full md:order-1 md:w-[80%] lg:w-[80%] xl:w-[85%]">
           <CategoryFilterNav pageSize={pageSize} page={page} />
@@ -48,7 +48,7 @@ function SectionProperties() {
         <div className="order-1 flex w-full items-center justify-center gap-3 md:order-2 md:w-auto md:justify-end">
           <button
             onClick={() => setIsModalOpen(true)}
-            className="flex flex-1 items-center justify-center gap-2 rounded-full border border-gray-300 px-4 py-2.5 text-sm font-medium transition-all hover:bg-gray-100 active:scale-95 md:flex-initial"
+            className="flex flex-1 items-center justify-center gap-2 rounded-full border border-gray-300 px-4 py-2.5 text-sm font-medium transition-all hover:bg-gray-100 active:scale-95 md:flex-initial dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-white"
           >
             <MdTune className="text-lg" />
             <span className="hidden sm:inline">Filters & Sort</span>
@@ -88,7 +88,7 @@ function SectionProperties() {
         >
           <div
             ref={modalRef}
-            className="w-full max-w-md rounded-xl bg-white p-6 shadow-lg"
+            className="w-full max-w-md rounded-xl bg-white p-6 shadow-lg dark:bg-gray-800"
           >
             {/* Header */}
             <div className="mb-4 flex items-center justify-between">
@@ -103,7 +103,7 @@ function SectionProperties() {
 
             {/* Search Input */}
             <div className="mb-4">
-              <label className="mb-1 block text-sm font-medium text-gray-700">
+              <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Search
               </label>
               <input
@@ -111,13 +111,13 @@ function SectionProperties() {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search places..."
-                className="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-blue-500 focus:outline-none"
+                className="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-gray-500 focus:outline-none focus:ring-0 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:focus:border-gray-500"
               />
             </div>
 
             {/* Date Range Filter */}
             <div className="mb-4">
-              <label className="mb-1 block text-sm font-medium text-gray-700">
+              <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Date Range
               </label>
               <div className="flex flex-wrap gap-2">
@@ -125,10 +125,10 @@ function SectionProperties() {
                   <button
                     key={day}
                     onClick={() => setDateFilter(day)}
-                    className={`rounded-full border px-4 py-1 text-sm ${
+                    className={`rounded-full border px-4 py-1 text-sm dark:text-gray-300 ${
                       dateFilter === day
-                        ? "border-blue-600 bg-blue-600 text-white"
-                        : "border-gray-300 text-gray-700 hover:bg-gray-100"
+                        ? "border-primary/30 bg-primary/80 text-white"
+                        : "border-gray-300 text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700"
                     }`}
                   >
                     {day === "all" ? "All" : `Last ${day} days`}
@@ -139,11 +139,11 @@ function SectionProperties() {
 
             {/* Sort Options */}
             <div className="mb-4">
-              <label className="mb-1 block text-sm font-medium text-gray-700">
+              <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Sort by Price
               </label>
               <div className="flex flex-col gap-2">
-                <label className="inline-flex items-center gap-2 text-sm">
+                <label className="inline-flex items-center gap-2 text-sm dark:text-gray-400">
                   <input
                     type="radio"
                     value="low"
@@ -152,7 +152,7 @@ function SectionProperties() {
                   />
                   Low to High
                 </label>
-                <label className="inline-flex items-center gap-2 text-sm">
+                <label className="inline-flex items-center gap-2 text-sm dark:text-gray-400">
                   <input
                     type="radio"
                     value="high"
@@ -168,7 +168,7 @@ function SectionProperties() {
             <div className="mt-6 flex justify-end">
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="rounded-lg bg-blue-600 px-6 py-2 text-sm font-medium text-white hover:bg-blue-700"
+                className="rounded-lg bg-primary px-6 py-2 text-sm font-medium text-white hover:bg-primary/80"
               >
                 Apply Filters
               </button>
