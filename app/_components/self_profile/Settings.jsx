@@ -23,6 +23,9 @@ import {
 } from "lucide-react";
 
 function Settings() {
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("user")) || {},
+  );
   const [darkMode, setDarkMode] = useState(false);
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -66,10 +69,6 @@ function Settings() {
     });
   };
 
-  const handleProfileSave = () => {
-    alert("Profile updated successfully!");
-  };
-
   const handleNotificationChange = (type) => {
     setNotifications((prev) => ({
       ...prev,
@@ -98,7 +97,7 @@ function Settings() {
 
   const baseClasses = darkMode
     ? "min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white"
-    : "min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 text-gray-900";
+    : "min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 text-gray-900";
 
   const cardClasses = darkMode
     ? "rounded-lg bg-gray-800 border border-gray-700 p-6 shadow-sm"
@@ -109,7 +108,7 @@ function Settings() {
     : "w-full rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500";
 
   return (
-    <div className={`${baseClasses} p-12 sm:px-6`}>
+    <div className={`${baseClasses} rounded-lg p-12 sm:px-6`}>
       <div className="mx-auto w-full px-8">
         <div className="mb-6 flex items-center justify-between">
           <h1 className="text-3xl font-bold">Settings</h1>
@@ -188,12 +187,12 @@ function Settings() {
                 </label>
                 <input
                   type="text"
-                  value={profile.phone}
+                  value={user.phone || "N/A"}
                   onChange={(e) =>
                     setProfile((prev) => ({ ...prev, phone: e.target.value }))
                   }
                   disabled
-                  className={inputClasses}
+                  className={`${inputClasses} disabled:opacity-50`}
                   placeholder="Your phone number"
                 />
               </div>
@@ -205,47 +204,16 @@ function Settings() {
                 </label>
                 <input
                   type="email"
-                  value={profile.email}
+                  value={user.email || "N/A"}
                   onChange={(e) =>
                     setProfile((prev) => ({ ...prev, email: e.target.value }))
                   }
                   disabled
-                  className={inputClasses}
+                  className={`${inputClasses} disabled:opacity-50`}
                   placeholder="Enter your email"
                 />
               </div>
-              <div>
-                <label
-                  className={`mb-1 block text-sm font-medium ${darkMode ? "text-gray-300" : "text-gray-700"}`}
-                >
-                  Timezone
-                </label>
-                <select
-                  value={profile.timezone}
-                  onChange={(e) =>
-                    setProfile((prev) => ({
-                      ...prev,
-                      timezone: e.target.value,
-                    }))
-                  }
-                  className={inputClasses}
-                >
-                  <option value="UTC">UTC</option>
-                  <option value="Asia/Dhaka">Dhaka</option>
-                  <option value="Asia/Tokyo">Tokyo</option>
-                  <option value="Europe/London">England</option>
-                  <option value="America/New_York">New York</option>
-                  <option value="South America/Sao_Paulo">Brazil</option>
-                </select>
-              </div>
             </div>
-            <button
-              onClick={handleProfileSave}
-              className="mt-4 inline-flex items-center gap-2 rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-            >
-              <Save size={16} />
-              Save Profile
-            </button>
           </div>
 
           {/* Chat Settings */}
@@ -448,7 +416,7 @@ function Settings() {
           </div>
 
           {/* Billing & Payment */}
-          <div className={cardClasses}>
+          <div className={`${cardClasses} opacity-60`}>
             <div className="mb-4 flex items-center gap-2">
               <CreditCard
                 className={`h-5 w-5 ${darkMode ? "text-indigo-400" : "text-indigo-600"}`}
@@ -472,19 +440,31 @@ function Settings() {
                 </p>
               </div>
               <div className="grid gap-3 sm:grid-cols-2">
-                <button className="inline-flex items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                <button
+                  disabled
+                  className="inline-flex items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                >
                   <CreditCard size={16} />
                   Update Payment Method
                 </button>
-                <button className="inline-flex items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                <button
+                  disabled
+                  className="inline-flex items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                >
                   <Download size={16} />
                   Download Invoices
                 </button>
-                <button className="inline-flex items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                <button
+                  disabled
+                  className="inline-flex items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                >
                   <DollarSign size={16} />
                   Change Plan
                 </button>
-                <button className="inline-flex items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                <button
+                  disabled
+                  className="inline-flex items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                >
                   <ExternalLink size={16} />
                   Billing Portal
                 </button>
@@ -525,7 +505,7 @@ function Settings() {
                   />
                 </button>
               </div>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between opacity-60">
                 <div>
                   <h3 className="text-sm font-medium">Push Notifications</h3>
                   <p
@@ -536,6 +516,7 @@ function Settings() {
                 </div>
                 <button
                   onClick={() => handleNotificationChange("push")}
+                  disabled
                   className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ${
                     notifications.push ? "bg-indigo-600" : "bg-gray-200"
                   }`}
