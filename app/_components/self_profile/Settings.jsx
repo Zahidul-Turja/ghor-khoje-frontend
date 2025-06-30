@@ -22,10 +22,19 @@ import {
   ExternalLink,
 } from "lucide-react";
 
+import { useRouter } from "next/navigation";
+
+import useAuthStore from "@/app/_store/authStore";
+import toast from "react-hot-toast";
+
 function Settings() {
+  const router = useRouter();
   const [user, setUser] = useState(
     JSON.parse(localStorage.getItem("user")) || {},
   );
+
+  const { changePassword, deactivateAccount } = useAuthStore();
+
   const [darkMode, setDarkMode] = useState(false);
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -54,14 +63,18 @@ function Settings() {
 
   const handlePasswordChange = () => {
     if (passwordForm.newPassword !== passwordForm.confirmPassword) {
-      alert("New passwords do not match!");
+      toast.error("New passwords do not match!");
       return;
     }
     if (passwordForm.newPassword.length < 8) {
-      alert("Password must be at least 8 characters long!");
+      toast.error("Password must be at least 8 characters long!");
       return;
     }
-    alert("Password changed successfully!");
+    changePassword(
+      passwordForm.currentPassword,
+      passwordForm.newPassword,
+      passwordForm.confirmPassword,
+    );
     setPasswordForm({
       currentPassword: "",
       newPassword: "",
@@ -83,11 +96,12 @@ function Settings() {
     }));
   };
 
-  const handleAccountDeactivate = () => {
-    alert(
-      "Account deactivation process initiated. You will receive an email confirmation.",
-    );
+  const handleAccountDeactivate = async () => {
+    const result = await deactivateAccount();
     setShowDeactivateModal(false);
+    if (result) {
+      router.push("/auth/login");
+    }
   };
 
   const toggleDarkMode = () => {
@@ -118,7 +132,7 @@ function Settings() {
               className={`rounded-full p-2 shadow-md transition-colors ${
                 darkMode
                   ? "bg-gray-700 hover:bg-gray-600"
-                  : "bg-indigo-600 hover:bg-indigo-700"
+                  : "bg-primary/70 hover:bg-primary/80"
               }`}
             >
               {darkMode ? (
@@ -128,7 +142,7 @@ function Settings() {
               )}
             </button>
             <div
-              className={`rounded-full p-2 shadow-md ${darkMode ? "bg-gray-700" : "bg-indigo-600"}`}
+              className={`rounded-full p-2 shadow-md ${darkMode ? "bg-gray-700" : "bg-primary/70"}`}
             >
               <Construction size={20} className="text-white" />
             </div>
@@ -142,7 +156,7 @@ function Settings() {
               {darkMode ? (
                 <Moon className="h-5 w-5 text-indigo-400" />
               ) : (
-                <Sun className="h-5 w-5 text-indigo-600" />
+                <Sun className="h-5 w-5 text-primary" />
               )}
               <h2 className="text-xl font-semibold">Appearance</h2>
             </div>
@@ -157,7 +171,7 @@ function Settings() {
               </div>
               <button
                 onClick={toggleDarkMode}
-                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ${
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 ${
                   darkMode ? "bg-indigo-600" : "bg-gray-200"
                 }`}
               >
@@ -174,7 +188,7 @@ function Settings() {
           <div className={cardClasses}>
             <div className="mb-4 flex items-center gap-2">
               <User
-                className={`h-5 w-5 ${darkMode ? "text-indigo-400" : "text-indigo-600"}`}
+                className={`h-5 w-5 ${darkMode ? "text-indigo-400" : "text-primary"}`}
               />
               <h2 className="text-xl font-semibold">Profile Information</h2>
             </div>
@@ -220,7 +234,7 @@ function Settings() {
           <div className={cardClasses}>
             <div className="mb-4 flex items-center gap-2">
               <MessageCircle
-                className={`h-5 w-5 ${darkMode ? "text-indigo-400" : "text-indigo-600"}`}
+                className={`h-5 w-5 ${darkMode ? "text-indigo-400" : "text-primary"}`}
               />
               <h2 className="text-xl font-semibold">Chat & Communication</h2>
             </div>
@@ -236,8 +250,8 @@ function Settings() {
                 </div>
                 <button
                   onClick={() => handleChatSettingChange("openToChat")}
-                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ${
-                    chatSettings.openToChat ? "bg-indigo-600" : "bg-gray-200"
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 ${
+                    chatSettings.openToChat ? "bg-primary/70" : "bg-gray-200"
                   }`}
                 >
                   <span
@@ -260,9 +274,9 @@ function Settings() {
                 </div>
                 <button
                   onClick={() => handleChatSettingChange("showOnlineStatus")}
-                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ${
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 ${
                     chatSettings.showOnlineStatus
-                      ? "bg-indigo-600"
+                      ? "bg-primary/70"
                       : "bg-gray-200"
                   }`}
                 >
@@ -286,9 +300,9 @@ function Settings() {
                 </div>
                 <button
                   onClick={() => handleChatSettingChange("allowDirectMessages")}
-                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ${
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 ${
                     chatSettings.allowDirectMessages
-                      ? "bg-indigo-600"
+                      ? "bg-primary/70"
                       : "bg-gray-200"
                   }`}
                 >
@@ -308,7 +322,7 @@ function Settings() {
           <div className={cardClasses}>
             <div className="mb-4 flex items-center gap-2">
               <Lock
-                className={`h-5 w-5 ${darkMode ? "text-indigo-400" : "text-indigo-600"}`}
+                className={`h-5 w-5 ${darkMode ? "text-indigo-400" : "text-primary/80"}`}
               />
               <h2 className="text-xl font-semibold">Change Password</h2>
             </div>
@@ -407,7 +421,7 @@ function Settings() {
               </div>
               <button
                 onClick={handlePasswordChange}
-                className="inline-flex items-center gap-2 rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                className="inline-flex items-center gap-2 rounded-md bg-primary/70 px-4 py-2 text-sm font-medium text-white hover:bg-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"
               >
                 <Shield size={16} />
                 Change Password
@@ -419,7 +433,7 @@ function Settings() {
           <div className={`${cardClasses} opacity-60`}>
             <div className="mb-4 flex items-center gap-2">
               <CreditCard
-                className={`h-5 w-5 ${darkMode ? "text-indigo-400" : "text-indigo-600"}`}
+                className={`h-5 w-5 ${darkMode ? "text-indigo-400" : "text-primary"}`}
               />
               <h2 className="text-xl font-semibold">Billing & Payment</h2>
             </div>
@@ -476,7 +490,7 @@ function Settings() {
           <div className={cardClasses}>
             <div className="mb-4 flex items-center gap-2">
               <Bell
-                className={`h-5 w-5 ${darkMode ? "text-indigo-400" : "text-indigo-600"}`}
+                className={`h-5 w-5 ${darkMode ? "text-indigo-400" : "text-primary"}`}
               />
               <h2 className="text-xl font-semibold">
                 Notification Preferences
@@ -528,7 +542,7 @@ function Settings() {
                   />
                 </button>
               </div>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between opacity-60">
                 <div>
                   <h3 className="text-sm font-medium">SMS Notifications</h3>
                   <p
@@ -539,6 +553,7 @@ function Settings() {
                 </div>
                 <button
                   onClick={() => handleNotificationChange("sms")}
+                  disabled
                   className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ${
                     notifications.sms ? "bg-indigo-600" : "bg-gray-200"
                   }`}
@@ -557,7 +572,9 @@ function Settings() {
           <div className={cardClasses}>
             <div className="mb-4 flex items-center gap-2">
               <AlertTriangle className="h-5 w-5 text-red-500" />
-              <h2 className="text-xl font-semibold">Account Management</h2>
+              <h2 className="text-xl font-semibold text-red-500">
+                Account Management
+              </h2>
             </div>
             <div className="space-y-4">
               <div
@@ -603,8 +620,11 @@ function Settings() {
                 className={`mb-6 space-y-1 text-sm ${darkMode ? "text-gray-300" : "text-gray-600"}`}
               >
                 <li>• Remove access to all your data</li>
-                <li>• Cancel your subscription</li>
-                <li>• Delete your profile permanently</li>
+                <li>• Disable your account</li>
+                <li>• Need to ask support to reactivate</li>
+                <li>
+                  • Delete your profile and data permanently (after 30 days)
+                </li>
               </ul>
               <div className="flex gap-3">
                 <button

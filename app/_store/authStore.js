@@ -426,6 +426,78 @@ const useAuthStore = create(
           set({ isLoading: false });
         }
       },
+
+      changePassword: async (currentPassword, newPassword, confirmPassword) => {
+        try {
+          set({ isLoading: true });
+
+          const response = await fetch(
+            `${BASE_ENDPOINT}/api/v1/auth/change-password/`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${get().accessToken}`,
+              },
+              body: JSON.stringify({
+                old_password: currentPassword,
+                new_password: newPassword,
+                confirm_password: confirmPassword,
+              }),
+            },
+          );
+
+          const data = await response.json();
+
+          if (response.ok) {
+            toast.success("Password changed successfully");
+            return true;
+          } else {
+            toast.error(data.message || "Failed to change password");
+            throw new Error(data.message || "Failed to change password");
+          }
+        } catch (error) {
+          toast.error("Failed to change password");
+          console.error("Change password error:", error.message);
+          throw error;
+        } finally {
+          set({ isLoading: false });
+        }
+      },
+
+      deactivateAccount: async () => {
+        try {
+          set({ isLoading: true });
+
+          const response = await fetch(
+            `${BASE_ENDPOINT}/api/v1/auth/deactivate-accounts/`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${get().accessToken}`,
+              },
+            },
+          );
+
+          const data = await response.json();
+
+          if (response.ok) {
+            toast.success("Account deactivated successfully");
+            get().logout(); // Log out the user after deactivation
+            return true;
+          } else {
+            toast.error(data.message || "Failed to deactivate account");
+            throw new Error(data.message || "Failed to deactivate account");
+          }
+        } catch (error) {
+          toast.error("Failed to deactivate account");
+          console.error("Deactivate account error:", error.message);
+          throw error;
+        } finally {
+          set({ isLoading: false });
+        }
+      },
     }),
     {
       name: "auth", // Key for localStorage
