@@ -16,14 +16,14 @@ function AppointmentCard({
 
   return (
     <div className="w-full rounded-xl border-2 border-gray-300 p-4 shadow-md transition-shadow duration-300 hover:shadow-lg">
-      <h3 className="mb-1 text-center text-xl font-semibold">
+      <h3 className="mb-1 text-center text-xl font-semibold dark:border-gray-700 dark:text-gray-200">
         Make an Appointment
       </h3>
       <p className="mb-4 text-center text-sm text-gray-500">
         Book your stay today
       </p>
 
-      <div className="my-6 divide-y divide-gray-300 rounded-lg border-2 border-gray-300 text-sm">
+      <div className="my-6 divide-y divide-gray-300 rounded-lg border-2 border-gray-300 text-sm dark:border-gray-700">
         <div className="flex items-center gap-3 px-4 py-3">
           <Calendar size={18} className="flex-shrink-0 text-gray-500" />
           <p>

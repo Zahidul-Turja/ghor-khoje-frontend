@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="overflow-x-hidden scroll-smooth">
       <body
-        className={`${raleway.className} relative min-h-screen min-w-full bg-gray-50 text-gray-800 antialiased dark:bg-gray-900 dark:text-white`}
+        className={`${raleway.className} relative min-h-screen min-w-full bg-gray-50 text-gray-800 antialiased dark:bg-gray-900 dark:text-gray-200`}
       >
         {isInitialLoading && (
           <LoadingScreen onLoadingComplete={handleInitialLoadingComplete} />

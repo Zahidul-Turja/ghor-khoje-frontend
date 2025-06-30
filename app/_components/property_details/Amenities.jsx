@@ -36,7 +36,7 @@ function Amenities({ amenities }) {
   }, []);
 
   return (
-    <div className="border-t-2 border-gray-300 py-6 sm:py-8">
+    <div className="border-t-2 border-gray-300 py-6 sm:py-8 dark:border-gray-700">
       <h3 className="mb-3 text-xl font-semibold sm:mb-4 sm:text-2xl">
         What This Place Offers
       </h3>
