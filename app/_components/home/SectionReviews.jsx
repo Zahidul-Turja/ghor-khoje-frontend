@@ -1,11 +1,49 @@
 "use client";
 
 import Image from "next/image";
-import { dummy_reviews } from "@/public/dummy_data";
+import { getReviews } from "@/app/_lib/generals";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
+import { useEffect, useState } from "react";
 
 function SectionReviews() {
-  // Duplicate reviews for smooth looping
-  const scrollingReviews = [...dummy_reviews, ...dummy_reviews];
+  const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Fetch reviews from the API
+    const fetchReviews = async () => {
+      try {
+        const fetchedReviews = await getReviews();
+        setReviews(fetchedReviews);
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchReviews();
+  }, []);
+
+  // Transform API data to match the component structure
+  const transformedReviews = reviews.map((review) => ({
+    id: review.id,
+    reviewer: {
+      name: review.reviewer.full_name,
+      image: review.reviewer.profile_image || "/default-avatar.png", // Fallback image
+    },
+    rating: review.overall,
+    comment: review.review_text,
+    date: review.created_at,
+  }));
+
+  // Duplicate reviews for smooth looping (only if we have reviews)
+  const scrollingReviews =
+    transformedReviews.length > 0
+      ? [...transformedReviews, ...transformedReviews]
+      : [];
 
   // Helper function to render stars
   const renderStars = (rating) => {
@@ -25,7 +63,7 @@ function SectionReviews() {
 
   // Helper function to truncate comment
   const truncateComment = (comment, maxLength = 120) => {
-    if (comment.length <= maxLength) return comment;
+    if (!comment || comment.length <= maxLength) return comment;
     return comment.slice(0, maxLength).trim() + "...";
   };
 
@@ -39,34 +77,65 @@ function SectionReviews() {
           </h2>
           <p className="mx-auto mt-4 text-gray-600 md:w-[80vw] md:text-lg lg:w-[60vw]">
             Discover what our customers truly think about us. These are honest,
-            unfiltered reviews from real people who’ve experienced our service
+            unfiltered reviews from real people who've experienced our service
             firsthand. Their feedback not only reflects the quality we strive
             for but also helps you get a clear picture of what to expect.
           </p>
         </div>
 
-        {/* Scrolling Reviews Container */}
-        <div className="relative overflow-x-hidden">
-          <SwiperSlider
-            scrollingReviews={scrollingReviews}
-            renderStars={renderStars}
-            truncateComment={truncateComment}
-          />
+        {/* Loading State */}
+        {loading && (
+          <div className="flex items-center justify-center py-16">
+            <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-gray-800"></div>
+          </div>
+        )}
 
-          {/* Enhanced gradient fade edges */}
-          <div className="pointer-events-none absolute left-0 top-0 z-10 hidden h-full w-32 bg-gradient-to-r from-gray-50 via-gray-50/80 to-transparent md:block" />
-          <div className="pointer-events-none absolute right-0 top-0 z-10 hidden h-full w-32 bg-gradient-to-l from-gray-50 via-gray-50/80 to-transparent md:block" />
-        </div>
+        {/* No Reviews State */}
+        {!loading && transformedReviews.length === 0 && (
+          <div className="py-16 text-center">
+            <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-gray-100">
+              <svg
+                className="h-12 w-12 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                />
+              </svg>
+            </div>
+            <h3 className="mb-2 text-xl font-semibold text-gray-800">
+              No Reviews Yet
+            </h3>
+            <p className="mx-auto max-w-md text-gray-600">
+              Be the first to share your experience! We'd love to hear your
+              feedback and help others make informed decisions.
+            </p>
+          </div>
+        )}
+
+        {/* Reviews Display */}
+        {!loading && scrollingReviews.length > 0 && (
+          <div className="relative overflow-x-hidden">
+            <SwiperSlider
+              scrollingReviews={scrollingReviews}
+              renderStars={renderStars}
+              truncateComment={truncateComment}
+            />
+
+            {/* Enhanced gradient fade edges */}
+            <div className="pointer-events-none absolute left-0 top-0 z-10 hidden h-full w-32 bg-gradient-to-r from-gray-50 via-gray-50/80 to-transparent md:block" />
+            <div className="pointer-events-none absolute right-0 top-0 z-10 hidden h-full w-32 bg-gradient-to-l from-gray-50 via-gray-50/80 to-transparent md:block" />
+          </div>
+        )}
       </div>
     </section>
   );
 }
-
-export default SectionReviews;
-
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
-import "swiper/css";
 
 function SwiperSlider({ scrollingReviews, renderStars, truncateComment }) {
   return (
@@ -79,7 +148,7 @@ function SwiperSlider({ scrollingReviews, renderStars, truncateComment }) {
       grabCursor={true}
       freeMode={true}
       autoplay={{
-        delay: 1500, // No delay between slides
+        delay: 1500,
         disableOnInteraction: false,
       }}
       speed={2000}
@@ -95,10 +164,13 @@ function SwiperSlider({ scrollingReviews, renderStars, truncateComment }) {
             <div className="relative h-16 w-16 overflow-hidden rounded-full">
               <Image
                 src={review.reviewer.image}
-                alt="Profile"
+                alt={`${review.reviewer.name}'s profile`}
                 width={56}
                 height={56}
                 className="h-16 w-16 rounded-full object-cover"
+                onError={(e) => {
+                  e.target.src = "/default-avatar.png"; // Fallback if image fails to load
+                }}
               />
             </div>
             <div className="flex-1">
@@ -108,7 +180,7 @@ function SwiperSlider({ scrollingReviews, renderStars, truncateComment }) {
               <div className="mt-1 flex items-center gap-2">
                 <div className="flex gap-1">{renderStars(review.rating)}</div>
                 <span className="text-sm font-medium text-gray-700">
-                  {review.rating.toFixed(1)}
+                  {review.rating}/5
                 </span>
               </div>
             </div>
@@ -133,20 +205,8 @@ function SwiperSlider({ scrollingReviews, renderStars, truncateComment }) {
           </div>
         </SwiperSlide>
       ))}
-      {/* {partners.map((partner) => (
-        <SwiperSlide
-          key={partner.id}
-          className="flex !w-[120px] items-center justify-center md:!w-[160px]"
-        >
-          <div className="flex h-36 items-center justify-center">
-            <img
-              src={partner.logo}
-              alt={partner.name}
-              className="max-h-full max-w-full object-contain grayscale transition duration-300 hover:grayscale-0"
-            />
-          </div>
-        </SwiperSlide>
-      ))} */}
     </Swiper>
   );
 }
+
+export default SectionReviews;
