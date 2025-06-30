@@ -68,7 +68,7 @@ function SectionReviews() {
   };
 
   return (
-    <section className="mx-auto overflow-hidden bg-gradient-to-br from-gray-50 to-white px-3 py-24 pt-16 md:px-6 md:pt-32 lg:px-8 dark:border-t dark:bg-gray-900 dark:from-gray-900 dark:to-gray-900">
+    <section className="mx-auto overflow-hidden bg-gradient-to-br from-gray-50 to-white px-3 py-24 pt-16 md:px-6 md:pt-32 lg:px-8 dark:bg-gray-900 dark:from-gray-900 dark:to-gray-900">
       <div className="mx-auto">
         {/* Section Header */}
         <div className="mb-12 text-center">

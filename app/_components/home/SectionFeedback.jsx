@@ -251,7 +251,7 @@ const SectionFeedback = () => {
                   value={formData.feedback_type}
                   onChange={handleInputChange}
                   required
-                  className="w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-sm text-gray-500 outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400 sm:text-base dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:focus:ring-gray-500"
+                  className="w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-sm text-gray-500 outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400 sm:text-base dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:focus:ring-gray-500"
                 >
                   <option value="">Select a topic</option>
                   {feedbackTypes?.map((type) => (
@@ -276,7 +276,7 @@ const SectionFeedback = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  className="w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-sm text-gray-500 outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400 sm:text-base dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:focus:ring-gray-500"
+                  className="w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-sm text-gray-500 outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400 sm:text-base dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:focus:ring-gray-500"
                   placeholder="Your full name"
                 />
               </div>
@@ -295,7 +295,7 @@ const SectionFeedback = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-sm text-gray-500 outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400 sm:text-base dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:focus:ring-gray-500"
+                  className="w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-sm text-gray-500 outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400 sm:text-base dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:focus:ring-gray-500"
                   placeholder="your.email@example.com"
                 />
               </div>
@@ -314,7 +314,7 @@ const SectionFeedback = () => {
                   name="subject"
                   value={formData.subject}
                   onChange={handleInputChange}
-                  className="w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-sm text-gray-500 outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400 sm:text-base dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:focus:ring-gray-500"
+                  className="w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-sm text-gray-500 outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400 sm:text-base dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:focus:ring-gray-500"
                   placeholder="Brief subject of your feedback"
                 />
               </div>
@@ -334,7 +334,7 @@ const SectionFeedback = () => {
                   onChange={handleInputChange}
                   required
                   rows={4}
-                  className="resize-vertical w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-sm outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400 sm:text-base dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:focus:ring-gray-500"
+                  className="resize-vertical w-full rounded-2xl border border-gray-300 bg-gray-100 px-4 py-3 text-sm outline-none transition-all focus:border-transparent focus:ring-1 focus:ring-gray-400 sm:text-base dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:focus:ring-gray-500"
                   placeholder="Tell us more about your feedback..."
                 />
               </div>
