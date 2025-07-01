@@ -135,7 +135,7 @@ function ProfileReviewsCard({ host }) {
 
   return (
     <div>
-      <div className="w-full rounded-2xl border border-gray-300 p-4">
+      <div className="w-full rounded-2xl border border-gray-300 p-4 dark:border-gray-700">
         <h3 className="text-lg font-semibold">
           {host?.full_name}'s Performance Matrices
         </h3>
@@ -145,7 +145,7 @@ function ProfileReviewsCard({ host }) {
               key={metric.key}
               className={`flex items-center justify-between px-2 py-3 ${
                 index < performanceMetrics.length - 1
-                  ? "border-b border-gray-300"
+                  ? "border-b border-gray-300 dark:border-gray-700"
                   : ""
               }`}
             >
@@ -153,13 +153,13 @@ function ProfileReviewsCard({ host }) {
                 <p className="text-sm font-medium">{metric.label}</p>
                 <div className="mt-2 flex items-center gap-2">
                   {renderProgressBar(metric.rating)}
-                  <span className="min-w-[45px] text-xs text-gray-600">
+                  <span className="min-w-[45px] text-xs text-gray-600 dark:text-gray-400">
                     {metric.rating.toFixed(1)}/5.0
                   </span>
                 </div>
               </div>
               <div className="text-right">
-                <div className="text-lg font-bold text-gray-800">
+                <div className="text-lg font-bold text-gray-800 dark:text-gray-200">
                   {metric.rating.toFixed(1)}
                 </div>
               </div>
@@ -174,7 +174,7 @@ function ProfileReviewsCard({ host }) {
           }
           setIsModalOpen(true);
         }}
-        className="my-5 flex items-center gap-2 transition-colors hover:text-red-600"
+        className="my-5 flex items-center gap-2 transition-colors hover:text-red-600 dark:text-gray-300"
       >
         <MdFeedback className="text-sm" />
         <span className="text-xs font-bold underline">Give a Review</span>
@@ -182,8 +182,8 @@ function ProfileReviewsCard({ host }) {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-          <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 p-4">
+          <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white dark:bg-gray-900">
             <div className="p-6">
               {/* Modal Header */}
               <div className="mb-6 flex items-start justify-between">
@@ -206,7 +206,7 @@ function ProfileReviewsCard({ host }) {
                     key={field.key}
                     className="flex items-center justify-between"
                   >
-                    <label className="min-w-[140px] text-sm font-medium text-gray-700">
+                    <label className="min-w-[140px] text-sm font-medium text-gray-700 dark:text-gray-300">
                       {field.label}
                     </label>
                     {renderRatingInput(field)}
@@ -215,7 +215,7 @@ function ProfileReviewsCard({ host }) {
 
                 {/* Review Text */}
                 <div className="space-y-2 pt-2">
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                     Review
                   </label>
                   <textarea
@@ -228,7 +228,7 @@ function ProfileReviewsCard({ host }) {
                     }
                     placeholder="Share your experience with this host..."
                     rows={4}
-                    className="w-full resize-none rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-green-500"
+                    className="w-full resize-none rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:focus:ring-green-600"
                   />
                 </div>
 
@@ -237,7 +237,7 @@ function ProfileReviewsCard({ host }) {
                   <button
                     type="button"
                     onClick={() => setIsModalOpen(false)}
-                    className="flex-1 rounded-lg border border-gray-300 px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50"
+                    className="flex-1 rounded-lg border border-gray-300 px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50 dark:bg-gray-300 dark:text-gray-900 dark:hover:bg-gray-400"
                   >
                     Cancel
                   </button>

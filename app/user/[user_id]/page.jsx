@@ -10,7 +10,7 @@ export const metadata = {
 function Page() {
   return (
     <>
-      <NavMain classes={"border-b border-gray-200 "} />
+      <NavMain classes={"border-b border-gray-200 dark:border-gray-700"} />
       <BoundingBox classes="px-64">
         <UserHostPage />
       </BoundingBox>

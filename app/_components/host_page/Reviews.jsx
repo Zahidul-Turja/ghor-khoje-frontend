@@ -37,9 +37,11 @@ function Reviews({ reviews = [], name = "Guest" }) {
   }
 
   return (
-    <div className="my-8 border-y border-gray-300 py-8">
+    <div className="my-8 border-y border-gray-300 py-8 dark:border-gray-700">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-bold">{name.split(" ")[0]}'s Reviews</h2>
+        <h2 className="text-lg font-bold dark:text-gray-300">
+          {name.split(" ")[0]}'s Reviews
+        </h2>
 
         {reviewsToShow.length > 2 && (
           <div className="flex items-center gap-2">
@@ -71,7 +73,7 @@ function Reviews({ reviews = [], name = "Guest" }) {
         {visibleReviews.map((review, index) => (
           <div
             key={review.id || index}
-            className="h-44 w-1/2 rounded-xl border border-gray-300 p-4"
+            className="h-44 w-1/2 rounded-xl border border-gray-300 p-4 dark:border-gray-700"
           >
             <p className="line-clamp-4 text-xs font-medium leading-5">
               {review.review_text}
@@ -104,7 +106,7 @@ function Reviews({ reviews = [], name = "Guest" }) {
       {!showAll && reviews.length > 2 && (
         <button
           onClick={handleShowMore}
-          className="mt-3 cursor-pointer border-none bg-transparent p-0 text-sm font-bold text-gray-700 underline"
+          className="mt-3 cursor-pointer border-none bg-transparent p-0 text-sm font-bold text-gray-700 underline dark:text-gray-300"
         >
           Show more reviews ({reviews.length - 2} more)
         </button>
