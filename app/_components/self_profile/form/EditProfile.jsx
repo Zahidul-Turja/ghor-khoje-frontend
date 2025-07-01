@@ -117,7 +117,7 @@ function EditProfile({ user, setEditMode }) {
   };
 
   return (
-    <div className="w-full overflow-hidden rounded-lg bg-white shadow-lg">
+    <div className="w-full overflow-hidden rounded-lg bg-white shadow-lg dark:bg-gray-900">
       {/* Cover Image Section */}
       <div className="relative h-64 w-full">
         <div className="absolute inset-0">
@@ -132,7 +132,7 @@ function EditProfile({ user, setEditMode }) {
         <div className="absolute bottom-4 right-4 flex items-center">
           <button
             onClick={() => coverInputRef.current.click()}
-            className="flex items-center gap-2 rounded-md bg-black bg-opacity-50 px-4 py-2 text-white transition hover:bg-opacity-70"
+            className="flex items-center gap-2 rounded-md bg-black bg-opacity-50 px-4 py-2 text-white transition hover:bg-opacity-70 dark:text-gray-200"
           >
             <FaCamera className="text-lg" />
             <span>Change Cover</span>
@@ -148,7 +148,7 @@ function EditProfile({ user, setEditMode }) {
 
         {/* Profile Image (Positioned at bottom of cover) */}
         <div className="absolute -bottom-16 left-8">
-          <div className="relative h-32 w-32 overflow-hidden rounded-full border-4 border-white bg-white">
+          <div className="relative h-32 w-32 overflow-hidden rounded-full border-4 border-white bg-white dark:border-gray-700 dark:bg-gray-800">
             <Image
               src={profileImagePreview}
               alt="Profile image"
@@ -173,8 +173,10 @@ function EditProfile({ user, setEditMode }) {
       </div>
 
       {/* Form Header */}
-      <div className="sticky right-0 top-0 mt-20 flex items-center justify-between border-b border-gray-200 px-8 pb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Edit Profile</h1>
+      <div className="sticky right-0 top-0 mt-20 flex items-center justify-between border-b border-gray-200 px-8 pb-6 dark:border-gray-700">
+        <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-200">
+          Edit Profile
+        </h1>
 
         <div className="flex items-center gap-4">
           <button
