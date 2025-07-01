@@ -80,13 +80,13 @@ function BookingRequests() {
   const getStatusStyle = (status) => {
     switch (status) {
       case "accepted":
-        return "bg-emerald-500 text-white shadow-emerald-200";
+        return "bg-emerald-500 text-white shadow-emerald-200 dark:shadow-none";
       case "rejected":
-        return "bg-rose-500 text-white shadow-rose-200";
+        return "bg-rose-500 text-white shadow-rose-200 dark:shadow-none";
       case "pending":
-        return "bg-amber-500 text-white shadow-amber-200";
+        return "bg-amber-500 text-white shadow-amber-200 dark:shadow-none";
       default:
-        return "bg-slate-500 text-white shadow-slate-200";
+        return "bg-slate-500 text-white shadow-slate-200 dark:shadow-none";
     }
   };
 
@@ -120,7 +120,7 @@ function BookingRequests() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-2 sm:p-4 lg:p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-2 dark:from-gray-800 dark:via-gray-800 dark:to-gray-800 sm:p-4 lg:p-6">
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="mb-4 sm:mb-6 lg:mb-8">
@@ -129,10 +129,10 @@ function BookingRequests() {
               <Home className="h-5 w-5 text-white sm:h-6 sm:w-6" />
             </div>
             <div>
-              <h1 className="bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-xl font-bold text-transparent sm:text-2xl">
+              <h1 className="bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-xl font-bold text-transparent dark:text-gray-200 sm:text-2xl">
                 Booking Requests
               </h1>
-              <p className="mt-0 text-sm text-slate-600 sm:text-base">
+              <p className="mt-0 text-sm text-slate-600 dark:text-gray-300 sm:text-base">
                 Manage and review all property booking requests
               </p>
             </div>
@@ -141,7 +141,7 @@ function BookingRequests() {
 
         {/* Modern Filter Tabs */}
         <div className="mb-4 sm:mb-6 lg:mb-8">
-          <div className="flex flex-wrap gap-1 rounded-xl border border-white/20 bg-white/70 p-1 shadow-lg backdrop-blur-sm sm:gap-2 sm:rounded-2xl">
+          <div className="flex flex-wrap gap-1 rounded-xl border border-white/20 bg-white/70 p-1 shadow-lg backdrop-blur-sm dark:border-gray-700 dark:bg-gray-900/70 sm:gap-2 sm:rounded-2xl">
             {["all", "pending", "accepted", "rejected"].map((status) => {
               const count =
                 status === "all"
@@ -153,8 +153,8 @@ function BookingRequests() {
                   onClick={() => setFilter(status)}
                   className={`flex items-center gap-1 rounded-lg px-2 py-2 text-xs font-medium capitalize transition-all duration-200 sm:gap-2 sm:rounded-xl sm:px-4 sm:text-sm ${
                     filter === status
-                      ? "scale-105 transform bg-gradient-to-r from-primary/80 to-primary/90 text-white shadow-lg shadow-blue-200"
-                      : "text-slate-600 hover:bg-white/80 hover:shadow-md"
+                      ? "scale-105 transform bg-gradient-to-r from-primary/80 to-primary/90 text-white shadow-lg shadow-blue-200 dark:shadow-gray-700"
+                      : "text-slate-600 hover:bg-white/80 hover:shadow-md dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-gray-200"
                   }`}
                 >
                   <span className="whitespace-nowrap">
@@ -162,7 +162,9 @@ function BookingRequests() {
                   </span>
                   <span
                     className={`rounded-full px-1.5 py-0.5 text-xs sm:px-2 sm:py-1 ${
-                      filter === status ? "bg-white/20" : "bg-slate-100"
+                      filter === status
+                        ? "bg-white/20"
+                        : "bg-slate-100 dark:bg-gray-800"
                     }`}
                   >
                     {count}
@@ -177,13 +179,13 @@ function BookingRequests() {
         <div className="space-y-4 sm:space-y-6">
           {filteredBookings.length === 0 ? (
             <div className="py-12 text-center sm:py-16">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-slate-100 to-slate-200 sm:mb-6 sm:h-24 sm:w-24">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-slate-100 to-slate-200 dark:from-gray-950 dark:to-gray-900 dark:text-gray-300 sm:mb-6 sm:h-24 sm:w-24">
                 <Home className="h-8 w-8 text-slate-400 sm:h-12 sm:w-12" />
               </div>
-              <h3 className="mb-2 text-lg font-semibold text-slate-900 sm:text-xl">
+              <h3 className="mb-2 text-lg font-semibold text-slate-900 dark:text-gray-200 sm:text-xl">
                 No booking requests found
               </h3>
-              <p className="mx-auto max-w-md px-4 text-sm text-slate-500 sm:text-base">
+              <p className="mx-auto max-w-md px-4 text-sm text-slate-500 dark:text-gray-400 sm:text-base">
                 {filter === "all"
                   ? "No booking requests have been made yet. New requests will appear here."
                   : `No ${filter} booking requests found. Try switching to a different filter.`}
@@ -193,7 +195,7 @@ function BookingRequests() {
             filteredBookings?.map((booking) => (
               <div
                 key={booking?.id}
-                className="group overflow-hidden rounded-2xl border border-white/50 bg-white/80 shadow-xl backdrop-blur-sm transition-all duration-300 hover:shadow-2xl sm:rounded-3xl"
+                className="group overflow-hidden rounded-2xl border border-white/50 bg-white/80 shadow-xl backdrop-blur-sm transition-all duration-300 hover:shadow-2xl dark:border-gray-700 dark:bg-gray-800/80 dark:hover:shadow-2xl sm:rounded-3xl lg:shadow-lg lg:hover:shadow-xl"
               >
                 {/* Status Banner */}
                 <div
@@ -213,10 +215,10 @@ function BookingRequests() {
                     <div className="flex-1">
                       <div className="mb-3 flex flex-col gap-3 sm:mb-4 sm:flex-row sm:items-start sm:justify-between">
                         <div className="min-w-0 flex-1">
-                          <h3 className="mb-2 line-clamp-2 text-lg font-bold text-slate-900 transition-colors group-hover:text-primary/90 sm:text-xl">
+                          <h3 className="mb-2 line-clamp-2 text-lg font-bold text-slate-900 transition-colors group-hover:text-primary/90 dark:text-gray-200 sm:text-xl">
                             {booking?.place.title}
                           </h3>
-                          <div className="flex flex-col gap-2 text-slate-600 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
+                          <div className="flex flex-col gap-2 text-slate-600 dark:text-gray-400 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
                             <div className="flex items-center gap-2">
                               <MapPin className="h-4 w-4 flex-shrink-0 text-blue-500" />
                               <span className="truncate text-sm font-medium sm:text-base">
@@ -243,18 +245,18 @@ function BookingRequests() {
                       </div>
 
                       {/* Price Display */}
-                      <div className="rounded-xl border border-blue-100 bg-gradient-to-r from-blue-50 to-indigo-50 p-3 sm:rounded-2xl sm:p-4">
+                      <div className="rounded-xl border border-blue-100 bg-gradient-to-r from-blue-50 to-indigo-50 p-3 dark:border-gray-700 dark:bg-gray-800/80 dark:from-gray-800 dark:to-gray-900 sm:rounded-2xl sm:p-4">
                         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-0">
                           <div>
-                            <p className="mb-1 text-xs text-slate-600 sm:text-sm">
+                            <p className="mb-1 text-xs text-slate-600 dark:text-gray-200 sm:text-sm">
                               Monthly Rent
                             </p>
-                            <p className="text-base font-bold text-slate-900 sm:text-lg">
+                            <p className="text-base font-bold text-slate-900 dark:text-gray-300 sm:text-lg">
                               {formatCurrency(booking?.rent_per_month)}
                             </p>
                           </div>
                           <div className="sm:text-right">
-                            <p className="mb-1 text-xs text-slate-600 sm:text-sm">
+                            <p className="mb-1 text-xs text-slate-600 dark:text-gray-300 sm:text-sm">
                               Total (with bills)
                             </p>
                             <p className="text-lg font-semibold text-primary sm:text-xl">
@@ -274,7 +276,7 @@ function BookingRequests() {
                 <div className="px-4 pb-4 sm:px-6 sm:pb-6 lg:px-8 lg:pb-8">
                   <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2 lg:gap-8">
                     {/* User Who Booked */}
-                    <div className="rounded-xl border border-slate-100 bg-gradient-to-br from-slate-50 to-white p-4 sm:rounded-2xl sm:p-6">
+                    <div className="dark:bg-from-gray-950 dark:bg-to-gray-900 rounded-xl border border-slate-100 bg-gradient-to-br from-slate-50 to-white p-4 sm:rounded-2xl sm:p-6">
                       <h4 className="mb-3 flex items-center gap-2 text-sm font-bold text-slate-900 sm:mb-4 sm:text-base">
                         <User className="h-4 w-4 text-blue-500 sm:h-5 sm:w-5" />
                         Booked By
