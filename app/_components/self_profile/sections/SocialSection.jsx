@@ -9,8 +9,10 @@ import {
 
 function SocialSection({ social_links }) {
   return (
-    <div className="border-t border-gray-200 py-8">
-      <h2 className="mb-6 text-xl font-semibold text-gray-800">Social Media</h2>
+    <div className="border-t border-gray-200 py-8 dark:border-gray-700">
+      <h2 className="mb-6 text-xl font-semibold text-gray-800 dark:text-gray-200">
+        Social Media
+      </h2>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {social_links.facebook && (
@@ -18,9 +20,9 @@ function SocialSection({ social_links }) {
             href={social_links.facebook}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 transition duration-300 hover:border-blue-300 hover:bg-blue-50"
+            className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 transition duration-300 hover:border-blue-300 hover:bg-blue-50 dark:border-gray-700 dark:hover:bg-gray-700"
           >
-            <div className="rounded-full bg-white p-1 text-gray-700">
+            <div className="rounded-full bg-white p-1 text-gray-700 dark:bg-gray-900 dark:text-gray-300">
               <FaFacebook className="text-3xl" />
             </div>
             <span className="font-medium">Facebook</span>
@@ -32,7 +34,7 @@ function SocialSection({ social_links }) {
             href={social_links.twitter}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 transition duration-300 hover:border-blue-300 hover:bg-blue-50"
+            className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 transition duration-300 hover:border-blue-300 hover:bg-blue-50 dark:border-gray-700 dark:hover:bg-gray-700"
           >
             <div className="rounded-full bg-gray-700 p-2 text-white">
               <FaTwitter className="text-lg" />
@@ -46,7 +48,7 @@ function SocialSection({ social_links }) {
             href={social_links.instagram}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 transition duration-300 hover:border-blue-300 hover:bg-blue-50"
+            className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 transition duration-300 hover:border-blue-300 hover:bg-blue-50 dark:border-gray-700 dark:hover:bg-gray-700"
           >
             <div className="rounded-full bg-gray-700 p-2 text-white">
               <FaInstagram />
@@ -60,7 +62,7 @@ function SocialSection({ social_links }) {
             href={social_links.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 transition duration-300 hover:border-blue-300 hover:bg-blue-50"
+            className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 transition duration-300 hover:border-blue-300 hover:bg-blue-50 dark:border-gray-700 dark:hover:bg-gray-700"
           >
             <div className="rounded-full bg-gray-700 p-2 text-white">
               <FaLinkedin />
@@ -74,7 +76,7 @@ function SocialSection({ social_links }) {
             href={social_links.youtube}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 transition duration-300 hover:border-blue-300 hover:bg-blue-50"
+            className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 transition duration-300 hover:border-blue-300 hover:bg-blue-50 dark:border-gray-700 dark:hover:bg-gray-700"
           >
             <div className="rounded-full bg-gray-700 p-2 text-white">
               <FaYoutube />
@@ -87,7 +89,7 @@ function SocialSection({ social_links }) {
             href={social_links.telegram}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 transition duration-300 hover:border-blue-300 hover:bg-blue-50"
+            className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 transition duration-300 hover:border-blue-300 hover:bg-blue-50 dark:border-gray-700 dark:hover:bg-gray-700"
           >
             <div className="rounded-full bg-gray-700 p-2 text-white">
               <FaTelegramPlane />

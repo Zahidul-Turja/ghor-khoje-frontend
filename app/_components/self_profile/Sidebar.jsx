@@ -66,7 +66,7 @@ function Sidebar({ isOpen, onClose }) {
     <>
       {/* Desktop Sidebar */}
       <div
-        className={`sticky top-0 hidden h-screen flex-col border-r border-gray-200 bg-white transition-all duration-300 dark:bg-gray-900 lg:flex ${
+        className={`sticky top-0 hidden h-screen flex-col border-r border-gray-200 bg-white transition-all duration-300 dark:bg-gray-900 lg:flex dark:border-gray-700${
           collapsed ? "w-16" : "w-64"
         }`}
       >
@@ -110,12 +110,12 @@ function Sidebar({ isOpen, onClose }) {
 
       {/* Mobile Sidebar */}
       <div
-        className={`fixed inset-y-0 left-0 z-30 flex h-full w-64 flex-col border-r border-gray-200 bg-white shadow-lg transition-transform duration-300 lg:hidden ${
+        className={`fixed inset-y-0 left-0 z-30 flex h-full w-64 flex-col border-r border-gray-200 bg-white shadow-lg transition-transform duration-300 dark:border-gray-700 dark:bg-gray-900 lg:hidden ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         {/* Mobile Header */}
-        <div className="flex items-center justify-between border-b border-gray-200 p-4">
+        <div className="flex items-center justify-between border-b border-gray-200 p-4 dark:border-gray-700">
           <h2 className="text-lg font-bold">Navigation</h2>
           <button
             onClick={onClose}
@@ -132,9 +132,9 @@ function Sidebar({ isOpen, onClose }) {
               <li key={index}>
                 <Link
                   href={`${CURRENT_URL}/?section=${item.name.toLowerCase().replace(" ", "-")}`}
-                  className={`flex items-center px-4 py-4 hover:bg-gray-100 ${
+                  className={`flex items-center px-4 py-4 hover:bg-gray-100 dark:hover:bg-gray-400 dark:hover:text-gray-900 ${
                     activeSection === item.name.toLowerCase().replace(" ", "-")
-                      ? "bg-blue-50 font-semibold text-blue-600"
+                      ? "bg-blue-50 font-semibold text-primary dark:bg-gray-400 dark:text-gray-900"
                       : "text-gray-700"
                   }`}
                   onClick={() => handleNavClick(item.name)}

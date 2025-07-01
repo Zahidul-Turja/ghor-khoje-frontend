@@ -35,7 +35,7 @@ export default function ProfileComponent() {
   if (!user) return null;
 
   return (
-    <div className="mx-auto overflow-hidden rounded-lg bg-white shadow-lg">
+    <div className="mx-auto overflow-hidden rounded-lg bg-white shadow-lg dark:bg-gray-900">
       {editMode ? (
         <EditProfile user={user} setEditMode={setEditMode} />
       ) : (
@@ -89,7 +89,7 @@ function Profile({
         </div>
         {/* Profile image */}
         <div className="absolute -bottom-16 left-8">
-          <div className="relative h-32 w-32 overflow-hidden rounded-full border-4 border-white bg-gray-200 shadow-lg">
+          <div className="relative h-32 w-32 overflow-hidden rounded-full border-4 border-white bg-gray-200 shadow-lg dark:border-gray-700 dark:bg-gray-400">
             {profile_image ? (
               <Image
                 src={`${profile_image}`}
@@ -120,7 +120,7 @@ function Profile({
 
         {/* Edit profile button - just for UI, no functionality */}
         <button
-          className="absolute right-4 top-4 flex items-center gap-2 rounded-full bg-white px-4 py-2 text-gray-900 shadow-md transition duration-300 hover:bg-blue-50"
+          className="absolute right-4 top-4 flex items-center gap-2 rounded-full bg-white px-4 py-2 text-gray-900 shadow-md transition duration-300 hover:bg-blue-50 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
           onClick={() => setEditMode(true)}
         >
           <FaPen size={14} />
@@ -132,12 +132,14 @@ function Profile({
       <div className="px-8 pb-8 pt-20">
         {/* Basic info */}
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-800">{full_name}</h1>
-          <div className="mt-1 flex items-center gap-2 text-gray-600">
+          <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-200">
+            {full_name}
+          </h1>
+          <div className="mt-1 flex items-center gap-2 text-gray-600 dark:text-gray-300">
             <FaBriefcase />
             <span>{profession}</span>
           </div>
-          <div className="mt-1 flex items-center gap-2 text-gray-600">
+          <div className="mt-1 flex items-center gap-2 text-gray-600 dark:text-gray-400">
             <FaMapMarkerAlt />
             <span>{`${address.city}, ${address.country}`}</span>
           </div>
