@@ -33,7 +33,7 @@ function BasicInfo({ activeTab, formData, handleInputChange, toggleFacility }) {
       <div className="space-y-4 sm:space-y-6">
         {/* Title Field */}
         <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700">
+          <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
             Title
           </label>
           <input
@@ -41,7 +41,7 @@ function BasicInfo({ activeTab, formData, handleInputChange, toggleFacility }) {
             name="title"
             value={formData.title}
             onChange={handleInputChange}
-            className="w-full rounded-lg border border-gray-300 p-2.5 text-sm focus:border-primary/70 focus:outline-none focus:ring-2 focus:ring-primary/20 sm:p-3 sm:text-base"
+            className="w-full rounded-lg border border-gray-300 p-2.5 text-sm focus:border-primary/70 focus:outline-none focus:ring-2 focus:ring-primary/20 dark:border-gray-500 dark:bg-gray-950 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500 sm:p-3 sm:text-base"
             placeholder="Enter property title"
             required
           />
@@ -49,7 +49,7 @@ function BasicInfo({ activeTab, formData, handleInputChange, toggleFacility }) {
 
         {/* Description Field */}
         <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700">
+          <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
             Description
           </label>
           <textarea
@@ -57,21 +57,21 @@ function BasicInfo({ activeTab, formData, handleInputChange, toggleFacility }) {
             value={formData.description}
             onChange={handleInputChange}
             rows={3}
-            className="resize-vertical min-h-[80px] w-full rounded-lg border border-gray-300 p-2.5 text-sm focus:border-primary/70 focus:outline-none focus:ring-2 focus:ring-primary/20 sm:min-h-[100px] sm:p-3 sm:text-base"
+            className="resize-vertical min-h-[80px] w-full rounded-lg border border-gray-300 p-2.5 text-sm focus:border-primary/70 focus:outline-none focus:ring-2 focus:ring-primary/20 dark:border-gray-500 dark:bg-gray-950 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500 sm:min-h-[100px] sm:p-3 sm:text-base"
             placeholder="Describe your property"
           />
         </div>
 
         {/* Category Field */}
         <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700">
+          <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
             Category
           </label>
           <select
             name="category"
             value={formData.category}
             onChange={handleInputChange}
-            className="w-full rounded-lg border border-gray-300 bg-white p-2.5 text-sm focus:border-primary/70 focus:outline-none focus:ring-2 focus:ring-primary/20 sm:p-3 sm:text-base"
+            className="w-full rounded-lg border border-gray-300 bg-white p-2.5 text-sm focus:border-primary/70 focus:outline-none focus:ring-2 focus:ring-primary/20 dark:border-gray-500 dark:bg-gray-950 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500 sm:p-3 sm:text-base"
             required
           >
             <option value="">Select category</option>
@@ -89,7 +89,7 @@ function BasicInfo({ activeTab, formData, handleInputChange, toggleFacility }) {
 
         {/* Facilities Field */}
         <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700">
+          <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
             Facilities
           </label>
 
@@ -98,7 +98,7 @@ function BasicInfo({ activeTab, formData, handleInputChange, toggleFacility }) {
             <div className="flex items-center justify-center py-8 sm:py-12">
               <div className="flex flex-col items-center space-y-2">
                 <div className="h-6 w-6 animate-spin rounded-full border-b-2 border-primary sm:h-8 sm:w-8"></div>
-                <span className="text-sm text-gray-500">
+                <span className="text-sm text-gray-500 dark:text-gray-300">
                   Loading facilities...
                 </span>
               </div>
@@ -119,7 +119,7 @@ function BasicInfo({ activeTab, formData, handleInputChange, toggleFacility }) {
                     className={`flex cursor-pointer items-center rounded-lg border p-2.5 transition-all duration-200 hover:shadow-sm sm:p-3 ${
                       isSelected
                         ? "border-primary/30 bg-primary/10 text-primary shadow-sm ring-1 ring-primary/20"
-                        : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+                        : "border-gray-200 hover:border-gray-300 hover:bg-gray-50 dark:border-gray-700 dark:hover:border-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-200"
                     }`}
                   >
                     <div className="flex min-w-0 flex-1 items-center space-x-2 sm:space-x-3">

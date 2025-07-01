@@ -86,13 +86,13 @@ export default function MyProperties() {
   if (user?.user_type !== "LANDLORD") {
     if (hasApplied) {
       return (
-        <div className="flex min-h-[60vh] items-center justify-center bg-gray-50">
-          <div className="mx-4 max-w-md rounded-lg bg-white p-6 shadow-lg sm:p-8">
+        <div className="flex min-h-[60vh] items-center justify-center bg-gray-50 dark:bg-gray-950">
+          <div className="mx-4 max-w-md rounded-lg bg-white p-6 shadow-lg dark:bg-gray-950 sm:p-8">
             <div className="text-center">
               <h1 className="mb-4 text-xl font-bold text-primary sm:text-2xl lg:text-3xl">
                 Your Application is Under Review
               </h1>
-              <p className="text-sm text-gray-600 sm:text-base">
+              <p className="text-sm text-gray-600 dark:text-gray-300 sm:text-base">
                 Thank you for applying to become a landlord. Our team will
                 review your application and get back to you soon.
               </p>
@@ -110,20 +110,20 @@ export default function MyProperties() {
             handleHostSubmission={handleHostSubmission}
           />
         )}
-        <div className="flex min-h-[60vh] items-center justify-center bg-gray-50">
+        <div className="flex min-h-[60vh] items-center justify-center bg-gray-50 dark:bg-gray-950">
           <div className="mx-4 max-w-md rounded-lg bg-white p-6 shadow-lg sm:p-8">
             <div className="text-center">
               <h1 className="mb-4 flex items-center justify-center text-xl font-bold text-primary sm:text-2xl lg:text-3xl">
                 <CiWarning className="mr-2 text-2xl sm:text-3xl lg:text-4xl" />
                 Landlord Access Required
               </h1>
-              <p className="mb-6 text-sm text-gray-600 sm:text-base">
+              <p className="mb-6 text-sm text-gray-600 dark:text-gray-300 sm:text-base">
                 You need to be a landlord to access the property dashboard. If
                 you believe this is an error, please contact support or apply to
                 become a landlord.
               </p>
               <button
-                className="w-full rounded-lg bg-primary/80 px-4 py-2 text-sm font-medium text-white transition hover:bg-primary/90 sm:w-auto sm:px-6 sm:py-3 sm:text-base"
+                className="w-full rounded-lg bg-primary/80 px-4 py-2 text-sm font-medium text-white transition hover:bg-primary/90 dark:text-gray-300 sm:w-auto sm:px-6 sm:py-3 sm:text-base"
                 onClick={() => setShowApplyModal(true)}
               >
                 Apply to become a Landlord

@@ -148,10 +148,10 @@ export default function AddPropertyModal({ onClose, onSubmit }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 p-2 backdrop-blur-sm sm:p-4">
-      <div className="relative flex h-full w-full max-w-6xl flex-col overflow-hidden rounded-none bg-white shadow-xl sm:h-[95vh] sm:max-h-[800px] sm:rounded-xl">
+      <div className="relative flex h-full w-full max-w-6xl flex-col overflow-hidden rounded-none bg-white shadow-xl dark:bg-gray-950 sm:h-[95vh] sm:max-h-[800px] sm:rounded-xl">
         {/* Header */}
-        <header className="flex flex-shrink-0 items-center justify-between border-b border-gray-200 bg-gray-50 px-4 py-3 sm:px-6 sm:py-4">
-          <h1 className="truncate text-lg font-bold text-gray-800 sm:text-2xl">
+        <header className="flex flex-shrink-0 items-center justify-between border-b border-gray-200 bg-gray-50 px-4 py-3 dark:border-gray-700 dark:bg-gray-950 sm:px-6 sm:py-4">
+          <h1 className="truncate text-lg font-bold text-gray-800 dark:text-gray-200 sm:text-2xl">
             Add New Property
           </h1>
           <button
@@ -163,14 +163,14 @@ export default function AddPropertyModal({ onClose, onSubmit }) {
         </header>
 
         {/* Tabs */}
-        <div className="flex flex-shrink-0 overflow-x-auto border-b border-gray-200">
+        <div className="flex flex-shrink-0 overflow-x-auto border-b border-gray-200 dark:border-gray-700">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               className={`whitespace-nowrap px-3 py-2 text-sm font-medium transition-colors sm:px-6 sm:py-3 sm:text-base ${
                 activeTab === tab.id
                   ? "border-b-2 border-primary/80 text-primary"
-                  : "text-gray-600 hover:bg-gray-50"
+                  : "text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800"
               }`}
               onClick={() => setActiveTab(tab.id)}
             >
@@ -180,7 +180,7 @@ export default function AddPropertyModal({ onClose, onSubmit }) {
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="no-scrollbar flex-1 overflow-y-auto">
           <div className="px-4 pb-20 pt-4 sm:px-6 sm:pb-24 sm:pt-6">
             <form onSubmit={handleSubmit} encType="multipart/form-data">
               {/* Basic Info */}
@@ -232,7 +232,7 @@ export default function AddPropertyModal({ onClose, onSubmit }) {
         </div>
 
         {/* Footer Actions */}
-        <div className="absolute bottom-0 left-0 right-0 z-10 flex flex-shrink-0 flex-col justify-end space-y-2 border-t border-gray-200 bg-white px-4 py-3 sm:flex-row sm:space-x-4 sm:space-y-0 sm:px-6 sm:py-4">
+        <div className="absolute bottom-0 left-0 right-0 z-10 flex flex-shrink-0 flex-col justify-end space-y-2 border-t border-gray-200 bg-white px-4 py-3 dark:border-gray-700 dark:bg-gray-950 sm:flex-row sm:space-x-4 sm:space-y-0 sm:px-6 sm:py-4">
           <button
             type="button"
             onClick={onClose}

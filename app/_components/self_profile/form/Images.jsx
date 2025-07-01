@@ -59,10 +59,10 @@ function Images({
             {formData.images.map((image, index) => (
               <div
                 key={index}
-                className="flex items-center justify-between rounded-lg border border-gray-200 bg-white p-3 shadow-sm"
+                className="flex items-center justify-between rounded-lg border border-gray-200 bg-white p-3 shadow-sm dark:bg-gray-950"
               >
                 <div className="flex w-full items-center space-x-4">
-                  <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-md bg-gray-100">
+                  <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-md bg-gray-100 dark:bg-gray-950">
                     <img
                       src={image.preview}
                       alt={`Property image ${index + 1}`}
@@ -77,7 +77,7 @@ function Images({
                       onChange={(e) =>
                         handleImageDescriptionChange(index, e.target.value)
                       }
-                      className="w-full rounded-lg border border-gray-300 p-2 focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/20"
+                      className="w-full rounded-lg border border-gray-300 p-2 focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/20 dark:bg-gray-950 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500 sm:p-3 sm:text-base"
                     />
                   </div>
                 </div>

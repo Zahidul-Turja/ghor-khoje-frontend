@@ -362,7 +362,7 @@ function Location({ activeTab, formData, handleInputChange, setFormData }) {
       <div className="space-y-6">
         <div className="grid gap-6 md:grid-cols-2">
           <div>
-            <label className="mb-2 block text-sm font-medium text-gray-700">
+            <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
               City
             </label>
             <input
@@ -370,11 +370,11 @@ function Location({ activeTab, formData, handleInputChange, setFormData }) {
               name="city"
               value={formData.city || ""}
               onChange={handleInputChange}
-              className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
+              className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20 dark:border-gray-500 dark:bg-gray-950 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500 sm:p-3 sm:text-base"
             />
           </div>
           <div>
-            <label className="mb-2 block text-sm font-medium text-gray-700">
+            <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
               Area Name
             </label>
             <input
@@ -382,14 +382,14 @@ function Location({ activeTab, formData, handleInputChange, setFormData }) {
               name="area_name"
               value={formData.area_name || ""}
               onChange={handleInputChange}
-              className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
+              className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20 dark:border-gray-500 dark:bg-gray-950 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500 sm:p-3 sm:text-base"
             />
           </div>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
           <div>
-            <label className="mb-2 block text-sm font-medium text-gray-700">
+            <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
               Area Code
             </label>
             <input
@@ -397,11 +397,11 @@ function Location({ activeTab, formData, handleInputChange, setFormData }) {
               name="area_code"
               value={formData.area_code || ""}
               onChange={handleInputChange}
-              className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
+              className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20 dark:border-gray-500 dark:bg-gray-950 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500 sm:p-3 sm:text-base"
             />
           </div>
           <div>
-            <label className="mb-2 block text-sm font-medium text-gray-700">
+            <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
               Block Name
             </label>
             <input
@@ -409,14 +409,14 @@ function Location({ activeTab, formData, handleInputChange, setFormData }) {
               name="block_name"
               value={formData.block_name || ""}
               onChange={handleInputChange}
-              className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
+              className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20 dark:border-gray-500 dark:bg-gray-950 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500 sm:p-3 sm:text-base"
             />
           </div>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
           <div>
-            <label className="mb-2 block text-sm font-medium text-gray-700">
+            <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
               Street Name
             </label>
             <input
@@ -424,11 +424,11 @@ function Location({ activeTab, formData, handleInputChange, setFormData }) {
               name="street_name"
               value={formData.street_name || ""}
               onChange={handleInputChange}
-              className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
+              className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20 dark:border-gray-500 dark:bg-gray-950 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500 sm:p-3 sm:text-base"
             />
           </div>
           <div>
-            <label className="mb-2 block text-sm font-medium text-gray-700">
+            <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
               House Name
             </label>
             <input
@@ -436,14 +436,14 @@ function Location({ activeTab, formData, handleInputChange, setFormData }) {
               name="house_name"
               value={formData.house_name || ""}
               onChange={handleInputChange}
-              className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
+              className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20 dark:border-gray-500 dark:bg-gray-950 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500 sm:p-3 sm:text-base"
             />
           </div>
         </div>
 
         <div className="grid gap-6 md:grid-cols-3">
           <div>
-            <label className="mb-2 block text-sm font-medium text-gray-700">
+            <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
               House Number
             </label>
             <input
@@ -451,11 +451,11 @@ function Location({ activeTab, formData, handleInputChange, setFormData }) {
               name="house_number"
               value={formData.house_number || ""}
               onChange={handleInputChange}
-              className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
+              className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20 dark:border-gray-500 dark:bg-gray-950 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500 sm:p-3 sm:text-base"
             />
           </div>
           <div>
-            <label className="mb-2 block text-sm font-medium text-gray-700">
+            <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
               Apartment Number
             </label>
             <input
@@ -463,11 +463,11 @@ function Location({ activeTab, formData, handleInputChange, setFormData }) {
               name="apartment_number"
               value={formData.apartment_number || ""}
               onChange={handleInputChange}
-              className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
+              className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20 dark:border-gray-500 dark:bg-gray-950 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500 sm:p-3 sm:text-base"
             />
           </div>
           <div>
-            <label className="mb-2 block text-sm font-medium text-gray-700">
+            <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
               Floor Number
             </label>
             <input
@@ -475,14 +475,14 @@ function Location({ activeTab, formData, handleInputChange, setFormData }) {
               name="floor_number"
               value={formData.floor_number || ""}
               onChange={handleInputChange}
-              className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
+              className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20 dark:border-gray-500 dark:bg-gray-950 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500 sm:p-3 sm:text-base"
             />
           </div>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
           <div>
-            <label className="mb-2 block text-sm font-medium text-gray-700">
+            <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
               Latitude
             </label>
             <input
@@ -491,11 +491,11 @@ function Location({ activeTab, formData, handleInputChange, setFormData }) {
               value={formData.latitude || ""}
               onChange={handleInputChange}
               step="0.000001"
-              className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
+              className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20 dark:border-gray-500 dark:bg-gray-950 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500 sm:p-3 sm:text-base"
             />
           </div>
           <div>
-            <label className="mb-2 block text-sm font-medium text-gray-700">
+            <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
               Longitude
             </label>
             <input
@@ -504,7 +504,7 @@ function Location({ activeTab, formData, handleInputChange, setFormData }) {
               value={formData.longitude || ""}
               onChange={handleInputChange}
               step="0.000001"
-              className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
+              className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20 dark:border-gray-500 dark:bg-gray-950 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500 sm:p-3 sm:text-base"
             />
           </div>
         </div>
@@ -512,9 +512,9 @@ function Location({ activeTab, formData, handleInputChange, setFormData }) {
         <div className="rounded-lg border border-dashed border-gray-300 p-4">
           <div className="space-y-4">
             {/* Map Container */}
-            <div className="relative h-96 w-full overflow-hidden rounded-lg border border-gray-300 bg-gray-100">
+            <div className="relative h-96 w-full overflow-hidden rounded-lg border border-gray-300 bg-gray-100 dark:bg-gray-950">
               {!mapLoaded && isBrowser && (
-                <div className="absolute inset-0 z-50 flex items-center justify-center bg-white bg-opacity-90">
+                <div className="absolute inset-0 z-50 flex items-center justify-center bg-white bg-opacity-90 dark:bg-gray-800">
                   <div className="flex items-center space-x-2">
                     <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-500 border-t-transparent"></div>
                     <span className="text-gray-500">Loading map...</span>
