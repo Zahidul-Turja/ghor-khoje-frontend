@@ -66,7 +66,7 @@ function Sidebar({ isOpen, onClose }) {
     <>
       {/* Desktop Sidebar */}
       <div
-        className={`sticky top-0 hidden h-screen flex-col border-r border-gray-200 bg-white transition-all duration-300 lg:flex ${
+        className={`sticky top-0 hidden h-screen flex-col border-r border-gray-200 bg-white transition-all duration-300 dark:bg-gray-900 lg:flex ${
           collapsed ? "w-16" : "w-64"
         }`}
       >
@@ -75,7 +75,7 @@ function Sidebar({ isOpen, onClose }) {
           {!collapsed && <h2 className="text-lg font-bold">Navigation</h2>}
           <button
             onClick={() => setCollapsed(!collapsed)}
-            className="rounded-full p-2 hover:bg-gray-100"
+            className="rounded-full p-2 hover:bg-gray-100 dark:hover:bg-gray-700"
           >
             {collapsed ? <FaChevronRight /> : <FaChevronLeft />}
           </button>
@@ -88,9 +88,9 @@ function Sidebar({ isOpen, onClose }) {
               <li key={index}>
                 <Link
                   href={`${CURRENT_URL}/?section=${item.name.toLowerCase().replace(" ", "-")}`}
-                  className={`flex items-center px-4 py-3 hover:bg-gray-100 hover:text-gray-800 ${
+                  className={`flex items-center px-4 py-3 hover:bg-gray-100 hover:text-gray-800 dark:text-gray-200 dark:hover:bg-gray-700 ${
                     activeSection === item.name.toLowerCase().replace(" ", "-")
-                      ? "bg-blue-50 font-semibold text-primary"
+                      ? "bg-blue-50 font-semibold text-primary dark:bg-gray-700"
                       : "text-gray-500"
                   } ${collapsed ? "justify-center" : ""}`}
                   onClick={() => handleNavClick(item.name)}

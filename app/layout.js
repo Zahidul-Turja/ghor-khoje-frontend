@@ -11,6 +11,11 @@ import { poppins, raleway } from "@/app/_utils/fonts";
 export default function RootLayout({ children }) {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
   const theme = useAuthStore((state) => state.theme);
+  // const { setTheme } = useAuthStore();
+
+  // useEffect(() => {
+  //   setTheme(theme);
+  // }, [theme, setTheme]);
 
   useEffect(() => {
     // Apply theme class to <html>
