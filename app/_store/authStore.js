@@ -13,17 +13,10 @@ const useAuthStore = create(
       isAuthenticated: false,
       isLoading: false,
       otpModalOpen: false,
-      theme: window?.localStorage.getItem("theme") || "light",
-      setTheme: (theme) => {
-        set({ theme });
-        if (typeof window !== "undefined") {
-          localStorage.setItem("theme", theme);
-        }
-      },
+      theme: "light",
 
       setTheme: (theme) => {
         set({ theme });
-        window.localStorage.setItem("theme", theme);
       },
 
       userInfo: async () => {
@@ -511,12 +504,13 @@ const useAuthStore = create(
       },
     }),
     {
-      name: "auth", // Key for localStorage
+      name: "auth",
       partialize: (state) => ({
         accessToken: state.accessToken,
         refreshToken: state.refreshToken,
         user: state.user,
         isAuthenticated: state.isAuthenticated,
+        theme: state.theme,
       }),
     },
   ),
