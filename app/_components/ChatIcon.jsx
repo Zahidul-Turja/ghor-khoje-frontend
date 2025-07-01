@@ -226,12 +226,12 @@ function ChatCard({
 
   return (
     <div
-      className={`fixed bottom-12 right-20 z-[1000] w-80 rounded-lg border border-gray-200 bg-white shadow-xl transition-all duration-300 ${isOpen ? "scale-100 opacity-100" : "pointer-events-none scale-95 opacity-0"}`}
+      className={`fixed bottom-12 right-20 z-[1000] w-80 rounded-lg border border-gray-200 bg-white shadow-xl transition-all duration-300 dark:border-gray-700 dark:bg-gray-900 ${isOpen ? "scale-100 opacity-100" : "pointer-events-none scale-95 opacity-0"}`}
     >
       {/* Header */}
-      <div className="flex items-center justify-between rounded-t-lg border-b border-gray-200 bg-primary p-4">
+      <div className="flex items-center justify-between rounded-t-lg border-b border-gray-200 bg-primary p-4 dark:border-gray-700 dark:bg-primary/90">
         <div className="flex items-center space-x-3">
-          <div className="relative h-8 w-8 overflow-hidden rounded-full border border-white">
+          <div className="relative h-8 w-8 overflow-hidden rounded-full border border-white dark:border-gray-800">
             <img
               src={receiver?.profile_image || "/profile-1.jpg"}
               alt="Host Profile"
@@ -329,14 +329,17 @@ function ChatCard({
       </div>
 
       {/* Input */}
-      <form onSubmit={onSendMessage} className="border-t border-gray-200 p-4">
+      <form
+        onSubmit={onSendMessage}
+        className="border-t border-gray-200 p-4 dark:border-gray-700"
+      >
         <div className="flex space-x-2">
           <input
             type="text"
             value={inputMessage}
             onChange={(e) => setInputMessage(e.target.value)}
             placeholder="Type your message..."
-            className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary"
+            className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-200 dark:text-gray-800 dark:placeholder:text-gray-500 dark:focus:border-primary dark:focus:ring-primary/70"
             disabled={!isConnected}
           />
           <button

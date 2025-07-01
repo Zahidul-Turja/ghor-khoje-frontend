@@ -21,7 +21,7 @@ function Reviews({ reviews, avgRatings, onSubmitReview }) {
     <div className="flex flex-col gap-8">
       {/* Average Ratings Section */}
       {avgRatings && (
-        <div className="relative overflow-hidden rounded-2xl border border-white/20 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-8 shadow-lg">
+        <div className="relative overflow-hidden rounded-2xl border border-white/20 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-8 shadow-lg dark:bg-gradient-to-br dark:from-gray-800 dark:via-gray-800 dark:to-gray-700">
           <div className="absolute right-4 top-4 text-purple-200">
             <HiSparkles size={24} />
           </div>
@@ -29,7 +29,7 @@ function Reviews({ reviews, avgRatings, onSubmitReview }) {
             <div className="rounded-xl bg-gradient-to-r from-primary/70 to-primary/90 p-2">
               <FaStar className="text-lg text-white" />
             </div>
-            <h3 className="bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-2xl font-bold text-transparent">
+            <h3 className="bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-2xl font-bold text-transparent dark:text-gray-200">
               Guest Reviews
             </h3>
           </div>
@@ -37,9 +37,9 @@ function Reviews({ reviews, avgRatings, onSubmitReview }) {
           <div className="grid grid-cols-2 gap-6 md:grid-cols-3">
             {Object.entries(avgRatings).map(([key, value]) => (
               <div key={key} className="group">
-                <div className="flex items-center justify-between rounded-xl border border-white/40 bg-white/70 p-4 backdrop-blur-sm transition-all duration-300 hover:bg-white/90 hover:shadow-md">
+                <div className="flex items-center justify-between rounded-xl border border-white/40 bg-white/70 p-4 backdrop-blur-sm transition-all duration-300 hover:bg-white/90 hover:shadow-md dark:bg-gray-800/70 dark:hover:bg-gray-800/70">
                   <div>
-                    <span className="block text-sm font-semibold capitalize text-gray-700">
+                    <span className="block text-sm font-semibold capitalize text-gray-700 dark:text-gray-300">
                       {key.replace("_", " ")}
                     </span>
                     <div className="mt-1 flex items-center gap-2">
@@ -124,20 +124,20 @@ function ReviewCard({
 }) {
   return (
     <div
-      className="group relative overflow-hidden rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-xl"
+      className="group relative overflow-hidden rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-xl dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
       style={{
         animationDelay: `${index * 100}ms`,
         animation: "fadeInUp 0.6s ease-out forwards",
       }}
     >
       {/* Subtle gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-50/30 to-purple-50/30 opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-50/30 to-purple-50/30 opacity-0 transition-opacity duration-500 group-hover:opacity-100 dark:bg-gradient-to-br dark:from-gray-800 dark:via-gray-800 dark:to-gray-700"></div>
 
       <div className="relative z-10">
         {/* Header */}
         <div className="mb-4 flex items-center gap-4">
           <div className="relative">
-            <div className="relative h-12 w-12 overflow-hidden rounded-full ring-2 ring-gray-100 transition-all duration-300 group-hover:ring-blue-200">
+            <div className="relative h-12 w-12 overflow-hidden rounded-full ring-2 ring-gray-100 transition-all duration-300 group-hover:ring-blue-200 dark:ring-gray-600">
               {reviewer?.profile_image ? (
                 <Image
                   src={BASE_URL + reviewer.profile_image}
@@ -157,10 +157,12 @@ function ReviewCard({
             </div>
           </div>
           <div className="flex-1">
-            <h3 className="font-bold text-gray-900 transition-colors duration-300 group-hover:text-primary">
+            <h3 className="font-bold text-gray-900 transition-colors duration-300 group-hover:text-primary dark:text-gray-200 dark:group-hover:text-primary">
               {reviewer.full_name}
             </h3>
-            <p className="text-xs text-gray-500">{reviewed_days_ago}</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">
+              {reviewed_days_ago}
+            </p>
           </div>
         </div>
 
@@ -178,14 +180,18 @@ function ReviewCard({
             ))}
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-sm font-bold text-gray-800">{overall}</span>
-            <span className="text-xs text-gray-400">/ 5</span>
+            <span className="text-sm font-bold text-gray-800 dark:text-gray-300">
+              {overall}
+            </span>
+            <span className="text-xs text-gray-400 dark:text-gray-300">
+              / 5
+            </span>
           </div>
         </div>
 
         {/* Review Text */}
         <div className="relative">
-          <p className="line-clamp-4 text-sm leading-relaxed text-gray-700 transition-all duration-300 group-hover:line-clamp-none">
+          <p className="line-clamp-4 text-sm leading-relaxed text-gray-700 transition-all duration-300 dark:text-gray-300">
             {review_text}
           </p>
           <div className="absolute left-0 top-0 -ml-6 h-full w-1 rounded-full bg-gradient-to-b from-primary/50 to-primary/80 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
@@ -241,9 +247,9 @@ function ReviewModal({ isOpen, onClose, onSubmit }) {
 
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
-      <div className="animate-modal-in max-h-[90vh] w-full max-w-2xl overflow-hidden rounded-3xl bg-white shadow-2xl">
+      <div className="animate-modal-in max-h-[90vh] w-full max-w-2xl overflow-hidden rounded-3xl bg-white shadow-2xl dark:bg-gray-900">
         {/* Header */}
-        <div className="relative bg-gradient-to-r from-primary/70 to-primary/90 p-6 text-white">
+        <div className="relative bg-gradient-to-r from-primary/70 to-primary/90 p-6 text-white dark:text-gray-200">
           <div className="absolute inset-0 bg-black/10"></div>
           <div className="relative flex items-center justify-between">
             <div>
@@ -274,7 +280,7 @@ function ReviewModal({ isOpen, onClose, onSubmit }) {
                 neighborhood: "Neighborhood",
               }).map(([field, label]) => (
                 <div key={field} className="group">
-                  <label className="mb-3 block text-sm font-semibold text-gray-800">
+                  <label className="mb-3 block text-sm font-semibold text-gray-800 dark:text-gray-200">
                     {label}
                   </label>
                   <div className="flex gap-2">
@@ -303,7 +309,7 @@ function ReviewModal({ isOpen, onClose, onSubmit }) {
                         />
                       </button>
                     ))}
-                    <span className="ml-3 flex items-center text-sm font-medium text-gray-600">
+                    <span className="ml-3 flex items-center text-sm font-medium text-gray-600 dark:text-gray-400">
                       {formData[field]} / 5
                     </span>
                   </div>
@@ -312,7 +318,7 @@ function ReviewModal({ isOpen, onClose, onSubmit }) {
 
               {/* Review Text */}
               <div>
-                <label className="mb-3 block text-sm font-semibold text-gray-800">
+                <label className="mb-3 block text-sm font-semibold text-gray-800 dark:text-gray-200">
                   Tell us about your experience
                 </label>
                 <div className="relative">
@@ -326,7 +332,7 @@ function ReviewModal({ isOpen, onClose, onSubmit }) {
                     }
                     placeholder="Share the highlights of your stay, what made it special, and any tips for future guests..."
                     rows={4}
-                    className="w-full resize-none rounded-xl border-2 border-gray-200 px-4 py-3 shadow-sm transition-all duration-200 focus:border-primary/70 focus:outline-none focus:ring-4 focus:ring-primary/10"
+                    className="w-full resize-none rounded-xl border-2 border-gray-200 px-4 py-3 shadow-sm transition-all duration-200 focus:border-primary/70 focus:outline-none focus:ring-4 focus:ring-primary/10 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary/70 dark:focus:ring-primary/10"
                     required
                   />
                   <div className="absolute bottom-3 right-3 text-xs text-gray-400">
@@ -341,7 +347,7 @@ function ReviewModal({ isOpen, onClose, onSubmit }) {
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 rounded-xl bg-gray-100 px-6 py-3 font-medium text-gray-700 transition-all duration-200 hover:bg-gray-200"
+                className="flex-1 rounded-xl bg-gray-100 px-6 py-3 font-medium text-gray-700 transition-all duration-200 hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-500"
               >
                 Cancel
               </button>

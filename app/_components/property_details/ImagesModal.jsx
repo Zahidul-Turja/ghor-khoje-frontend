@@ -29,9 +29,9 @@ function ImagesModal({ images, onClose }) {
       className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 p-4"
       onClick={handleOverlayClick}
     >
-      <div className="flex max-h-screen w-full max-w-4xl flex-col overflow-hidden rounded-lg bg-white">
+      <div className="flex max-h-screen w-full max-w-4xl flex-col overflow-hidden rounded-lg bg-white dark:bg-gray-800">
         {/* Header */}
-        <div className="flex justify-between border-b p-4">
+        <div className="flex justify-between border-b p-4 dark:border-gray-700">
           <h3 className="text-lg font-medium">
             Image {currentIndex + 1} of {images.length}
           </h3>
@@ -46,7 +46,7 @@ function ImagesModal({ images, onClose }) {
         {/* Image Container */}
         <div className="relative flex flex-grow flex-col overflow-hidden md:flex-row">
           {/* Image */}
-          <div className="relative flex h-96 w-full flex-grow items-center justify-center bg-gray-100 p-2">
+          <div className="relative flex h-96 w-full flex-grow items-center justify-center bg-gray-100 p-2 dark:bg-gray-800">
             <img
               src={`${currentImage.image || "/api/placeholder/400/400"}`}
               alt={`Room view ${currentIndex + 1}`}
@@ -56,27 +56,27 @@ function ImagesModal({ images, onClose }) {
             {/* Navigation Buttons */}
             <button
               onClick={goToPrevious}
-              className="absolute left-2 rounded-full bg-white bg-opacity-70 p-1 shadow-md hover:bg-opacity-100"
+              className="absolute left-2 rounded-full bg-white bg-opacity-70 p-1 shadow-md hover:bg-opacity-100 dark:bg-gray-700 dark:hover:bg-gray-600"
             >
               <ChevronLeft size={24} />
             </button>
             <button
               onClick={goToNext}
-              className="absolute right-2 rounded-full bg-white bg-opacity-70 p-1 shadow-md hover:bg-opacity-100"
+              className="absolute right-2 rounded-full bg-white bg-opacity-70 p-1 shadow-md hover:bg-opacity-100 dark:bg-gray-700 dark:hover:bg-gray-600"
             >
               <ChevronRight size={24} />
             </button>
           </div>
 
           {/* Description */}
-          <div className="w-full border-t bg-gray-50 p-4 md:w-96 md:border-l md:border-t-0">
+          <div className="w-full border-t bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800 md:w-96 md:border-l md:border-t-0">
             <h4 className="mb-2 font-medium">Description</h4>
             <p className="text-sm text-gray-600">{currentImage.description}</p>
           </div>
         </div>
 
         {/* Thumbnails */}
-        <div className="overflow-x-auto border-t p-2">
+        <div className="overflow-x-auto border-t p-2 dark:border-gray-700">
           <div className="flex space-x-2">
             {images.map((img, idx) => (
               <button

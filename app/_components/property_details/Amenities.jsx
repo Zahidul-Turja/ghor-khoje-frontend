@@ -36,7 +36,7 @@ function Amenities({ amenities }) {
   }, []);
 
   return (
-    <div className="border-t-2 border-gray-300 py-6 sm:py-8 dark:border-gray-700">
+    <div className="border-t-2 border-gray-300 py-6 dark:border-gray-700 sm:py-8">
       <h3 className="mb-3 text-xl font-semibold sm:mb-4 sm:text-2xl">
         What This Place Offers
       </h3>
@@ -66,7 +66,7 @@ function Amenities({ amenities }) {
       </div>
 
       <button
-        className="mt-4 cursor-pointer rounded-lg border border-gray-700 px-4 py-2 text-sm font-semibold transition-colors hover:bg-gray-50 sm:px-6 sm:py-3"
+        className="dark:bg-bg-gray-800 mt-4 cursor-pointer rounded-lg border border-gray-700 px-4 py-2 text-sm font-semibold transition-colors hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-white sm:px-6 sm:py-3"
         onClick={() => {
           setNumberOfAmenities((prev) =>
             prev === 20 ? facilities.length : 20,
