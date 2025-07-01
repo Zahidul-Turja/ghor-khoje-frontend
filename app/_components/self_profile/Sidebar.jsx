@@ -66,12 +66,12 @@ function Sidebar({ isOpen, onClose }) {
     <>
       {/* Desktop Sidebar */}
       <div
-        className={`sticky top-0 hidden h-screen flex-col border-r border-gray-200 bg-white transition-all duration-300 dark:bg-gray-900 lg:flex dark:border-gray-700${
+        className={`sticky top-0 hidden h-screen flex-col border-r border-gray-200 bg-white transition-all duration-300 dark:border-gray-700 dark:bg-gray-900 lg:flex ${
           collapsed ? "w-16" : "w-64"
         }`}
       >
         {/* Desktop Header */}
-        <div className="flex items-center justify-between border-b border-gray-200 p-4">
+        <div className="flex items-center justify-between border-b border-gray-200 p-4 dark:border-gray-700">
           {!collapsed && <h2 className="text-lg font-bold">Navigation</h2>}
           <button
             onClick={() => setCollapsed(!collapsed)}
@@ -148,8 +148,8 @@ function Sidebar({ isOpen, onClose }) {
         </div>
 
         {/* Mobile Footer */}
-        <div className="border-t border-gray-200 p-4">
-          <div className="text-center text-xs text-gray-500">
+        <div className="border-t border-gray-200 p-4 dark:border-gray-700">
+          <div className="text-center text-xs text-gray-500 dark:text-gray-400">
             Swipe left to close
           </div>
         </div>

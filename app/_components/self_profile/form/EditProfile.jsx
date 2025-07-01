@@ -181,7 +181,7 @@ function EditProfile({ user, setEditMode }) {
         <div className="flex items-center gap-4">
           <button
             type="button"
-            className="flex items-center gap-2 rounded-md border-2 border-gray-700 px-4 py-2 font-semibold text-gray-700 shadow-md transition duration-300 hover:bg-gray-300"
+            className="dakr:border-gray-500 flex items-center gap-2 rounded-md border-2 border-gray-700 px-4 py-2 font-semibold text-gray-700 shadow-md transition duration-300 hover:bg-gray-300 dark:text-gray-200 dark:hover:bg-gray-700"
             onClick={() => setEditMode(false)}
           >
             <FaTimes size={14} />
@@ -205,14 +205,14 @@ function EditProfile({ user, setEditMode }) {
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {/* Basic Info Section */}
             <div className="col-span-full">
-              <h2 className="mb-4 text-xl font-semibold text-gray-700">
+              <h2 className="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">
                 Basic Information
               </h2>
             </div>
 
             {/* Full Name */}
             <div className="col-span-1">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Full Name
               </label>
               <input
@@ -220,13 +220,13 @@ function EditProfile({ user, setEditMode }) {
                 name="full_name"
                 value={formData.full_name}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-900 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500"
               />
             </div>
 
             {/* Phone */}
             <div className="col-span-1">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Phone Number
               </label>
               <input
@@ -234,20 +234,20 @@ function EditProfile({ user, setEditMode }) {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-900 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500"
               />
             </div>
 
             {/* Gender */}
             <div className="col-span-1">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Gender
               </label>
               <select
                 name="gender"
                 value={formData.gender}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-900 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500"
               >
                 <option value="MALE">Male</option>
                 <option value="FEMALE">Female</option>
@@ -257,7 +257,7 @@ function EditProfile({ user, setEditMode }) {
 
             {/* Date of Birth */}
             <div className="col-span-1">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Date of Birth
               </label>
               <input
@@ -265,13 +265,13 @@ function EditProfile({ user, setEditMode }) {
                 name="date_of_birth"
                 value={formData.date_of_birth}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-900 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500"
               />
             </div>
 
             {/* NID */}
             <div className="col-span-1">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 National ID
               </label>
               <input
@@ -279,13 +279,13 @@ function EditProfile({ user, setEditMode }) {
                 name="nid"
                 value={formData.nid}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-900 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500"
               />
             </div>
 
             {/* Profession */}
             <div className="col-span-1">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Profession
               </label>
               <input
@@ -293,13 +293,13 @@ function EditProfile({ user, setEditMode }) {
                 name="profession"
                 value={formData.profession}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-900 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500"
               />
             </div>
 
             {/* Bio */}
             <div className="col-span-full">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Bio
               </label>
               <textarea
@@ -307,21 +307,21 @@ function EditProfile({ user, setEditMode }) {
                 value={formData.bio}
                 onChange={handleChange}
                 rows={4}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-900 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500"
                 placeholder="Tell us about yourself..."
               />
             </div>
 
             {/* Location Section */}
             <div className="col-span-full mt-6">
-              <h2 className="mb-4 text-xl font-semibold text-gray-700">
+              <h2 className="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">
                 Location
               </h2>
             </div>
 
             {/* Address */}
             <div className="col-span-full">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Address
               </label>
               <input
@@ -330,13 +330,13 @@ function EditProfile({ user, setEditMode }) {
                 value={formData.address}
                 placeholder="Street, Area, etc."
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-900 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500"
               />
             </div>
 
             {/* Country */}
             <div className="col-span-1">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Country
               </label>
               <input
@@ -345,13 +345,13 @@ function EditProfile({ user, setEditMode }) {
                 placeholder="Bangladesh, New Zealand, England etc."
                 value={formData.country}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-900 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500"
               />
             </div>
 
             {/* State */}
             <div className="col-span-1">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 State/Province
               </label>
               <input
@@ -360,13 +360,13 @@ function EditProfile({ user, setEditMode }) {
                 value={formData.state}
                 placeholder="Dhaka, Auckland, etc."
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-900 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500"
               />
             </div>
 
             {/* City */}
             <div className="col-span-1">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 City
               </label>
               <input
@@ -375,20 +375,20 @@ function EditProfile({ user, setEditMode }) {
                 value={formData.city}
                 placeholder="Gulshan, Mirpur, etc."
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-900 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500"
               />
             </div>
 
             {/* Language Section */}
             <div className="col-span-full mt-6">
-              <h2 className="mb-4 text-xl font-semibold text-gray-700">
+              <h2 className="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">
                 Languages
               </h2>
             </div>
 
             {/* Languages */}
             <div className="col-span-1">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Languages
               </label>
               <input
@@ -396,14 +396,14 @@ function EditProfile({ user, setEditMode }) {
                 name="languages"
                 value={formData.languages}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-900 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500"
                 placeholder="English, Bangla (comma separated values)"
               />
             </div>
 
             {/* Preferred language */}
             <div className="col-span-1">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Preferred Language
               </label>
               <input
@@ -412,20 +412,20 @@ function EditProfile({ user, setEditMode }) {
                 value={formData.preferred_language}
                 placeholder="Bangla"
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-900 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500"
               />
             </div>
 
             {/* Social Media Section */}
             <div className="col-span-full mt-6">
-              <h2 className="mb-4 text-xl font-semibold text-gray-700">
+              <h2 className="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">
                 Social Media
               </h2>
             </div>
 
             {/* Facebook */}
             <div className="col-span-1">
-              <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+              <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
                 <FaFacebook className="text-blue-600" />
                 Facebook
               </label>
@@ -434,14 +434,14 @@ function EditProfile({ user, setEditMode }) {
                 name="facebook"
                 value={formData.facebook}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-900 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500"
                 placeholder="https://facebook.com/username"
               />
             </div>
 
             {/* Twitter */}
             <div className="col-span-1">
-              <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+              <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
                 <FaTwitter className="text-blue-400" />
                 Twitter
               </label>
@@ -450,14 +450,14 @@ function EditProfile({ user, setEditMode }) {
                 name="twitter"
                 value={formData.twitter}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-900 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500"
                 placeholder="https://twitter.com/username"
               />
             </div>
 
             {/* Instagram */}
             <div className="col-span-1">
-              <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+              <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
                 <FaInstagram className="text-pink-600" />
                 Instagram
               </label>
@@ -466,14 +466,14 @@ function EditProfile({ user, setEditMode }) {
                 name="instagram"
                 value={formData.instagram}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-900 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500"
                 placeholder="https://instagram.com/username"
               />
             </div>
 
             {/* LinkedIn */}
             <div className="col-span-1">
-              <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+              <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
                 <FaLinkedin className="text-blue-700" />
                 LinkedIn
               </label>
@@ -482,14 +482,14 @@ function EditProfile({ user, setEditMode }) {
                 name="linkedin"
                 value={formData.linkedin}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-900 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500"
                 placeholder="https://linkedin.com/in/username"
               />
             </div>
 
             {/* YouTube */}
             <div className="col-span-1">
-              <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+              <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
                 <FaYoutube className="text-red-600" />
                 YouTube
               </label>
@@ -498,14 +498,14 @@ function EditProfile({ user, setEditMode }) {
                 name="youtube"
                 value={formData.youtube}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-900 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500"
                 placeholder="https://youtube.com/channel/channelId"
               />
             </div>
 
             {/* Telegram */}
             <div className="col-span-1">
-              <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+              <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
                 <FaTelegram className="text-blue-500" />
                 Telegram
               </label>
@@ -514,7 +514,7 @@ function EditProfile({ user, setEditMode }) {
                 name="telegram"
                 value={formData.telegram}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-900 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500"
                 placeholder="https://t.me/username"
               />
             </div>
