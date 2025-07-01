@@ -146,10 +146,10 @@ export default function MyProperties() {
         />
       )}
 
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
           <div className="mb-4 flex flex-col gap-4 sm:mb-6 sm:flex-row sm:items-center sm:justify-between">
-            <h1 className="text-2xl font-bold text-gray-800 sm:text-3xl">
+            <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-200 sm:text-3xl">
               Property Dashboard
             </h1>
 
@@ -163,7 +163,7 @@ export default function MyProperties() {
             </button>
           </div>
 
-          <div className="overflow-hidden rounded-xl bg-white shadow-sm">
+          <div className="overflow-hidden rounded-xl bg-white shadow-sm dark:bg-gray-900">
             {loading && (
               <div className="flex items-center justify-center p-8">
                 <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-gray-600"></div>
