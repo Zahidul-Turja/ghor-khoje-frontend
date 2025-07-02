@@ -6,6 +6,7 @@ import { FaBath, FaUsers } from "react-icons/fa";
 import { IoMdBed } from "react-icons/io";
 import { IoAdd, IoEllipsisVertical, IoSearch } from "react-icons/io5";
 import AddPropertyModal from "./AddPropertyModal";
+import Link from "next/link";
 
 function Listings({ places, handleSubmit }) {
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
@@ -153,9 +154,12 @@ function Listings({ places, handleSubmit }) {
                         )}
                       </div>
                       <div>
-                        <div className="font-medium text-gray-900 dark:text-gray-300">
+                        <Link
+                          href={`/${place?.slug}`}
+                          className="font-medium text-gray-900 dark:text-gray-300"
+                        >
                           {place?.title}
-                        </div>
+                        </Link>
                         <div className="text-xs text-gray-500 dark:text-gray-400">
                           {place?.category.name}
                         </div>
@@ -336,11 +340,14 @@ function Listings({ places, handleSubmit }) {
               left: `${menuPosition.left}px`,
             }}
           >
-            <button className="flex w-full items-center px-4 py-2.5 text-left transition-colors hover:bg-gray-50 dark:hover:bg-gray-700">
+            <Link
+              href={`/${places.find((p) => p.id === openMenuId)?.slug}`}
+              className="flex w-full items-center px-4 py-2.5 text-left transition-colors hover:bg-gray-50 dark:hover:bg-gray-700"
+            >
               <span className="text-gray-700 dark:text-gray-300">
                 View Details
               </span>
-            </button>
+            </Link>
             <button className="flex w-full items-center px-4 py-2.5 text-left transition-colors hover:bg-gray-50 dark:hover:bg-gray-700">
               <span className="text-gray-700 dark:text-gray-300">
                 Edit Property
