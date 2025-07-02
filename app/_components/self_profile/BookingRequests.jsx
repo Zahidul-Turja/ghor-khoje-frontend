@@ -120,7 +120,7 @@ function BookingRequests() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-2 dark:from-gray-800 dark:via-gray-800 dark:to-gray-800 sm:p-4 lg:p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-2 dark:from-gray-900 dark:via-gray-900 dark:to-gray-900 sm:p-4 lg:p-6">
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="mb-4 sm:mb-6 lg:mb-8">
@@ -276,13 +276,13 @@ function BookingRequests() {
                 <div className="px-4 pb-4 sm:px-6 sm:pb-6 lg:px-8 lg:pb-8">
                   <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2 lg:gap-8">
                     {/* User Who Booked */}
-                    <div className="dark:bg-from-gray-950 dark:bg-to-gray-900 rounded-xl border border-slate-100 bg-gradient-to-br from-slate-50 to-white p-4 sm:rounded-2xl sm:p-6">
-                      <h4 className="mb-3 flex items-center gap-2 text-sm font-bold text-slate-900 sm:mb-4 sm:text-base">
-                        <User className="h-4 w-4 text-blue-500 sm:h-5 sm:w-5" />
+                    <div className="rounded-xl border border-slate-100 bg-gradient-to-br from-slate-50 to-white p-4 dark:border-gray-700 dark:from-gray-900 dark:to-gray-900 sm:rounded-2xl sm:p-6">
+                      <h4 className="mb-3 flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-gray-200 sm:mb-4 sm:text-base">
+                        <User className="h-4 w-4 text-blue-500 dark:text-primary sm:h-5 sm:w-5" />
                         Booked By
                       </h4>
                       <div className="flex items-start gap-3 sm:gap-4">
-                        <div className="h-12 w-12 flex-shrink-0 overflow-hidden rounded-xl shadow-lg ring-2 ring-white sm:h-16 sm:w-16 sm:rounded-2xl sm:ring-4">
+                        <div className="h-12 w-12 flex-shrink-0 overflow-hidden rounded-xl shadow-lg ring-2 ring-white dark:ring-gray-800 sm:h-16 sm:w-16 sm:rounded-2xl sm:ring-4">
                           <img
                             src={
                               booking?.booked_by.profile_image ||
@@ -293,22 +293,22 @@ function BookingRequests() {
                           />
                         </div>
                         <div className="min-w-0 flex-1">
-                          <h5 className="mb-1 line-clamp-1 text-sm font-semibold text-slate-900 sm:text-base">
+                          <h5 className="mb-1 line-clamp-1 text-sm font-semibold text-slate-900 dark:text-gray-300 sm:text-base">
                             {booking.booked_by.full_name}
                           </h5>
-                          <p className="mb-2 line-clamp-1 text-xs text-slate-600 sm:text-sm">
+                          <p className="mb-2 line-clamp-1 text-xs text-slate-600 dark:text-gray-400 sm:text-sm">
                             {booking.booked_by.profession}
                           </p>
                           <div className="space-y-1.5 sm:space-y-2">
                             <div className="flex items-center gap-2 text-xs sm:text-sm">
-                              <Mail className="h-3 w-3 flex-shrink-0 text-slate-400 sm:h-4 sm:w-4" />
-                              <span className="truncate text-slate-600">
+                              <Mail className="h-3 w-3 flex-shrink-0 text-slate-400 dark:text-primary sm:h-4 sm:w-4" />
+                              <span className="truncate text-slate-600 dark:text-gray-200">
                                 {booking.booked_by.email}
                               </span>
                             </div>
                             <div className="flex items-center gap-2 text-xs sm:text-sm">
-                              <Phone className="h-3 w-3 flex-shrink-0 text-slate-400 sm:h-4 sm:w-4" />
-                              <span className="text-slate-600">
+                              <Phone className="h-3 w-3 flex-shrink-0 text-slate-400 dark:text-primary sm:h-4 sm:w-4" />
+                              <span className="text-slate-600 dark:text-gray-200">
                                 {booking.booked_by.phone}
                               </span>
                             </div>
@@ -318,19 +318,19 @@ function BookingRequests() {
                     </div>
 
                     {/* Booking Information */}
-                    <div className="rounded-xl border border-blue-100 bg-gradient-to-br from-blue-50 to-indigo-50 p-4 sm:rounded-2xl sm:p-6">
-                      <h4 className="mb-3 flex items-center gap-2 text-sm font-bold text-slate-900 sm:mb-4 sm:text-base">
-                        <Calendar className="h-4 w-4 text-indigo-500 sm:h-5 sm:w-5" />
+                    <div className="rounded-xl border border-blue-100 bg-gradient-to-br from-blue-50 to-indigo-50 p-4 dark:border-gray-700 dark:from-gray-900 dark:to-gray-900 sm:rounded-2xl sm:p-6">
+                      <h4 className="dark: mb-3 flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-gray-200 sm:mb-4 sm:text-base">
+                        <Calendar className="h-4 w-4 text-indigo-500 dark:text-primary sm:h-5 sm:w-5" />
                         Booking Details
                       </h4>
                       <div className="space-y-3 sm:space-y-4">
                         {booking.full_name &&
                           booking.full_name !== booking.booked_by.full_name && (
                             <div>
-                              <p className="mb-1 text-xs text-slate-600 sm:text-sm">
+                              <p className="mb-1 text-xs text-slate-600 dark:text-gray-300 sm:text-sm">
                                 Tenant Name
                               </p>
-                              <p className="line-clamp-1 text-sm font-medium text-slate-900 sm:text-base">
+                              <p className="line-clamp-1 text-sm font-medium text-slate-900 dark:text-gray-300 sm:text-base">
                                 {booking.full_name}
                               </p>
                             </div>
@@ -338,10 +338,10 @@ function BookingRequests() {
                         {booking.email &&
                           booking.email !== booking.booked_by.email && (
                             <div>
-                              <p className="mb-1 text-xs text-slate-600 sm:text-sm">
+                              <p className="mb-1 text-xs text-slate-600 dark:text-gray-300 sm:text-sm">
                                 Tenant Email
                               </p>
-                              <p className="truncate text-sm font-medium text-slate-900 sm:text-base">
+                              <p className="truncate text-sm font-medium text-slate-900 dark:text-gray-200 sm:text-base">
                                 {booking.email}
                               </p>
                             </div>
@@ -358,29 +358,29 @@ function BookingRequests() {
                         )}
                         <div className="grid grid-cols-2 gap-3 sm:gap-4">
                           <div>
-                            <p className="mb-1 text-xs text-slate-600 sm:text-sm">
+                            <p className="mb-1 text-xs text-slate-600 dark:text-gray-400 sm:text-sm">
                               Move-in
                             </p>
-                            <p className="text-xs font-medium text-slate-900 sm:text-sm">
+                            <p className="text-xs font-medium text-slate-900 dark:text-gray-300 sm:text-sm">
                               {formatDate(booking.move_in_date)}
                             </p>
                           </div>
                           <div>
-                            <p className="mb-1 text-xs text-slate-600 sm:text-sm">
+                            <p className="mb-1 text-xs text-slate-600 dark:text-gray-400 sm:text-sm">
                               Move-out
                             </p>
-                            <p className="text-xs font-medium text-slate-900 sm:text-sm">
+                            <p className="text-xs font-medium text-slate-900 dark:text-gray-300 sm:text-sm">
                               {formatDate(booking.move_out_date)}
                             </p>
                           </div>
                         </div>
                         <div>
-                          <p className="mb-1 text-xs text-slate-600 sm:text-sm">
+                          <p className="mb-1 text-xs text-slate-600 dark:text-gray-400 sm:text-sm">
                             Occupants
                           </p>
                           <div className="flex items-center gap-2">
-                            <Users className="h-3 w-3 text-indigo-500 sm:h-4 sm:w-4" />
-                            <span className="text-sm font-medium text-slate-900 sm:text-base">
+                            <Users className="h-3 w-3 text-indigo-500 dark:text-primary sm:h-4 sm:w-4" />
+                            <span className="text-sm font-medium text-slate-900 dark:text-gray-300 sm:text-base">
                               {booking.number_of_occupants} person(s)
                             </span>
                           </div>
@@ -391,14 +391,14 @@ function BookingRequests() {
 
                   {/* Special Note */}
                   {booking.note && (
-                    <div className="mt-4 rounded-xl border border-amber-200 bg-gradient-to-r from-amber-50 to-orange-50 p-4 sm:mt-6 sm:rounded-2xl sm:p-6">
+                    <div className="mt-4 rounded-xl border border-amber-200 bg-gradient-to-r from-amber-50 to-orange-50 p-4 dark:border-gray-700 dark:from-gray-800 dark:to-gray-900 sm:mt-6 sm:rounded-2xl sm:p-6">
                       <div className="flex items-start gap-3">
                         <MessageSquare className="mt-0.5 h-4 w-4 flex-shrink-0 text-amber-600 sm:h-5 sm:w-5" />
                         <div>
-                          <h5 className="mb-2 text-sm font-semibold text-amber-900 sm:text-base">
+                          <h5 className="mb-2 text-sm font-semibold text-amber-900 dark:text-amber-300 sm:text-base">
                             Special Note
                           </h5>
-                          <p className="text-sm leading-relaxed text-amber-800 sm:text-base">
+                          <p className="text-sm leading-relaxed text-amber-800 dark:text-amber-200 sm:text-base">
                             {booking.note}
                           </p>
                         </div>
@@ -414,7 +414,7 @@ function BookingRequests() {
                           expandedCard === booking.id ? null : booking.id,
                         )
                       }
-                      className="flex items-center gap-2 rounded-lg bg-gray-50 px-3 py-2 text-sm font-semibold text-gray-600 transition-colors hover:bg-gray-100 hover:text-primary/90 sm:rounded-xl sm:px-4 sm:text-base"
+                      className="flex items-center gap-2 rounded-lg bg-gray-50 px-3 py-2 text-sm font-semibold text-gray-600 transition-colors hover:bg-gray-100 hover:text-primary/90 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-primary/90 sm:rounded-xl sm:px-4 sm:text-base lg:px-6 lg:py-3"
                     >
                       <Eye className="h-4 w-4" />
                       {expandedCard === booking.id ? "Hide" : "View"} Property
@@ -429,46 +429,46 @@ function BookingRequests() {
 
                   {/* Expanded Property Details */}
                   {expandedCard === booking.id && (
-                    <div className="mt-4 rounded-xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-4 sm:mt-6 sm:rounded-2xl sm:p-6">
+                    <div className="mt-4 rounded-xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-4 dark:border-gray-700 dark:from-gray-900 dark:to-gray-800 sm:mt-6 sm:rounded-2xl sm:p-6">
                       <div className="mb-4 grid grid-cols-2 gap-3 sm:mb-6 sm:grid-cols-4 sm:gap-4 lg:gap-6">
-                        <div className="rounded-lg border border-slate-100 bg-white p-3 text-center sm:rounded-xl sm:p-4">
-                          <div className="text-xl font-bold text-slate-900 sm:text-2xl">
+                        <div className="rounded-lg border border-slate-100 bg-white p-3 text-center dark:border-gray-700 dark:bg-gray-900 sm:rounded-xl sm:p-4">
+                          <div className="text-xl font-bold text-slate-900 dark:text-gray-200 sm:text-2xl">
                             {booking.place.num_of_bedrooms}
                           </div>
-                          <div className="text-xs text-slate-600 sm:text-sm">
+                          <div className="text-xs text-slate-600 dark:text-gray-400 sm:text-sm">
                             Bedrooms
                           </div>
                         </div>
-                        <div className="rounded-lg border border-slate-100 bg-white p-3 text-center sm:rounded-xl sm:p-4">
-                          <div className="text-xl font-bold text-slate-900 sm:text-2xl">
+                        <div className="rounded-lg border border-slate-100 bg-white p-3 text-center dark:border-gray-700 dark:bg-gray-900 sm:rounded-xl sm:p-4">
+                          <div className="text-xl font-bold text-slate-900 dark:text-gray-200 sm:text-2xl">
                             {booking.place.num_of_bathrooms}
                           </div>
-                          <div className="text-xs text-slate-600 sm:text-sm">
+                          <div className="text-xs text-slate-600 dark:text-gray-400 sm:text-sm">
                             Bathrooms
                           </div>
                         </div>
-                        <div className="rounded-lg border border-slate-100 bg-white p-3 text-center sm:rounded-xl sm:p-4">
-                          <div className="text-xl font-bold text-slate-900 sm:text-2xl">
+                        <div className="rounded-lg border border-slate-100 bg-white p-3 text-center dark:border-gray-700 dark:bg-gray-900 sm:rounded-xl sm:p-4">
+                          <div className="text-xl font-bold text-slate-900 dark:text-gray-200 sm:text-2xl">
                             {booking.place.area_in_sqft}
                           </div>
-                          <div className="text-xs text-slate-600 sm:text-sm">
+                          <div className="text-xs text-slate-600 dark:text-gray-400 sm:text-sm">
                             Sq Ft
                           </div>
                         </div>
-                        <div className="rounded-lg border border-slate-100 bg-white p-3 text-center sm:rounded-xl sm:p-4">
-                          <div className="text-xl font-bold text-slate-900 sm:text-2xl">
+                        <div className="rounded-lg border border-slate-100 bg-white p-3 text-center dark:border-gray-700 dark:bg-gray-900 sm:rounded-xl sm:p-4">
+                          <div className="text-xl font-bold text-slate-900 dark:text-gray-200 sm:text-2xl">
                             {booking.place.capacity}
                           </div>
-                          <div className="text-xs text-slate-600 sm:text-sm">
+                          <div className="text-xs text-slate-600 dark:text-gray-400 sm:text-sm">
                             Max People
                           </div>
                         </div>
                       </div>
-                      <div className="rounded-lg border border-slate-100 bg-white p-3 sm:rounded-xl sm:p-4">
-                        <h6 className="mb-2 text-sm font-semibold text-slate-900 sm:text-base">
+                      <div className="rounded-lg border border-slate-100 bg-white p-3 dark:border-gray-700 dark:bg-gray-900 sm:rounded-xl sm:p-4">
+                        <h6 className="mb-2 text-sm font-semibold text-slate-900 dark:text-gray-200 sm:text-base">
                           Full Address
                         </h6>
-                        <p className="text-sm leading-relaxed text-slate-700 sm:text-base">
+                        <p className="text-sm leading-relaxed text-slate-700 dark:text-gray-400 sm:text-base">
                           {booking.place.house_name},{" "}
                           {booking.place.house_number}
                           {booking.place.apartment_number &&
@@ -487,7 +487,7 @@ function BookingRequests() {
                           onClick={() =>
                             HandleUpdateStatus(booking.id, "accepted")
                           }
-                          className="flex transform items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-green-500 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-emerald-200 transition-all duration-200 hover:from-emerald-600 hover:to-green-600 hover:shadow-xl hover:shadow-emerald-300 sm:gap-3 sm:rounded-2xl sm:px-6 sm:py-3 sm:text-base lg:px-8"
+                          className="flex transform items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-green-500 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-emerald-200 transition-all duration-200 hover:from-emerald-600 hover:to-green-600 hover:shadow-xl hover:shadow-emerald-300 dark:shadow-none sm:gap-3 sm:rounded-2xl sm:px-6 sm:py-3 sm:text-base lg:px-8"
                         >
                           <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5" />
                           Confirm Booking
@@ -496,7 +496,7 @@ function BookingRequests() {
                           onClick={() =>
                             HandleUpdateStatus(booking.id, "rejected")
                           }
-                          className="flex transform items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-rose-500 to-red-500 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-rose-200 transition-all duration-200 hover:from-rose-600 hover:to-red-600 hover:shadow-xl hover:shadow-rose-300 sm:gap-3 sm:rounded-2xl sm:px-6 sm:py-3 sm:text-base lg:px-8"
+                          className="flex transform items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-rose-500 to-red-500 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-rose-200 transition-all duration-200 hover:from-rose-600 hover:to-red-600 hover:shadow-xl hover:shadow-rose-300 dark:shadow-none sm:gap-3 sm:rounded-2xl sm:px-6 sm:py-3 sm:text-base lg:px-8"
                         >
                           <XCircle className="h-4 w-4 sm:h-5 sm:w-5" />
                           Reject Booking
@@ -508,7 +508,7 @@ function BookingRequests() {
                         onClick={() =>
                           HandleUpdateStatus(booking.id, "pending")
                         }
-                        className="transform rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-amber-200 transition-all duration-200 hover:scale-105 hover:from-amber-600 hover:to-yellow-600 hover:shadow-xl hover:shadow-amber-300 sm:rounded-2xl sm:px-6 sm:py-3 sm:text-base lg:px-8"
+                        className="transform rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-amber-200 transition-all duration-200 hover:scale-105 hover:from-amber-600 hover:to-yellow-600 hover:shadow-xl hover:shadow-amber-300 dark:shadow-none sm:rounded-2xl sm:px-6 sm:py-3 sm:text-base lg:px-8"
                       >
                         Mark as Pending
                       </button>
@@ -518,7 +518,7 @@ function BookingRequests() {
                         onClick={() =>
                           HandleUpdateStatus(booking.id, "pending")
                         }
-                        className="transform rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-200 transition-all duration-200 hover:scale-105 hover:from-blue-600 hover:to-indigo-600 hover:shadow-xl hover:shadow-blue-300 sm:rounded-2xl sm:px-6 sm:py-3 sm:text-base lg:px-8"
+                        className="transform rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-200 transition-all duration-200 hover:scale-105 hover:from-blue-600 hover:to-indigo-600 hover:shadow-xl hover:shadow-blue-300 dark:shadow-none sm:rounded-2xl sm:px-6 sm:py-3 sm:text-base lg:px-8"
                       >
                         Reconsider Request
                       </button>

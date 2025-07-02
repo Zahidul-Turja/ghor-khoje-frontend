@@ -152,7 +152,9 @@ function Notifications() {
       <div className="min-h-screen sm:px-6">
         <div className="mx-auto">
           <div className="mb-6 flex items-center justify-between">
-            <h1 className="text-3xl font-bold text-gray-900">Notifications</h1>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-200">
+              Notifications
+            </h1>
           </div>
           <div className="flex items-center justify-center py-16">
             <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-primary/80"></div>
@@ -166,7 +168,9 @@ function Notifications() {
     <div className="min-h-screen sm:px-6">
       <div className="mx-auto">
         <div className="mb-6 flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-gray-900">Notifications</h1>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-200">
+            Notifications
+          </h1>
           <div className="flex items-center space-x-2">
             <button className="rounded-full bg-white p-2 shadow-md hover:bg-gray-50">
               <Bell size={20} className="text-gray-600" />
@@ -179,8 +183,8 @@ function Notifications() {
           </div>
         </div>
 
-        <div className="overflow-hidden rounded-2xl bg-white shadow-xl">
-          <div className="border-b border-gray-200 bg-gradient-to-r from-primary/80 to-primary/90 p-6">
+        <div className="overflow-hidden rounded-2xl bg-white shadow-xl dark:bg-gray-900">
+          <div className="border-b border-gray-200 bg-gradient-to-r from-primary/80 to-primary/90 p-6 dark:border-gray-700 dark:bg-gray-800">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <Bell size={24} className="mr-3 rotate-12 text-white" />
@@ -238,12 +242,12 @@ function Notifications() {
 
           <div className="p-1">
             {filteredNotifications.length > 0 ? (
-              <ul className="divide-y divide-gray-100">
+              <ul className="divide-y divide-gray-100 dark:divide-gray-700">
                 {filteredNotifications.map((notification) => (
                   <li
                     key={notification.id}
                     onClick={() => handleNotificationClick(notification.id)}
-                    className={`flex items-start p-4 transition hover:bg-gray-50 ${
+                    className={`dark:hover-bg-gray-700 flex items-start p-4 transition hover:bg-gray-800 ${
                       !notification.is_read
                         ? "cursor-pointer bg-blue-50/50"
                         : ""
@@ -257,8 +261,8 @@ function Notifications() {
                         <h3
                           className={`mb-1 text-sm font-semibold ${
                             !notification.is_read
-                              ? "text-gray-900"
-                              : "text-gray-700"
+                              ? "text-gray-900 dark:text-gray-400"
+                              : "text-gray-700 dark:text-gray-200"
                           }`}
                         >
                           {notification.title}
@@ -267,8 +271,8 @@ function Notifications() {
                       <p
                         className={`text-sm ${
                           !notification.is_read
-                            ? "font-medium text-gray-900"
-                            : "text-gray-800"
+                            ? "font-medium text-gray-900 dark:text-gray-400"
+                            : "text-gray-800 dark:text-gray-300"
                         }`}
                       >
                         {notification.message}
@@ -276,7 +280,7 @@ function Notifications() {
                       <div className="mt-1 flex items-center text-xs text-gray-500">
                         <Clock size={12} className="mr-1" />
                         {formatTime(notification.created_at)}
-                        <span className="ml-2 rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600">
+                        <span className="ml-2 rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600 dark:bg-gray-800 dark:text-gray-300">
                           {notification.type}
                         </span>
                         {markingIds.has(notification.id) && (
@@ -299,13 +303,16 @@ function Notifications() {
               </ul>
             ) : (
               <div className="flex flex-col items-center justify-center py-16">
-                <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-gray-100">
-                  <Bell size={32} className="text-gray-400" />
+                <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
+                  <Bell
+                    size={32}
+                    className="text-gray-400 dark:text-gray-300"
+                  />
                 </div>
-                <h3 className="mb-1 text-lg font-medium text-gray-900">
+                <h3 className="mb-1 text-lg font-medium text-gray-900 dark:text-gray-200">
                   No notifications
                 </h3>
-                <p className="text-gray-500">
+                <p className="text-gray-500 dark:text-gray-400">
                   You're all caught up! Check back later.
                 </p>
               </div>
@@ -313,12 +320,12 @@ function Notifications() {
           </div>
 
           {filteredNotifications.length > 0 && (
-            <div className="border-t border-gray-200 bg-gray-50 p-4">
+            <div className="border-t border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800">
               <div className="flex items-center justify-between">
-                <button className="text-sm font-medium text-indigo-600 hover:text-indigo-800">
+                <button className="text-sm font-medium text-indigo-600 hover:text-indigo-800 dark:text-indigo-200">
                   Clear all notifications
                 </button>
-                <button className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700">
+                <button className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-500">
                   View all activity
                   <svg
                     className="ml-1 h-4 w-4"

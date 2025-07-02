@@ -26,7 +26,7 @@ function BookMarks() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-6 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 px-4 py-6 dark:bg-gray-900 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="mb-8">
           <div className="flex items-center gap-4">
@@ -36,10 +36,10 @@ function BookMarks() {
               </div>
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-200 sm:text-3xl">
                 Bookmarks
               </h1>
-              <p className="mt-1 text-gray-600">
+              <p className="mt-1 text-gray-600 dark:text-gray-400">
                 You've bookmarked these places
               </p>
             </div>
