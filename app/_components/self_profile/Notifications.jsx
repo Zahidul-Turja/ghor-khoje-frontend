@@ -247,13 +247,13 @@ function Notifications() {
                   <li
                     key={notification.id}
                     onClick={() => handleNotificationClick(notification.id)}
-                    className={`dark:hover-bg-gray-700 flex items-start p-4 transition hover:bg-gray-800 ${
+                    className={`flex items-start p-4 transition hover:bg-gray-200 dark:hover:bg-gray-700 ${
                       !notification.is_read
-                        ? "cursor-pointer bg-blue-50/50"
+                        ? "cursor-pointer bg-blue-50/50 dark:bg-gray-900"
                         : ""
                     } ${markingIds.has(notification.id) ? "opacity-60" : ""}`}
                   >
-                    <div className="mr-4 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-100 to-purple-100">
+                    <div className="mr-4 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-gray-700 dark:to-gray-800">
                       {getNotificationIcon(notification.type)}
                     </div>
                     <div className="flex-grow">
@@ -320,7 +320,7 @@ function Notifications() {
           </div>
 
           {filteredNotifications.length > 0 && (
-            <div className="border-t border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800">
+            <div className="border-t border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-900">
               <div className="flex items-center justify-between">
                 <button className="text-sm font-medium text-indigo-600 hover:text-indigo-800 dark:text-indigo-200">
                   Clear all notifications
