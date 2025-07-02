@@ -35,10 +35,18 @@ function SectionProperties() {
     }
   };
 
+  const handleFilterApply = () => {
+    setIsModalOpen(false);
+    setPage(1);
+    setNumberOfItems(pageSize);
+    getPlaces(pageSize, 1, "all", searchTerm, dateFilter, sortOrder);
+    console.log("Filters Applied:", { searchTerm, dateFilter, sortOrder });
+  };
+
   return (
     <section className="mx-auto max-w-screen-2xl px-3 py-8 md:px-6 md:py-10 lg:px-8">
       {/* Filter and Sort Bar */}
-      <div className="my-6 flex w-full flex-col gap-4 rounded-2xl bg-white px-4 py-0 shadow-lg md:my-8 md:flex-row md:items-center md:justify-between md:px-6 lg:rounded-full dark:bg-gray-800">
+      <div className="my-6 flex w-full flex-col gap-4 rounded-2xl bg-white px-4 py-0 shadow-lg dark:bg-gray-800 md:my-8 md:flex-row md:items-center md:justify-between md:px-6 lg:rounded-full">
         {/* Category Filter Navigation */}
         <div className="order-2 w-full md:order-1 md:w-[80%] lg:w-[80%] xl:w-[85%]">
           <CategoryFilterNav pageSize={pageSize} page={page} />
@@ -48,7 +56,7 @@ function SectionProperties() {
         <div className="order-1 flex w-full items-center justify-center gap-3 md:order-2 md:w-auto md:justify-end">
           <button
             onClick={() => setIsModalOpen(true)}
-            className="flex flex-1 items-center justify-center gap-2 rounded-full border border-gray-300 px-4 py-2.5 text-sm font-medium transition-all hover:bg-gray-100 active:scale-95 md:flex-initial dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-white"
+            className="flex flex-1 items-center justify-center gap-2 rounded-full border border-gray-300 px-4 py-2.5 text-sm font-medium transition-all hover:bg-gray-100 active:scale-95 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-white md:flex-initial"
           >
             <MdTune className="text-lg" />
             <span className="hidden sm:inline">Filters & Sort</span>
@@ -124,9 +132,9 @@ function SectionProperties() {
                 {["7", "30", "90", "all"].map((day) => (
                   <button
                     key={day}
-                    onClick={() => setDateFilter(day)}
+                    onClick={() => setDateFilter(`last_${day}_days`)}
                     className={`rounded-full border px-4 py-1 text-sm dark:text-gray-300 ${
-                      dateFilter === day
+                      dateFilter === `last_${day}_days`
                         ? "border-primary/30 bg-primary/80 text-white"
                         : "border-gray-300 text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700"
                     }`}
@@ -147,8 +155,8 @@ function SectionProperties() {
                   <input
                     type="radio"
                     value="low"
-                    checked={sortOrder === "low"}
-                    onChange={() => setSortOrder("low")}
+                    checked={sortOrder === "low_to_high"}
+                    onChange={() => setSortOrder("low_to_high")}
                   />
                   Low to High
                 </label>
@@ -156,18 +164,29 @@ function SectionProperties() {
                   <input
                     type="radio"
                     value="high"
-                    checked={sortOrder === "high"}
-                    onChange={() => setSortOrder("high")}
+                    checked={sortOrder === "high_to_low"}
+                    onChange={() => setSortOrder("high_to_low")}
                   />
                   High to Low
                 </label>
               </div>
             </div>
 
+            <button
+              onClick={() => {
+                setSearchTerm("");
+                setDateFilter("");
+                setSortOrder("");
+              }}
+              className="mt-4 rounded-lg bg-gray-200 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-300 dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-500"
+            >
+              Clear Filters
+            </button>
+
             {/* Action Button */}
             <div className="mt-6 flex justify-end">
               <button
-                onClick={() => setIsModalOpen(false)}
+                onClick={() => handleFilterApply()}
                 className="rounded-lg bg-primary px-6 py-2 text-sm font-medium text-white hover:bg-primary/80"
               >
                 Apply Filters

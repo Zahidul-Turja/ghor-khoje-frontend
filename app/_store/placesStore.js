@@ -12,14 +12,21 @@ const usePlacesStore = create((set, get) => ({
   previousPage: null,
   totalPages: null,
 
-  getPlaces: async (page_size = 16, page = 1, category = "") => {
+  getPlaces: async (
+    page_size = 16,
+    page = 1,
+    category = "",
+    search = "",
+    date_range = "",
+    sort_by_price = "",
+  ) => {
     try {
       set({ isLoading: true });
       const categoryQuery = category
         ? `&category=${category}`
         : "&category=all";
       const response = await fetch(
-        `${BASE_ENDPOINT}/api/v1/places/list/?page_size=${page_size}&page=${page}${categoryQuery}`,
+        `${BASE_ENDPOINT}/api/v1/places/list/?page_size=${page_size}&page=${page}${categoryQuery}&search=${search}&date_range=${date_range}&sort_by_price=${sort_by_price}`,
       );
       const data = await response.json();
 
