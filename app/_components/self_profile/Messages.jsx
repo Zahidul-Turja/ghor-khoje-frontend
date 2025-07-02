@@ -207,7 +207,7 @@ function Messages() {
     <div className="min-h-screen bg-gradient-to-br">
       <div className="mx-auto flex h-screen flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between bg-white p-6 shadow-sm">
+        <div className="flex items-center justify-between bg-white p-6 shadow-sm dark:bg-gray-900">
           <h1 className="text-3xl font-bold">Messages</h1>
           <div className="flex items-center gap-2">
             {!isConnected && (
@@ -217,7 +217,10 @@ function Messages() {
               </div>
             )}
             <div className="rounded-full bg-primary/80 p-2 shadow-md">
-              <Construction size={20} className="text-white" />
+              <Construction
+                size={20}
+                className="text-white transition-colors duration-200 hover:text-gray-300 dark:text-gray-200"
+              />
             </div>
           </div>
         </div>
