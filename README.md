@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🏠 Ghor Khoje – Frontend
 
-## Getting Started
+**Ghor Khoje** is a modern and responsive property rental platform in Bangladesh. This is the frontend portion of the application built with **Next.js**, **Tailwind CSS**, **Zustand**, and **Recharts**, aimed at providing a seamless and interactive user experience.
 
-First, run the development server:
+---
+
+## 🚀 Features
+
+- 🔐 Authentication and user profiles
+- 📩 OTP verification via email
+- 🛡️ Custom admin panel for host
+- 🏡 Browse listings by category, city, and availability
+- 🔍 Advanced filtering & sorting (price, category, date, etc.)
+- 📊 Graphical analytics dashboard for hosts
+- 🗺️ Property location mapping
+- 📅 Booking and calendar management
+- 📝 Reviews for both the Host and place
+- 💬 Messaging system between users and hosts
+- 📦 Modular component-based architecture with optimized performance
+- 🔔 Notifications for users
+- 💬 Feedback and email functionality if user wants
+- ⏾⋆ Dark mode support
+
+and many more
+
+---
+
+## 🛠️ Tech Stack
+
+| Tech                                     | Description                       |
+| ---------------------------------------- | --------------------------------- |
+| [Next.js](https://nextjs.org/)           | React framework for SSR & routing |
+| [Tailwind CSS](https://tailwindcss.com/) | Utility-first CSS framework       |
+| [Recharts](https://recharts.org/)        | Chart library for analytics       |
+| [Zustand](https://zustand-demo.pmnd.rs/) | Lightweight state management      |
+
+---
+
+## 📦 Setup Instructions
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Zahidul-Turja/ghor-khoje-frontend.git
+cd ghor-khoje-frontend
+```
+
+### 2. Create a Environment
+
+Create a `.env.loca` file and these variables
+
+```bash
+NEXT_PUBLIC_BASE_API_ENDPOINT=http://127.0.0.1:8000
+NEXT_PUBLIC_CHAT_SOCKET_ENDPOINT=ws://127.0.0.1:8000
+```
+
+### 3. Install dependencies
+
+```bash
+npm install
+```
+
+### 4. Install and run backend
+
+Please setup the [backend](https://github.com/Zahidul-Turja/ghor-khoje-backend).
+
+### 5. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app should now be running at [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🤝 Contributing
 
-## Learn More
+Contributions are welcome! Feel free to fork the repo, create a new branch, and submit a PR.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🧑 Author
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Zahidul Islam Turja**  
+🔗 [LinkedIn](https://linkedin.com/in/zahidul-turja)  
+📫 zahidul.turja@gmail.com
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📝 License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is licensed under the [MIT License](LICENSE).
