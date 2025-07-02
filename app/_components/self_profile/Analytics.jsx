@@ -129,11 +129,15 @@ function Analytics() {
     };
 
     return (
-      <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg">
+      <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg dark:border-gray-700 dark:bg-gray-900">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-sm font-medium text-gray-600">{title}</p>
-            <p className="text-2xl font-bold text-gray-900">{value}</p>
+            <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
+              {title}
+            </p>
+            <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+              {value}
+            </p>
             {change && (
               <p
                 className={`text-sm ${change > 0 ? "text-green-600" : "text-red-600"} flex items-center gap-1`}
@@ -153,7 +157,7 @@ function Analytics() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 px-4 py-6 sm:px-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 px-4 py-6 dark:from-gray-900 dark:via-gray-900 dark:to-gray-900 sm:px-6">
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="mb-8 flex items-center justify-between">
@@ -161,7 +165,7 @@ function Analytics() {
             <h1 className="bg-gradient-to-r from-primary/80 to-primary bg-clip-text text-4xl font-bold text-transparent">
               Analytics Dashboard
             </h1>
-            <p className="mt-2 text-gray-600">
+            <p className="mt-2 text-gray-600 dark:text-gray-400">
               Track your rental performance and insights
             </p>
           </div>
@@ -189,7 +193,7 @@ function Analytics() {
 
         <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
           {/* Revenue & Bookings Combined */}
-          <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg">
+          <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg dark:border-gray-700 dark:bg-gray-900">
             <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold">
               <TrendingUp className="text-blue-500" size={20} />
               Revenue & Bookings Trend
@@ -229,7 +233,7 @@ function Analytics() {
           </div>
 
           {/* Occupancy Rate */}
-          <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg">
+          <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg dark:border-gray-700 dark:bg-gray-900">
             <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold">
               <Users className="text-purple-500" size={20} />
               Occupancy Rate
@@ -325,7 +329,7 @@ function Analytics() {
               </PieChart>
             </ResponsiveContainer>
           </div> */}
-          <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg">
+          <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg dark:border-gray-700 dark:bg-gray-900">
             <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold">
               <DollarSign className="text-green-500" size={20} />
               Price vs Revenue Analysis
@@ -361,7 +365,7 @@ function Analytics() {
           </div>
 
           {/* Performance Metrics */}
-          <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg">
+          <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg dark:border-gray-700 dark:bg-gray-900">
             <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold">
               <Award className="text-orange-500" size={20} />
               Performance Metrics
@@ -370,7 +374,7 @@ function Analytics() {
               {performanceMetrics.map((metric, index) => (
                 <div key={index}>
                   <div className="mb-1 flex items-center justify-between">
-                    <span className="text-sm font-medium text-gray-700">
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                       {metric.metric}
                     </span>
                     <span className="text-sm font-bold">
@@ -378,7 +382,7 @@ function Analytics() {
                       {metric.metric.includes("Rate") ? "%" : "/5"}
                     </span>
                   </div>
-                  <div className="h-2 w-full rounded-full bg-gray-200">
+                  <div className="h-2 w-full rounded-full bg-gray-200 dark:bg-gray-950">
                     <div
                       className="h-2 rounded-full"
                       style={{
@@ -393,7 +397,7 @@ function Analytics() {
           </div>
         </div>
 
-        <div className="mb-8 rounded-xl border border-gray-100 bg-white p-6 shadow-lg">
+        <div className="mb-8 rounded-xl border border-gray-100 bg-white p-6 shadow-lg dark:border-gray-700 dark:bg-gray-900">
           <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold">
             <Star className="text-yellow-500" size={20} />
             Top Performing Listings
@@ -421,9 +425,9 @@ function Analytics() {
           </ResponsiveContainer>
         </div>
 
-        <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
+        {/*<div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
           {/* Price Optimization */}
-          {/* <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg">
+        {/*<div className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg">
             <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold">
               <DollarSign className="text-green-500" size={20} />
               Price vs Revenue Analysis
@@ -458,8 +462,8 @@ function Analytics() {
             </ResponsiveContainer>
           </div> */}
 
-          {/* Seasonal Trends */}
-          {/* <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg">
+        {/* Seasonal Trends */}
+        {/* <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg">
             <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold">
               <Clock className="text-indigo-500" size={20} />
               Average Stay Duration
@@ -488,8 +492,8 @@ function Analytics() {
                 />
               </LineChart>
             </ResponsiveContainer>
-          </div> */}
-        </div>
+          </div> 
+        </div>*/}
 
         {/* Cancellation Analysis */}
         {/* <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg">

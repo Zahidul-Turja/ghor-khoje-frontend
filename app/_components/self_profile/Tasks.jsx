@@ -273,7 +273,7 @@ function Tasks() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 px-4 py-6 sm:px-6">
+    <div className="dark:from-gray-gray-900 min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 px-4 py-6 dark:from-gray-900 dark:via-gray-900 dark:to-gray-900 dark:text-gray-200 sm:px-6">
       <div className="mx-auto max-w-6xl">
         {/* Header */}
         <div className="mb-8 flex items-center justify-between">
@@ -281,7 +281,7 @@ function Tasks() {
             <h1 className="bg-gradient-to-r from-primary/80 to-primary bg-clip-text text-4xl font-bold text-transparent">
               Task Management
             </h1>
-            <p className="mt-2 text-gray-600">
+            <p className="mt-2 text-gray-600 dark:text-gray-400">
               Keep track of your rental property tasks
             </p>
           </div>
@@ -301,47 +301,57 @@ function Tasks() {
 
         {/* Stats Cards */}
         <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-5">
-          <div className="rounded-lg border border-gray-100 bg-white p-4 shadow-lg">
-            <div className="text-2xl font-bold text-gray-900">
+          <div className="rounded-lg border border-gray-100 bg-white p-4 shadow-lg dark:border-gray-700 dark:bg-gray-900">
+            <div className="text-2xl font-bold text-gray-900 dark:text-gray-200">
               {taskStats.total}
             </div>
-            <div className="text-sm text-gray-600">Total Tasks</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">
+              Total Tasks
+            </div>
           </div>
-          <div className="rounded-lg border border-gray-100 bg-white p-4 shadow-lg">
+          <div className="rounded-lg border border-gray-100 bg-white p-4 shadow-lg dark:border-gray-700 dark:bg-gray-900">
             <div className="text-2xl font-bold text-green-600">
               {taskStats.is_complete}
             </div>
-            <div className="text-sm text-gray-600">Complete</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">
+              Complete
+            </div>
           </div>
-          <div className="rounded-lg border border-gray-100 bg-white p-4 shadow-lg">
+          <div className="rounded-lg border border-gray-100 bg-white p-4 shadow-lg dark:border-gray-700 dark:bg-gray-900">
             <div className="text-2xl font-bold text-blue-600">
               {taskStats.pending}
             </div>
-            <div className="text-sm text-gray-600">Pending</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">
+              Pending
+            </div>
           </div>
-          <div className="rounded-lg border border-gray-100 bg-white p-4 shadow-lg">
+          <div className="rounded-lg border border-gray-100 bg-white p-4 shadow-lg dark:border-gray-700 dark:bg-gray-900">
             <div className="text-2xl font-bold text-red-600">
               {taskStats.overdue}
             </div>
-            <div className="text-sm text-gray-600">Overdue</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">
+              Overdue
+            </div>
           </div>
-          <div className="rounded-lg border border-gray-100 bg-white p-4 shadow-lg">
+          <div className="rounded-lg border border-gray-100 bg-white p-4 shadow-lg dark:border-gray-700 dark:bg-gray-900">
             <div className="text-2xl font-bold text-orange-600">
               {taskStats.dueSoon}
             </div>
-            <div className="text-sm text-gray-600">Due Soon</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">
+              Due Soon
+            </div>
           </div>
         </div>
 
         {/* Filters */}
-        <div className="mb-6 rounded-xl border border-gray-100 bg-white p-6 shadow-lg">
+        <div className="mb-6 rounded-xl border border-gray-100 bg-white p-6 shadow-lg dark:border-gray-700 dark:bg-gray-900">
           <div className="flex flex-col items-center gap-4 md:flex-row">
             <div className="flex flex-1 items-center gap-2">
               <Search size={20} className="text-gray-400" />
               <input
                 type="text"
                 placeholder="Search tasks..."
-                className="flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-900"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -349,7 +359,7 @@ function Tasks() {
             <div className="flex items-center gap-2">
               <Filter size={20} className="text-gray-400" />
               <select
-                className="rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-900"
                 value={filterCategory}
                 onChange={(e) => setFilterCategory(e.target.value)}
               >
@@ -361,7 +371,7 @@ function Tasks() {
                 ))}
               </select>
               <select
-                className="rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-900"
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
               >
@@ -375,18 +385,18 @@ function Tasks() {
 
         {/* Add/Edit Task Form */}
         {showAddForm && (
-          <div className="mb-6 rounded-xl border border-gray-100 bg-white p-6 shadow-lg">
+          <div className="mb-6 rounded-xl border border-gray-100 bg-white p-6 shadow-lg dark:border-gray-700 dark:bg-gray-900">
             <h3 className="mb-4 text-lg font-semibold">
               {editingTask ? "Edit Task" : "Add New Task"}
             </h3>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div className="md:col-span-2">
-                <label className="mb-1 block text-sm font-medium text-gray-700">
+                <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
                   Title
                 </label>
                 <input
                   type="text"
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900"
                   value={newTask.title}
                   onChange={(e) =>
                     setNewTask({ ...newTask, title: e.target.value })
@@ -395,11 +405,11 @@ function Tasks() {
                 />
               </div>
               <div className="md:col-span-2">
-                <label className="mb-1 block text-sm font-medium text-gray-700">
+                <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
                   Description
                 </label>
                 <textarea
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900"
                   rows="3"
                   value={newTask.description}
                   onChange={(e) =>
@@ -409,11 +419,11 @@ function Tasks() {
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium text-gray-700">
+                <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
                   Category
                 </label>
                 <select
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-900"
                   value={newTask.category}
                   onChange={(e) =>
                     setNewTask({ ...newTask, category: e.target.value })
@@ -427,11 +437,11 @@ function Tasks() {
                 </select>
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium text-gray-700">
+                <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
                   Priority
                 </label>
                 <select
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-900"
                   value={newTask.priority}
                   onChange={(e) =>
                     setNewTask({ ...newTask, priority: e.target.value })
@@ -445,12 +455,12 @@ function Tasks() {
                 </select>
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium text-gray-700">
+                <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
                   Due Date
                 </label>
                 <input
                   type="date"
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-900"
                   value={newTask.dueDate}
                   onChange={(e) =>
                     setNewTask({ ...newTask, dueDate: e.target.value })
@@ -458,7 +468,7 @@ function Tasks() {
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium text-gray-700">
+                <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
                   Property
                 </label>
                 {/* <input
@@ -471,7 +481,7 @@ function Tasks() {
                   placeholder="Which property is this for?"
                 /> */}
                 <select
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-900"
                   value={newTask.priority}
                   onChange={(e) =>
                     setNewTask({ ...newTask, related_property: e.target.value })
@@ -489,7 +499,7 @@ function Tasks() {
             <div className="mt-6 flex gap-3">
               <button
                 onClick={editingTask ? handleUpdateTask : handleAddTask}
-                className="rounded-lg bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600"
+                className="rounded-lg bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600 dark:bg-blue-700"
               >
                 {editingTask ? "Update Task" : "Add Task"}
               </button>
@@ -506,7 +516,7 @@ function Tasks() {
                     related_property: "",
                   });
                 }}
-                className="rounded-lg bg-gray-300 px-4 py-2 text-gray-700 transition-colors hover:bg-gray-400"
+                className="rounded-lg bg-gray-300 px-4 py-2 text-gray-700 transition-colors hover:bg-gray-400 dark:bg-gray-400 dark:text-gray-900 dark:hover:bg-gray-500 dark:hover:text-gray-100"
               >
                 Cancel
               </button>
@@ -517,14 +527,14 @@ function Tasks() {
         {/* Tasks List */}
         <div className="space-y-4">
           {filteredTasks.length === 0 ? (
-            <div className="rounded-xl border border-gray-100 bg-white p-8 text-center shadow-lg">
+            <div className="rounded-xl border border-gray-100 bg-white p-8 text-center shadow-lg dark:border-gray-700 dark:bg-gray-900">
               <div className="mb-4 text-gray-400">
                 <Circle size={48} className="mx-auto" />
               </div>
-              <h3 className="mb-2 text-lg font-medium text-gray-900">
+              <h3 className="mb-2 text-lg font-medium text-gray-900 dark:text-gray-200">
                 No tasks found
               </h3>
-              <p className="text-gray-600">
+              <p className="text-gray-600 dark:text-gray-400">
                 {searchTerm ||
                 filterCategory !== "all" ||
                 filterStatus !== "all"
@@ -541,7 +551,7 @@ function Tasks() {
               return (
                 <div
                   key={task.id}
-                  className={`rounded-xl border bg-white p-6 shadow-lg transition-all duration-200 hover:shadow-xl ${
+                  className={`rounded-xl border bg-white p-6 shadow-lg transition-all duration-200 hover:shadow-xl dark:bg-gray-900 ${
                     task.is_complete
                       ? "border-green-200 bg-green-50/30"
                       : isOverdue(task.dueDate)
@@ -573,8 +583,8 @@ function Tasks() {
                           <h3
                             className={`mb-2 text-lg font-semibold ${
                               task.is_complete
-                                ? "text-gray-500 line-through"
-                                : "text-gray-900"
+                                ? "text-gray-500 line-through dark:text-gray-400"
+                                : "text-gray-900 dark:text-gray-200"
                             }`}
                           >
                             {task.title}
@@ -583,8 +593,8 @@ function Tasks() {
                             <p
                               className={`mb-3 text-sm ${
                                 task.is_complete
-                                  ? "text-gray-400"
-                                  : "text-gray-600"
+                                  ? "text-gray-400 line-through dark:text-gray-500"
+                                  : "text-gray-600 dark:text-gray-300"
                               }`}
                             >
                               {task.description}
@@ -599,12 +609,12 @@ function Tasks() {
                               {categoryInfo.name}
                             </span>
                             <span
-                              className={`inline-flex items-center rounded-full border px-2 py-1 text-xs font-medium ${priorityInfo.color}`}
+                              className={`inline-flex items-center rounded-full border px-2 py-1 text-xs font-medium dark:border-gray-600 dark:bg-gray-900 ${priorityInfo.color}`}
                             >
                               {priorityInfo.name}
                             </span>
                             {task.related_property && (
-                              <span className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-700">
+                              <span className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-700 dark:bg-gray-800 dark:text-gray-300">
                                 <Home size={12} />
                                 {task.related_property.title}
                               </span>
