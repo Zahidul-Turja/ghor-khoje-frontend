@@ -122,11 +122,11 @@ export default function OTPVerificationModal({ email }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
-        <h2 className="mb-4 text-center text-2xl font-bold">
+      <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-xl dark:bg-gray-900">
+        <h2 className="mb-4 text-center text-2xl font-bold dark:text-gray-200">
           Verify Your Email
         </h2>
-        <p className="mb-6 text-center text-sm text-gray-600">
+        <p className="mb-6 text-center text-sm text-gray-600 dark:text-gray-300">
           We've sent a 4-digit code to {user?.email}. Enter the code below to
           verify your account.
         </p>
@@ -141,7 +141,7 @@ export default function OTPVerificationModal({ email }) {
               value={digit}
               onChange={(e) => handleOtpChange(index, e.target.value)}
               onKeyDown={(e) => handleKeyDown(index, e)}
-              className="h-14 w-14 rounded-md border border-gray-300 text-center text-2xl font-bold focus:border-primary/90 focus:outline-none focus:ring-1 focus:ring-primary/90"
+              className="h-14 w-14 rounded-md border border-gray-300 text-center text-2xl font-bold focus:border-primary/90 focus:outline-none focus:ring-1 focus:ring-primary/90 dark:bg-gray-900 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500"
             />
           ))}
         </div>

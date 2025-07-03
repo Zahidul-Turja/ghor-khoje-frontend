@@ -80,8 +80,8 @@ function SignupPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
-      <div className="relative w-full max-w-md space-y-8 rounded-lg border border-gray-200 px-10 py-12 shadow-md">
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 dark:bg-gray-900 sm:px-6 lg:px-8">
+      <div className="relative w-full max-w-md space-y-8 rounded-lg border border-gray-200 px-10 py-12 shadow-md dark:border-gray-700">
         <div>
           <a
             href="/"
@@ -89,14 +89,14 @@ function SignupPage() {
           >
             <FaChevronLeft />
           </a>
-          <h1 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          <h1 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-gray-200">
             Create your account
           </h1>
-          <p className="mt-2 text-center text-sm text-gray-600">
+          <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-300">
             Already have an account?{" "}
             <Link
               href="/auth/login"
-              className="font-medium text-primary/90 hover:text-primary/80"
+              className="font-medium text-primary/90 hover:text-primary/80 dark:text-primary"
             >
               Log in
             </Link>
@@ -124,7 +124,7 @@ function SignupPage() {
                 type="text"
                 autoComplete="name"
                 required
-                className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-primary/90 focus:outline-none focus:ring-primary/90 sm:text-sm"
+                className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-primary/90 focus:outline-none focus:ring-primary/90 dark:bg-gray-900 dark:text-gray-200 sm:text-sm"
                 placeholder="Full name"
                 value={formData.name}
                 onChange={handleChange}
@@ -140,7 +140,7 @@ function SignupPage() {
                 type="email"
                 autoComplete="email"
                 required
-                className="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-primary/90 focus:outline-none focus:ring-primary/90 sm:text-sm"
+                className="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-primary/90 focus:outline-none focus:ring-primary/90 dark:bg-gray-900 dark:text-gray-200 sm:text-sm"
                 placeholder="Email address"
                 value={formData.email}
                 onChange={handleChange}
@@ -156,7 +156,7 @@ function SignupPage() {
                 type="password"
                 autoComplete="new-password"
                 required
-                className="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-primary/90 focus:outline-none focus:ring-primary/90 sm:text-sm"
+                className="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-primary/90 focus:outline-none focus:ring-primary/90 dark:bg-gray-900 dark:text-gray-200 sm:text-sm"
                 placeholder="Password"
                 value={formData.password}
                 onChange={handleChange}
@@ -172,7 +172,7 @@ function SignupPage() {
                 type="password"
                 autoComplete="new-password"
                 required
-                className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-primary/90 focus:outline-none focus:ring-primary/90 sm:text-sm"
+                className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-primary/90 focus:outline-none focus:ring-primary/90 dark:bg-gray-900 dark:text-gray-200 sm:text-sm"
                 placeholder="Confirm password"
                 value={formData.confirm_password}
                 onChange={handleChange}
@@ -190,7 +190,7 @@ function SignupPage() {
             </button>
           </div>
 
-          <div className="text-center text-sm text-gray-600">
+          <div className="text-center text-sm text-gray-600 dark:text-gray-300">
             By signing up, you agree to our{" "}
             <Link
               href="/terms"

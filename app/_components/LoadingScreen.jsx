@@ -81,7 +81,7 @@ const LoadingScreen = ({ onLoadingComplete }) => {
   }, [onLoadingComplete]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-900 dark:text-gray-200">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute left-20 top-20 h-32 w-32 animate-pulse rounded-full bg-blue-200"></div>

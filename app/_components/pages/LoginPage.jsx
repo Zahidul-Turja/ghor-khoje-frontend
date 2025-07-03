@@ -41,8 +41,8 @@ function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
-      <div className="relative w-full max-w-md space-y-8 rounded-lg border border-gray-200 px-10 py-12 shadow-md">
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 dark:bg-gray-900 sm:px-6 lg:px-8">
+      <div className="relative w-full max-w-md space-y-8 rounded-lg border border-gray-200 px-10 py-12 shadow-md dark:border-gray-700">
         <div>
           <a
             href="/"
@@ -50,14 +50,14 @@ function LoginPage() {
           >
             <FaChevronLeft />
           </a>
-          <h1 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          <h1 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-gray-200">
             Log in to your account
           </h1>
-          <p className="mt-2 text-center text-sm text-gray-600">
+          <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-200">
             Or{" "}
             <Link
               href="/auth/signup"
-              className="font-medium text-primary/90 hover:text-primary/80"
+              className="font-medium text-primary/90 hover:text-primary/80 dark:text-primary"
             >
               create a new account
             </Link>
@@ -85,7 +85,7 @@ function LoginPage() {
                 type="email"
                 autoComplete="email"
                 required
-                className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-primary/90 focus:outline-none focus:ring-primary/90 sm:text-sm"
+                className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-primary/90 focus:outline-none focus:ring-primary/90 dark:bg-gray-900 dark:text-gray-300 sm:text-sm"
                 placeholder="Email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -100,7 +100,7 @@ function LoginPage() {
                 name="password"
                 type="password"
                 autoComplete="current-password"
-                className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-primary/90 focus:outline-none focus:ring-primary/90 sm:text-sm"
+                className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-primary/90 focus:outline-none focus:ring-primary/90 dark:bg-gray-900 dark:text-gray-300 sm:text-sm"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -118,7 +118,7 @@ function LoginPage() {
               />
               <label
                 htmlFor="remember-me"
-                className="ml-2 block text-sm text-gray-900"
+                className="ml-2 block text-sm text-gray-900 dark:text-gray-300"
               >
                 Remember me
               </label>
