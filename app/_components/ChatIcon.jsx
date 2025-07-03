@@ -154,7 +154,7 @@ function ChatIcon({ receiver }) {
     <>
       {/* Chat Icon */}
       <div
-        className={`tooltip-chat fixed bottom-12 right-20 z-[1000] cursor-pointer rounded-full bg-primary p-3 text-white shadow-lg transition hover:scale-110 ${isChatOpen ? "hidden" : "block"}`}
+        className={`tooltip-chat fixed bottom-6 right-6 z-[1000] cursor-pointer rounded-full bg-primary p-3 text-white shadow-lg transition hover:scale-110 md:bottom-12 md:right-20 ${isChatOpen ? "hidden" : "block"}`}
         onClick={toggleChat}
       >
         <MdMarkChatUnread className="text-2xl" />
@@ -226,7 +226,7 @@ function ChatCard({
 
   return (
     <div
-      className={`fixed bottom-12 right-20 z-[1000] w-80 rounded-lg border border-gray-200 bg-white shadow-xl transition-all duration-300 dark:border-gray-700 dark:bg-gray-900 ${isOpen ? "scale-100 opacity-100" : "pointer-events-none scale-95 opacity-0"}`}
+      className={`fixed bottom-6 right-6 z-[1000] w-80 rounded-lg border border-gray-200 bg-white shadow-xl transition-all duration-300 dark:border-gray-700 dark:bg-gray-900 md:bottom-12 md:right-20 ${isOpen ? "scale-100 opacity-100" : "pointer-events-none scale-95 opacity-0"}`}
     >
       {/* Header */}
       <div className="flex items-center justify-between rounded-t-lg border-b border-gray-200 bg-primary p-4 dark:border-gray-700 dark:bg-primary/90">

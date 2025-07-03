@@ -125,7 +125,7 @@ function Settings() {
 
   return (
     <div className={`${baseClasses} rounded-lg p-12 sm:px-6`}>
-      <div className="mx-auto w-full px-8">
+      <div className="mx-auto w-full px-0 md:px-8">
         <div className="mb-6 flex items-center justify-between">
           <h1 className="text-3xl font-bold">Settings</h1>
           <div className="flex gap-2">
