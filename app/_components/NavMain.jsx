@@ -15,7 +15,8 @@ function NavMain({ classes }) {
   const [hasApplied, setHasApplied] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { isAuthenticated, user, userInfo, logout } = useAuthStore();
+  const { isAuthenticated, user, userInfo, logout, setTheme } = useAuthStore();
+  const theme = useAuthStore((state) => state.theme);
   const router = useRouter();
 
   const handleHostSubmission = async () => {
@@ -89,6 +90,41 @@ function NavMain({ classes }) {
 
         {/* Desktop Auth Section */}
         <div className="hidden items-center md:flex">
+          <button
+            id="theme-toggle"
+            type="button"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="mr-6 rounded-full bg-gray-200 p-2 transition-colors duration-300 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
+            aria-label="Toggle Theme"
+          >
+            {/* Sun icon (light mode button for dark theme) */}
+            {theme === "dark" ? (
+              <svg
+                className="h-5 w-5 text-yellow-500"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 3v1m0 16v1m8.485-8.485l-.707.707M4.222 4.222l-.707.707M21 12h-1M4 12H3m16.485 4.243l-.707-.707M4.222 19.778l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z"
+                />
+              </svg>
+            ) : (
+              // Moon icon (dark mode button for light theme)
+              <svg
+                className="h-5 w-5 text-gray-800"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path d="M17.293 13.293A8 8 0 116.707 2.707 8.001 8.001 0 0017.293 13.293z" />
+              </svg>
+            )}
+          </button>
           {!isAuthenticated ? (
             <div className="flex items-center gap-4">
               <Link
@@ -176,20 +212,57 @@ function NavMain({ classes }) {
         </div>
 
         {/* Mobile Hamburger Menu Button */}
-        <button
-          className="text-2xl text-primary md:hidden"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          {isMobileMenuOpen ? <LuX /> : <LuMenu />}
-        </button>
+        <div className="flex items-center justify-center md:hidden">
+          <button
+            id="theme-toggle"
+            type="button"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="mr-2 rounded-full bg-gray-200 p-1 transition-colors duration-300 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
+            aria-label="Toggle Theme"
+          >
+            {/* Sun icon (light mode button for dark theme) */}
+            {theme === "dark" ? (
+              <svg
+                className="h-4 w-4 text-yellow-500"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 3v1m0 16v1m8.485-8.485l-.707.707M4.222 4.222l-.707.707M21 12h-1M4 12H3m16.485 4.243l-.707-.707M4.222 19.778l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z"
+                />
+              </svg>
+            ) : (
+              // Moon icon (dark mode button for light theme)
+              <svg
+                className="h-4 w-4 text-gray-800"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path d="M17.293 13.293A8 8 0 116.707 2.707 8.001 8.001 0 0017.293 13.293z" />
+              </svg>
+            )}
+          </button>
+          <button
+            className="text-2xl text-primary"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <LuX /> : <LuMenu />}
+          </button>
+        </div>
       </nav>
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-50 w-screen bg-black bg-opacity-50 md:hidden">
-          <div className="absolute right-0 top-0 h-full w-80 max-w-[85vw] bg-white shadow-lg">
+          <div className="absolute right-0 top-0 h-full w-80 max-w-[85vw] bg-white shadow-lg dark:bg-gray-900">
             {/* Mobile Menu Header */}
-            <div className="flex items-center justify-between border-b p-4">
+            <div className="flex items-center justify-between border-b p-4 dark:border-gray-700">
               <span className="text-lg font-bold text-primary">Menu</span>
               <button
                 className="text-2xl text-gray-600"
@@ -202,7 +275,7 @@ function NavMain({ classes }) {
             {/* Mobile Menu Content */}
             <div className="flex flex-col p-4">
               {/* Navigation Links */}
-              <div className="flex flex-col gap-4 border-b pb-4">
+              <div className="flex flex-col gap-4 border-b pb-4 dark:border-gray-700">
                 <Link
                   href={"/"}
                   className="cursor-pointer px-1 text-base font-bold tracking-wide text-primary"
@@ -283,7 +356,7 @@ function NavMain({ classes }) {
                         )}
                       </div>
                     )}
-                    <span className="text-base font-semibold text-gray-800">
+                    <span className="text-base font-semibold text-gray-800 dark:text-gray-200">
                       {user?.full_name}
                     </span>
                   </Link>
