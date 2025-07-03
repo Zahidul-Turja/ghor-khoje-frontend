@@ -276,7 +276,7 @@ function Tasks() {
     <div className="dark:from-gray-gray-900 min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 px-4 py-6 dark:from-gray-900 dark:via-gray-900 dark:to-gray-900 dark:text-gray-200 sm:px-6">
       <div className="mx-auto max-w-6xl">
         {/* Header */}
-        <div className="mb-8 flex items-center justify-between">
+        <div className="mb-8 flex flex-col items-center justify-between gap-2 md:flex-row md:gap-0">
           <div>
             <h1 className="bg-gradient-to-r from-primary/80 to-primary bg-clip-text text-4xl font-bold text-transparent">
               Task Management
