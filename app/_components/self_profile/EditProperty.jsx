@@ -11,7 +11,6 @@ import {
   X,
   AlertTriangle,
   UndoDot,
-  Plus,
   Check,
 } from "lucide-react";
 
@@ -19,6 +18,9 @@ import {
   getPlaceDetails,
   getAllCategories,
   getAllFacilities,
+  updatePlace,
+  addNewImage,
+  deleteImage,
 } from "@/app/_lib/apiCalls";
 
 const EditProperty = ({
@@ -38,6 +40,7 @@ const EditProperty = ({
   const [deleteModal, setDeleteModal] = useState({
     open: false,
     imageIndex: null,
+    id: null,
   });
   const [loading, setLoading] = useState(false);
 
@@ -76,12 +79,19 @@ const EditProperty = ({
   };
 
   const handleAddImage = () => {
-    if (newImage.image && newImage.description) {
-      const updatedImages = [...(property?.images || []), newImage];
-      setProperty({ ...property, images: updatedImages });
-      setNewImage({ image: "", description: "" });
-      setIsAddingNew(false);
+    async function addImage() {
+      const res = await addNewImage(newImage, propertySlug);
+      console.log(res);
+
+      if (newImage.image && newImage.description) {
+        const updatedImages = [...(property?.images || []), res];
+        setProperty({ ...property, images: updatedImages });
+        setNewImage({ image: "", description: "" });
+        setIsAddingNew(false);
+      }
     }
+
+    addImage();
   };
 
   const handleCancelAddImage = () => {
@@ -106,19 +116,52 @@ const EditProperty = ({
 
   const handleSave = async () => {
     setLoading(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log("Saving property:", property);
-    // console.log("Selected facilities:", selectedFacilities);
-    setLoading(false);
+
+    // Create a shallow copy to avoid mutating original state
+    const {
+      avg_ratings,
+      reviews,
+      appointment_status,
+      created_at,
+      images,
+      owner,
+      facilities,
+      category,
+      ...rest
+    } = property;
+
+    const form = {
+      ...rest,
+      facilities: selectedFacilities || [],
+      category: category?.id || null,
+    };
+
+    try {
+      await updatePlace(form, property.slug);
+      setEditProperty(false);
+      setEditPropertySlug(null);
+    } catch (error) {
+      console.error("Error updating property:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleDeleteImage = (index) => {
-    setProperty((prev) => ({
-      ...prev,
-      images: prev.images.filter((_, i) => i !== index),
-    }));
-    setDeleteModal({ open: false, imageIndex: null });
+  const handleDeleteImage = (index, id) => {
+    async function deleteImageCall() {
+      try {
+        await deleteImage(property.slug, id);
+
+        const updatedImages = property?.images?.filter((img) => img.id !== id);
+
+        setProperty({ ...property, images: updatedImages });
+        setDeleteModal({ open: false, imageIndex: null, id: null });
+      } catch (error) {
+        console.error("Failed to delete image:", error);
+      }
+    }
+
+    deleteImageCall();
   };
 
   const handleImageDescriptionChange = (index, description) => {
@@ -651,7 +694,11 @@ const EditProperty = ({
 
                 <button
                   onClick={() =>
-                    setDeleteModal({ open: true, imageIndex: index })
+                    setDeleteModal({
+                      open: true,
+                      imageIndex: index,
+                      id: image.id,
+                    })
                   }
                   className="rounded-lg p-2 text-red-600 transition-colors duration-200 hover:bg-red-50"
                 >
@@ -750,7 +797,9 @@ const EditProperty = ({
                 Cancel
               </button>
               <button
-                onClick={() => handleDeleteImage(deleteModal.imageIndex)}
+                onClick={() =>
+                  handleDeleteImage(deleteModal.index, deleteModal.id)
+                }
                 className="rounded-lg bg-red-600 px-4 py-2 text-white transition-colors duration-200 hover:bg-red-700"
               >
                 Delete

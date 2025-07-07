@@ -8,6 +8,8 @@ import { IoAdd, IoEllipsisVertical, IoSearch } from "react-icons/io5";
 import AddPropertyModal from "./AddPropertyModal";
 import Link from "next/link";
 
+import { deletePlace } from "@/app/_lib/apiCalls";
+
 function Listings({
   places,
   handleSubmit,
@@ -55,6 +57,18 @@ function Listings({
     event.stopPropagation();
     if (menuRef.current && !menuRef.current.contains(event.target)) {
       setOpenMenuId(null);
+    }
+  };
+
+  const handleDeleteProperty = async (slug) => {
+    try {
+      await deletePlace(slug);
+      setFilteredPlaces((prevPlaces) =>
+        prevPlaces.filter((place) => place.slug !== slug),
+      );
+      setOpenMenuId(null);
+    } catch (error) {
+      console.error("Error deleting property:", error);
     }
   };
 
@@ -132,8 +146,12 @@ function Listings({
             <tbody>
               {filteredPlaces.map((place) => (
                 <tr
+                  onClick={() => {
+                    setEditPropertySlug(place?.slug);
+                    setEditProperty(true);
+                  }}
                   key={place?.id}
-                  className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+                  className="cursor-pointer border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
                 >
                   <td className="px-6 py-4">
                     <div className="flex items-center space-x-3">
@@ -159,12 +177,9 @@ function Listings({
                         )}
                       </div>
                       <div>
-                        <Link
-                          href={`/${place?.slug}`}
-                          className="font-medium text-gray-900 dark:text-gray-300"
-                        >
+                        <td className="font-medium text-gray-900 dark:text-gray-300">
                           {place?.title}
-                        </Link>
+                        </td>
                         <div className="text-xs text-gray-500 dark:text-gray-400">
                           {place?.category.name}
                         </div>
@@ -367,7 +382,14 @@ function Listings({
                 Edit Property
               </span>
             </button>
-            <button className="flex w-full items-center border-t border-gray-100 px-4 py-2.5 text-left transition-colors hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-700">
+            <button
+              onClick={() =>
+                handleDeleteProperty(
+                  places.find((p) => p.id === openMenuId)?.slug,
+                )
+              }
+              className="flex w-full items-center border-t border-gray-100 px-4 py-2.5 text-left transition-colors hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-700"
+            >
               <span className="text-red-600">Delete</span>
             </button>
           </div>

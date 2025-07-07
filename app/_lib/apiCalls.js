@@ -514,3 +514,98 @@ export const getPlaceDetails = async (slug) => {
     throw error;
   }
 };
+
+export const updatePlace = async (form, slug) => {
+  try {
+    const response = await axios.patch(
+      `${BASE_URL}/api/v1/places/update/${slug}/`,
+      form,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      },
+    );
+    const data = response.data;
+    toast.success("Place updated successfully");
+    console.log("Place updated:", data);
+    return data.data;
+  } catch (error) {
+    console.error("Error updating place:", error);
+    toast.error("Failed to update place");
+    throw error;
+  }
+};
+
+export const deletePlace = async (slug) => {
+  try {
+    const response = await axios.delete(
+      `${BASE_URL}/api/v1/places/delete/${slug}/`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      },
+    );
+    const data = response.data;
+    toast.success("Place deleted successfully");
+    console.log("Place deleted:", data);
+    return data;
+  } catch (error) {
+    console.error("Error deleting place:", error);
+    toast.error("Failed to delete place");
+    throw error;
+  }
+};
+
+export const addNewImage = async (imageData, slug) => {
+  const form = new FormData();
+
+  // Convert base64 string to a Blob
+  const base64Response = await fetch(imageData.image);
+  const blob = await base64Response.blob();
+
+  // Append the Blob and description to the FormData
+  form.append("image", blob, "image.png"); // you can change the filename if needed
+  form.append("description", imageData.description);
+
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/api/v1/places/add/image/${slug}/`,
+      form,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          "Content-Type": "multipart/form-data", // important
+        },
+      },
+    );
+    toast.success("Image added successfully");
+    return response.data.data;
+  } catch (error) {
+    console.error("Error adding image:", error);
+    toast.error("Failed to add image");
+    throw error;
+  }
+};
+
+export const deleteImage = async (slug, imageId) => {
+  try {
+    const response = await axios.delete(
+      `${BASE_URL}/api/v1/places/delete/image/${slug}/${imageId}/`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      },
+    );
+    const data = response.data;
+    toast.success("Image deleted successfully");
+    console.log("Image deleted:", data);
+    return data.data;
+  } catch (error) {
+    console.error("Error deleting image:", error);
+    toast.error("Failed to delete image");
+    throw error;
+  }
+};
