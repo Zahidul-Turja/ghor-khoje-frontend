@@ -113,18 +113,6 @@ const EditProperty = ({
     setLoading(false);
   };
 
-  //   const handleAddImage = () => {
-  //     // Simulate adding a new image
-  //     const newImage = {
-  //       image: "https://images.unsplash.com/photo-1560448204-c9f7d1b3a7c5?w=400",
-  //       description: "New image",
-  //     };
-  //     setProperty((prev) => ({
-  //       ...prev,
-  //       images: [...prev.images, newImage],
-  //     }));
-  //   };
-
   const handleDeleteImage = (index) => {
     setProperty((prev) => ({
       ...prev,
@@ -143,10 +131,10 @@ const EditProperty = ({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-4 dark:from-gray-900 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-50 p-4 dark:from-gray-900 dark:to-gray-900">
       <div className="mx-auto max-w-6xl">
         {/* Header */}
-        <div className="mb-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+        <div className="mb-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-900">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="mb-2 text-3xl font-bold text-slate-800 dark:text-gray-200">
@@ -183,7 +171,7 @@ const EditProperty = ({
           {/* Main Form */}
           <div className="space-y-6 lg:col-span-2">
             {/* Basic Information */}
-            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-900">
               <div className="mb-6 flex items-center gap-2">
                 <Home className="h-5 w-5 text-primary" />
                 <h2 className="text-xl font-bold text-slate-800 dark:text-gray-300">
@@ -381,17 +369,17 @@ const EditProperty = ({
             </div>
 
             {/* Pricing Information */}
-            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-900">
               <div className="mb-6 flex items-center gap-2">
-                <DollarSign className="h-5 w-5 text-blue-600" />
-                <h2 className="text-xl font-bold text-slate-800">
+                <DollarSign className="h-5 w-5 text-primary" />
+                <h2 className="text-xl font-bold text-slate-800 dark:text-gray-300">
                   Pricing Details
                 </h2>
               </div>
 
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
-                  <label className="mb-2 block text-sm font-semibold text-slate-700">
+                  <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-gray-300">
                     Rent per Month
                   </label>
                   <input
@@ -400,12 +388,12 @@ const EditProperty = ({
                     onChange={(e) =>
                       handleInputChange("rent_per_month", e.target.value)
                     }
-                    className="w-full rounded-xl border border-slate-300 px-4 py-3 transition-all duration-200 focus:border-transparent focus:ring-2 focus:ring-blue-500"
+                    className="w-full rounded-xl border border-slate-300 px-4 py-3 transition-all duration-200 focus:border-transparent focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300"
                   />
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-sm font-semibold text-slate-700">
+                  <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-gray-300">
                     Total per Month
                   </label>
                   <input
@@ -414,12 +402,12 @@ const EditProperty = ({
                     onChange={(e) =>
                       handleInputChange("total_per_month", e.target.value)
                     }
-                    className="w-full rounded-xl border border-slate-300 px-4 py-3 transition-all duration-200 focus:border-transparent focus:ring-2 focus:ring-blue-500"
+                    className="w-full rounded-xl border border-slate-300 px-4 py-3 transition-all duration-200 focus:border-transparent focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300"
                   />
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-sm font-semibold text-slate-700">
+                  <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-gray-300">
                     Extra Bills
                   </label>
                   <input
@@ -428,12 +416,12 @@ const EditProperty = ({
                     onChange={(e) =>
                       handleInputChange("extra_bills", e.target.value)
                     }
-                    className="w-full rounded-xl border border-slate-300 px-4 py-3 transition-all duration-200 focus:border-transparent focus:ring-2 focus:ring-blue-500"
+                    className="w-full rounded-xl border border-slate-300 px-4 py-3 transition-all duration-200 focus:border-transparent focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300"
                   />
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-sm font-semibold text-slate-700">
+                  <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-gray-300">
                     Prepayment Months
                   </label>
                   <input
@@ -445,17 +433,17 @@ const EditProperty = ({
                         parseInt(e.target.value),
                       )
                     }
-                    className="w-full rounded-xl border border-slate-300 px-4 py-3 transition-all duration-200 focus:border-transparent focus:ring-2 focus:ring-blue-500"
+                    className="w-full rounded-xl border border-slate-300 px-4 py-3 transition-all duration-200 focus:border-transparent focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300"
                   />
                 </div>
               </div>
             </div>
 
             {/* Property Details */}
-            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-900">
               <div className="mb-6 flex items-center gap-2">
-                <Users className="h-5 w-5 text-blue-600" />
-                <h2 className="text-xl font-bold text-slate-800">
+                <Users className="h-5 w-5 text-primary" />
+                <h2 className="text-xl font-bold text-slate-800 dark:text-gray-300">
                   Property Details
                 </h2>
               </div>
@@ -473,7 +461,7 @@ const EditProperty = ({
                   { key: "capacity", label: "Capacity" },
                 ].map((field) => (
                   <div key={field.key}>
-                    <label className="mb-2 block text-sm font-semibold text-slate-700">
+                    <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-gray-300">
                       {field.label}
                     </label>
                     <input
@@ -482,7 +470,7 @@ const EditProperty = ({
                       onChange={(e) =>
                         handleInputChange(field.key, parseInt(e.target.value))
                       }
-                      className="w-full rounded-xl border border-slate-300 px-4 py-3 transition-all duration-200 focus:border-transparent focus:ring-2 focus:ring-blue-500"
+                      className="w-full rounded-xl border border-slate-300 px-4 py-3 transition-all duration-200 focus:border-transparent focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300"
                     />
                   </div>
                 ))}
@@ -490,17 +478,17 @@ const EditProperty = ({
             </div>
 
             {/* Availability */}
-            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="dark:-border-gray-700 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-900">
               <div className="mb-6 flex items-center gap-2">
-                <Calendar className="h-5 w-5 text-blue-600" />
-                <h2 className="text-xl font-bold text-slate-800">
+                <Calendar className="h-5 w-5 text-primary" />
+                <h2 className="text-xl font-bold text-slate-800 dark:text-gray-300">
                   Availability
                 </h2>
               </div>
 
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <div>
-                  <label className="mb-2 block text-sm font-semibold text-slate-700">
+              <div className="flex flex-col gap-4 md:flex-row md:justify-between">
+                <div className="md:w-full">
+                  <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-gray-300">
                     Available From
                   </label>
                   <input
@@ -509,37 +497,56 @@ const EditProperty = ({
                     onChange={(e) =>
                       handleInputChange("available_from", e.target.value)
                     }
-                    className="w-full rounded-xl border border-slate-300 px-4 py-3 transition-all duration-200 focus:border-transparent focus:ring-2 focus:ring-blue-500"
+                    className="w-full rounded-xl border border-slate-300 px-4 py-3 transition-all duration-200 focus:border-transparent focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300"
                   />
                 </div>
 
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      checked={property.is_available}
-                      onChange={(e) =>
-                        handleInputChange("is_available", e.target.checked)
-                      }
-                      className="h-4 w-4 rounded text-blue-600 focus:ring-blue-500"
-                    />
-                    <label className="text-sm font-semibold text-slate-700">
+                <div className="flex w-full flex-col items-end justify-end gap-4">
+                  {/* Available Toggle */}
+                  <div className="flex items-center justify-between gap-5">
+                    <label className="text-sm font-semibold text-slate-700 dark:text-gray-300">
                       Available
                     </label>
+                    <button
+                      onClick={() =>
+                        handleInputChange(
+                          "is_available",
+                          !property.is_available,
+                        )
+                      }
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 ${
+                        property.is_available ? "bg-primary" : "bg-slate-300"
+                      }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition duration-300 ${
+                          property.is_available
+                            ? "translate-x-6"
+                            : "translate-x-1"
+                        }`}
+                      />
+                    </button>
                   </div>
 
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      checked={property.featured}
-                      onChange={(e) =>
-                        handleInputChange("featured", e.target.checked)
-                      }
-                      className="h-4 w-4 rounded text-blue-600 focus:ring-blue-500"
-                    />
-                    <label className="text-sm font-semibold text-slate-700">
+                  {/* Featured Toggle */}
+                  <div className="flex items-center justify-between gap-5">
+                    <label className="text-sm font-semibold text-slate-700 dark:text-gray-300">
                       Featured
                     </label>
+                    <button
+                      onClick={() =>
+                        handleInputChange("featured", !property.featured)
+                      }
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 ${
+                        property.featured ? "bg-primary" : "bg-slate-300"
+                      }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition duration-300 ${
+                          property.featured ? "translate-x-6" : "translate-x-1"
+                        }`}
+                      />
+                    </button>
                   </div>
                 </div>
               </div>
@@ -549,19 +556,19 @@ const EditProperty = ({
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Facilities */}
-            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-              <h3 className="mb-4 text-lg font-bold text-slate-800">
+            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-900">
+              <h3 className="mb-4 text-lg font-bold text-slate-800 dark:text-gray-300">
                 Facilities
               </h3>
-              <div className="grid max-h-80 grid-cols-5 gap-3 overflow-y-auto">
+              <div className="no-scrollbar grid max-h-80 grid-cols-5 gap-3 overflow-y-auto">
                 {facilities.map((facility) => (
                   <div
                     key={facility.id}
                     onClick={() => handleFacilityToggle(facility.id)}
-                    className={`relative flex aspect-square cursor-pointer flex-col items-center justify-center rounded-lg border-2 p-2 transition-all duration-200 ${
+                    className={`relative flex aspect-square cursor-pointer flex-col items-center justify-center rounded-lg border-2 p-2 transition-all duration-200 dark:text-gray-300 ${
                       selectedFacilities?.includes(facility.id)
-                        ? "border-blue-500 bg-blue-50 text-blue-700"
-                        : "border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-50"
+                        ? "border-primary bg-blue-50 text-blue-700 dark:bg-gray-700 dark:text-gray-100"
+                        : "border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-50 dark:hover:bg-gray-700 dark:hover:text-gray-100"
                     }`}
                   >
                     <div className="mb-1 h-8 w-8">
@@ -581,7 +588,7 @@ const EditProperty = ({
                     </span>
 
                     {selectedFacilities?.includes(facility.id) && (
-                      <div className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-blue-500">
+                      <div className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary">
                         <svg
                           className="h-2 w-2 text-white"
                           fill="currentColor"
@@ -603,9 +610,9 @@ const EditProperty = ({
         </div>
 
         {/* Images Section */}
-        <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-900">
           <div className="mb-6 flex items-center justify-between">
-            <h2 className="text-xl font-bold text-slate-800">
+            <h2 className="text-xl font-bold text-slate-800 dark:text-gray-200">
               Property Images
             </h2>
             {!isAddingNew && (
@@ -624,7 +631,7 @@ const EditProperty = ({
             {property?.images?.map((image, index) => (
               <div
                 key={index}
-                className="flex items-center gap-4 rounded-xl border border-slate-200 p-4 transition-all duration-200 hover:shadow-md"
+                className="flex items-center gap-4 rounded-xl border border-slate-200 p-4 transition-all duration-200 hover:shadow-md dark:border-gray-700"
               >
                 <img
                   src={image.image}
@@ -637,7 +644,7 @@ const EditProperty = ({
                     onChange={(e) =>
                       handleImageDescriptionChange(index, e.target.value)
                     }
-                    className="h-24 w-full rounded-lg border border-slate-300 px-3 py-2 transition-all duration-200 focus:border-transparent focus:ring-2 focus:ring-blue-500"
+                    className="h-24 w-full rounded-lg border border-slate-300 px-3 py-2 transition-all duration-200 focus:border-transparent focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300"
                     placeholder="Image description..."
                   />
                 </div>
@@ -655,8 +662,8 @@ const EditProperty = ({
 
             {/* Add New Image Section */}
             {isAddingNew && (
-              <div className="flex items-center gap-4 rounded-xl border border-blue-200 bg-blue-50 p-4 transition-all duration-200">
-                <div className="flex h-24 w-24 cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-blue-300 transition-colors hover:border-blue-400">
+              <div className="flex items-center gap-4 rounded-xl border border-blue-200 bg-blue-50 p-4 transition-all duration-200 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300">
+                <div className="flex h-24 w-24 cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-blue-300 transition-colors hover:border-blue-400 dark:border-gray-500">
                   {newImage.image ? (
                     <img
                       src={newImage.image}
@@ -668,8 +675,8 @@ const EditProperty = ({
                       htmlFor="image-upload"
                       className="flex h-full w-full cursor-pointer flex-col items-center justify-center text-center"
                     >
-                      <Upload className="mb-1 h-8 w-8 text-blue-400" />
-                      <span className="text-xs text-blue-600 hover:text-blue-800">
+                      <Upload className="mb-1 h-8 w-8 text-blue-400 dark:text-gray-300" />
+                      <span className="text-xs text-blue-600 hover:text-blue-800 dark:text-gray-200">
                         Upload
                       </span>
                     </label>
@@ -689,7 +696,7 @@ const EditProperty = ({
                     onChange={(e) =>
                       setNewImage({ ...newImage, description: e.target.value })
                     }
-                    className="h-24 w-full rounded-lg border border-slate-300 px-3 py-2 transition-all duration-200 focus:border-transparent focus:ring-2 focus:ring-blue-500"
+                    className="h-24 w-full rounded-lg border border-slate-300 px-3 py-2 transition-all duration-200 focus:border-transparent focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300"
                     placeholder="Image description..."
                   />
                 </div>
@@ -698,13 +705,13 @@ const EditProperty = ({
                   <button
                     onClick={handleAddImage}
                     disabled={!newImage.image || !newImage.description}
-                    className="rounded-lg p-2 text-green-600 transition-colors duration-200 hover:bg-green-50 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="rounded-lg bg-green-700 p-2 text-white transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     <Check className="h-5 w-5" />
                   </button>
                   <button
                     onClick={handleCancelAddImage}
-                    className="rounded-lg p-2 text-gray-600 transition-colors duration-200 hover:bg-gray-50"
+                    className="rounded-lg bg-red-600 p-2 text-white transition-colors duration-200"
                   >
                     <X className="h-5 w-5" />
                   </button>
@@ -718,15 +725,17 @@ const EditProperty = ({
       {/* Delete Confirmation Modal */}
       {deleteModal.open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
+          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl dark:bg-gray-900">
             <div className="mb-4 flex items-center gap-3">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
                 <AlertTriangle className="h-6 w-6 text-red-600" />
               </div>
-              <h3 className="text-lg font-bold text-slate-800">Delete Image</h3>
+              <h3 className="text-lg font-bold text-slate-800 dark:text-gray-200">
+                Delete Image
+              </h3>
             </div>
 
-            <p className="mb-6 text-slate-600">
+            <p className="mb-6 text-slate-600 dark:text-gray-300">
               Are you sure you want to delete this image? This action cannot be
               undone.
             </p>
@@ -736,7 +745,7 @@ const EditProperty = ({
                 onClick={() =>
                   setDeleteModal({ open: false, imageIndex: null })
                 }
-                className="rounded-lg px-4 py-2 text-slate-600 transition-colors duration-200 hover:bg-slate-100"
+                className="rounded-lg px-4 py-2 text-slate-600 transition-colors duration-200 hover:bg-slate-100 dark:border dark:border-gray-400 dark:text-gray-300 dark:hover:bg-gray-800"
               >
                 Cancel
               </button>
