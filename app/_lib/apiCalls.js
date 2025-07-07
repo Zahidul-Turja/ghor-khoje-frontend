@@ -501,3 +501,16 @@ export const analytics = async () => {
     throw error;
   }
 };
+
+export const getPlaceDetails = async (slug) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/api/v1/places/${slug}/`);
+    const data = response.data;
+    // console.log("Place details response:", data);
+    return data.data;
+  } catch (error) {
+    console.error("Error fetching place details:", error);
+    toast.error("Failed to fetch place details");
+    throw error;
+  }
+};

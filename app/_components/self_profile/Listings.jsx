@@ -8,7 +8,12 @@ import { IoAdd, IoEllipsisVertical, IoSearch } from "react-icons/io5";
 import AddPropertyModal from "./AddPropertyModal";
 import Link from "next/link";
 
-function Listings({ places, handleSubmit }) {
+function Listings({
+  places,
+  handleSubmit,
+  setEditPropertySlug,
+  setEditProperty,
+}) {
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
   const [openMenuId, setOpenMenuId] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -348,7 +353,16 @@ function Listings({ places, handleSubmit }) {
                 View Details
               </span>
             </Link>
-            <button className="flex w-full items-center px-4 py-2.5 text-left transition-colors hover:bg-gray-50 dark:hover:bg-gray-700">
+            <button
+              onClick={() => {
+                setEditPropertySlug(
+                  places.find((p) => p.id === openMenuId)?.slug,
+                );
+                setEditProperty(places.find((p) => p.id === openMenuId));
+                setShowModal(false);
+              }}
+              className="flex w-full items-center px-4 py-2.5 text-left transition-colors hover:bg-gray-50 dark:hover:bg-gray-700"
+            >
               <span className="text-gray-700 dark:text-gray-300">
                 Edit Property
               </span>

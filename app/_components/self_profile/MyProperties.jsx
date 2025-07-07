@@ -17,10 +17,13 @@ import {
 } from "@/app/_lib/apiCalls";
 import useAuthStore from "@/app/_store/authStore";
 import toast from "react-hot-toast";
+import EditProperty from "./EditProperty";
 
 export default function MyProperties() {
   const { user, userInfo } = useAuthStore();
 
+  const [editProperty, setEditProperty] = useState(false);
+  const [editPropertySlug, setEditPropertySlug] = useState("");
   const [places, setPlaces] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -135,6 +138,16 @@ export default function MyProperties() {
     );
   }
 
+  if (editProperty) {
+    return (
+      <EditProperty
+        propertySlug={editPropertySlug}
+        setEditProperty={setEditProperty}
+        setEditPropertySlug={setEditPropertySlug}
+      />
+    );
+  }
+
   return (
     <>
       {showModal && (
@@ -180,6 +193,8 @@ export default function MyProperties() {
                   <Listings
                     places={places}
                     handleSubmit={(formData) => handleSubmit(formData)}
+                    setEditProperty={setEditProperty}
+                    setEditPropertySlug={setEditPropertySlug}
                   />
                 ) : (
                   <div className="flex min-h-[400px] flex-col items-center justify-center gap-4 p-8 text-center sm:gap-6 sm:p-16">
