@@ -120,7 +120,7 @@ function BookingModal({ isOpen, onClose, propertyData }) {
       className="fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-50 p-4"
       onClick={handleBackdropClick}
     >
-      <div className="relative h-[80vh] w-full max-w-5xl overflow-hidden rounded-2xl bg-white shadow-2xl">
+      <div className="relative h-[80vh] w-full max-w-5xl overflow-hidden rounded-2xl bg-white shadow-2xl dark:bg-gray-950">
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -288,14 +288,14 @@ function BookingModal({ isOpen, onClose, propertyData }) {
               <form onSubmit={handleSubmit}>
                 {currentStep === 1 && (
                   <div className="space-y-6">
-                    <h3 className="text-2xl font-bold text-gray-900">
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-200">
                       Booking Details
                     </h3>
 
                     {/* Date Selection */}
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label className="mb-2 block text-sm font-medium text-gray-700">
+                        <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                           Move-in Date
                         </label>
                         <input
@@ -310,12 +310,12 @@ function BookingModal({ isOpen, onClose, propertyData }) {
                         />
                       </div>
                       <div>
-                        <label className="mb-2 block text-sm font-medium text-gray-400">
+                        <label className="mb-2 block text-sm font-medium text-gray-400 dark:text-gray-300">
                           Contract Duration
                         </label>
                         <select
                           name="contractDuration"
-                          className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-20"
+                          className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-20 dark:bg-gray-900 dark:text-gray-200"
                           required
                           value={formData.contractDuration}
                           onChange={handleInputChange}
@@ -330,14 +330,14 @@ function BookingModal({ isOpen, onClose, propertyData }) {
 
                     {/* Number of Occupants */}
                     <div>
-                      <label className="mb-2 block text-sm font-medium text-gray-700">
+                      <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-200">
                         Number of Occupants
                       </label>
                       <select
                         name="numberOfGuests"
                         value={formData.numberOfGuests}
                         onChange={handleInputChange}
-                        className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-20"
+                        className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-20 dark:bg-gray-900 dark:text-gray-300"
                         required
                       >
                         {Array.from(
@@ -353,7 +353,7 @@ function BookingModal({ isOpen, onClose, propertyData }) {
 
                     {/* Special Requests */}
                     <div>
-                      <label className="mb-2 block text-sm font-medium text-gray-700">
+                      <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                         Special Requests (Optional)
                       </label>
                       <textarea
@@ -361,7 +361,7 @@ function BookingModal({ isOpen, onClose, propertyData }) {
                         value={formData.message}
                         onChange={handleInputChange}
                         rows={4}
-                        className="h-60 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-20"
+                        className="h-60 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-20 dark:bg-gray-900 dark:text-gray-300"
                         placeholder="Any special requirements or questions..."
                       />
                     </div>
@@ -378,12 +378,12 @@ function BookingModal({ isOpen, onClose, propertyData }) {
 
                 {currentStep === 2 && (
                   <div className="space-y-6">
-                    <h3 className="text-2xl font-bold text-gray-900">
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-200">
                       Contact Information
                     </h3>
 
                     <div>
-                      <label className="mb-2 block text-sm font-medium text-gray-700">
+                      <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                         Full Name
                       </label>
                       <input
@@ -391,13 +391,13 @@ function BookingModal({ isOpen, onClose, propertyData }) {
                         name="fullName"
                         value={formData.fullName}
                         onChange={handleInputChange}
-                        className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-20"
+                        className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-20 dark:bg-gray-900 dark:text-gray-300"
                         required
                       />
                     </div>
 
                     <div>
-                      <label className="mb-2 block text-sm font-medium text-gray-700">
+                      <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                         Email Address
                       </label>
                       <input
@@ -405,13 +405,13 @@ function BookingModal({ isOpen, onClose, propertyData }) {
                         name="email"
                         value={formData.email}
                         onChange={handleInputChange}
-                        className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-20"
+                        className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-20 dark:bg-gray-900 dark:text-gray-300"
                         required
                       />
                     </div>
 
                     <div>
-                      <label className="mb-2 block text-sm font-medium text-gray-700">
+                      <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                         Phone Number
                       </label>
                       <input
@@ -419,17 +419,17 @@ function BookingModal({ isOpen, onClose, propertyData }) {
                         name="phone"
                         value={formData.phone}
                         onChange={handleInputChange}
-                        className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-20"
+                        className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-20 dark:bg-gray-900 dark:text-gray-300"
                         required
                       />
                     </div>
 
                     {/* Terms and Conditions */}
-                    <div className="rounded-lg bg-gray-50 p-4">
-                      <h4 className="mb-2 font-semibold text-gray-900">
+                    <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-900">
+                      <h4 className="mb-2 font-semibold text-gray-900 dark:text-gray-300">
                         Booking Terms
                       </h4>
-                      <ul className="space-y-1 text-sm text-gray-600">
+                      <ul className="space-y-1 text-sm text-gray-600 dark:text-gray-300">
                         <li>• Security deposit of 2 months rent required</li>
                         <li>
                           • {propertyData.num_prepayment_months} months advance
@@ -447,7 +447,10 @@ function BookingModal({ isOpen, onClose, propertyData }) {
                         required
                         className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
                       />
-                      <label htmlFor="terms" className="text-sm text-gray-600">
+                      <label
+                        htmlFor="terms"
+                        className="text-sm text-gray-600 dark:text-gray-300"
+                      >
                         I agree to the terms and conditions and privacy policy
                       </label>
                     </div>
@@ -456,7 +459,7 @@ function BookingModal({ isOpen, onClose, propertyData }) {
                       <button
                         type="button"
                         onClick={prevStep}
-                        className="flex-1 rounded-lg border border-gray-300 py-3 font-semibold text-gray-700 transition-colors hover:bg-gray-50"
+                        className="flex-1 rounded-lg border border-gray-300 py-3 font-semibold text-gray-700 transition-colors hover:bg-gray-50 dark:text-gray-300 dark:hover:text-gray-900"
                       >
                         Back
                       </button>
