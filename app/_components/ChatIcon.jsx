@@ -87,6 +87,34 @@ function ChatIcon({ receiver }) {
       socket.addEventListener("message", handleMessage);
       return () => socket.removeEventListener("message", handleMessage);
     }
+
+    if (isChatOpen && messages.length === 0) {
+      const fetchMessages = async () => {
+        try {
+          const response = await fetch(
+            `${process.env.NEXT_PUBLIC_BASE_API_ENDPOINT}/api/v1/chat/messages/${receiver.id}/`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+            },
+          );
+
+          if (!response.ok) {
+            throw new Error("Failed to fetch messages");
+          }
+
+          const result = await response.json();
+          setMessages(result.data || []);
+        } catch (err) {
+          console.error("Error fetching messages:", err);
+          setError("Failed to load messages");
+        }
+      };
+
+      fetchMessages();
+    }
   }, [socket, isChatOpen]);
 
   // Auto scroll to bottom when new messages arrive
@@ -271,7 +299,7 @@ function ChatCard({
       )}
 
       {/* Messages */}
-      <div className="h-64 space-y-3 overflow-y-auto p-4">
+      <div className="no-scrollbar h-64 space-y-3 overflow-y-auto p-4">
         {messages.length === 0 ? (
           <div className="text-center text-sm text-gray-500">
             Start a conversation...
