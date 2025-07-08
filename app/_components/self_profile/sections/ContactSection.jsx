@@ -27,7 +27,7 @@ function ContactSection({ address, phone, email }) {
           <div>
             <p className="text-sm text-gray-500 dark:text-gray-300">Phone</p>
             <p className="font-medium text-gray-800 dark:text-gray-200">
-              {phone}
+              {phone && phone}
             </p>
           </div>
         </div>
@@ -43,10 +43,10 @@ function ContactSection({ address, phone, email }) {
           </div>
           <div>
             <p className="font-medium text-gray-800 dark:text-gray-200">
-              {address.address}
+              {address?.address}
             </p>
             <p className="mt-1 text-gray-600 dark:text-gray-300">
-              {address.city}, {address.state}, {address.country}
+              {address?.city}, {address?.state}, {address?.country}
             </p>
           </div>
         </div>
