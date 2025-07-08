@@ -1,9 +1,15 @@
+"use client";
+
+import { useRef } from "react";
+
 function PropertyDetails({
   activeTab,
   formData,
   handleNumberInput,
   handleInputChange,
 }) {
+  const dateRef = useRef(null);
+
   return (
     <div className={activeTab === "details" ? "block" : "hidden"}>
       <div className="space-y-6">
@@ -141,13 +147,16 @@ function PropertyDetails({
           <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
             Available From
           </label>
-          <input
-            type="date"
-            name="available_from"
-            value={formData.available_from}
-            onChange={handleInputChange}
-            className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/20 dark:border-gray-500 dark:bg-gray-950 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500 sm:p-3 sm:text-base"
-          />
+          <div onClick={() => dateRef.current.showPicker()}>
+            <input
+              ref={dateRef}
+              type="date"
+              name="available_from"
+              value={formData.available_from}
+              onChange={handleInputChange}
+              className="w-full cursor-pointer rounded-lg border border-gray-300 p-3 focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/20 dark:border-gray-500 dark:bg-gray-950 dark:text-gray-200 dark:focus:border-blue-500 dark:focus:ring-gray-500 sm:p-3 sm:text-base"
+            />
+          </div>
         </div>
       </div>
     </div>

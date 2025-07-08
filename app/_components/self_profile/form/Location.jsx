@@ -173,6 +173,7 @@ function Location({ activeTab, formData, handleInputChange, setFormData }) {
         const searchControl = window.L.control({ position: "topleft" });
 
         searchControl.onAdd = function () {
+          const isDarkMode = window.localStorage.getItem("theme") === "dark";
           const container = window.L.DomUtil.create(
             "div",
             "leaflet-control leaflet-bar",
@@ -183,12 +184,18 @@ function Location({ activeTab, formData, handleInputChange, setFormData }) {
           container.style.borderRadius = "4px";
           container.style.boxShadow = "0 1px 5px rgba(0,0,0,0.4)";
           container.style.width = "250px";
+          container.style.color = "#000";
 
           const input = window.L.DomUtil.create(
             "input",
             "search-input",
             container,
           );
+          if (isDarkMode) {
+            container.style.backgroundColor = "#111";
+            input.style.backgroundColor = "#111";
+            input.style.color = "#ddd";
+          }
           input.type = "text";
           input.placeholder = "Search location...";
           input.style.width = "100%";
