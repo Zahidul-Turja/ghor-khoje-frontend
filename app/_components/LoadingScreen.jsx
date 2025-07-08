@@ -114,14 +114,16 @@ const LoadingScreen = ({ onLoadingComplete }) => {
           <h1 className="bg-gradient-to-r from-primary/70 to-primary bg-clip-text text-3xl font-bold text-transparent">
             GhorKhojee
           </h1>
-          <p className="font-medium text-gray-600">Your Dream Home Awaits</p>
+          <p className="font-medium text-gray-600 dark:text-gray-300">
+            Your Dream Home Awaits
+          </p>
           {/* Developer Note */}
           {currentStep === 0 && !stepStatus[0] && (
-            <div className="mt-4 rounded-r-lg border-l-4 border-amber-400 bg-amber-50 p-4">
+            <div className="mt-4 rounded-r-lg border-l-4 border-amber-400 bg-amber-50 p-4 dark:bg-gray-800">
               <div className="flex items-start">
                 <div className="flex-shrink-0">
                   <svg
-                    className="h-5 w-5 text-amber-400"
+                    className="h-5 w-5 text-amber-400 dark:text-amber-300"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                   >
@@ -133,7 +135,7 @@ const LoadingScreen = ({ onLoadingComplete }) => {
                   </svg>
                 </div>
                 <div className="ml-3">
-                  <p className="text-sm text-amber-700">
+                  <p className="text-sm text-amber-700 dark:text-amber-500">
                     <span className="font-semibold">Note:</span> Backend hosted
                     on Render's free tier -{" "}
                     <span className="font-bold">
@@ -151,13 +153,13 @@ const LoadingScreen = ({ onLoadingComplete }) => {
 
         {/* Progress Bar */}
         <div className="space-y-4">
-          <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200">
+          <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-600">
             <div
               className="h-full rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 transition-all duration-300 ease-out"
               style={{ width: `${Math.min(progress, 100)}%` }}
             ></div>
           </div>
-          <div className="text-sm font-medium text-gray-500">
+          <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
             {Math.round(Math.min(progress, 100))}% Complete
           </div>
         </div>
@@ -174,9 +176,9 @@ const LoadingScreen = ({ onLoadingComplete }) => {
                 key={index}
                 className={`flex items-center space-x-3 rounded-lg p-3 transition-all duration-500 ${
                   isActive
-                    ? "scale-105 transform bg-blue-50 text-blue-700"
+                    ? "scale-105 transform bg-blue-50 text-blue-700 dark:bg-gray-600 dark:text-blue-500"
                     : isPassed
-                      ? "bg-green-50 text-green-700"
+                      ? "bg-green-50 text-green-700 dark:bg-green-800 dark:text-green-400"
                       : "text-gray-400"
                 }`}
               >
