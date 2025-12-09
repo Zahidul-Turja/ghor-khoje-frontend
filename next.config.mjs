@@ -1,10 +1,23 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: [
-      "127.0.0.1",
-      "res.cloudinary.com",
-      "ghor-khoje-backend.onrender.com",
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "127.0.0.1",
+        port: "8000",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "ghor-khoje-backend.onrender.com",
+        pathname: "/**",
+      },
     ],
   },
 };
