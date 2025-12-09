@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
+import smoothscroll from "smoothscroll-polyfill";
 import "@/app/_styles/globals.css";
 import LoadingScreen from "@/app/_components/LoadingScreen";
 import useAuthStore from "@/app/_store/authStore";
@@ -14,6 +15,7 @@ export default function RootLayout({ children }) {
 
   useEffect(() => {
     // Apply theme class to <html>
+    smoothscroll.polyfill();
     const root = document.documentElement;
     if (theme === "dark") {
       root.classList.add("dark");
