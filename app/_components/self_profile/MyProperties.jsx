@@ -45,11 +45,7 @@ export default function MyProperties() {
         setTotalPages(response.count);
 
         const appliedResponse = await hasAppliedForHost();
-        setHasApplied(appliedResponse.has_applied || false);
-
-        console.log("Properties fetched:", response);
-        console.log("Has applied for host:", appliedResponse);
-        console.log("has appliedForHost State:", hasApplied);
+        setHasApplied(appliedResponse?.has_applied || false);
       } catch (error) {
         setError("Failed to fetch properties");
       } finally {

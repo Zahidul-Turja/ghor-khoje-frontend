@@ -156,9 +156,9 @@ function Listings({
                   <td className="px-6 py-4">
                     <div className="flex items-center space-x-3">
                       <div className="flex-shrink-0">
-                        {place?.images[0]?.image ? (
+                        {place?.image ? (
                           <Image
-                            src={`${place?.images[0]?.image}`}
+                            src={`${place?.image}`}
                             alt={place?.title}
                             width={200}
                             height={200}
@@ -247,9 +247,9 @@ function Listings({
                 <div className="flex gap-4">
                   {/* Property Image */}
                   <div className="flex-shrink-0">
-                    {place?.images[0]?.image ? (
+                    {place?.image ? (
                       <Image
-                        src={`${place?.images[0]?.image}`}
+                        src={`${place?.image}`}
                         alt={place?.title}
                         width={200}
                         height={200}
