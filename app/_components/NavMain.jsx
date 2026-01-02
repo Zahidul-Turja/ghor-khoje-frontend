@@ -72,20 +72,20 @@ function NavMain({ classes }) {
             href={"/"}
             className="cursor-pointer border-b-2 border-gray-700 px-1 text-sm font-bold tracking-wide dark:border-gray-50"
           >
-            Buy
-          </Link>
-          <Link
-            href={"/"}
-            className="cursor-pointer px-1 text-sm tracking-wide"
-          >
             Rent
           </Link>
-          <Link
-            href={"/"}
+          <button
+            onClick={() => toast.success("Feature in progress!")}
+            className="cursor-pointer px-1 text-sm tracking-wide"
+          >
+            Buy
+          </button>
+          <button
+            onClick={() => toast.success("Feature in progress")}
             className="cursor-pointer px-1 text-sm tracking-wide"
           >
             Sell
-          </Link>
+          </button>
         </div>
 
         {/* Desktop Auth Section */}

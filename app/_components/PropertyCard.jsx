@@ -5,14 +5,12 @@ import { IoImageOutline } from "react-icons/io5";
 
 function PropertyCard({ property }) {
   const {
-    id,
     slug,
-    images,
+    image,
     title,
     address,
-    owner,
-    avg_ratings,
-    description,
+    owner_full_name,
+    avg_rating,
     rent_per_month,
     type,
   } = property;
@@ -24,10 +22,10 @@ function PropertyCard({ property }) {
         href={`/${slug}`}
         className="relative block aspect-[4/3] w-full overflow-hidden rounded-t-xl"
       >
-        {images.length > 0 ? (
+        {image ? (
           <div className="relative h-full w-full">
             <Image
-              src={images[0].image}
+              src={image}
               alt={title}
               fill
               className="object-cover transition-transform duration-300 group-hover:scale-105"
@@ -47,40 +45,44 @@ function PropertyCard({ property }) {
         <div className="mb-2 flex items-start justify-between gap-2">
           <Link
             href={`/${slug}`}
-            className="flex-1 text-sm font-semibold text-gray-900 hover:text-primary sm:text-base dark:text-gray-200 dark:hover:text-gray-200"
+            className="flex-1 text-sm font-semibold text-gray-900 hover:text-primary dark:text-gray-200 dark:hover:text-gray-200 sm:text-base"
           >
             <h3 className="line-clamp-2 leading-tight">{title}</h3>
           </Link>
 
-          {avg_ratings?.overall > 0 && (
-            <div className="flex shrink-0 items-center gap-1 text-xs font-semibold text-gray-700 sm:text-sm dark:text-gray-300">
-              <FaStar className="h-3 w-3 text-yellow-400 sm:h-4 sm:w-4 dark:text-yellow-500" />
-              <span>{avg_ratings.overall}</span>
+          {avg_rating ? (
+            <div className="flex shrink-0 items-center gap-1 text-xs font-semibold text-gray-700 dark:text-gray-300 sm:text-sm">
+              <FaStar className="h-3 w-3 text-yellow-400 dark:text-yellow-500 sm:h-4 sm:w-4" />
+              <span>{avg_rating}</span>
+            </div>
+          ) : (
+            <div className="flex shrink-0 items-center gap-1 rounded-md bg-green-500 px-2 py-1 text-xs font-semibold text-gray-100 dark:text-gray-300 sm:text-sm">
+              <span>NEW</span>
             </div>
           )}
         </div>
 
         {/* Owner Information */}
-        {owner?.full_name && (
-          <p className="mb-3 text-xs text-gray-600 sm:text-sm dark:text-gray-400">
+        {owner_full_name && (
+          <p className="mb-3 text-xs text-gray-600 dark:text-gray-400 sm:text-sm">
             <span className="font-light">Owned by </span>
-            <span className="font-medium">{owner.full_name}</span>
+            <span className="font-medium">{owner_full_name}</span>
           </p>
         )}
 
         {/* Address */}
         {address && (
-          <p className="mb-3 line-clamp-1 text-xs text-gray-500 sm:text-sm dark:text-gray-400">
+          <p className="mb-3 line-clamp-1 text-xs text-gray-500 dark:text-gray-400 sm:text-sm">
             {address}
           </p>
         )}
 
         {/* Price */}
         <div className="flex items-baseline gap-1">
-          <span className="text-base font-bold text-gray-900 sm:text-lg dark:text-gray-200">
+          <span className="text-base font-bold text-gray-900 dark:text-gray-200 sm:text-lg">
             &#2547;{rent_per_month?.toLocaleString()}
           </span>
-          <span className="text-xs font-light text-gray-600 sm:text-sm dark:text-gray-400">
+          <span className="text-xs font-light text-gray-600 dark:text-gray-400 sm:text-sm">
             /month
           </span>
         </div>
