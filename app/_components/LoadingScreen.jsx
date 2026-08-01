@@ -1,55 +1,98 @@
-import React, { useState, useEffect } from "react";
-import { Home, Wifi, Database } from "lucide-react";
+import React, { useState, useEffect, useCallback } from "react";
+import {
+  Home,
+  Wifi,
+  Database,
+  Server,
+  Wrench,
+  Zap,
+  WifiOff,
+  RefreshCw,
+  Check,
+  AlertTriangle,
+} from "lucide-react";
+
+const MAX_HEALTH_ATTEMPTS = 3;
+const HEALTH_RETRY_DELAY_MS = 3000;
+
+const MAX_DB_ATTEMPTS = 3;
+const DB_RETRY_DELAY_MS = 2500;
 
 const LoadingScreen = ({ onLoadingComplete }) => {
   const [progress, setProgress] = useState(0);
   const [currentStep, setCurrentStep] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
   const [stepStatus, setStepStatus] = useState([false, false, false]); // [server, db, properties]
+  const [serverDown, setServerDown] = useState(false);
+  const [dataError, setDataError] = useState(false);
+  const [isRetrying, setIsRetrying] = useState(false);
 
   const steps = [
-    { icon: Wifi, text: "Waking up server...", delay: 800 },
-    { icon: Database, text: "Connecting to database...", delay: 1200 },
-    { icon: Home, text: "Loading property data...", delay: 1000 },
+    { icon: Wifi, text: "Checking server status..." },
+    { icon: Database, text: "Connecting to database..." },
+    { icon: Home, text: "Loading property data..." },
   ];
 
   const BASE_URL =
     process.env.NEXT_PUBLIC_BASE_API_ENDPOINT || "http://localhost:8000";
 
-  const checkServerHealth = async () => {
+  const pingHealth = async () => {
     try {
       const response = await fetch(`${BASE_URL}/health/`);
-      if (response.status === 200) {
+      return response.status === 200;
+    } catch (error) {
+      return false;
+    }
+  };
+
+  const pingDatabase = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/api/v1/places/list/`);
+      return response.ok;
+    } catch (error) {
+      return false;
+    }
+  };
+
+  // Tries the health check a few times (in case it's just a brief blip)
+  // before concluding the server is actually down.
+  const checkServerHealth = async () => {
+    for (let attempt = 1; attempt <= MAX_HEALTH_ATTEMPTS; attempt++) {
+      const healthy = await pingHealth();
+      if (healthy) {
         setStepStatus((prev) => [true, prev[1], prev[2]]);
         setProgress(33);
         setCurrentStep(1);
         return true;
       }
-      return false;
-    } catch (error) {
-      console.log("Server not ready, retrying...");
-      return false;
+      if (attempt < MAX_HEALTH_ATTEMPTS) {
+        await new Promise((resolve) =>
+          setTimeout(resolve, HEALTH_RETRY_DELAY_MS),
+        );
+      }
     }
+    return false;
   };
 
+  // Server responded fine here, so this is a separate failure mode
+  // (e.g. DB down, API error) — not the "server offline" case.
   const checkDatabase = async () => {
-    try {
-      const response = await fetch(`${BASE_URL}/api/v1/places/list/`);
-      if (response.ok) {
+    for (let attempt = 1; attempt <= MAX_DB_ATTEMPTS; attempt++) {
+      const ok = await pingDatabase();
+      if (ok) {
         setStepStatus((prev) => [prev[0], true, prev[2]]);
         setProgress(66);
         setCurrentStep(2);
         return true;
       }
-      return false;
-    } catch (error) {
-      console.log("Database connection failed");
-      return false;
+      if (attempt < MAX_DB_ATTEMPTS) {
+        await new Promise((resolve) => setTimeout(resolve, DB_RETRY_DELAY_MS));
+      }
     }
+    return false;
   };
 
   const loadProperties = async () => {
-    // Simulate property loading completion
     setStepStatus([true, true, true]);
     setProgress(100);
     setIsComplete(true);
@@ -58,55 +101,210 @@ const LoadingScreen = ({ onLoadingComplete }) => {
     }
   };
 
-  useEffect(() => {
-    const initializeApp = async () => {
-      // Step 1: Check server health
-      let serverReady = await checkServerHealth();
+  const initializeApp = useCallback(async () => {
+    setServerDown(false);
+    setDataError(false);
 
-      // If server not ready, keep trying every 3 seconds
-      while (!serverReady) {
-        await new Promise((resolve) => setTimeout(resolve, 3000));
-        serverReady = await checkServerHealth();
-      }
+    const serverReady = await checkServerHealth();
+    if (!serverReady) {
+      setServerDown(true);
+      return;
+    }
 
-      // Step 2: Check database connection
-      const dbReady = await checkDatabase();
-      if (dbReady) {
-        // Step 3: Complete loading
-        await loadProperties();
-      }
-    };
+    const dbReady = await checkDatabase();
+    if (!dbReady) {
+      setDataError(true);
+      return;
+    }
 
-    initializeApp();
+    await loadProperties();
   }, [onLoadingComplete]);
 
+  useEffect(() => {
+    initializeApp();
+  }, [initializeApp]);
+
+  const handleRetry = async () => {
+    setIsRetrying(true);
+    setProgress(0);
+    setCurrentStep(0);
+    setStepStatus([false, false, false]);
+    await initializeApp();
+    setIsRetrying(false);
+  };
+
+  // ---- Server down state ----
+  if (serverDown) {
+    const reasons = [
+      {
+        icon: Wrench,
+        title: "Scheduled maintenance",
+        description: "The server may be temporarily offline for updates.",
+      },
+      {
+        icon: Zap,
+        title: "Power outage",
+        description: "The machine hosting this site may have lost power.",
+      },
+      {
+        icon: WifiOff,
+        title: "ISP / connection issue",
+        description: "The home internet connection it relies on may be down.",
+      },
+    ];
+
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-amber-50 p-6 dark:from-gray-900 dark:via-gray-900 dark:to-gray-900 dark:text-gray-200">
+        <div className="w-full max-w-md animate-[fadeUp_0.4s_ease-out] space-y-6 text-center">
+          <div className="relative mx-auto flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 shadow-lg">
+            <Server className="h-10 w-10 text-white" />
+            <div className="absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 ring-4 ring-white dark:ring-gray-900">
+              <span className="h-2 w-2 rounded-full bg-white" />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
+              Server is currently offline
+            </h1>
+            <p className="text-sm text-gray-600 dark:text-gray-300">
+              This is a self-hosted project running on a personal server rather
+              than commercial cloud infrastructure, so it can go offline from
+              time to time. Likely reasons:
+            </p>
+          </div>
+
+          <div className="space-y-3 text-left">
+            {reasons.map(({ icon: ReasonIcon, title, description }, i) => (
+              <div
+                key={i}
+                className="flex items-start space-x-3 rounded-lg border border-amber-100 bg-amber-50/60 p-3 dark:border-gray-700 dark:bg-gray-800"
+              >
+                <div className="flex-shrink-0 rounded-md bg-amber-100 p-2 dark:bg-gray-700">
+                  <ReasonIcon className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-gray-800 dark:text-gray-100">
+                    {title}
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    {description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <button
+            onClick={handleRetry}
+            disabled={isRetrying}
+            className="inline-flex items-center justify-center space-x-2 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 px-5 py-2.5 text-sm font-medium text-white shadow transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            <RefreshCw
+              className={`h-4 w-4 ${isRetrying ? "animate-spin" : ""}`}
+            />
+            <span>{isRetrying ? "Checking again..." : "Try again"}</span>
+          </button>
+
+          <p className="text-xs text-gray-400 dark:text-gray-500">
+            Thanks for your patience — it should be back up shortly.
+          </p>
+        </div>
+
+        <style jsx>{`
+          @keyframes fadeUp {
+            from {
+              opacity: 0;
+              transform: translateY(10px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+        `}</style>
+      </div>
+    );
+  }
+
+  // ---- Data/DB error state (server itself is fine) ----
+  if (dataError) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-red-50 p-6 dark:from-gray-900 dark:via-gray-900 dark:to-gray-900 dark:text-gray-200">
+        <div className="w-full max-w-md animate-[fadeUp_0.4s_ease-out] space-y-6 text-center">
+          <div className="relative mx-auto flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-r from-red-500 to-rose-500 shadow-lg">
+            <Database className="h-10 w-10 text-white" />
+            <div className="absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center rounded-full bg-amber-400 ring-4 ring-white dark:ring-gray-900">
+              <AlertTriangle className="h-3.5 w-3.5 text-white" />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
+              Trouble loading data
+            </h1>
+            <p className="text-sm text-gray-600 dark:text-gray-300">
+              Good news — the server itself is up and responding. The issue is
+              with loading property data, likely a database hiccup on the
+              backend. This should resolve itself shortly.
+            </p>
+          </div>
+
+          <button
+            onClick={handleRetry}
+            disabled={isRetrying}
+            className="inline-flex items-center justify-center space-x-2 rounded-lg bg-gradient-to-r from-red-500 to-rose-500 px-5 py-2.5 text-sm font-medium text-white shadow transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            <RefreshCw
+              className={`h-4 w-4 ${isRetrying ? "animate-spin" : ""}`}
+            />
+            <span>{isRetrying ? "Checking again..." : "Try again"}</span>
+          </button>
+        </div>
+
+        <style jsx>{`
+          @keyframes fadeUp {
+            from {
+              opacity: 0;
+              transform: translateY(10px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+        `}</style>
+      </div>
+    );
+  }
+
+  // ---- Normal loading state ----
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-900 dark:text-gray-200">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute left-20 top-20 h-32 w-32 animate-pulse rounded-full bg-blue-200"></div>
-        <div className="absolute right-32 top-40 h-24 w-24 animate-pulse rounded-full bg-indigo-200 delay-1000"></div>
-        <div className="absolute bottom-32 left-1/3 h-40 w-40 animate-pulse rounded-full bg-purple-200 delay-500"></div>
+        <div className="absolute right-32 top-40 h-24 w-24 animate-pulse rounded-full bg-indigo-200 [animation-delay:1s]"></div>
+        <div className="absolute bottom-32 left-1/3 h-40 w-40 animate-pulse rounded-full bg-purple-200 [animation-delay:0.5s]"></div>
       </div>
 
       <div className="w-full max-w-md space-y-8 p-8 text-center">
         {/* Main Logo/Icon */}
         <div className="relative">
           <div
-            className={`transition-all duration-1000 ${isComplete ? "rotate-12 scale-110" : "scale-100"}`}
+            className={`transition-all duration-700 ${isComplete ? "scale-110" : "scale-100"}`}
           >
-            <div className="mx-auto flex h-20 w-20 transform items-center justify-center rounded-2xl bg-gradient-to-r from-primary/50 to-primary/90 shadow-lg transition-transform hover:scale-105">
+            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-r from-primary/50 to-primary/90 shadow-lg">
               <Home className="h-10 w-10 text-white" />
             </div>
           </div>
 
-          {/* Animated rings */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="h-24 w-24 animate-ping rounded-full border-2 border-primary/50"></div>
-          </div>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="h-32 w-32 animate-ping rounded-full border border-primary/30 delay-500"></div>
-          </div>
+          {/* Single soft pulse ring — quieter than two overlapping pings */}
+          {!isComplete && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="h-24 w-24 animate-ping rounded-full border-2 border-primary/30 [animation-duration:2s]"></div>
+            </div>
+          )}
         </div>
 
         {/* Brand Name */}
@@ -117,45 +315,13 @@ const LoadingScreen = ({ onLoadingComplete }) => {
           <p className="font-medium text-gray-600 dark:text-gray-300">
             Your Dream Home Awaits
           </p>
-          {/* Developer Note */}
-          {currentStep === 0 && !stepStatus[0] && (
-            <div className="mt-4 rounded-r-lg border-l-4 border-amber-400 bg-amber-50 p-4 dark:bg-gray-800">
-              <div className="flex items-start">
-                <div className="flex-shrink-0">
-                  <svg
-                    className="h-5 w-5 text-amber-400 dark:text-amber-300"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-                <div className="ml-3">
-                  <p className="text-sm text-amber-700 dark:text-amber-500">
-                    <span className="font-semibold">Note:</span> Backend hosted
-                    on Render's free tier -{" "}
-                    <span className="font-bold">
-                      cold starts can take upto 70 seconds
-                    </span>{" "}
-                    as the server spins up from sleep mode. This simulates
-                    real-world deployment scenarios and cost-effective scaling
-                    strategies.
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
 
         {/* Progress Bar */}
         <div className="space-y-4">
           <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-600">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 transition-all duration-300 ease-out"
+              className="h-full rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 transition-all duration-500 ease-out"
               style={{ width: `${Math.min(progress, 100)}%` }}
             ></div>
           </div>
@@ -168,44 +334,35 @@ const LoadingScreen = ({ onLoadingComplete }) => {
         <div className="space-y-3">
           {steps.map((step, index) => {
             const StepIcon = step.icon;
-            const isActive = index === currentStep;
-            const isPassed = index < currentStep;
+            const isActive = index === currentStep && !isComplete;
+            const isPassed = index < currentStep || isComplete;
 
             return (
               <div
                 key={index}
                 className={`flex items-center space-x-3 rounded-lg p-3 transition-all duration-500 ${
                   isActive
-                    ? "scale-105 transform bg-blue-50 text-blue-700 dark:bg-gray-600 dark:text-blue-500"
+                    ? "scale-[1.02] transform bg-blue-50 text-blue-700 dark:bg-gray-600 dark:text-blue-500"
                     : isPassed
                       ? "bg-green-50 text-green-700 dark:bg-green-800 dark:text-green-400"
                       : "text-gray-400"
                 }`}
               >
-                <div
-                  className={`flex-shrink-0 transition-all duration-300 ${
-                    isActive ? "animate-spin" : isPassed ? "animate-bounce" : ""
-                  }`}
-                >
-                  <StepIcon className="h-5 w-5" />
+                <div className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center">
+                  {isActive && (
+                    <span className="absolute h-full w-full animate-ping rounded-full bg-blue-400/40 [animation-duration:1.4s]"></span>
+                  )}
+                  <StepIcon
+                    className={`relative h-5 w-5 transition-opacity duration-300 ${
+                      isActive ? "opacity-100" : ""
+                    }`}
+                  />
                 </div>
                 <span className="text-sm font-medium">{step.text}</span>
                 {isPassed && (
-                  <div className="ml-auto">
+                  <div className="ml-auto animate-[popIn_0.3s_ease-out]">
                     <div className="flex h-5 w-5 items-center justify-center rounded-full bg-green-500">
-                      <svg
-                        className="h-3 w-3 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M5 13l4 4L19 7"
-                        ></path>
-                      </svg>
+                      <Check className="h-3 w-3 text-white" strokeWidth={3} />
                     </div>
                   </div>
                 )}
@@ -216,21 +373,9 @@ const LoadingScreen = ({ onLoadingComplete }) => {
 
         {/* Completion Animation */}
         {isComplete && (
-          <div className="animate-fadeIn">
-            <div className="mx-auto flex h-16 w-16 animate-bounce items-center justify-center rounded-full bg-green-500">
-              <svg
-                className="h-8 w-8 text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M5 13l4 4L19 7"
-                ></path>
-              </svg>
+          <div className="animate-[fadeUp_0.4s_ease-out]">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-500">
+              <Check className="h-8 w-8 text-white" strokeWidth={3} />
             </div>
             <p className="mt-4 font-semibold text-green-600">
               Ready to explore properties!
@@ -240,7 +385,7 @@ const LoadingScreen = ({ onLoadingComplete }) => {
       </div>
 
       <style jsx>{`
-        @keyframes fadeIn {
+        @keyframes fadeUp {
           from {
             opacity: 0;
             transform: translateY(20px);
@@ -251,8 +396,15 @@ const LoadingScreen = ({ onLoadingComplete }) => {
           }
         }
 
-        .animate-fadeIn {
-          animation: fadeIn 0.5s ease-out;
+        @keyframes popIn {
+          from {
+            opacity: 0;
+            transform: scale(0.6);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
         }
       `}</style>
     </div>

@@ -5,12 +5,14 @@ import { Toaster } from "react-hot-toast";
 import smoothscroll from "smoothscroll-polyfill";
 import "@/app/_styles/globals.css";
 import LoadingScreen from "@/app/_components/LoadingScreen";
+import DemoDisclaimerModal from "@/app/_components/DemoDisclaimerModal";
 import useAuthStore from "@/app/_store/authStore";
 
 import { poppins, raleway } from "@/app/_utils/fonts";
 
 export default function RootLayout({ children }) {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const [showDisclaimer, setShowDisclaimer] = useState(false);
   const theme = useAuthStore((state) => state.theme);
 
   useEffect(() => {
@@ -26,6 +28,7 @@ export default function RootLayout({ children }) {
 
   const handleInitialLoadingComplete = () => {
     setIsInitialLoading(false);
+    setShowDisclaimer(true);
   };
 
   return (
@@ -38,6 +41,11 @@ export default function RootLayout({ children }) {
         )}
 
         {!isInitialLoading && children}
+
+        <DemoDisclaimerModal
+          open={showDisclaimer}
+          onClose={() => setShowDisclaimer(false)}
+        />
 
         <Toaster position="top-center" toastOptions={{ duration: 3000 }} />
       </body>
