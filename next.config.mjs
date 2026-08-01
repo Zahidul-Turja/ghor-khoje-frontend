@@ -19,6 +19,11 @@ const nextConfig = {
         hostname: "ghor-khoje-backend.onrender.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "api-ghorkhojee.zahidulturja.com",
+        pathname: "/**",
+      },
     ],
   },
 };
